@@ -14,7 +14,7 @@
                 <ute:Tag elem="span" class="nrgBilling-ppChkBk-lftDiv-pageTitleSpan"
                          text="{comp-i18n-billing>nrgBilling-prpayChkBook-PAGE_TITLE}" />
                 <ute:Tag elem="span" class="nrgBilling-ppChkBk-lftDiv-backToDash">
-                    <utmain:Button design="None" class="" press="_onBackToDashboard">
+                    <utmain:Button design="None" class="" press="_onBackToBilling">
                         <core:Icon src="sap-icon://slim-arrow-left" class="nrgBilling-ppChkBk-backIcon" />
                         <ute:Tag elem="span" class="nrgBilling-ppChkBk-backTitle"
                                  text="{comp-i18n-billing>nrgBilling-billChkBook-BACK}" />

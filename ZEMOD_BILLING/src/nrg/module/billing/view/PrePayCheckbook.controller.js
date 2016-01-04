@@ -94,13 +94,13 @@ sap.ui.define(
             }
         };
 
-        CustomController.prototype._onBackToDashboard = function () {
-            var oRouter = this.getOwnerComponent().getRouter();
 
+        CustomController.prototype._onBackToBilling = function () {
+            var oRouter = this.getOwnerComponent().getRouter();
             if (this._coNum) {
-                oRouter.navTo('dashboard.VerificationWithCaCo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                oRouter.navTo('billing.BillingInfo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
             } else {
-                oRouter.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
+                oRouter.navTo('billing.BillingInfoNoCo', {bpNum: this._bpNum, caNum: this._caNum});
             }
         };
 
