@@ -134,9 +134,9 @@ sap.ui.define(
          *
 		 *
 		 */
-        Controller.prototype.onChangeCampaign = function (oControlEvent) {
+/*        Controller.prototype.onChangeCampaign = function (oControlEvent) {
             this.navTo("campaign", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, typeV: "C"});
-        };
+        };*/
         /**
 		 * Handler for Energy Efficienty website launcher
          *

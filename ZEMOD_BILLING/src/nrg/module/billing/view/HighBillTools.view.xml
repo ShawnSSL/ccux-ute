@@ -39,11 +39,11 @@
                     class="nrgHighBill-btn"
                     press=".onEngergyEff">
                 </u:Button>
-                <u:Button buttonType="SpecialNav" width="220px" enabled="true"
+<!--                <u:Button buttonType="SpecialNav" width="220px" enabled="true"
                     text="{comp-i18n-billing>nrgHighBillChangeCmp}"
                     class="nrgHighBill-btn"
                     press=".onChangeCampaign">
-                </u:Button>
+                </u:Button>-->
                 <u:Button buttonType="SpecialNav" width="220px" enabled="true"
                     class="nrgHighBill-btn"
                     text="{comp-i18n-billing>nrgHighBillMeterTest}"

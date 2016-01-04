@@ -110,10 +110,38 @@ sap.ui.define(
             function fnMidAngle(data) {
                 return data.startAngle + (data.endAngle - data.startAngle) / 2;
             }
-            fnColor = d3.scale.ordinal()
+/*            fnColor = d3.scale.ordinal()
                 .domain(aData, fnLabel)
-                .range(['#2AA6DF', '#FDD20A', '#E80E89', '#a6df2a', '#59308c', '#449646', '#f15a24']);
-
+                .range(['#2AA6DF', '#FDD20A', '#E80E89', '#a6df2a', '#59308c', '#449646', '#f15a24']);*/
+            //mobile/website/ivr/phone/chat/survey/correspondence/misc
+            fnColor = function (channel) {
+                var sChannelColor = '#FFFFFF';// Default one
+                channel = channel.toLowerCase();
+                switch (channel) {
+                case "website":
+                    sChannelColor = '#2AA6DF';
+                    break;
+                case "chat":
+                    sChannelColor = '#FDD20A';
+                    break;
+                case "survey":
+                    sChannelColor = '#E80E89';
+                    break;
+                case "ivr":
+                    sChannelColor = '#a6df2a';
+                    break;
+                case "phone":
+                    sChannelColor = '#59308c';
+                    break;
+                case "correspondence":
+                    sChannelColor = '#449646';
+                    break;
+                case "mobile":
+                    sChannelColor = '#f15a24';
+                    break;
+                }
+                return sChannelColor;
+            };
             /* Donut rim */
             oPieRim = oCanvas.append('g');
 

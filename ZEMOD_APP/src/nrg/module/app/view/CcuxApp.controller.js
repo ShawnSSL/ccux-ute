@@ -249,12 +249,15 @@ sap.ui.define(
                 AppHeader.HMItemId.Transaction
             );
 
-            this._oApp.setOccupied(true);
-            if (oWebUiManager.isAvailable()) {
+            oWebUiManager.notifyWebUi('openIndex', {
+                LINK_ID: "Z_CCS_MENU"
+            });
+            //this._oApp.setOccupied(true);
+/*            if (oWebUiManager.isAvailable()) {
                 oWebUiManager.notifyWebUi('launchTransaction', {}, this._onTransactionPressCallback, this);
             } else {
                 this._onTransactionPressCallback();
-            }
+            }*/
         };
 
         CustomController.prototype._onTransactionPressCallback = function (oEvent) {

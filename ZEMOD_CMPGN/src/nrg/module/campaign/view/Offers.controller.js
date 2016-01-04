@@ -927,19 +927,19 @@ sap.ui.define(
             }
             oTableTag = this.byId(sap.ui.core.Fragment.createId("Invoice1", "idnrgCamOffPriceT"));
             if (oTableTag) {
-                oTableTag.removeAllAggregation("content");
+                oTableTag.removeContent();
             }
             oTableTag = this.byId(sap.ui.core.Fragment.createId("Invoice2", "idnrgCamOffPriceT"));
             if (oTableTag) {
-                oTableTag.removeAllAggregation("content");
+                oTableTag.removeContent();
             }
             oTableTag = this.byId(sap.ui.core.Fragment.createId("Cons1", "idnrgCamOffPriceT"));
             if (oTableTag) {
-                oTableTag.removeAllAggregation("content");
+                oTableTag.removeContent();
             }
             oTableTag = this.byId(sap.ui.core.Fragment.createId("Cons2", "idnrgCamOffPriceT"));
             if (oTableTag) {
-                oTableTag.removeAllAggregation("content");
+                oTableTag.removeContent();
             }
             oProactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oReactiveButton.removeStyleClass("nrgCamOff-btn-selected");

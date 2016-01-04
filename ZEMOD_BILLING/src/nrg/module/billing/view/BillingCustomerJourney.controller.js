@@ -81,9 +81,9 @@ sap.ui.define(
                     jQuery.sap.log.info("Odata Read Error occured");
                 }.bind(this)
             };
-            //if (oModel) {
-                //oModel.read(sPath, oBindingInfo);
-            //}
+            if (oModel && this._sBP && this._sCA) {
+                oModel.read(sPath, oBindingInfo);
+            }
         };
         /**
 		 * Handler for Customer Journey Refresh
@@ -97,6 +97,12 @@ sap.ui.define(
                 oDatesJsonModel = this.getView().getModel('Cj-Date'),
                 oModel = this.getOwnerComponent().getModel('comp-cj'),
                 that = this;
+            // to Avoid reloading with same information.
+            if ((data.bpNum) && (this._sBP) && (parseInt(this._sBP, 10) === parseInt(data.bpNum, 10))) {
+                if ((data.caNum) && (this._sCA) && (parseInt(this._sCA, 10) === parseInt(data.caNum, 10))) {
+                    return;
+                }
+            }
             this._sBP = data.bpNum;
             this._sCA = data.caNum;
             sPath = "/CJLifeCycleSet(BP='" + this._sBP + "',CA='" + this._sCA + "')";
@@ -113,7 +119,7 @@ sap.ui.define(
                     jQuery.sap.log.info("Odata Read Error occured");
                 }.bind(this)
             };
-            if (oModel) {
+            if (oModel && this._sBP && this._sCA) {
                 oModel.read(sPath, oBindingInfo);
             }
         };
@@ -131,17 +137,22 @@ sap.ui.define(
                 oReferralTemplate = this.getView().byId('idnrgCustomerRef-temp'),
                 aFilterIds,
                 aFilterValues,
-                aFilters;
+                aFilters,
+                fnRecievedHandler;
             aFilterIds = ["BP", "CA", "StartDate", "EndDate"];
             aFilterValues = [this._sBP, this._sCA, dStartDate, dEndDate];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = "/CJReferralSet";
-            oReferral.removeAllAggregation("content");
+            oReferral.removeContent();
+            fnRecievedHandler = function (oEvent) {
+                jQuery.sap.log.info("Odata Read successfully");
+            };
             oBindingInfo = {
                 model : "comp-cj",
                 path : sPath,
                 template : oReferralTemplate,
-                filters : aFilters
+                filters : aFilters,
+                events: {dataReceived : fnRecievedHandler}
             };
             oReferral.bindAggregation("content", oBindingInfo);
         };
@@ -403,7 +414,8 @@ sap.ui.define(
                 oToDate,
                 oModel = this.getOwnerComponent().getModel('comp-cj'),
                 oCustomerJourneyModel,
-                oDatesModel;
+                oDatesModel,
+                oSearchText;
             oDatesModel = this.getView().getModel('Cj-Date');
             oCustomerJourneyModel = new JSONModel();
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
@@ -445,6 +457,8 @@ sap.ui.define(
                     { recordIndex: '7', channelIcon: 'sap-icon://multi-select', topLabel: 'All', channel: 'All'}
                 ]
             }), 'timeline');
+            oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search");
+            oSearchText.setValue("");
             mParameters = {
                 filters : aFilters,
                 success : function (oData) {
@@ -484,7 +498,9 @@ sap.ui.define(
                 sChannel,
                 oCJTable = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-table"),
                 oCJDropDown = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-DD"),
-                oFilter1;
+                oFilter1,
+                oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search");
+            oSearchText.setValue("");
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             aFilterIds = ["BP", "CA", "StartDate", "EndDate"];
             aFilterValues = [this._sBP, this._sCA, (new Date(oFromDate.getValue())), (new Date(oToDate.getValue()))];
