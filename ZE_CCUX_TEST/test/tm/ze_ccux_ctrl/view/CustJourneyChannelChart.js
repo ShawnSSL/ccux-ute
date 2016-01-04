@@ -1,5 +1,5 @@
-/*global sap*/
-
+/*global sap , d3*/
+/*jslint nomen:true*/
 sap.ui.define(
     [
         'sap/ui/core/Control',
@@ -66,14 +66,28 @@ sap.ui.define(
         };
 
         CustomControl.prototype._createChart = function () {
-            var oCustomControl = this;
-            var iWidth = this.getWidth();
-            var iHeight = this.getHeight();
-            var iRadius = Math.min(iWidth, iHeight) / 3;
-            var aData = this.getDataModel().getData().data;
+            var oCustomControl = this,
+                iWidth = this.getWidth(),
+                iHeight = this.getHeight(),
+                iRadius = Math.min(iWidth, iHeight) / 3,
+                aData = this.getDataModel().getData().data,
+                oCanvas,
+                fnColor,
+                oPieRim,
+                oTotal,
+                fnPie,
+                fnPieArc,
+                oPie,
+                oPieSlice,
+                oPieSliceText,
+                fnLineInnerArc,
+                fnLineOuterArc,
+                oLine,
+                oLineInnerPoint,
+                oLabel;
 
             // Create a canvas with the center as starting point
-            var oCanvas = d3.select('#' + this.getId())
+            oCanvas = d3.select('#' + this.getId())
                 .append('svg')
                     .attr('width', iWidth)
                     .attr('height', iHeight)
@@ -87,12 +101,12 @@ sap.ui.define(
                 return data.startAngle + (data.endAngle - data.startAngle) / 2;
             }
 
-            var fnColor = d3.scale.ordinal()
+            fnColor = d3.scale.ordinal()
                 .domain(aData, fnLabel)
                 .range(['#5092ce', '#f2a814', '#c0272d', '#315952', '#f15a24', '#9C27B0', '#2e9985']);
 
             /* Donut rim */
-            var oPieRim = oCanvas.append('g');
+            oPieRim = oCanvas.append('g');
 
             oPieRim.append('circle')
                 .attr('r', iRadius * 0.95)
@@ -104,7 +118,7 @@ sap.ui.define(
                 .attr('r', iRadius * 0.8);
 
             /* Total circle */
-            var oTotal = oCanvas.append('g');
+            oTotal = oCanvas.append('g');
 
             oTotal.append('circle')
                 .attr('r', iRadius * 0.35)
@@ -124,25 +138,25 @@ sap.ui.define(
             });
 
             /* Donut chart */
-            var fnPie = d3.layout.pie()
+            fnPie = d3.layout.pie()
                 .sort(null)
                 .value(fnValue);
 
-            var fnPieArc = d3.svg.arc()
+            fnPieArc = d3.svg.arc()
                 .outerRadius(iRadius * 0.6)
                 .innerRadius(iRadius * 0.35);
 
-            var oPie = oCanvas.append('g');
+            oPie = oCanvas.append('g');
 
-            var oPieSlice = oPie.append('g').selectAll('path.tmCustJCChart-slice')
+            oPieSlice = oPie.append('g').selectAll('path.tmCustJCChart-slice')
                 .data(fnPie(aData))
                 .enter()
                 .append('path')
                     .attr('d', fnPieArc)
                     .attr('class', 'tmCustJCChart-slice')
                     .style('fill', function (data) {
-                        return fnColor(fnLabel(data.data));
-                    });
+                    return fnColor(fnLabel(data.data));
+                });
 
             oPieSlice.on('dblclick', function (data) {
                 oCustomControl.fireSliceDoublePress({
@@ -151,7 +165,7 @@ sap.ui.define(
             });
 
             /* Donut chart value */
-            var oPieSliceText = oPie.append('g').selectAll('text.tmCustJCChart-sliceValue')
+            oPieSliceText = oPie.append('g').selectAll('text.tmCustJCChart-sliceValue')
                 .data(fnPie(aData))
                 .enter()
                 .append('text')
@@ -167,31 +181,31 @@ sap.ui.define(
             });
 
             /* Line between donut chart and label */
-            var fnLineInnerArc = d3.svg.arc()
+            fnLineInnerArc = d3.svg.arc()
                 .outerRadius(iRadius * 0.7)
                 .innerRadius(iRadius * 0.7);
 
-            var fnLineOuterArc = d3.svg.arc()
+            fnLineOuterArc = d3.svg.arc()
                 .outerRadius(iRadius)
                 .innerRadius(iRadius);
 
-            var oLine = oCanvas.append('g').selectAll('polyline.tmCustJCChart-line')
+            oLine = oCanvas.append('g').selectAll('polyline.tmCustJCChart-line')
                 .data(fnPie(aData))
                 .enter()
                     .append('polyline')
-                        .attr('points', function(data) {
-                            var aXY = fnLineOuterArc.centroid(data);
-                            aXY[0] = iRadius * 1.4 * (fnMidAngle(data) < Math.PI ? 1 : -1 );
+                        .attr('points', function (data) {
+                    var aXY = fnLineOuterArc.centroid(data);
+                    aXY[0] = iRadius * 1.4 * (fnMidAngle(data) < Math.PI ? 1 : -1);
 
-                            return [fnLineInnerArc.centroid(data), fnLineOuterArc.centroid(data), aXY];
-                        })
+                    return [fnLineInnerArc.centroid(data), fnLineOuterArc.centroid(data), aXY];
+                })
                         .attr('stroke', function (data) {
-                            return fnColor(fnLabel(data.data));
-                        })
+                    return fnColor(fnLabel(data.data));
+                })
                         .attr('class', 'tmCustJCChart-line');
 
             /* Line point */
-            var oLineInnerPoint = oCanvas.append('g').selectAll('circle')
+            oLineInnerPoint = oCanvas.append('g').selectAll('circle')
                 .data(fnPie(aData))
                 .enter()
                     .append('circle')
@@ -203,19 +217,19 @@ sap.ui.define(
                         .attr('cy', function (data) { return fnLineInnerArc.centroid(data)[1]; });
 
             /* Label */
-            var oLabel = oCanvas.append('g').selectAll('text.tmCustJCChart-label')
+            oLabel = oCanvas.append('g').selectAll('text.tmCustJCChart-label')
                 .data(fnPie(aData))
                 .enter()
                     .append('text')
                         .attr('dy', '0.35em')
-                        .attr('transform', function(data) {
-                            var aXY = fnLineOuterArc.centroid(data);
-                            aXY[0] = iRadius * 1.5 * (fnMidAngle(data) < Math.PI ? 1 : -1 );
-                            return 'translate(' + aXY + ')';
-                        })
-                        .style('text-anchor', function(data) {
-                            return fnMidAngle(data) < Math.PI ? 'start' : 'end';
-                        })
+                        .attr('transform', function (data) {
+                    var aXY = fnLineOuterArc.centroid(data);
+                    aXY[0] = iRadius * 1.5 * (fnMidAngle(data) < Math.PI ? 1 : -1);
+                    return 'translate(' + aXY + ')';
+                })
+                        .style('text-anchor', function (data) {
+                    return fnMidAngle(data) < Math.PI ? 'start' : 'end';
+                })
                         .text(function (data) { return fnLabel(data.data); });
         };
 
