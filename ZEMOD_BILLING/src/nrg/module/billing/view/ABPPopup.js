@@ -43,7 +43,7 @@ sap.ui.define(
                 });
                 // Set a variable to flag if it's retro or not
                 oABPView.getController().isRetro = this.getIsRetro();
-                if (this._oABPPopup.isOpen()) { return this;}
+                if (this._oABPPopup.isOpen()) { return this; }
                 this._oABPPopup.addContent(oABPView);
             }
             this._oABPPopup.open();

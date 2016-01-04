@@ -15,7 +15,7 @@ sap.ui.define(
         var DepositToolPopup = Control.extend('nrg.module.dashboard.view.DepositToolPopup', {
             metadata: {
                 properties: {
-                    title: { type: 'string', defaultValue: null },
+                    title: { type: 'string', defaultValue: null }
                 }
             }
         });

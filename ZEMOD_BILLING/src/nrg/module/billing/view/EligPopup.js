@@ -43,7 +43,7 @@ sap.ui.define(
                 });
                 // Set a variable for eligibility type
                 oEligView.getController().eligType = this.getEligType();
-                if (this._oEligPopup.isOpen()) { return this;}
+                if (this._oEligPopup.isOpen()) { return this; }
                 this._oEligPopup.addContent(oEligView);
             }
             this._oEligPopup.open();

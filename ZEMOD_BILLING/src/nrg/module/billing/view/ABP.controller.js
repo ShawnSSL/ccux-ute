@@ -233,7 +233,7 @@ sap.ui.define(
                                 // Retrieve the data for graph
                                 this._retrieveGraphInfo(this._coNum, function () {bDoneRetrGraph = true; });
                                 // Check all graph control checkboxes
-                                for (i = 0; i < this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent().length; i++) {
+                                for (i = 0; i < this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent().length; i = i + 1) {
                                     graphControlBtn = this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent()[i];
                                     graphControlBtn.getContent()[0].setChecked(true);
                                 }

@@ -1,5 +1,5 @@
 /*global sap*/
-
+/*jslint nomen:true*/
 sap.ui.define(
     [
         'sap/ui/core/mvc/Controller',
@@ -26,11 +26,11 @@ sap.ui.define(
         };
 
         CustomController.prototype._onTotalPress = function (oEvent) {
-            console.log(oEvent);
+            //console.log(oEvent);
         };
 
         CustomController.prototype._onSlicePress = function (oEvent) {
-            console.log(oEvent.getParameters());
+            //console.log(oEvent.getParameters());
         };
 
         return CustomController;

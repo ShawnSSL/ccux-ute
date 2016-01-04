@@ -105,10 +105,14 @@ sap.ui.define(
             oParameters = {
                 success : function (oData) {
                     oEligModel.setData(oData);
-                    if (fnSuccess) fnSuccess();
+                    if (fnSuccess) {
+                        fnSuccess();
+                    }
                 }.bind(this),
                 error: function (oError) {
-                    if (fnFail) fnFail();
+                    if (fnFail) {
+                        fnFail();
+                    }
                 }.bind(this)
             };
 
@@ -123,11 +127,11 @@ sap.ui.define(
             if (this.getView().byId('nrgAppMain-footerWrap').hasStyleClass('open')) {
                 // Hide footer
                 this.getView().byId('nrgAppMain-footerWrap').removeStyleClass('open');
-                $('.uteAppBodyCnt-footer').css('border-bottom', '6px solid #FFF');
+                jQuery('.uteAppBodyCnt-footer').css('border-bottom', '6px solid #FFF');
             } else {
                 // Show footer
                 this.getView().byId('nrgAppMain-footerWrap').addStyleClass('open');
-                $('.uteAppBodyCnt-footer').css('border-bottom', 'none');
+                jQuery('.uteAppBodyCnt-footer').css('border-bottom', 'none');
             }
         };
 
@@ -200,10 +204,10 @@ sap.ui.define(
             oParameters = {
                 filters: aFilters,
                 success : function (oData) {
-                    if (oData.results.length) {                        
+                    if (oData.results.length) {
                         this.getView().getModel('oFooterNotification').setData(oData.results);
                         this.notificationLinkPressActions = {};
-                        for (i = 0; i < oData.results.length; i++) {
+                        for (i = 0; i < oData.results.length; i = i + 1) {
                             if (oData.results[i].FilterType === 'M2M') { this.notificationLinkPressActions[oData.results[i].MessageText] = this._onM2mLinkPress.bind(this); }
                             if (oData.results[i].FilterType === 'SMTP') { this.notificationLinkPressActions[oData.results[i].MessageText] = this._onSmtpLinkPress.bind(this); }
                             if (oData.results[i].FilterType === 'MAIL') { this.notificationLinkPressActions[oData.results[i].MessageText] = this._onMailLinkPress.bind(this); }
@@ -256,10 +260,11 @@ sap.ui.define(
                         iCurrentIndex = 0,
                         aCurrent = [],
                         dropdownContainer = this.getView().byId("nrgAppFtrDetails-rhs-currentItem"),
-                        i, j,
+                        i,
+                        j,
                         oTag;
 
-                    if (oData.results.length > 0) {                        
+                    if (oData.results.length > 0) {
                         // Get all objects for Current and generate a dropdwon
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             if (oData.results[i].Type === 'C') {
@@ -325,7 +330,7 @@ sap.ui.define(
         }.bind(this);
 
         Controller.prototype._onRhsCurrenDropdownClick = function (oControlEvent) {
-            var rhsSection = $('.nrgAppFtrDetails-rhs');
+            var rhsSection = jQuery('.nrgAppFtrDetails-rhs');
             if (rhsSection.find('.uteMDd-picker').height() > 170) {
                 if (rhsSection.hasClass('scrollBarAppear')) {
                     rhsSection.removeClass('scrollBarAppear');
@@ -458,15 +463,15 @@ sap.ui.define(
                 oRouting = this.getView().getModel('oFooterRouting'),
                 item = oControlEvent.getSource().getDomRef().childNodes[0];
 
-            if ($(item).hasClass('currentItem') && $(item).hasClass('hasValue')) {
+            if (jQuery(item).hasClass('currentItem') && jQuery(item).hasClass('hasValue')) {
                 oRouter.navTo('campaign', {bpNum: oRouting.oData.BpNumber, caNum: oRouting.oData.CaNumber, coNum: oRouting.oData.CoNumber, typeV: 'C'});
             }
 
-            if ($(item).hasClass('pendingItem') && $(item).hasClass('hasValue')) {
+            if (jQuery(item).hasClass('pendingItem') && jQuery(item).hasClass('hasValue')) {
                 oRouter.navTo('campaign', {bpNum: oRouting.oData.BpNumber, caNum: oRouting.oData.CaNumber, coNum: oRouting.oData.CoNumber, typeV: 'PE'});
             }
 
-            if ($(item).hasClass('historyItem') && $(item).hasClass('hasValue')) {
+            if (jQuery(item).hasClass('historyItem') && jQuery(item).hasClass('hasValue')) {
                 oRouter.navTo('campaignhistory', {bpNum: oRouting.oData.BpNumber, caNum: oRouting.oData.CaNumber, coNum: oRouting.oData.CoNumber});
             }
         };
@@ -611,14 +616,15 @@ sap.ui.define(
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
                 oRouter = this.getOwnerComponent().getRouter(),
                 oRouting = this.getView().getModel('oFooterRouting'),
-                sRetrStatus;
+                sRetrStatus,
+                checkRetrComplete;
 
             // Display the loading indicator
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             // Retrieve Notification
-            this._retrieveEligibility(function () {sRetrStatus = 'success';}, function () {sRetrStatus = 'fail';} );
+            this._retrieveEligibility(function () {sRetrStatus = 'success'; }, function () {sRetrStatus = 'fail'; });
             // Check retrieval done
-            var checkRetrComplete = setInterval (function () {
+            checkRetrComplete = setInterval(function () {
                 // Succeeded
                 if (sRetrStatus === 'success') {
                     var oEligibilityModel = this.getView().getModel('oEligibility');
@@ -650,7 +656,7 @@ sap.ui.define(
                     // Display error message
                     ute.ui.main.Popup.Alert({ title: 'Retrieve Error', message: 'We cannot retrieve the eligibility data of DPP. Please check the Contract number or network and try again later.'});
                 }
-            }.bind(this), 100); 
+            }.bind(this), 100);
         };
 
         Controller.prototype._onM2mCloseClick = function (oEvent) {
