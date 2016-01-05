@@ -378,7 +378,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oModel) {
+            if (oModel && this._coNum) {
                 oModel.read(sPath, oParameters);
             }
         };

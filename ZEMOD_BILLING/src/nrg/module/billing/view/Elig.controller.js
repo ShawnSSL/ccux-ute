@@ -54,9 +54,12 @@ sap.ui.define(
                 parsedData = {},
                 i;
 
-            aFilters.push(new Filter({ path: 'Contract', operator: FilterOperator.EQ, value1: this._coNum}));
-            aFilters.push(new Filter({ path: 'EligKey', operator: FilterOperator.EQ, value1: sEligType}));
-
+            if (this._coNum) {
+                aFilters.push(new Filter({ path: 'Contract', operator: FilterOperator.EQ, value1: this._coNum}));
+            }
+            if (sEligType) {
+                aFilters.push(new Filter({ path: 'EligKey', operator: FilterOperator.EQ, value1: sEligType}));
+            }
             oParameters = {
                 filters: aFilters,
                 success : function (oData) {
@@ -117,7 +120,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oModel) {
+            if (oModel && aFilters && aFilters.length > 0) {
                 oModel.read(sPath, oParameters);
             }
         };

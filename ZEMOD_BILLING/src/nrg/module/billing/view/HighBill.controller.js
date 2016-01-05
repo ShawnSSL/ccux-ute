@@ -83,7 +83,7 @@ sap.ui.define(
                 error: function (oError) {
                 }.bind(this)
             };
-            if (oEligibilityModel) {
+            if (oEligibilityModel && this._coNum) {
                 oEligibilityModel.read(sCurrentPath, mParameters);
             }
         };
