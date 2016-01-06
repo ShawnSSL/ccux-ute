@@ -395,7 +395,74 @@ sap.ui.define(
             }
             return aFilters;
         };
-
+        /**
+		 * Display Customer Journey module when user navigated
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onContactLogs = function (oEvent) {
+            var sPath,
+                mParameters,
+                oCJTable,
+                aFilters,
+                aFilterIds,
+                aFilterValues,
+                that = this,
+                oFromDate,
+                oToDate,
+                oModel = this.getOwnerComponent().getModel('comp-cj'),
+                oCustomerJourneyModel,
+                oDatesModel,
+                oSearchText;
+            oDatesModel = this.getView().getModel('Cj-Date');
+            oCustomerJourneyModel = new JSONModel();
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            aFilterIds = ["BP", "CA", "StartDate", "EndDate", "ChannelType"];
+            aFilterValues = [this._sBP, this._sCA, oDatesModel.getProperty("/StartDate"), oDatesModel.getProperty("/EndDate"), "CLOG"];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            if (!this._oContactLogFragment) {
+                this._oContactLogFragment = sap.ui.xmlfragment("ContactLogs", "nrg.module.billing.view.CJModule", this);
+            }
+            if (this._oContactLogDialog === undefined) {
+                this._oContactLogDialog = new ute.ui.main.Popup.create({
+                    title: 'Contact Logs',
+                    content: this._oContactLogFragment
+                });
+                this._oContactLogDialog.addStyleClass("nrgCJModule-dialog");
+            }
+            this._oContactLogFragment.setModel(oCustomerJourneyModel, 'Cj-module');
+            this._oContactLogFragment.setModel(new JSONModel({
+                visible: false
+            }), 'CJ-local');
+            sPath = "/CJModuleSet";
+            oCJTable = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-table");
+            oCJTable.setModel(oCustomerJourneyModel);
+            oFromDate = sap.ui.core.Fragment.byId("ContactLogs", "idnrgBllCJ-fromDate");
+            oToDate = sap.ui.core.Fragment.byId("ContactLogs", "idnrgBllCJ-toDate");
+            oToDate.setMinDate(new Date(1, 0, 1));
+            oFromDate.setMinDate(new Date(1, 0, 1));
+            oToDate.setDefaultDate(this._oFormatYyyymmdd.format(oDatesModel.getProperty("/EndDate"), true));
+            oFromDate.setDefaultDate(this._oFormatYyyymmdd.format(oDatesModel.getProperty("/StartDate"), true));
+            oSearchText = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-search");
+            oSearchText.setValue("");
+            mParameters = {
+                filters : aFilters,
+                success : function (oData) {
+                    oCustomerJourneyModel.setData(that.convertCJModuleData(oData.results));
+                    that._oContactLogDialog.open();
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    jQuery.sap.log.info("Odata Read Successfully:::");
+                }.bind(this),
+                error: function (oError) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    jQuery.sap.log.info("Odata Read Error occured");
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sPath, mParameters);
+            }
+        };
         /**
 		 * Display Customer Journey module when user navigated
 		 *
@@ -419,8 +486,8 @@ sap.ui.define(
             oDatesModel = this.getView().getModel('Cj-Date');
             oCustomerJourneyModel = new JSONModel();
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            aFilterIds = ["BP", "CA", "StartDate", "EndDate"];
-            aFilterValues = [this._sBP, this._sCA, oDatesModel.getProperty("/StartDate"), oDatesModel.getProperty("/EndDate")];
+            aFilterIds = ["BP", "CA", "StartDate", "EndDate", "ChannelType"];
+            aFilterValues = [this._sBP, this._sCA, oDatesModel.getProperty("/StartDate"), oDatesModel.getProperty("/EndDate"), "CJM"];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             if (!this._oDialogFragment) {
                 this._oDialogFragment = sap.ui.xmlfragment("CustomerJourney", "nrg.module.billing.view.CJModule", this);
@@ -428,7 +495,6 @@ sap.ui.define(
             if (this._oCJDialog === undefined) {
                 this._oCJDialog = new ute.ui.main.Popup.create({
                     title: 'CUSTOMER JOURNEY MODULE',
-                    close: this._handleDialogClosed,
                     content: this._oDialogFragment
                 });
                 //this.getView().addDependent(this._oCJDialog);
@@ -457,6 +523,9 @@ sap.ui.define(
                     { recordIndex: '7', channelIcon: 'sap-icon://multi-select', topLabel: 'All', channel: 'All'}
                 ]
             }), 'timeline');
+            this._oDialogFragment.setModel(new JSONModel({
+                visible: true
+            }), 'CJ-local');
             oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search");
             oSearchText.setValue("");
             mParameters = {

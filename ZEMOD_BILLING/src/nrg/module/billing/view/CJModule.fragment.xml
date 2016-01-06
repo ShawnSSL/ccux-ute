@@ -25,32 +25,34 @@
                     <u:Tag class="nrgCJModule-selPanel-fields-fd">
                         <u:DatePicker width="7rem" id="idnrgBllCJ-toDate"/>
                     </u:Tag>
-                     <um:Dropdown selectedKey="All" class="nrgCJModule-selPanel-fields-fd" placeholder="ALL" id="idnrgCJModule-DD">
-                        <um:DropdownItem key="ALL" >
-                            <u:Tag text="ALL" />
-                        </um:DropdownItem>
-                        <um:DropdownItem key="Correspondence" >
-                            <u:Tag text="Correspondence" />
-                        </um:DropdownItem>
-                        <um:DropdownItem key="Survey">
-                            <u:Tag text="Survey" />
-                        </um:DropdownItem>
-                        <um:DropdownItem key="Chat">
-                            <u:Tag text="Chat" />
-                        </um:DropdownItem>
-                        <um:DropdownItem key="Phone">
-                            <u:Tag text="Phone" />
-                        </um:DropdownItem>
-                        <um:DropdownItem key="IVR">
-                            <u:Tag text="IVR" />
-                        </um:DropdownItem>
-                        <um:DropdownItem key="Website">
-                            <u:Tag text="Website" />
-                        </um:DropdownItem>
-                        <um:DropdownItem key="Mobile">
-                            <u:Tag text="Mobile" />
-                        </um:DropdownItem>
-                    </um:Dropdown>
+                    <u:Tag class="nrgCJModule-selPanel-fields-fd" visible="{CJ-local>/visible}">
+                         <um:Dropdown selectedKey="All" placeholder="ALL" id="idnrgCJModule-DD">
+                            <um:DropdownItem key="ALL" >
+                                <u:Tag text="ALL" />
+                            </um:DropdownItem>
+                            <um:DropdownItem key="Correspondence" >
+                                <u:Tag text="Correspondence" />
+                            </um:DropdownItem>
+                            <um:DropdownItem key="Survey">
+                                <u:Tag text="Survey" />
+                            </um:DropdownItem>
+                            <um:DropdownItem key="Chat">
+                                <u:Tag text="Chat" />
+                            </um:DropdownItem>
+                            <um:DropdownItem key="Phone">
+                                <u:Tag text="Phone" />
+                            </um:DropdownItem>
+                            <um:DropdownItem key="IVR">
+                                <u:Tag text="IVR" />
+                            </um:DropdownItem>
+                            <um:DropdownItem key="Website">
+                                <u:Tag text="Website" />
+                            </um:DropdownItem>
+                            <um:DropdownItem key="Mobile">
+                                <u:Tag text="Mobile" />
+                            </um:DropdownItem>
+                        </um:Dropdown>
+                    </u:Tag>
                     <u:Tag class="nrgCJModule-selPanel-fields-fd">
                         <um:Button text="GO"
                                    class="nrgBllCJ-timeline-gobtn"
@@ -69,7 +71,7 @@
                                press=".onSearch"/>
                 </u:Tag>
             </u:Tag>
-            <u:Tag class="nrgCJModule-selPanel-fields">
+            <u:Tag class="nrgCJModule-selPanel-fields" visible="{CJ-local>/visible}">
                  <ch:CustomerJourneyTimeline channel="{timeline>/data}" class="nrgChannelCJIcons">
                     <ch:CustomerJourneyTimelineChannel
                         channelIcon="{timeline>channelIcon}"

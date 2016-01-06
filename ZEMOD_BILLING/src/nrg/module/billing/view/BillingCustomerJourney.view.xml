@@ -20,7 +20,7 @@
             <um:Button text="{comp-i18n-billing>nrgBllCJContactLogsTtl}"
                         class="nrgBllCJ-header-btn"
                         design="None"
-                        press=".onCustomerJourneyModule">
+                        press=".onContactLogs">
             </um:button>
             <um:Button text="{comp-i18n-billing>nrgBllCJContactFullTtl}"
                         class="nrgBllCJ-header-btn"
