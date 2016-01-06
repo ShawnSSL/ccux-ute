@@ -92,7 +92,7 @@
                         </um:button>
                     </u:Tag>
                     <u:Tag class="nrgCmpOff-tier">
-                        <um:Button id="idCamToggleBtn-FS"
+                        <um:Button id="idCamToggleBtn-F"
                             press=".toggleTier"
                             text="{comp-i18n-campaign>nrgCmpOffTFinalSave}"
                             class="nrgCamOff-offerBtn"
