@@ -519,6 +519,7 @@ sap.ui.define(
             sPath = i18NModel.getProperty("nrgPendingSwapsSet");
             oPendingSwapsTable = sap.ui.core.Fragment.byId("PendingOverview", "idnrgCamPds-pendTable");
             oPendingSwapsTemplate = sap.ui.core.Fragment.byId("PendingOverview", "idnrgCamPds-pendRow");
+            oPendingSwapsTable.setModel(oModel, 'comp-campaign');
             fnRecievedHandler = function () {
                 var oBinding = oPendingSwapsTable.getBinding("rows");
                 that._oCancelDialog.open();
@@ -535,7 +536,7 @@ sap.ui.define(
                 events: {dataReceived : fnRecievedHandler}
             };
             oPendingSwapsTable.bindRows(oBindingInfo);
-            this.getView().addDependent(this._oCancelDialog);
+            //this.getView().addDependent(this._oCancelDialog);
             //to get access to the global model
             this._oCancelDialog.addStyleClass("nrgCamHis-dialog");
 

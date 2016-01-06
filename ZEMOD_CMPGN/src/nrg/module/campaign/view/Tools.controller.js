@@ -130,7 +130,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onCancelPress = function (oEvent) {
-            var oModel,
+            var oModel = this.getOwnerComponent().getModel('comp-campaign'),
                 sPath,
                 mParameters,
                 oHistoryView,
@@ -169,6 +169,7 @@ sap.ui.define(
                     oTableBinding.detachDataReceived(fnRecievedHandler);
                 }
             };
+            oPendingSwapsTable.setModel(oModel, 'comp-campaign');
             mParameters = {
                 model : "comp-campaign",
                 path : sPath,
@@ -176,7 +177,7 @@ sap.ui.define(
                 template : oPendingSwapsTemplate,
                 events: {dataReceived : fnRecievedHandler}
             };
-            this.getView().addDependent(this._oCancelDialog);
+            //this.getView().addDependent(this._oCancelDialog);
             //to get access to the global model
             this._oCancelDialog.addStyleClass("nrgCamHis-dialog");
             oPendingSwapsTable.bindRows(mParameters);

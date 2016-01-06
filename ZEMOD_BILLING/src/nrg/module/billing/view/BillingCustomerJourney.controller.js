@@ -265,8 +265,12 @@ sap.ui.define(
                     oViewModel.setProperty("/interval1", false);
                     oViewModel.setProperty("/interval2", true);
                 }
-                oToDate.setDefaultDate(this._oFormatYyyymmdd.format(oDatesJsonModel.getProperty("/EndDate"), true));
-                oFromDate.setDefaultDate(this._oFormatYyyymmdd.format(oDatesJsonModel.getProperty("/StartDate"), true));
+                if (oDatesJsonModel.getProperty("/EndDate")) {
+                    oToDate.setDefaultDate(this._oFormatYyyymmdd.format(oDatesJsonModel.getProperty("/EndDate"), true));
+                }
+                if (oDatesJsonModel.getProperty("/StartDate")) {
+                    oFromDate.setDefaultDate(this._oFormatYyyymmdd.format(oDatesJsonModel.getProperty("/StartDate"), true));
+                }
             } else {
                 if (bInterval1) {
                     oNewDate.setDate(oNewDate.getDate() - oDatesJsonModel.getProperty("/Interval1"));

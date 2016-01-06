@@ -83,6 +83,8 @@
                  </ch:CustomerJourneyTimeline>
            </u:Tag>
          </u:Tag>
+       <u:Tag class="nrgCJModule-msg"  visible="{= !${CJ-local>/visible} }"
+       text="ATTENTION:  The contact logs below are the ones that  were posted within the defined timeline data range, but that could not be classified in any channel." />
        <u:Tag class="nrgCJModule-tableTag-cols">
             <u:Tag text="Date/Time" class="nrgCJModule-tableTag-cols-col nrgCJModule-tableTag-cols-col-Date" />
             <u:Tag text="Channel" class="nrgCJModule-tableTag-cols-col nrgCJModule-tableTag-cols-col-Channel" />

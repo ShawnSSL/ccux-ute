@@ -24,6 +24,7 @@
             <u:Tag class="nrgCamHis-Div">
                 <um:Button text="{comp-i18n-campaign>nrgCmpHisLBilling}"
                             class="nrgCamHis-btns"
+                            press=".onBillWizard"
                             design="None" />
                 <um:Button text="{comp-i18n-campaign>nrgCmpHisLUsage}"
                            press=".onAvgUsage"

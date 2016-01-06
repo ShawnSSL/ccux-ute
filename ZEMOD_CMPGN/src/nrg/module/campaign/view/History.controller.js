@@ -344,6 +344,15 @@ sap.ui.define(
             return aFilters;
         };
         /**
+		 * Navigate to Bill Wizard page.
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onBillWizard = function (oEvent) {
+            this.navTo("billing.BillingInfo", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract});
+        };
+        /**
 		 * Back to Overview page function
 		 *
 		 * @function
