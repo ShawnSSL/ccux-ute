@@ -419,6 +419,7 @@ sap.ui.define(
                 oCustomerJourneyModel,
                 oDatesModel,
                 oSearchText;
+            this._ChannelType = "CLOG";
             oDatesModel = this.getView().getModel('Cj-Date');
             oCustomerJourneyModel = new JSONModel();
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
@@ -487,6 +488,7 @@ sap.ui.define(
                 oCustomerJourneyModel,
                 oDatesModel,
                 oSearchText;
+            this._ChannelType = "CJM";
             oDatesModel = this.getView().getModel('Cj-Date');
             oCustomerJourneyModel = new JSONModel();
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
@@ -575,11 +577,15 @@ sap.ui.define(
                 oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search");
             oSearchText.setValue("");
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            aFilterIds = ["BP", "CA", "StartDate", "EndDate"];
-            aFilterValues = [this._sBP, this._sCA, (new Date(oFromDate.getValue())), (new Date(oToDate.getValue()))];
+            aFilterIds = ["BP", "CA", "StartDate", "EndDate", "ChannelType"];
+            aFilterValues = [this._sBP, this._sCA, (new Date(oFromDate.getValue())), (new Date(oToDate.getValue())), this._ChannelType];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-            sChannel =  oCJDropDown.getSelectedKey();
-            if (sChannel === "All") {
+            if (this._ChannelType !== "CLOG") {
+                sChannel =  oCJDropDown.getSelectedKey();
+                if (sChannel === "All") {
+                    sChannel = "";
+                }
+            } else {
                 sChannel = "";
             }
             mParameters = {

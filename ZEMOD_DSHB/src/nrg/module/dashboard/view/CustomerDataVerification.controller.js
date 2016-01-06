@@ -104,11 +104,11 @@ sap.ui.define(
 
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
 
-            if (true) {
-                oWebUiManager.notifyWebUi('clearAccount', {}, this._navLeftClearAccCallBack, this);
-            } else {
+/*            if (true) {*/
+            oWebUiManager.notifyWebUi('clearAccount', {}, this._navLeftClearAccCallBack, this);
+/*            } else {
                 this._dhsbVerificationNavLeftClearAccCallBack();
-            }
+            }*/
         };
 
         Controller.prototype._dhsbVerificationNavLeftClearAccCallBack = function () {
