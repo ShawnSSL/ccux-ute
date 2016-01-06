@@ -266,9 +266,15 @@ sap.ui.define(
                     temp = results[iCount1];
                     if ((temp !== undefined) && (temp.EFLLevel !== undefined) && (temp.EFLType !== undefined)) {
                         if (temp.EFLType === tempTypes[iCount2]) {
-                            oBRCells.push({
-                                "EFLPrice": temp.EFLPrice
-                            });
+                            if (temp.EFLPrice) {
+                                oBRCells.push({
+                                    "EFLPrice": parseFloat(temp.EFLPrice).toFixed(1)
+                                });
+                            } else {
+                                oBRCells.push({
+                                    "EFLPrice": temp.EFLPrice
+                                });
+                            }
                         }
 
                     }
