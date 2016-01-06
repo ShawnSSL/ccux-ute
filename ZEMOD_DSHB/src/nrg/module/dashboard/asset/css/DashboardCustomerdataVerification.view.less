@@ -802,6 +802,8 @@
 
                         & .nrgDashboard-cusDataVerify-left-meterValue {
                             width: 100%;
+	                        overflow: hidden;
+	                        text-overflow: ellipsis;
 
                             span {
                             	color: @nrgColor-black;
@@ -1414,12 +1416,15 @@
                             width: 65px;
                         }
                         & .nrgDashboard-cusDataVerify-middle-emailVal {
-                            width: 105px;
+                            width: auto;
                             height: 29px;
                             min-width: 105px;
+                            max-width: 25rem;
                             font-weight: @nrgFontWeight-semiBold;
                             padding: 0;
-
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow:hidden;
                             & .uteMBtn-text {
                                 padding: 0;
                                 text-align: left;

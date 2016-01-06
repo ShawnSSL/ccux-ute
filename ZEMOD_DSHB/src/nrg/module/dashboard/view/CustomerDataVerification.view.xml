@@ -76,7 +76,15 @@
                             <!-- Value Section -->
                             <ute:TextView id="meter_num"
                                 text="{oDtaVrfyContract>/MeterNumber}"
-                                class="nrgDashboard-cusDataVerify-left-meterValue"/>
+                                class="nrgDashboard-cusDataVerify-left-meterValue">
+                                <ute:tooltip>
+                                    <ute:Tooltip>
+                                        <ute:Tag>
+                                            <ute:TextView color="White" text="{oDtaVrfyContract>/MeterNumber}"/>
+                                        </ute:Tag>
+                                    </ute:Tooltip>
+                                </ute:tooltip>
+                            </ute:TextView>
                         </ute:Tag>
                         <!-- Description -->
                         <ute:Tag class="nrgDashboard-cusDataVerify-left-description">
