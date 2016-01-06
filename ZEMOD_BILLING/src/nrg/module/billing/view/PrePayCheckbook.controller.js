@@ -80,7 +80,7 @@ sap.ui.define(
             var QuickControl = new QuickPayControl();
             this.getView().addDependent(QuickControl);
             if (this._coNum) {
-                QuickControl.openQuickPay(this._coNum, this.bpNum, this.caNum);
+                QuickControl.openQuickPay(this._coNum, this._bpNum, this._caNum);
             }
         };
 
