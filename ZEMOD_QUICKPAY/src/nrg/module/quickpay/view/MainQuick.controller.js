@@ -433,10 +433,14 @@ sap.ui.define(
             sPath = "/CCCreateURLSet(BP='" + this._sBP + "',CA='" + this._sCA + "')";
             oBindingInfo = {
                 success : function (oData) {
-                    var paymentWindow = window.open(oData.URL);
-                    paymentWindow.onbeforeunload = function (oEvent) {
-                        that.onRefreshCC();
-                    };
+                    var paymentWindow = window.open(oData.URL),
+                        timer;
+                    timer = setInterval(function () {
+                        if (paymentWindow.closed) {
+                            clearInterval(timer);
+                            that.onRefreshCC();
+                        }
+                    }, 1000);
                     jQuery.sap.log.info("Odata Read Successfully:::");
                 }.bind(this),
                 error: function (oError) {
