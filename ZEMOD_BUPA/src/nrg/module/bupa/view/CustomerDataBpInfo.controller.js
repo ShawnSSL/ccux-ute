@@ -1255,10 +1255,10 @@ sap.ui.define(
             var sBpNum = this._bpNum,
                 oConfigModel = this.getView().getModel('oBpInfoConfig');
 
-            this._retrBpContact(sBpNum);
-            oConfigModel.setProperty('/contactInfoEditVisible', true);
-            oConfigModel.setProperty('/contactInfoSaveVisible', false);
-            oConfigModel.setProperty('/contactInfoEditable', false);
+            //this._retrBpContact(sBpNum);
+            //oConfigModel.setProperty('/contactInfoEditVisible', true);
+            //oConfigModel.setProperty('/contactInfoSaveVisible', false);
+            //oConfigModel.setProperty('/contactInfoEditable', true);
             this.getOwnerComponent().getCcuxApp().setOccupied(false);
             this._retrBpMarkPrefSet(sBpNum);
             this.getOwnerComponent().getCcuxApp().setOccupied(false);

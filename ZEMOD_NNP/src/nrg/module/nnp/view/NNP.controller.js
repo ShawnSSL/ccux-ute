@@ -51,6 +51,7 @@ sap.ui.define(
                 success : function (oData) {
                     if (oData) {
                         this._beforeOpenEditAddrDialogue = true;
+                        oData.messages = that._convertScripts(oData.Script);
                         oEditEmailNNP.setData(oData);
                         if ((oEditEmailNNP.getProperty('/Email') === undefined) || (oEditEmailNNP.getProperty('/Email') === "") || (oEditEmailNNP.getProperty('/Email') === null)) {
                             this.getView().getModel("oLocalModel").setProperty("/emailExist", false);
@@ -92,6 +93,40 @@ sap.ui.define(
             } else {
                 return true;
             }
+        };
+        /**;;
+		 * Converts long string in to messages.
+		 *
+		 * @function
+		 * @param {String} Type value from the binding
+         *
+		 *
+		 */
+        Controller.prototype._convertScripts = function (Scripts) {
+            var columns = [],
+                rows = [],
+                temp,
+                iCount1,
+                iCount2,
+                aHeaders,
+                aValues,
+                iCounter,
+                row = {},
+                aJsonDataNew,
+                cells = [];
+            if (Scripts) {
+                rows = Scripts.split("~");
+                for (iCount1 = 0; iCount1 < rows.length; iCount1 = iCount1 + 1) {
+                    temp = rows[iCount1];
+                    if ((temp !== undefined)) {
+                        columns.push({
+                            "message": temp
+                        });
+                    }
+                }
+            }
+
+            return columns;
         };
         Controller.prototype._onValidateEmailAddress = function (oEvent) {
             var oEmailValidate = this.getView().getModel('oEditEmailValidate'),
@@ -186,6 +221,9 @@ sap.ui.define(
                 }.bind(this)
             };
             if (oModel) {
+                if ((oNNP.oData) && (oNNP.oData.messages)) {
+                    delete oNNP.oData.messages;
+                }
                 oModel.update(sPath, oNNP.oData, oParameters);
             }
         };

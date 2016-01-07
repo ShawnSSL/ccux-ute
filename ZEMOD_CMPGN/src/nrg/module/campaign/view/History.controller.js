@@ -350,7 +350,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onBillWizard = function (oEvent) {
-            this.navTo("billing.BillingInfo", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract});
+            this.navTo('billing.HighBill', {bpNum: this._sBP, caNum: this._sCA, coNum : this._sContract});
         };
         /**
 		 * Back to Overview page function
