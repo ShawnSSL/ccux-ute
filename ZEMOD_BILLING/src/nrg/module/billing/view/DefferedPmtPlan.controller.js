@@ -765,7 +765,7 @@ sap.ui.define(
                         title: 'DEFFERED PAYMENT PLAN',
                         message: 'DEFFERED PAYMENT PLAN request failed'
                     });
-                    this._selectScrn('StepThree');
+                    //this._selectScrn('StepThree');
                 }.bind(this)
             };
 

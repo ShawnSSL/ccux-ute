@@ -22,11 +22,11 @@
                         design="None"
                         press=".onContactLogs">
             </um:button>
-            <um:Button text="{comp-i18n-billing>nrgBllCJContactFullTtl}"
+<!--            <um:Button text="{comp-i18n-billing>nrgBllCJContactFullTtl}"
                         class="nrgBllCJ-header-btn"
                         design="None"
                         press=".onContactLogFullView">
-            </um:button>
+            </um:button>-->
             <um:Button  press=".onCustomerJourneyModule"
                         text="{comp-i18n-billing>nrgBllCJCJModuleTtl}"
                         class="nrgBllCJ-header-btn nrgBllCJ-header-btn-rht"
