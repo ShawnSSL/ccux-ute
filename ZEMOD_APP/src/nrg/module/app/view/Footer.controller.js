@@ -169,7 +169,7 @@ sap.ui.define(
         Controller.prototype.onCreateLog = function (oControlEvent) {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
             oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "Z_CLOG_CRE"
+                LINK_ID: "Z_CLOG_INQ"
             });
         };
 

@@ -469,7 +469,7 @@ sap.ui.define(
                 oProactiveButton = this.getView().byId("idCamToggleBtn-P"),
                 oReactiveButton = this.getView().byId("idCamToggleBtn-R"),
                 oSaveButton = this.getView().byId("idCamToggleBtn-S"),
-                oFinalSaveButton = this.getView().byId("idCamToggleBtn-FS"),
+                oFinalSaveButton = this.getView().byId("idCamToggleBtn-F"),
                 oSearchButton = this.getView().byId("idCamToggleBtn-SE"),
                 oNoDataTag = this.getView().byId("idnrgCamHisNoData"),
                 i18NModel = this.getOwnerComponent().getModel("comp-i18n-campaign");
@@ -909,7 +909,7 @@ sap.ui.define(
                 oProactiveButton = this.getView().byId("idCamToggleBtn-P"),
                 oReactiveButton = this.getView().byId("idCamToggleBtn-R"),
                 oSaveButton = this.getView().byId("idCamToggleBtn-S"),
-                oFinalSaveButton = this.getView().byId("idCamToggleBtn-FS"),
+                oFinalSaveButton = this.getView().byId("idCamToggleBtn-F"),
                 oSearchButton = this.getView().byId("idCamToggleBtn-SE"),
                 oTableTag;
 
@@ -927,19 +927,19 @@ sap.ui.define(
             }
             oTableTag = this.byId(sap.ui.core.Fragment.createId("Invoice1", "idnrgCamOffPriceT"));
             if (oTableTag) {
-                oTableTag.removeContent();
+                oTableTag.removeContent(0);
             }
             oTableTag = this.byId(sap.ui.core.Fragment.createId("Invoice2", "idnrgCamOffPriceT"));
             if (oTableTag) {
-                oTableTag.removeContent();
+                oTableTag.removeContent(0);
             }
             oTableTag = this.byId(sap.ui.core.Fragment.createId("Cons1", "idnrgCamOffPriceT"));
             if (oTableTag) {
-                oTableTag.removeContent();
+                oTableTag.removeContent(0);
             }
             oTableTag = this.byId(sap.ui.core.Fragment.createId("Cons2", "idnrgCamOffPriceT"));
             if (oTableTag) {
-                oTableTag.removeContent();
+                oTableTag.removeContent(0);
             }
             oProactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oReactiveButton.removeStyleClass("nrgCamOff-btn-selected");

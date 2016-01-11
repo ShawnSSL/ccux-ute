@@ -81,7 +81,7 @@ sap.ui.define(
                         for (iCount = 0; iCount < aContent.length; iCount = iCount + 1) {
                             sTempValue = aContent[iCount].getBindingContext("comp-campaign").getProperty("Type");
                             sOfferCode = aContent[iCount].getBindingContext("comp-campaign").getProperty("OfferCode");
-                            if ((sTempValue) && (sTempValue === that._sFlag) && (sTempValue !== '00000000')) {
+                            if ((sTempValue) && (sTempValue === that._sFlag) && (sOfferCode !== '00000000')) {
                                 aContent[iCount].setSelected(true);
                                 sPath = aContent[iCount].getBindingContext("comp-campaign").getPath();
                             } else if ((!sTempValue) && (sTempValue !== "C")) {
@@ -97,11 +97,17 @@ sap.ui.define(
                     if ((that._sFlag) && (that._sFlag === "C")) {
                         for (iCount = 0; iCount < aContent.length; iCount = iCount + 1) {
                             sTempValue = aContent[iCount].getBindingContext("comp-campaign").getProperty("Type");
+                            sOfferCode = aContent[iCount].getBindingContext("comp-campaign").getProperty("OfferCode");
                             if ((sTempValue) && (sTempValue === that._sFlag)) {
                                 aContent[iCount].setSelected(true);
                                 sPath = aContent[iCount].getBindingContext("comp-campaign").getPath();
                             } else if ((!sTempValue) || (sTempValue === "PE")) {
-                                aContent[iCount].setEnabled(false);
+                                if ((sOfferCode)) {
+                                    aContent[iCount].setEnabled(true);
+                                } else {
+                                    aContent[iCount].setEnabled(false);
+                                }
+
                             }
                         }
                     }

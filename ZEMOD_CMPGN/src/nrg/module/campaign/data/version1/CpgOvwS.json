@@ -3,26 +3,112 @@
       "results":[
          {
             "__metadata":{
-               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='34805112',OfferCode='50132985',StartDate=datetime'2014-06-24T05%3A00%3A00')",
-               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='34805112',OfferCode='50132985',StartDate=datetime'2014-06-24T05%3A00%3A00')",
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='41063961',OfferCode='50187633',StartDate=datetimeoffset'2015-05-08T05%3A00%3A00Z')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='41063961',OfferCode='50187633',StartDate=datetimeoffset'2015-05-08T05%3A00%3A00Z')",
                "type":"ZE_CCUX_CAMPAIGN_OVW_SRV.Cpg"
             },
-            "Contract":"34805112",
-            "OfferCode":"50132985",
+            "Contract":"41063961",
+            "OfferCode":"50187633",
             "Type":"C",
-            "StartDate":"\/Date(1403586000000)\/",
-            "EndDate":"\/Date(253402236000000)\/",
-            "OfferTitle":"DEFAULT ONLY-CNP BC=$5 WPT RELIANT FLEX $0",
-            "Description":"- No long-term contract and no cancellation fees<BR/>- EFL Price: 500 kWh: 15.8 ¢/kWh,<BR/>1,000 kWh: 14.4 ¢/kWh,<BR/>2,000 kWh: 13.7 ¢/kWh<BR/>- EFL Prices include energy charge 9.2 ¢/kWh;<BR/>TDSP Delivery Charges and $5.00 Base Charge<BR/>- Recurring TDSP Delivery Charges of $<U_MO> per month and<BR/><U_KWH> ¢/kWh are passed through without mark-up<BR/>- TDSP Delivery Charges are effective as of <ISSUEDATE>",
-            "AvgUsage":"762",
-            "Campaign":"14D29R01V2",
-            "Promo":"MA0XCW",
+            "StartDate":"/Date(1307422800000)/",
+            "EndDate":"/Date(1307422800000)/",
+            "OfferTitle":"DEFAULT ONLY-SHY BC=$9.95 IF <800KWH, ELSE $0 CLEAR FLEX $0",
+            "Description":"- EFL Price: 500 kWh: 17.4 Â¢/kWh,<BR/>1,000 kWh: 14.4 Â¢/kWh,<BR/>2,000 kWh: 13.9 Â¢/kWh<BR/>- EFL Prices include energy charge 6.1 Â¢/kWh; TDSP<BR/>Delivery Charges and any Usage Charge<BR/>- Usage Charge=$9.95 if monthly usage is below 800 kWh; Usage Charge=$0<BR/>if monthly usage is greater than or equal to 800kWh<BR/>- Recurring TDSP Delivery Charges of $10.00 per month and<BR/>7.3109 Â¢/kWh<BR/>are passed through without mark-up<BR/>- TDSP Delivery Charges are effective as of 03/02/2015",
+            "AvgUsage":"1072",
+            "Campaign":"15C26R09V2",
+            "Promo":"MA2PN8",
             "Term":"00",
             "CncFee":"0.00",
             "Incentive":"0.00",
             "IncenDesc":"NO INCENTIVE",
-            "CurrInvAmt":"141.48",
-            "CurrCons":"866",
+            "RateCat":"",
+            "CurrInvAmt":"251.84",
+            "CurrCons":"1694",
+            "BillMonth":"August",
+            "EstInvAmt":"251.84",
+            "EstCents":"14.87",
+            "Disposition":"",
+            "LPcode":"",
+            "LPtext":"",
+            "LPReqName":"",
+            "EFLLevel":2000,
+            "EFLPrice":"13.90",
+            "Brand":"",
+            "PromoRank":0,
+            "EffectDate":null,
+            "Scripts":{
+               "__deferred":{
+                  "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='41063961',OfferCode='50187633',StartDate=datetimeoffset'2015-05-08T05%3A00%3A00Z')/Scripts"
+               }
+            },
+            "EFLs":{
+               "results":[
+                  {
+                     "__metadata":{
+                        "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=500)",
+                        "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=500)",
+                        "type":"ZE_CCUX_CAMPAIGN_OVW_SRV.EFL"
+                     },
+                     "Contract":"41063961",
+                     "OfferCode":"50187633",
+                     "StartDate":"/Date(1307422800000)/",
+                     "EFLType":"BR",
+                     "EFLLevel":500,
+                     "EFLPrice":"17.40"
+                  },
+                  {
+                     "__metadata":{
+                        "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=1000)",
+                        "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=1000)",
+                        "type":"ZE_CCUX_CAMPAIGN_OVW_SRV.EFL"
+                     },
+                     "Contract":"41063961",
+                     "OfferCode":"50187633",
+                     "StartDate":"/Date(1307422800000)/",
+                     "EFLType":"BR",
+                     "EFLLevel":1000,
+                     "EFLPrice":"14.40"
+                  },
+                  {
+                     "__metadata":{
+                        "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=2000)",
+                        "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=2000)",
+                        "type":"ZE_CCUX_CAMPAIGN_OVW_SRV.EFL"
+                     },
+                     "Contract":"41063961",
+                     "OfferCode":"50187633",
+                     "StartDate":"/Date(1307422800000)/",
+                     "EFLType":"BR",
+                     "EFLLevel":2000,
+                     "EFLPrice":"13.90"
+                  }
+               ]
+            }
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='41063961',OfferCode='50187633',StartDate=datetimeoffset'2016-01-07T06%3A00%3A00Z')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='41063961',OfferCode='50187633',StartDate=datetimeoffset'2016-01-07T06%3A00%3A00Z')",
+               "type":"ZE_CCUX_CAMPAIGN_OVW_SRV.Cpg"
+            },
+            "Contract":"41063961",
+            "OfferCode":"50187633",
+            "Type":"PE",
+            "StartDate":"/Date(1307422800000)/",
+            "EndDate":"/Date(1307422800000)/",
+            "OfferTitle":"DEFAULT ONLY-SHY BC=$9.95 IF <800KWH, ELSE $0 CLEAR FLEX $0",
+            "Description":"- EFL Price: 500 kWh: <TBZ1E-EFL_BR500> Â¢/kWh,<BR/>1,000 kWh: <TBZ1E-EFL_BR1000> Â¢/kWh,<BR/>2,000 kWh: <TBZ1E-EFL_BR2000> Â¢/kWh<BR/>- EFL Prices include energy charge <TBZ1E-S_UNBUNDLE> Â¢/kWh; TDSP<BR/>Delivery Charges and any Usage Charge<BR/>- Usage Charge=$9.95 if monthly usage is below 800 kWh; Usage Charge=$0<BR/>if monthly usage is greater than or equal to 800kWh<BR/>- Recurring TDSP Delivery Charges of $<U_MO> per month and<BR/><U_KWH> Â¢/kWh<BR/>are passed through without mark-up<BR/>- TDSP Delivery Charges are effective as of <ISSUEDATE>",
+            "AvgUsage":"0",
+            "Campaign":"15C26R09V2",
+            "Promo":"MA2PN8",
+            "Term":"00",
+            "CncFee":"0.00",
+            "Incentive":"0.00",
+            "IncenDesc":"NO INCENTIVE",
+            "RateCat":"",
+            "CurrInvAmt":"0.00",
+            "CurrCons":"0",
+            "BillMonth":"",
             "EstInvAmt":"0.00",
             "EstCents":"0.00",
             "Disposition":"",
@@ -30,99 +116,57 @@
             "LPtext":"",
             "LPReqName":"",
             "EFLLevel":2000,
-            "EFLPrice":"13.70",
-            "Brand":"RS",
+            "EFLPrice":"13.90",
+            "Brand":"",
             "PromoRank":0,
-            "EFLS":{
+            "EffectDate":"/Date(1307422800000)/",
+            "Scripts":{
+               "__deferred":{
+                  "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='41063961',OfferCode='50187633',StartDate=datetimeoffset'2016-01-07T06%3A00%3A00Z')/Scripts"
+               }
+            },
+            "EFLs":{
                "results":[
                   {
                      "__metadata":{
-                        "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(EFLType='BR',EFLLevel=1000)",
-                        "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(EFLType='BR',EFLLevel=1000)",
+                        "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=500)",
+                        "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=500)",
                         "type":"ZE_CCUX_CAMPAIGN_OVW_SRV.EFL"
                      },
-                     "Contract":"34805112",
-                     "OfferCode":"50132985",
-                     "StartDate":"\/Date(1403586000000)\/",
+                     "Contract":"41063961",
+                     "OfferCode":"50187633",
+                     "StartDate":"/Date(1307422800000)/",
+                     "EFLType":"BR",
+                     "EFLLevel":500,
+                     "EFLPrice":"17.40"
+                  },
+                  {
+                     "__metadata":{
+                        "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=1000)",
+                        "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=1000)",
+                        "type":"ZE_CCUX_CAMPAIGN_OVW_SRV.EFL"
+                     },
+                     "Contract":"41063961",
+                     "OfferCode":"50187633",
+                     "StartDate":"/Date(1307422800000)/",
                      "EFLType":"BR",
                      "EFLLevel":1000,
                      "EFLPrice":"14.40"
                   },
                   {
                      "__metadata":{
-                        "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(EFLType='BR',EFLLevel=2000)",
-                        "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(EFLType='BR',EFLLevel=2000)",
+                        "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=2000)",
+                        "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(OfferCode='50187633',EFLType='BR',EFLLevel=2000)",
                         "type":"ZE_CCUX_CAMPAIGN_OVW_SRV.EFL"
                      },
-                     "Contract":"34805112",
-                     "OfferCode":"50132985",
-                     "StartDate":"\/Date(1403586000000)\/",
+                     "Contract":"41063961",
+                     "OfferCode":"50187633",
+                     "StartDate":"/Date(1307422800000)/",
                      "EFLType":"BR",
                      "EFLLevel":2000,
-                     "EFLPrice":"13.70"
-                  },
-                  {
-                     "__metadata":{
-                        "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(EFLType='BR',EFLLevel=500)",
-                        "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/EFLS(EFLType='BR',EFLLevel=500)",
-                        "type":"ZE_CCUX_CAMPAIGN_OVW_SRV.EFL"
-                     },
-                     "Contract":"34805112",
-                     "OfferCode":"50132985",
-                     "StartDate":"\/Date(1403586000000)\/",
-                     "EFLType":"BR",
-                     "EFLLevel":500,
-                     "EFLPrice":"15.80"
+                     "EFLPrice":"13.90"
                   }
                ]
-            },
-            "Scripts":{
-               "__deferred":{
-                  "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='3584030',OfferCode='50132985',StartDate=datetime'2014-06-24T05%3A00%3A00')/Scripts"
-               }
-            }
-         },
-         {
-            "__metadata":{
-               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='34805112',OfferCode='00000000',StartDate=datetime'2015-10-21T05%3A00%3A00')",
-               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='34805112',OfferCode='00000000',StartDate=datetime'2015-10-21T05%3A00%3A00')",
-               "type":"ZE_CCUX_CAMPAIGN_OVW_SRV.Cpg"
-            },
-            "Contract":"34805112",
-            "OfferCode":"00000000",
-            "Type":"",
-            "StartDate":"\/Date(1445403600000)\/",
-            "EndDate":null,
-            "OfferTitle":"",
-            "Description":"",
-            "AvgUsage":"0",
-            "Campaign":"",
-            "Promo":"",
-            "Term":"00",
-            "CncFee":"0.00",
-            "Incentive":"0.00",
-            "IncenDesc":"",
-            "CurrInvAmt":"0.00",
-            "CurrCons":"0",
-            "EstInvAmt":"0.00",
-            "EstCents":"0.00",
-            "Disposition":"",
-            "LPcode":"",
-            "LPtext":"",
-            "LPReqName":"",
-            "EFLLevel":0,
-            "EFLPrice":"0.00",
-            "Brand":"",
-            "PromoRank":0,
-            "EFLs":{
-               "results":[
-
-               ]
-            },
-            "Scripts":{
-               "__deferred":{
-                  "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CAMPAIGN_SRV/CpgOvwS(Contract='34805112',OfferCode='00000000',StartDate=datetime'2015-10-21T05%3A00%3A00')/Scripts"
-               }
             }
          }
       ]
