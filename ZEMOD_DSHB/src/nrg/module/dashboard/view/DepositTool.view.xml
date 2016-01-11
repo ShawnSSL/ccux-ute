@@ -35,8 +35,8 @@
                             text="{oDeposit>Request}"/>
                         <ute:Tag class="nrgDashboard-depositToolPopup-table-status"
                             text="{oDeposit>StatTxt}"/>
-                        <ute:Tag class="nrgDashboard-depositToolPopup-table-type"
-                            text="{oDeposit>Type}"/>
+                        <utmain:Button class="nrgDashboard-depositToolPopup-table-type"
+                            text="{oDeposit>Type}" design="None" press="._onTypeClicked"/>
                         <ute:Tag class="nrgDashboard-depositToolPopup-table-interestDate"
                             text="{oDeposit>SecInterest}"/>
                         <ute:Tag class="nrgDashboard-depositToolPopup-table-receivedDate"

@@ -90,7 +90,18 @@ sap.ui.define(
         Controller.prototype.onPopupClose = function (oEvent) {
             this._DepositToolPopupControl.close();
         };
+        Controller.prototype._onTypeClicked = function (oEvent) {
+            var oWebUiManager = this.getView().getParent().getParent().getParent().getController().getOwnerComponent().getCcuxWebUiManager(),
+                oContext = oEvent.getSource().getBindingContext("oDeposit"),
+                sSecurityNumber = oContext.getProperty("Security");
 
+            //this._oApp.setHeaderMenuItemSelected(false, App.HMItemId.Index);
+
+            oWebUiManager.notifyWebUi('openIndex', {
+                LINK_ID: "ZSECURITY",
+                Security : sSecurityNumber
+            });
+        };
         return Controller;
     }
 );
