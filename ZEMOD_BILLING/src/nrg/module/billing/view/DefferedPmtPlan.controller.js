@@ -8,10 +8,11 @@ sap.ui.define(
         'sap/ui/core/routing/HashChanger',
         "sap/ui/model/json/JSONModel",
         'sap/ui/model/Filter',
-        'sap/ui/model/FilterOperator'
+        'sap/ui/model/FilterOperator',
+        'nrg/module/quickpay/view/QuickPayControl'
     ],
 
-    function (CoreController, jQuery, price, HashChanger, JSONModel, Filter, FilterOperator) {
+    function (CoreController, jQuery, price, HashChanger, JSONModel, Filter, FilterOperator, QuickPayControl) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.billing.view.DefferedPmtPlan');
@@ -86,6 +87,12 @@ sap.ui.define(
             oScrnControl.setProperty('/EXTDenied', false);
         };
 
+        Controller.prototype._onDownPayment = function (oEvent) {
+            var QuickControl = new QuickPayControl();
+
+            this.getView().addDependent(QuickControl);
+            QuickControl.openQuickPay(this._coNum, this._bpNum, this._caNum);
+        };
         Controller.prototype._startScrnControl = function () {
             var oScrnControl = this.getView().getModel('oDppScrnControl'),
                 oHashChanger = new HashChanger(),
@@ -1039,30 +1046,46 @@ sap.ui.define(
                 oReason = this.getView().getModel('oExtExtReasons'),
                 sDwnPayDate = this.getView().byId('nrgBilling-dpp-dwnPayDueDate-id').getValue(),
                 sPath,
-                oParameters;
+                oParameters,
+                oDataObject = {};
 
-            oPost.setProperty('/ContractAccountNumber', this._caNum);
-            oPost.setProperty('/PartnerID', oExt.getProperty('/results/0/PartnerID'));
-            oPost.setProperty('/DefDtNew', oExt.getProperty('/results/0/OpenItems/DefferalDate'));
-            oPost.setProperty('/DefDtOld', null);
-            oPost.setProperty('/Message', '');
-            oPost.setProperty('/Error', '');
-            oPost.setProperty('/SelectedData', '');
+            //oPost.setProperty('/ContractAccountNumber', this._caNum);
+            oDataObject.ContractAccountNumber = this._caNum;
+            //oPost.setProperty('/PartnerID', oExt.getProperty('/results/0/PartnerID'));
+            oDataObject.PartnerID = oExt.getProperty('/results/0/PartnerID');
+            //oPost.setProperty('/DefDtNew', oExt.getProperty('/results/0/OpenItems/DefferalDate'));// Date
+            oDataObject.DefDtNew = oExt.getProperty('/results/0/OpenItems/DefferalDate');
+            //oPost.setProperty('/DefDtOld', null);//Date
+           // oPost.setProperty('/Message', '');
+            //oPost.setProperty('/Error', '');
+            //oPost.setProperty('/SelectedData', '');
             if (this._bOverRide) {
-                oPost.setProperty('/OverRide', 'X');
+                //oPost.setProperty('/OverRide', 'X');
+                oDataObject.OverRide  = 'X';
             } else {
-                oPost.setProperty('/OverRide', '');
+                oDataObject.OverRide  = '';
             }
-            oPost.setProperty('/DwnPay', oExt.getProperty('/results/0/iDwnPay'));
+            //oPost.setProperty('/DwnPay', oExt.getProperty('/results/0/iDwnPay'));
+            //oDataObject.DwnPay  = oExt.getProperty('/results/0/iDwnPay');
             if (sDwnPayDate) {
-                oPost.setProperty('/DwnPayDate', new Date(sDwnPayDate));
-            } else {
-                oPost.setProperty('/DwnPayDate', null);
+                //oPost.setProperty('/DwnPayDate', new Date(sDwnPayDate));//Date
+                oDataObject.DwnPayDate = new Date(sDwnPayDate);
+            } //else {
+                //oPost.setProperty('/DwnPayDate', null);
+            //}
+            if (oReason.getProperty()) {
+                //oPost.setProperty('/ExtReason', oReason.getProperty());
+                oDataObject.ExtReason = oReason.getProperty();
             }
-            oPost.setProperty('/ExtReason', oReason.getProperty());
-            oPost.setProperty('/ExtReason', this._extReason);
-            oPost.setProperty('/ExtActive', false);
-            oPost.setProperty('/ChgOpt', false);
+            if (this._extReason) {
+                //oPost.setProperty('/ExtReason', this._extReason);
+                oDataObject.ExtReason = this._extReason;
+            }
+
+            //oPost.setProperty('/ExtActive', false);
+            oDataObject.ExtActive = false;
+            //oPost.setProperty('/ChgOpt', false);
+            oDataObject.ChgOpt = false;
 
             sPath = '/ExtConfs';
 
@@ -1084,7 +1107,7 @@ sap.ui.define(
             };
 
             if (oODataSvc) {
-                oODataSvc.create(sPath, oPost.oData, oParameters);
+                oODataSvc.create(sPath, oDataObject, oParameters);
             }
 
         };

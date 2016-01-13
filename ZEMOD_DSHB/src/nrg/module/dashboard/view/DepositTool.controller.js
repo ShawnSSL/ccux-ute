@@ -99,7 +99,7 @@ sap.ui.define(
 
             oWebUiManager.notifyWebUi('openIndex', {
                 LINK_ID: "ZSECURITY",
-                Security : sSecurityNumber
+                REF_ID : sSecurityNumber
             });
         };
         return Controller;

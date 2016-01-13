@@ -89,7 +89,7 @@
         <u:Tag visible="false">
             <u:Tag id="idnrgCustomerRef-temp" class="nrgBllCJ-timeline-referral">
                 <u:Tag class="nrgBllCJ-timeline-referral-id">
-                    <u:Tag width="7rem"  class="nrgBllCJ-timeline-referral-id-text" text="Open Issue Referral" />
+                    <u:Tag width="7rem"  class="nrgBllCJ-timeline-referral-id-text" text="{comp-cj>ReferralText}" />
                     <um:Button text="{comp-cj>ReferralNo}"
                                    design="None"
                                    class="nrgBllCJ-timeline-referral-id-value"

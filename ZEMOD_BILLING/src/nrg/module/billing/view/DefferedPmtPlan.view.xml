@@ -477,6 +477,15 @@
                     </ute:Tag>
                 </ute:Tag>
             </ute:Tag>
+            <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment">
+                <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Amount"/>
+                <ute:Textfield class="nrgBilling-payment-lbl"
+                                       fieldType="Regular" width="8rem" value=""/>
+                <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Due Date"/>
+                <ute:DatePicker width="8rem" class="nrgBilling-payment-lbl"/>
+                <utmain:Button class="nrgBilling-payment-lbl" text="Make a Payment"
+                               press="._onDownPayment"/>
+            </ute:Tag>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm">
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox" visible="{parts:['oExtEligible>/ExtActive'], formatter:'._reverseBooleanFormatter'}">
                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox-icon"><ute:Tag text="{comp-i18n-billing>nrgBilling-dpp-info-i}"/></ute:Tag>
