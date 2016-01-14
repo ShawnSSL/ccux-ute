@@ -563,9 +563,10 @@ sap.ui.define(
                     } else {
                         //oMailEdit.setProperty('/AddressInfo', oData.AddressInfo);
                         if (!this._oMailEditPopup) {
+                            var oDialogFragment = sap.ui.xmlfragment("AddressUpdate", "nrg.module.bupa.view.AddrUpdatePopup", this);
                             this._oMailEditPopup = ute.ui.main.Popup.create({
                                 close: this._handleEditMailPopupClose,
-                                content: sap.ui.xmlfragment(this.getView().sId, "nrg.module.bupa.view.AddrUpdatePopup", this),
+                                content: oDialogFragment,
                                 title: 'Edit Mailing Address'
                             });
                             this.getView().addDependent(this._oMailEditPopup);
