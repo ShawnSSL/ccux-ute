@@ -1559,10 +1559,9 @@ sap.ui.define(
         };
 
         Controller.prototype._navToSvcOdr = function () {
-            var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData,
-                oRouter = this.getOwnerComponent().getRouter();
+            var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData;
 
-            oRouter.navTo('dashboard.ServiceOrder', {bpNum: oRouteInfo.bpNum, caNum: oRouteInfo.caNum, coNum: oRouteInfo.coNum});
+            this.navTo('dashboard.ServiceOrder', {bpNum: oRouteInfo.bpNum, caNum: oRouteInfo.caNum, coNum: oRouteInfo.coNum});
 
         };
 

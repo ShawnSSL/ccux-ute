@@ -96,6 +96,23 @@ sap.ui.define(
             case App.QuickLinkId.Referral:
                 this._onQLReferralClick(oControlEvent);
                 break;
+            case App.QuickLinkId.ServiceOrder:
+                this._onQLServiceOrderClick(oControlEvent);
+                break;
+            }
+        };
+        CustomController.prototype._onQLServiceOrderClick = function (oControlEvent) {
+            var oContext, oRouter;
+
+            oContext = this.getOwnerComponent().getCcuxContextManager().getContext().getData();
+            oRouter = this.getOwnerComponent().getRouter();
+
+            if (oContext.bpNum && oContext.caNum && oContext.coNum) {
+                oRouter.navTo('dashboard.ServiceOrder', {
+                    bpNum: oContext.bpNum,
+                    caNum: oContext.caNum,
+                    coNum: oContext.coNum
+                });
             }
         };
         CustomController.prototype._onQLBillingClick = function (oControlEvent) {
