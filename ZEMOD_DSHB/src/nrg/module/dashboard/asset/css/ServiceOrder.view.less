@@ -5,8 +5,13 @@
         height: 55px;
         font-weight: @nrgFontWeight-bold;
         font-size: @nrgFontSize-large;
+        display: inline-block;
     }
-
+    & > .nrgDashboard-cusSerOdr-link {
+        display: inline-block;
+        float: right;
+        color: @nrgColor-blue-link;
+    }
     & > .nrgDashboard-cusSerOdr-ctnt{
         display: flex;
     }
@@ -29,11 +34,11 @@
         padding: 0;
         font-size: @nrgFontSize-base;
         font-weight: @nrgFontWeight-semiBold;
-        color: @nrgColor-grey-inactive;
+        color: @nrgColor-blue-label;
     }
 
     & > .nrgDashboard-cusSerOdr-ctnt > .nrgDashboard-cusSerOdr-lftArea > .nrgDashboard-cusSerOdr-lftArea-tab-selected > span > div{
-        color: @nrgColor-blue-label;
+        color: @nrgColor-grey-inactive;
     }
 
     & > .nrgDashboard-cusSerOdr-ctnt > .nrgDashboard-cusSerOdr-rgtArea{

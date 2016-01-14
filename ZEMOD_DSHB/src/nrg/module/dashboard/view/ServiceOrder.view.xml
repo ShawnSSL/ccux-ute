@@ -12,6 +12,9 @@
 
 	<ute:Tag class="nrgAppMain-generalContent nrgDashboard-cusSerOdr">
         <ute:Tag class="nrgDashboard-cusSerOdr-title" text="{comp-i18n-dashboard>nrgDashboard-ServOrder-ScrnTitle}"/>
+        <ute:Tag class="nrgDashboard-cusSerOdr-link">
+                <utmain:Button text="{comp-i18n-dashboard>nrgDashboard-ServOrder-LinkDB}" design="None" press="._onDashBoard"/>
+        </ute:Tag>
         <ute:Tag class="nrgDashboard-cusSerOdr-ctnt">
             <!--Tab Area-->
             <ute:Tag class="nrgDashboard-cusSerOdr-lftArea">

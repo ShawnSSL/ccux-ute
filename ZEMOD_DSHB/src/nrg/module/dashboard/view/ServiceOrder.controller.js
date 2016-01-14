@@ -374,8 +374,15 @@ sap.ui.define(
             }
         };
 
-
-
+        /**
+		 * Back to DashBoard
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype._onDashBoard = function (oEvent) {
+            this.navTo("dashboard.VerificationWithCaCo", {bpNum: this._bpNum, caNum: this._caNum, coNum : this._coNum});
+        };
         /********************************************************************************************************************************/
 
 		return Controller;
