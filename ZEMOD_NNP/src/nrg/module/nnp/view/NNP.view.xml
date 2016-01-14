@@ -12,7 +12,7 @@
    <ute:Tag class="nrgAppMain-generalContent nrgAppMain-generalContent-full">
         <ute:Tag id="idnrgDB-EmailBox" visible="true"
             class="nrgNnp-Nnp">
-            <ute:Tag class="nrgNnp-Nnp-desc" content="{oEditEmailNNP>/messages}">
+            <ute:Tag class="nrgNnp-Nnp-desc" content="{oEditEmailNNP>/messages}" visible="{oEditEmailNNP>/showmsg}">
                 <ute:Tag text="{oEditEmailNNP>message}" class="nrgNnp-Nnp-desc-text"/>
 <!--                <ute:TextView
                     text="{oEditEmailNNP>/Script}"/>-->

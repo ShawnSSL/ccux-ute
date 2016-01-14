@@ -51,7 +51,13 @@ sap.ui.define(
                 success : function (oData) {
                     if (oData) {
                         this._beforeOpenEditAddrDialogue = true;
-                        oData.messages = that._convertScripts(oData.Script);
+                        if (oData.Script) {
+                            oData.messages = that._convertScripts(oData.Script);
+                            oData.showmsg = true;
+                        } else {
+                            oData.messages = "";
+                            oData.showmsg = false;
+                        }
                         oEditEmailNNP.setData(oData);
                         if ((oEditEmailNNP.getProperty('/Email') === undefined) || (oEditEmailNNP.getProperty('/Email') === "") || (oEditEmailNNP.getProperty('/Email') === null)) {
                             this.getView().getModel("oLocalModel").setProperty("/emailExist", false);
@@ -223,6 +229,9 @@ sap.ui.define(
             if (oModel) {
                 if ((oNNP.oData) && (oNNP.oData.messages)) {
                     delete oNNP.oData.messages;
+                }
+                if ((oNNP.oData) && (oNNP.oData.showmsg)) {
+                    delete oNNP.oData.showmsg;
                 }
                 oModel.update(sPath, oNNP.oData, oParameters);
             }
