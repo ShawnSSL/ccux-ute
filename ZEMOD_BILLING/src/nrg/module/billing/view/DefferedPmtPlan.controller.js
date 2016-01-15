@@ -547,7 +547,13 @@ sap.ui.define(
 
             this._postDPPConfRequest(oDataObject);
         };
-
+        Controller.prototype._onCheckbook = function (oEvent) {
+            if (this._coNum) {
+                this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+            } else {
+                this.navTo('billing.CheckBookNoCo', {bpNum: this._bpNum, caNum: this._caNum});
+            }
+        };
         Controller.prototype._onDppConfCancelClick = function (oEvent) {
             var oRouter = this.getOwnerComponent().getRouter();
 

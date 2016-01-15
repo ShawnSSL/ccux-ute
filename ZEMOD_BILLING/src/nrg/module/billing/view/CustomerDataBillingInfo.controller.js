@@ -488,8 +488,8 @@ sap.ui.define(
         CustomController.prototype._initializeFilters = function () {
             var oInvSelFiltersModel = this.getView().getModel('oInvoiceSelectFilters');
 
-            oInvSelFiltersModel.setProperty('/All', true);
-            this._onSelectAll();
+            oInvSelFiltersModel.setProperty('/All', false);
+            //this._onSelectAll();
             oInvSelFiltersModel.setProperty('/Disconnect', false);
             oInvSelFiltersModel.setProperty('/Invoice', false);
             oInvSelFiltersModel.setProperty('/Reversal', false);

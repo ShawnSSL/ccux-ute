@@ -26,7 +26,7 @@
             <ute:Tag class="nrgBilling-invSelPopup-filterArea-item">
                 <utmain:Checkbox id="id_InvSel_Filter_DSNote" class="nrgBilling-invSelPopup-filterArea-filter"
                     checked="{oInvoiceSelectFilters>/Disconnect}" select="_onSelectDisconnect"/>
-                <utmain:Label labelFor="id_InvSel_Filter_DSNote" text="Disconection Notice"/>
+                <utmain:Label labelFor="id_InvSel_Filter_DSNote" text="Disconnection Notice"/>
             </ute:Tag>
             <ute:Tag class="nrgBilling-invSelPopup-filterArea-item">
                 <utmain:Checkbox id="id_InvSel_Filter_Inv" class="nrgBilling-invSelPopup-filterArea-filter"
