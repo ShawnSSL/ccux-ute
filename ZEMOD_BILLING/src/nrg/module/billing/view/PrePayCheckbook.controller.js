@@ -98,9 +98,9 @@ sap.ui.define(
         CustomController.prototype._onBackToBilling = function () {
             var oRouter = this.getOwnerComponent().getRouter();
             if (this._coNum) {
-                oRouter.navTo('billing.BillingInfo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                oRouter.navTo('billing.BillingPrePaid', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
             } else {
-                oRouter.navTo('billing.BillingInfoNoCo', {bpNum: this._bpNum, caNum: this._caNum});
+                oRouter.navTo('billing.BillingPrePaidNoCo', {bpNum: this._bpNum, caNum: this._caNum});
             }
         };
 

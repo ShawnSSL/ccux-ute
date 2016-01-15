@@ -93,16 +93,16 @@
                                 </ute:Tag>
                             </ute:Tooltip>
                         </ute:tooltip>
-                    </ute:Tag>
-                    <ute:Tag>
                         <ute:Tag elem="span" class="nrgBilling-blChkBk-lftDiv-qkRefArea-mdl-amtNum"
-                                 text="{path: 'oChkbkHdr>/InvAmount',
-                                        type: 'nrg.base.type.Price',
-                                        formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
+                                     text="{path: 'oChkbkHdr>/InvAmount',
+                                            type: 'nrg.base.type.Price',
+                                            formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
                         <ute:Tag visible="{parts:['oChkbkHdr>InvAmtMark'], formatter:'._formatBoolCurChrg'}" elem="span"
-                                 class="nrgBilling-blChkBk-lftDiv-qkRefArea-mdl-amtNum"
-                                 text="{comp-i18n-billing>nrgBilling-billChkBook-Hdr-Astrik}"/>
+                                     class="nrgBilling-blChkBk-lftDiv-qkRefArea-mdl-amtNum"
+                                     text="{comp-i18n-billing>nrgBilling-billChkBook-Hdr-Astrik}"/>
+
                     </ute:Tag>
+
                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-mdl-amtDscp1" text="{comp-i18n-billing>nrgBilling-billChkBook-Hdr-AmountDue}"/>
                     <ute:Tag visible="{parts:['oChkbkHdr>InvAmtMark'], formatter:'._formatBoolCurChrg'}"
                              class="nrgBilling-blChkBk-lftDiv-qkRefArea-mdl-amtDscp2"

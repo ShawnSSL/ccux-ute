@@ -4,7 +4,7 @@
 
 sap.ui.define(
     [
-        'sap/ui/core/mvc/Controller',
+        'nrg/base/view/BaseController',
         'sap/ui/core/Fragment',
         'sap/ui/model/json/JSONModel',
         'sap/ui/model/Filter',

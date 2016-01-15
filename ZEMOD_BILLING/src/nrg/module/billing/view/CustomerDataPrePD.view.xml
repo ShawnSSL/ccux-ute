@@ -29,7 +29,7 @@
                         <l:MatrixLayoutCell class="nrgBilling-cusDataPrePD-l">
                             <ute:Tag class="nrgBilling-cusDataPrePD-l-div">
                                 <utmain:Button design="None" class="nrgBilling-cusDataBil-PayBalBtn" press="onPayNow">
-                                    <ute:Tag elem="div" class="nrgBilling-cusDataBil-PayBalBtn-amount" text="$00.00" />
+                                    <ute:Tag elem="div" class="nrgBilling-cusDataBil-PayBalBtn-amount" text="{comp-feeAdjs>AmountDue}" />
                                     <ute:Tag elem="div" class="nrgBilling-cusDataBil-PayBalBtn-text" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-l-div-PAY_NOW}" />
                                 </utmain:Button>
 
@@ -54,15 +54,15 @@
                                 <ute:Tag class="nrgBilling-cusDataPrePD-date">
                                     <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-label" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-l-div-BILLING_DATE}" />
 
-                                    <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-value" text="10/28/2014" />
+                                    <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-value" text="{path: 'comp-feeAdjs>BillingDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
 
                                     <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-label" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-l-div-REMAINING_DAYS}" />
 
-                                    <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-value" text="18" />
+                                    <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-value" text="{comp-feeAdjs>DaysRemain}" />
 
                                     <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-label" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-l-div-DPP_BALANCE}" />
 
-                                    <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-value" text="$0.00" />
+                                    <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-value" text="{comp-feeAdjs>DPPBalance}" />
                                 </ute:Tag>
                             </ute:Tag>
                         </l:MatrixLayoutCell>
@@ -81,7 +81,7 @@
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AUTO_PAY_TYPE_DESC} :" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="N/A" />
+                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="{comp-feeAdjs>PayTypeDesc}" />
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
@@ -93,7 +93,7 @@
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl2" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-THRESHOLD_AMNT}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="$0.00" />
+                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="{comp-feeAdjs>ThresholdAmt}" />
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
@@ -105,7 +105,7 @@
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl2" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-RELOAD_AMNT}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="$0.00" />
+                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="{comp-feeAdjs>ReloadAmt}" />
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
@@ -117,7 +117,7 @@
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl3" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-ACCOUNT_BAL}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt3" text="$47.61" />
+                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt3" text="{comp-feeAdjs>AccountBal}" />
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
@@ -128,15 +128,15 @@
 
                                 <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-label1" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AVG_DAILY_USAGE}:" />
 
-                                <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-value" text="$2.56" />
+                                <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-value" text="{comp-feeAdjs>AvgDailyUsage}" />
 
                                 <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-label2" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AUTO_PAY_DATE} - {comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-START}:" />
 
-                                <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-value" text="00/00/0000" />
+                                <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-value" text="{path: 'comp-feeAdjs>AutoPayStartDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
 
                                 <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-label3" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-END}:" />
 
-                                <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-value" text="00/00/0000" />
+                                <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-value" text="{path: 'comp-feeAdjs>AutoPayEndDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
 
 
                             </ute:Tag>

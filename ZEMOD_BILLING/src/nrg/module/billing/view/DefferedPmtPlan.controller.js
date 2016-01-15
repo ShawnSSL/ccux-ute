@@ -812,20 +812,19 @@ sap.ui.define(
                 aFilterValues,
                 aFilterIds;
 
-            aFilterIds = ["ContractAccountNumber"];
-            aFilterValues = [this._caNum];
-            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-            sPath = '/DPPElgbles';
+           // aFilterIds = ["Contract"];
+            //aFilterValues = [this._coNum];
+            //aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            sPath = "/DPPElgbles('" + this._coNum + "')";
 
             //sPath = '/DPPElgbles(ContractAccountNumber=\'' + this._caNum + '\',DPPReason=\'\')';
 
             oParameters = {
-                filters : aFilters,
+               //filters : aFilters,
                 success : function (oData) {
-                    if (oData.results[0]) {
-                        this.getView().getModel('oDppEligible').setData(oData.results[0]);
-
-                        if (oData.results[0].EligibleYes) {
+                    if (oData) {
+                        this.getView().getModel('oDppEligible').setData(oData);
+                        if (oData.EligibleYes) {
                             this._selectScrn('StepOne');
                         } else {
                             this._selectScrn('DPPDenied');
@@ -837,7 +836,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oODataSvc) {
+            if (oODataSvc && this._coNum) {
                 oODataSvc.read(sPath, oParameters);
             }
         };
@@ -850,17 +849,16 @@ sap.ui.define(
                 aFilterValues,
                 aFilterIds;
 
-            aFilterIds = ["ContractAccountNumber"];
-            aFilterValues = [this._caNum];
-            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-            sPath = '/ExtElgbles';  //(ContractAccountNumber=\'' + this._caNum + '\',ExtActive=false)';
+            //aFilterIds = ["Contract"];
+            //aFilterValues = [this._coNum];
+            //aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            sPath = "/ExtElgbles('" + this._coNum + "')";  //(ContractAccountNumber=\'' + this._caNum + '\',ExtActive=false)';
 
             oParameters = {
-                filters : aFilters,
+                //filters : aFilters,
                 success : function (oData) {
-                    if (oData.results[0]) {
-                        this.getView().getModel('oExtEligible').setData(oData.results[0]);
-
+                    if (oData) {
+                        this.getView().getModel('oExtEligible').setData(oData);
                         if (this.getView().getModel('oExtEligible').getProperty('/EligibleYes')) {
                             this._selectScrn('EXTGrant');
                         } else {
@@ -873,7 +871,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oODataSvc) {
+            if (oODataSvc && this._coNum) {
                 oODataSvc.read(sPath, oParameters);
             }
         };

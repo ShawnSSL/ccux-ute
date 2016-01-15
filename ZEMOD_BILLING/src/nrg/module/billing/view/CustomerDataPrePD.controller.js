@@ -4,7 +4,7 @@
 sap.ui.define(
     [
         'jquery.sap.global',
-        'sap/ui/core/mvc/Controller',
+        'nrg/base/view/BaseController',
         'sap/ui/model/json/JSONModel',
         'nrg/module/quickpay/view/QuickPayControl'
     ],
@@ -20,8 +20,26 @@ sap.ui.define(
 
         CustomController.prototype.onBeforeRendering = function () {
             this.getOwnerComponent().getCcuxApp().setTitle('BILLING');
-
             this._initRouting();
+            var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
+                oBindingInfo,
+                sPath = "/PrepaySet(BP='0002473499',CA='000070020875')",
+                that = this;
+            oBindingInfo = {
+                success : function (oData) {
+                    that.getView().bindElement({
+                        model : "comp-feeAdjs",
+                        path : sPath
+                    });
+                    jQuery.sap.log.info("Odata Read Successfully:::");
+                }.bind(this),
+                error: function (oError) {
+                    jQuery.sap.log.info("Odata Error occured");
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sPath, oBindingInfo);
+            }
         };
 
         CustomController.prototype.onAfterRendering = function () {
