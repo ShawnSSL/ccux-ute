@@ -23,7 +23,7 @@ sap.ui.define(
             this._initRouting();
             var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
                 oBindingInfo,
-                sPath = "/PrepaySet(BP='0002473499',CA='000070020875')",
+                sPath = "/PrepaySet(BP='" + this._bpNum + "',CA='" + this._caNum + "')",
                 that = this;
             oBindingInfo = {
                 success : function (oData) {
