@@ -65,7 +65,7 @@
                     <um:Button text="GO"
                                class="nrgBllCJ-timeline-gobtn"
                                design="Default"
-                               press="onUpdate">
+                               press=".onUpdate">
                     </um:button>
                     <u:Tag class="nrgBllCJ-timeline-referrals" id="idnrgCustomerRef"></u:Tag>
                 </u:Tag>

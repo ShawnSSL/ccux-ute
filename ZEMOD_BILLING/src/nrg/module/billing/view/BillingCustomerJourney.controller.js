@@ -213,7 +213,7 @@ sap.ui.define(
                 oTimeLineModel = this.getView().getModel('Cj-timeline'),
                 that = this,
                 oViewModel = this.getView().getModel('cj-view');
-            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             sPath = "/CJIconsSet";
             aFilterIds = ["BP", "CA", "StartDate", "EndDate"];
             aFilterValues = [this._sBP, this._sCA, dStartDate, dEndDate];

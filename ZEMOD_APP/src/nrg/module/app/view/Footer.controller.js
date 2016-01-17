@@ -134,6 +134,13 @@ sap.ui.define(
                 jQuery('.uteAppBodyCnt-footer').css('border-bottom', 'none');
             }
         };
+        Controller.prototype.footerClose = function () {
+            if (this.getView().byId('nrgAppMain-footerWrap').hasStyleClass('open')) {
+                // Hide footer
+                this.getView().byId('nrgAppMain-footerWrap').removeStyleClass('open');
+                jQuery('.uteAppBodyCnt-footer').css('border-bottom', '6px solid #FFF');
+            }
+        };
 
         Controller.prototype.initUiBlocks = function () {
             this.footerElement = {};
@@ -179,6 +186,7 @@ sap.ui.define(
             this.updateFooterNotification(channel, event, data);
             this.updateFooterRhs(channel, event, data);
             this.updateFooterCampaign(channel, event, data);
+            this.footerClose();
         };
 
         /*--------------------------- Notification ---------------------------*/
