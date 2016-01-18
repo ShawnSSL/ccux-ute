@@ -87,8 +87,8 @@ sap.ui.define(
             case App.QuickLinkId.HighBill:
                 this._onQLHighBillClick(oControlEvent);
                 break;
-            case App.QuickLinkId.ContactLog:
-                this._onQLContactLogClick(oControlEvent);
+            case App.QuickLinkId.SVOC:
+                this._onQLSVOCClick(oControlEvent);
                 break;
             case App.QuickLinkId.Billing:
                 this._onQLBillingClick(oControlEvent);
@@ -135,10 +135,10 @@ sap.ui.define(
                 LINK_ID: "Z_SENDREF"
             });
         };
-        CustomController.prototype._onQLContactLogClick = function (oControlEvent) {
+        CustomController.prototype._onQLSVOCClick = function (oControlEvent) {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
             oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "Z_CLFULLVW"
+                LINK_ID: "ZZSENDCOR2"
             });
         };
         CustomController.prototype._onQLHighBillClick = function (oControlEvent) {

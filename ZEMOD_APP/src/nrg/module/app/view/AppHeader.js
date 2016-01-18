@@ -51,10 +51,11 @@ sap.ui.define(
             Campaign: 'campaign',
             HighBill: 'highBill',
             RHS: 'rhs',
-            ContactLog: 'contactLog',
+            /*ContactLog: 'contactLog',*/
             Billing: 'billing',
             BusinessPartner: 'bupa',
-            Referral: 'Ref'
+            Referral: 'Ref',
+            SVOC : 'SVOC'
         };
 
         AppHeader.prototype.init = function () {

@@ -49,7 +49,7 @@
                     </ua:EventArea>
                     <ua:EventArea id="contactLog" class="nrgAppHdrMenu-link" click="._onQuickLinkClick">
                         <core:Icon src="sap-icon://nrg-icon/contact-log" class="nrgAppHdrMenu-linkIcon" />
-                        <ua:Text text="{comp-i18n-app>nrgAppHdrMenuContactLogs}" class="nrgAppHdrMenu-linkText" />
+                        <ua:Text text="{comp-i18n-app>nrgAppHdrMenuSVOC}" class="nrgAppHdrMenu-linkText" />
                     </ua:EventArea>
                 </span>
                 <span class="nrgAppHdrMenu-content nrgU-right">

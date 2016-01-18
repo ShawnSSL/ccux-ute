@@ -29,7 +29,7 @@
                         <l:MatrixLayoutCell class="nrgBilling-cusDataPrePD-l">
                             <ute:Tag class="nrgBilling-cusDataPrePD-l-div">
                                 <utmain:Button design="None" class="nrgBilling-cusDataBil-PayBalBtn" press="onPayNow">
-                                    <ute:Tag elem="div" class="nrgBilling-cusDataBil-PayBalBtn-amount" text="{comp-feeAdjs>AmountDue}" />
+                                    <ute:Tag elem="div" class="nrgBilling-cusDataBil-PayBalBtn-amount" text="{path: 'comp-feeAdjs>AmountDue', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }" />
                                     <ute:Tag elem="div" class="nrgBilling-cusDataBil-PayBalBtn-text" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-l-div-PAY_NOW}" />
                                 </utmain:Button>
 
@@ -62,7 +62,7 @@
 
                                     <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-label" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-l-div-DPP_BALANCE}" />
 
-                                    <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-value" text="{comp-feeAdjs>DPPBalance}" />
+                                    <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-date-value" text="{path: 'comp-feeAdjs>DPPBalance', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }" />
                                 </ute:Tag>
                             </ute:Tag>
                         </l:MatrixLayoutCell>
@@ -93,7 +93,7 @@
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl2" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-THRESHOLD_AMNT}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="{comp-feeAdjs>ThresholdAmt}" />
+                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="{path: 'comp-feeAdjs>ThresholdAmt', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }" />
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
@@ -105,7 +105,7 @@
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl2" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-RELOAD_AMNT}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="{comp-feeAdjs>ReloadAmt}" />
+                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="{path: 'comp-feeAdjs>ReloadAmt', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }" />
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
@@ -117,7 +117,7 @@
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl3" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-ACCOUNT_BAL}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt3" text="{comp-feeAdjs>AccountBal}" />
+                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt3" text="{path: 'comp-feeAdjs>AccountBal', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }" />
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
