@@ -543,7 +543,7 @@ sap.ui.define(
                 oProactiveButton = this.getView().byId("idCamToggleBtn-P"),
                 oReactiveButton = this.getView().byId("idCamToggleBtn-R"),
                 oSaveButton = this.getView().byId("idCamToggleBtn-S"),
-                oFinalSaveButton = this.getView().byId("idCamToggleBtn-FS"),
+                oFinalSaveButton = this.getView().byId("idCamToggleBtn-F"),
                 oSearchButton = this.getView().byId("idCamToggleBtn-SE"),
                 oNoDataTag = this.getView().byId("idnrgCamHisNoData"),
                 aFilterIds,
