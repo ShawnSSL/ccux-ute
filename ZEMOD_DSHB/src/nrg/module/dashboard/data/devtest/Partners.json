@@ -7,7 +7,7 @@
                     "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('64041')",
                     "type":"ZE_CCUX_SRV.Partner"
                 },
-                "PartnerID":"64041",
+                "PartnerID":"0007672597",
                 "PartnerType":"2",
                 "SiebelCustomer":"",
                 "FullName":"ROBBYE WALDRON",

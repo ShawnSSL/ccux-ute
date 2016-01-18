@@ -31,6 +31,7 @@ sap.ui.define(
             this.getView().setModel(this.getOwnerComponent().getModel('comp-billing'), 'oDataSvc');
             this.getView().setModel(this.getOwnerComponent().getModel('comp-billing-invoice'), 'oDataInvoiceSvc');
             this.getView().setModel(this.getOwnerComponent().getModel('comp-eligibility'), 'oDataEligSvc');
+            this.getView().setModel(this.getOwnerComponent().getModel('comp-feeAdjs'), 'oDataBillingSvc');
 
             // Model for Eligibility
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEligibility');
@@ -42,6 +43,9 @@ sap.ui.define(
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oPmtSummary');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oPmtPayments');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oPmtItems');
+
+            // Model for disconnect info
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDisconInfo');
 
             // Models for Invoice Select Popup
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oInvoiceSelectInfo');
@@ -55,6 +59,9 @@ sap.ui.define(
 
             // Get DPP/ABP/RetroABP/EXTN notification
             this._retreInvoiceNotification();
+
+            // Get the disconnection info
+            this._retrDiscInfo();
 
             // Disable backspace key on this page
             $(document).on("keydown", function (e) {
@@ -255,6 +262,22 @@ sap.ui.define(
             }
         };
 
+        CustomController.prototype._retrDiscInfo = function () {
+            var oBillingOData = this.getView().getModel('oDataBillingSvc'),
+                sPath = '/DisconnectInfos(\'' + this._caNum + '\')',
+                oParameters = {
+                        success : function (oData) {
+                            if (oData) {
+                                this.getView().getModel('oDisconInfo').setData(oData);
+                            }
+                        }.bind(this),
+                        error: function (oError) {
+                        }.bind(this)
+                    };
+            if (oBillingOData) {
+            	oBillingOData.read(sPath, oParameters);
+            }
+        };
         /*************************************************************************************************************************/
         //Formatter Functions
         CustomController.prototype._formatDate = function (oDate) {
