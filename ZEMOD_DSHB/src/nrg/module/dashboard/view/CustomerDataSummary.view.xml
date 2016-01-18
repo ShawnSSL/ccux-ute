@@ -312,7 +312,7 @@
                 text="{comp-i18n-dashboard>nrgDashboardCusDatSum_CusSeg}"
                 class="nrgDashboard-cusDataSumSegFrgmt-Title"/>
                     <l:MatrixLayout
-                        width="50%"
+                        width="100%"
                         columns="1"
                         widths="100%"
                         rows="{oSmryBpAllSegInf>/}">
