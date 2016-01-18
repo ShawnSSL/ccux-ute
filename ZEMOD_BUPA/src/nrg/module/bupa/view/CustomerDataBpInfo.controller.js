@@ -343,7 +343,8 @@ sap.ui.define(
         Controller.prototype._retrBpPersonal = function (sBpNum) {
             var oModel = this.getView().getModel('oODataSvc'),
                 sPath = '/Partners' + '(\'' + sBpNum + '\')/BpPersonal/',
-                oParameters;
+                oParameters,
+                that = this;
 
             oParameters = {
                 success : function (oData) {

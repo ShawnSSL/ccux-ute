@@ -7,7 +7,7 @@
 sap.ui.define(
     [
         'jquery.sap.global',
-        'sap/ui/core/mvc/Controller',
+        'nrg/base/view/BaseController',
         'sap/ui/model/json/JSONModel',
         'nrg/module/quickpay/view/QuickPayControl',
         'nrg/base/type/Price',
@@ -27,7 +27,35 @@ sap.ui.define(
         CustomController.prototype.onBeforeRendering = function () {
 
             this.getOwnerComponent().getCcuxApp().setTitle('BILLING');
+            this._initRoutingInfo();
+            var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
+                oBindingInfo,
+                sPath = "/PrepayFlagS('" + this._caNum + "')",
+                that = this;
+            oBindingInfo = {
+                success : function (oData) {
+                    if (oData && oData.Prepay) {
+                        if (that._coNum) {
+                            that.navTo('billing.BillingPrePaid', {bpNum: that._bpNum, caNum: that._caNum, coNum: this._coNum});
+                        } else {
+                            that.navTo('billing.BillingPrePaidNoCo', {bpNum: that._bpNum, caNum: that._caNum});
+                        }
+                    } else {
+                        that.PostPaidAccounts();
+                    }
+                    jQuery.sap.log.info("Odata Read Successfully:::");
+                }.bind(this),
+                error: function (oError) {
+                    jQuery.sap.log.info("Odata Error occured");
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sPath, oBindingInfo);
+            }
 
+
+        };
+        CustomController.prototype.PostPaidAccounts = function () {
             this.getView().setModel(this.getOwnerComponent().getModel('comp-billing'), 'oDataSvc');
             this.getView().setModel(this.getOwnerComponent().getModel('comp-billing-invoice'), 'oDataInvoiceSvc');
             this.getView().setModel(this.getOwnerComponent().getModel('comp-eligibility'), 'oDataEligSvc');
@@ -53,7 +81,7 @@ sap.ui.define(
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oInvoiceSelectDateRange');
 
             // Starting invoices retriviging
-            this._initRoutingInfo();
+
             this._initRetrBillInvoices();
             this._initBillingMsgs();
 
@@ -70,7 +98,6 @@ sap.ui.define(
                 }
             });
         };
-
         CustomController.prototype.onAfterRendering = function () {
             this.getOwnerComponent().getCcuxApp().setLayout('FullWidthTool');
 

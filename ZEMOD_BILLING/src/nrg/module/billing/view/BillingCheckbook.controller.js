@@ -23,7 +23,36 @@ sap.ui.define(
 
         CustomController.prototype.onBeforeRendering = function () {
             this.getOwnerComponent().getCcuxApp().setTitle('BILLING');
+            this._initRoutingInfo();
+            var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
+                oBindingInfo,
+                sPath = "/PrepayFlagS('" + this._caNum + "')",
+                that = this;
+            oBindingInfo = {
+                success : function (oData) {
+                    if (oData && oData.Prepay) {
+                        if (that._coNum) {
+                            that.navTo('billing.PrePayCheckBook', {bpNum: that._bpNum, caNum: that._caNum, coNum: this._coNum});
+                        } else {
+                            that.navTo('billing.PrePayCheckBookNoCo', {bpNum: that._bpNum, caNum: that._caNum});
+                        }
+                    } else {
+                        that.PostPaidAccounts();
+                    }
+                    jQuery.sap.log.info("Odata Read Successfully:::");
+                }.bind(this),
+                error: function (oError) {
+                    jQuery.sap.log.info("Eligibility Error occured");
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sPath, oBindingInfo);
+            }
 
+
+        };
+
+        CustomController.prototype.PostPaidAccounts = function () {
             //var o18n = this.getOwnerComponent().getModel('comp-i18n-billing');
 
             this.getView().setModel(this.getOwnerComponent().getModel('comp-billing'), 'oDataSvc');
@@ -44,21 +73,11 @@ sap.ui.define(
 
 
             //Start of data retriving
-            this._initRoutingInfo();
+
             this._initChkbookHdr();
             this._initPaymentHdr();
             this._initPostInvoiceItems();
-
-            // Retrieve routing parameters
-            var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData;
-            this._bpNum = oRouteInfo.bpNum;
-            this._caNum = oRouteInfo.caNum;
-            this._coNum = oRouteInfo.coNum;
-
-
-
         };
-
         CustomController.prototype.onAfterRendering = function () {
 
             // Update Footer

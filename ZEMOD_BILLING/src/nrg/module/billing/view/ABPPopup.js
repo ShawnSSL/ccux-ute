@@ -29,7 +29,7 @@ sap.ui.define(
                 close: this._onPopupClosed
             });
             this._oABPPopup.addStyleClass('nrgBilling-avgBillingPopup');
-            this._oABPPopup.setShowCloseButton(true);
+            this._oABPPopup.setShowCloseButton(false);
             this.addDependent(this._oABPPopup);
         };
 
