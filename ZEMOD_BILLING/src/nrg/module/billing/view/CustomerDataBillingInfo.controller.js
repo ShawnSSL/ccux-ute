@@ -293,16 +293,16 @@ sap.ui.define(
             var oBillingOData = this.getView().getModel('oDataBillingSvc'),
                 sPath = '/DisconnectInfos(\'' + this._caNum + '\')',
                 oParameters = {
-                        success : function (oData) {
-                            if (oData) {
-                                this.getView().getModel('oDisconInfo').setData(oData);
-                            }
-                        }.bind(this),
-                        error: function (oError) {
-                        }.bind(this)
-                    };
+                    success : function (oData) {
+                        if (oData) {
+                            this.getView().getModel('oDisconInfo').setData(oData);
+                        }
+                    }.bind(this),
+                    error: function (oError) {
+                    }.bind(this)
+                };
             if (oBillingOData) {
-            	oBillingOData.read(sPath, oParameters);
+                oBillingOData.read(sPath, oParameters);
             }
         };
         /*************************************************************************************************************************/

@@ -557,7 +557,8 @@ sap.ui.define(
                 aFilters = [],
                 oPendingSwapsTable,
                 oPendingSwapsTemplate,
-                fnRecievedHandler;
+                fnRecievedHandler,
+                oModel = this.getOwnerComponent().getModel('comp-campaign');
 
             // Display loading indicator
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
@@ -578,7 +579,7 @@ sap.ui.define(
             
             oPendingSwapsTable = sap.ui.core.Fragment.byId("FooterPendingSwaps", "idnrgCamPds-pendTable");
             oPendingSwapsTemplate = sap.ui.core.Fragment.byId("FooterPendingSwaps", "idnrgCamPds-pendRow");
-            
+            oPendingSwapsTable.setModel(oModel, 'comp-campaign');
             fnRecievedHandler = function () {
                 var oBinding = oPendingSwapsTable.getBinding("rows");
                 this._oCancelDialog.open();
@@ -587,7 +588,6 @@ sap.ui.define(
                     oBinding.detachDataReceived(fnRecievedHandler);
                 }
             }.bind(this);
-
             oBindingInfo = {
                 model : "comp-app",
                 path : sPath,
@@ -596,7 +596,7 @@ sap.ui.define(
                 events: {dataReceived : fnRecievedHandler}
             };
             oPendingSwapsTable.bindRows(oBindingInfo);
-            this.getView().addDependent(this._oCancelDialog);
+            //this.getView().addDependent(this._oCancelDialog);
         };
 
         /*---------------------------------------------- Footer Alert Methods -----------------------------------------------*/

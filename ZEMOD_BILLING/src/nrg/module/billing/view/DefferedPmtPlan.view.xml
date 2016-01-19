@@ -477,7 +477,7 @@
                     </ute:Tag>
                 </ute:Tag>
             </ute:Tag>
-            <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="{oExtEligible>/DownPayAuth}">
+            <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="{parts:['oExtEligible>/ExtOverride', 'oExtEligible>/NewExtActive', 'oExtEligible>/EligibleYes'], formatter:'._formatShowDownPayment'}">
                 <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Amount"/>
                 <ute:Textfield class="nrgBilling-payment-lbl"
                                        fieldType="Regular" width="8rem" value=""/>
@@ -496,13 +496,13 @@
                                    visible="{oExtEligible>/ExtActive}"
                                    press="._onDppDeniedOkClick"/>
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnCfirm}"
-                                   visible="{parts:['oExtEligible>/ExtActive'], formatter:'._reverseBooleanFormatter'}"
+                                   visible="{parts:['oExtEligible>/ExtOverride', 'oExtEligible>/ExtActive', 'oExtEligible>/EligibleYes'], formatter:'._formatShowConfirm'}"
                                    press="._onDppExtConfirmClick"/>
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnCncl}"
-                                   visible="{parts:['oExtEligible>/ExtActive'], formatter:'._reverseBooleanFormatter'}"
+                                   visible="{parts:['oExtEligible>/ExtOverride', 'oExtEligible>/ExtActive', 'oExtEligible>/EligibleYes'], formatter:'._formatShowConfirm'}"
                                    press="._onDppDeniedOkClick"/>
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnChangeExt}"
-                                   visible="{parts:['oExtExtensions>/results/0/DownPayAuth', 'oExtEligible>/ExtActive'], formatter:'._formatShowChangeExt'}"
+                                   visible="{parts:['oExtEligible>/ExtOverride', 'oExtEligible>/ExtActive', 'oExtEligible>/EligibleYes'], formatter:'._formatShowChangeExt'}"
                                    press="._onDppExtChangeClick"/>
                 </ute:Tag>
             </ute:Tag>

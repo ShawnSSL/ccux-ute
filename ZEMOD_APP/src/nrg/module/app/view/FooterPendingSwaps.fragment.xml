@@ -38,7 +38,6 @@
             <u:Tag class="nrgCamPds-top nrgCamPds-font">
                 <u:Textfield
                     placeholder=""
-                    change="testInputChange"
                     fieldType="Underlined"
                     label="Requestor's Name"
                     value="{localModel>/ReqName}">
@@ -51,7 +50,6 @@
             <u:Tag class="nrgCamPds-top">
                 <u:Textfield
                     placeholder=""
-                    change="testInputChange"
                     fieldType="Underlined"
                     label="Requestor's Number"
                     value="{localModel>/ReqNumber}"

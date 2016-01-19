@@ -87,9 +87,9 @@ sap.ui.define(
 
         Controller.prototype.onAfterRendering = function () {
             // Navigation arrow event handling
-/*            this.getOwnerComponent().getCcuxApp().showNavLeft(false);
+/*            this.getOwnerComponent().getCcuxApp().showNavLeft(false);*/
             this.getOwnerComponent().getCcuxApp().detachNavLeftAll();
-            this.getOwnerComponent().getCcuxApp().attachNavLeft(this._dhsbVerificationNavLeftCallBack, this);*/
+            this.getOwnerComponent().getCcuxApp().attachNavLeft(this._dhsbVerificationNavLeftCallBack, this);
 
             // Update Footer
             this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);

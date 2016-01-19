@@ -601,7 +601,7 @@ sap.ui.define(
                         i = i - 1;  //At this moment i is the lengh of oData, need the index of the last element
 
                         //Check over due invoices
-                        if (oData.results[i].DueDate < oCurDate) {
+                        if (oData.results[i] && oData.results[i].DueDate && oData.results[i].DueDate < oCurDate) {
                             oData.results[i].bAlert = true;
                             oData.results[i].bRegul = false;
                         }

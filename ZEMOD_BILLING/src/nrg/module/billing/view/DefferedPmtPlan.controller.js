@@ -163,8 +163,41 @@ sap.ui.define(
             return !bIndicator;
         };
 
-        Controller.prototype._formatShowChangeExt = function (sDwnPay, bExtActive) {
-            if (sDwnPay === 'X' || sDwnPay === 'x') {
+        Controller.prototype._formatShowDownPayment = function (ExtOverride, bExtActive, EligibleYes) {
+            if (EligibleYes) {
+                if (bExtActive) {
+                    return false;
+                } else {
+                    if (ExtOverride) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            } else {
+                if (ExtOverride) {
+                    if (!bExtActive) { return true; } else { return false; }
+                } else {
+                    return false;
+                }
+            }
+
+        };
+        Controller.prototype._formatShowConfirm = function (ExtOverride, bExtActive, EligibleYes) {
+            if (EligibleYes) {
+                if (!bExtActive) { return true; } else { return false; }
+            }
+            if (ExtOverride) {
+                if (!bExtActive) { return true; } else { return false; }
+            } else {
+                return false;
+            }
+        };
+        Controller.prototype._formatShowChangeExt = function (ExtOverride, bExtActive, EligibleYes) {
+            if (EligibleYes) {
+                if (bExtActive) { return true; } else { return false; }
+            }
+            if (ExtOverride) {
                 if (bExtActive) { return true; } else { return false; }
             } else {
                 return false;
@@ -858,6 +891,7 @@ sap.ui.define(
                 //filters : aFilters,
                 success : function (oData) {
                     if (oData) {
+                        oData.NewExtActive = oData.ExtActive;
                         this.getView().getModel('oExtEligible').setData(oData);
                         if (this.getView().getModel('oExtEligible').getProperty('/EligibleYes')) {
                             this._selectScrn('EXTGrant');
@@ -1025,8 +1059,8 @@ sap.ui.define(
                 aFilterValues,
                 aFilterIds;
 
-            aFilterIds = ["ContractAccountNumber"];
-            aFilterValues = [this._caNum];
+            aFilterIds = ["Contract"];
+            aFilterValues = [this._coNum];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
 
             sPath = '/Extensions';//(ContractAccountNumber=\'' + this._caNum + '\',ExtActive=false)/ExtensionSet';
@@ -1060,12 +1094,14 @@ sap.ui.define(
                 sDwnPayDate = this.getView().byId('nrgBilling-dpp-dwnPayDueDate-id').getValue(),
                 sPath,
                 oParameters,
-                oDataObject = {};
+                oDataObject = {},
+                that = this;
 
             //oPost.setProperty('/ContractAccountNumber', this._caNum);
-            oDataObject.ContractAccountNumber = this._caNum;
+            oDataObject.Contract = this._coNum;
             //oPost.setProperty('/PartnerID', oExt.getProperty('/results/0/PartnerID'));
-            oDataObject.PartnerID = oExt.getProperty('/results/0/PartnerID');
+            oDataObject.Partner = this._bpNum;
+            oDataObject.ContAccount = this._caNum;
             //oPost.setProperty('/DefDtNew', oExt.getProperty('/results/0/OpenItems/DefferalDate'));// Date
             oDataObject.DefDtNew = oExt.getProperty('/results/0/OpenItems/DefferalDate');
             //oPost.setProperty('/DefDtOld', null);//Date
@@ -1098,7 +1134,7 @@ sap.ui.define(
             //oPost.setProperty('/ExtActive', false);
             oDataObject.ExtActive = false;
             //oPost.setProperty('/ChgOpt', false);
-            oDataObject.ChgOpt = false;
+            //oDataObject.ChgOpt = false;
 
             sPath = '/ExtConfs';
 
@@ -1107,9 +1143,9 @@ sap.ui.define(
                 success : function (oData) {
                     ute.ui.main.Popup.Alert({
                         title: 'Extension',
-                        message: 'Extension request success'
+                        message: oData.Message
                     });
-                    this._selectScrn('EXTGrant');
+                    that._onCheckbook();
                 }.bind(this),
                 error: function (oError) {
                     ute.ui.main.Popup.Alert({
