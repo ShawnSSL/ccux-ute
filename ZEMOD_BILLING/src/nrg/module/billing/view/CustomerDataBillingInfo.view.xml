@@ -217,7 +217,7 @@
                                             <ute:Tag elem="div" class="nrgBilling-cusDataBil-r-content-lbl" text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-r-div-DUE_DATE}:" />
                                         </l:MatrixLayoutCell>
                                         <l:MatrixLayoutCell>
-                                            <ute:Tag elem="div" class="nrgBilling-cusDataBil-r-content-cnt" text="{path: 'oDisconInfo>/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                                            <ute:Tag elem="div" class="nrgBilling-cusDataBil-r-content-cnt" text="{path: 'oDisconInfo>/MailDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
                                         </l:MatrixLayoutCell>
                                     </l:MatrixLayoutRow>
                                 </l:MatrixLayout>
@@ -229,7 +229,7 @@
                                             <ute:Tag elem="div" class="nrgBilling-cusDataBil-r-content-lbl" text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-r-div-DISCONN_DATE}:" />
                                         </l:MatrixLayoutCell>
                                         <l:MatrixLayoutCell>
-                                            <ute:Tag elem="div" class="nrgBilling-cusDataBil-r-content-cnt" text="{path: 'oDisconInfo>/MailDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                                            <ute:Tag elem="div" class="nrgBilling-cusDataBil-r-content-cnt" text="{path: 'oDisconInfo>/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
                                         </l:MatrixLayoutCell>
                                     </l:MatrixLayoutRow>
                                 </l:MatrixLayout>
