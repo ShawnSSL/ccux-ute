@@ -19,11 +19,11 @@
                     class="nrgHighBill-btn"
                     press=".onWeekly">
                 </u:Button>
-                <u:Button buttonType="SpecialNav" width="220px" enabled="true"
+<!--                <u:Button buttonType="SpecialNav" width="220px" enabled="true"
                     text="{comp-i18n-billing>nrgHighBillProject}"
                     class="nrgHighBill-btn"
                     press=".onProjectBill">
-                </u:Button>
+                </u:Button>-->
                 <u:Button buttonType="SpecialNav" width="220px" enabled="true"
                     text="{comp-i18n-billing>nrgHighBillSmartMeter}"
                     class="nrgHighBill-btn"

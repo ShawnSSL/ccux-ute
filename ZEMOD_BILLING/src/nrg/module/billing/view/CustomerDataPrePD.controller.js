@@ -21,6 +21,7 @@ sap.ui.define(
         CustomController.prototype.onBeforeRendering = function () {
             this.getOwnerComponent().getCcuxApp().setTitle('BILLING');
             this._initRouting();
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
                 oBindingInfo,
                 sPath = "/PrepaySet(BP='" + this._bpNum + "',CA='" + this._caNum + "')",
@@ -31,9 +32,11 @@ sap.ui.define(
                         model : "comp-feeAdjs",
                         path : sPath
                     });
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     jQuery.sap.log.info("Odata Read Successfully:::");
                 }.bind(this),
                 error: function (oError) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     jQuery.sap.log.info("Odata Error occured");
                 }.bind(this)
             };
