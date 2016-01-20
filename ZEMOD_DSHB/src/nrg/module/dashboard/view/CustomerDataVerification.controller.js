@@ -1477,6 +1477,11 @@ sap.ui.define(
 
             oContracts.setProperty('/selectedKey', iSelectedIndex.toString());
             this._refreshPaging();
+            // Confirm with WebUI and CCUX
+            this._routeInfoConfirm();
+
+            // Update the linkability of METER lable
+            this._updateUsageLink();
         };
         Controller.prototype._onConPtwo = function () {
             var oPage = this.getView().getModel('oCoPageModel').getProperty('/paging'),
@@ -1490,6 +1495,11 @@ sap.ui.define(
 
             oContracts.setProperty('/selectedKey', iSelectedIndex.toString());
             this._refreshPaging();
+            // Confirm with WebUI and CCUX
+            this._routeInfoConfirm();
+
+            // Update the linkability of METER lable
+            this._updateUsageLink();
         };
         Controller.prototype._onConPthree = function () {
             var oPage = this.getView().getModel('oCoPageModel').getProperty('/paging'),
@@ -1502,6 +1512,11 @@ sap.ui.define(
 
             oContracts.setProperty('/selectedKey', iSelectedIndex.toString());
             this._refreshPaging();
+                        // Confirm with WebUI and CCUX
+            this._routeInfoConfirm();
+
+            // Update the linkability of METER lable
+            this._updateUsageLink();
         };
         Controller.prototype._onConRite = function () {
             var oPage = this.getView().getModel('oCoPageModel').getProperty('/paging'),
@@ -1559,20 +1574,6 @@ sap.ui.define(
             this.navTo('dashboard.ServiceOrder', {bpNum: oRouteInfo.bpNum, caNum: oRouteInfo.caNum, coNum: oRouteInfo.coNum});
 
         };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         return Controller;
     }

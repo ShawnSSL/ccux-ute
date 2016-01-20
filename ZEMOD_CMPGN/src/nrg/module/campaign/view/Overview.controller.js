@@ -488,7 +488,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.showPendingSwaps = function () {
-            var oModel,
+            var oModel = this.getOwnerComponent().getModel('comp-campaign'),
                 sPath,
                 oBindingInfo,
                 oHistoryView,

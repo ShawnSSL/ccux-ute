@@ -77,6 +77,7 @@ sap.ui.define(
             this._initChkbookHdr();
             this._initPaymentHdr();
             this._initPostInvoiceItems();
+            this._retrieveNotification();
         };
         CustomController.prototype.onAfterRendering = function () {
 
@@ -86,7 +87,7 @@ sap.ui.define(
             this.getOwnerComponent().getCcuxApp().updateFooterCampaign(this._bpNum, this._caNum, this._coNum, true);
 
             // Retrieve Notification
-            this._retrieveNotification();
+
         };
 
         CustomController.prototype.onExit = function () {
@@ -709,52 +710,49 @@ sap.ui.define(
                     oEligModel.setData(oData);
                     var container = this.getView().byId('nrgBilling-billChkBook-notifications');
 
-                    // If already has eligibility alerts, then skip
-                    if (!this._eligibilityAlerts) {
-                        this._eligibilityAlerts = [];
+                // If already has eligibility alerts, then skip
+                    this._eligibilityAlerts = [];
 
-                        // Check ABP
-                        alert = new ute.ui.app.FooterNotificationItem({
-                            link: true,
-                            design: 'Information',
-                            text: (oData.ABPElig) ? "Eligible for ABP" : "Not eligible for ABP",
-                            linkPress: this._openEligABPPopup.bind(this)
-                        });
-                        this._eligibilityAlerts.push(alert);
+                    // Check ABP
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.ABPElig) ? "Eligible for ABP" : "Not eligible for ABP",
+                        linkPress: this._openEligABPPopup.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
 
-                        // Check EXTN
-                        alert = new ute.ui.app.FooterNotificationItem({
-                            link: true,
-                            design: 'Information',
-                            text: (oData.EXTNElig) ? "Eligible for EXTN" : "Not eligible for EXTN",
-                            linkPress: this._openEligEXTNPopup.bind(this)
-                        });
-                        this._eligibilityAlerts.push(alert);
+                    // Check EXTN
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.EXTNElig) ? "Eligible for EXTN" : "Not eligible for EXTN",
+                        linkPress: this._openEligEXTNPopup.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
 
-                        // Check RBB
-                        alert = new ute.ui.app.FooterNotificationItem({
-                            link: true,
-                            design: 'Information',
-                            text: (oData.RBBElig) ? "Eligible for Retro-AB" : "Not eligible for Retro-AB",
-                            linkPress: this._openEligRBBPopup.bind(this)
-                        });
-                        this._eligibilityAlerts.push(alert);
+                    // Check RBB
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.RBBElig) ? "Eligible for Retro-AB" : "Not eligible for Retro-AB",
+                        linkPress: this._openEligRBBPopup.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
 
-                        // Check DPP
-                        alert = new ute.ui.app.FooterNotificationItem({
-                            link: true,
-                            design: 'Information',
-                            text: (oData.DPPElig) ? "Eligible for DPP" : "Not eligible for DPP"
-                        });
-                        
-                        this._eligibilityAlerts.push(alert);
+                    // Check DPP
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.DPPElig) ? "Eligible for DPP" : "Not eligible for DPP"
+                    });
 
-                        // Insert all alerts to DOM
-                        for (i = 0; i < this._eligibilityAlerts.length; i = i + 1) {
-                            this._eligibilityAlerts[i].placeAt(container);
-                        }
+                    this._eligibilityAlerts.push(alert);
+
+                    // Insert all alerts to DOM
+                    for (i = 0; i < this._eligibilityAlerts.length; i = i + 1) {
+                        this._eligibilityAlerts[i].placeAt(container);
                     }
-
                 }.bind(this),
                 error: function (oError) {
 

@@ -45,7 +45,7 @@
             </u:Tag>
             <u:Tag class="nrgCamPds-top nrgCamPds-font nrgCamPds-noPhone">
                 <c:Label text="No Phone" class="nrgCamPds-font"/>
-                <um:Checkbox id="idnrgCamTlsNoPhone" select=".onSelected" class="nrgCamPds-left" checked="{localModel>/NoPhone}"/>
+                <um:Checkbox id="idnrgCamTlsNoPhone" class="nrgCamPds-left" checked="{localModel>/NoPhone}"/>
             </u:Tag>
             <u:Tag class="nrgCamPds-top">
                 <u:Textfield
