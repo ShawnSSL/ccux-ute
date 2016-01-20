@@ -547,7 +547,7 @@
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm">
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-btn-left">
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnOk}"
-                                   press="._onDppDeniedOkClick"/>
+                                   press="._onExtDeniedOkClick"/>
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnOver}" enabled="{oExtEligible>/ExtOverride}"
                                    press="._onExtOverrideClick"/>
                 </ute:Tag>

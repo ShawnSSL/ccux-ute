@@ -288,14 +288,47 @@ sap.ui.define(
             oDPPComunication.setProperty('/AddrCheck', true);
         };
 
+        Controller.prototype._onExtDeniedOkClick = function () {    //Navigate to DPP setup if 'OK' is clicked
+            var oModel = this.getOwnerComponent().getModel("comp-dppext"),
+                that = this;
+            oModel.create("/ExtDeniedS", {
+                "Contract": this._coNum,
+                "ContAccount": this._caNum,
+                "Partner" : this._bpNum
+            }, {
+                success : function (oData, oResponse) {
+                    if (oData) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Extension',
+                            message: oData.Message
+                        });
+                        that.navTo('billing.CheckBook', {bpNum: that._bpNum, caNum: that._caNum, coNum: that._coNum});
+                    }
+                },
+                error : function (oError) {
+                }
+            });
+        };
         Controller.prototype._onDppDeniedOkClick = function () {    //Navigate to DPP setup if 'OK' is clicked
-            var oRouter = this.getOwnerComponent().getRouter();
-
-            if (this._coNum) {
-                oRouter.navTo('dashboard.VerificationWithCaCo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
-            } else {
-                oRouter.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
-            }
+            var oModel = this.getOwnerComponent().getModel("comp-dppext"),
+                that = this;
+            oModel.create("/DPPDenieds", {
+                "Contract": this._coNum,
+                "ContAccount": this._caNum,
+                "Partner" : this._bpNum
+            }, {
+                success : function (oData, oResponse) {
+                    if (oData) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Extension',
+                            message: oData.Message
+                        });
+                        that.navTo('billing.CheckBook', {bpNum: that._bpNum, caNum: that._caNum, coNum: that._coNum});
+                    }
+                },
+                error : function (oError) {
+                }
+            });
         };
 
         Controller.prototype._onDppOverrideClick = function () {
@@ -1141,11 +1174,15 @@ sap.ui.define(
             oParameters = {
                 merge: false,
                 success : function (oData) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'Extension',
-                        message: oData.Message
-                    });
-                    that._onCheckbook();
+                    if (oData) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Extension',
+                            message: oData.Message
+                        });
+                        if (!oData.Error) {
+                            that._onCheckbook();
+                        }
+                    }
                 }.bind(this),
                 error: function (oError) {
                     ute.ui.main.Popup.Alert({
