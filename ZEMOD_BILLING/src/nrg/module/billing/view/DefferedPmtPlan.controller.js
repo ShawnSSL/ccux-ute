@@ -491,26 +491,25 @@ sap.ui.define(
                 sTempCOpbel,
                 sTempCOpupw,
                 sTempCOpupk,
-                sTempCOpupz,
-                oDataObject;
+                sTempCOpupz;
 
 
             oConfPost.setProperty('/ContractAccountNumber', oConf.oData.results[0].ContractAccountNumber);
-            oDataObject.ContractAccountNumber = oConf.oData.results[0].ContractAccountNumber;
+
             oConfPost.setProperty('/PartnerID', oConf.oData.results[0].PartnerID);
-            oDataObject.PartnerID = oConf.oData.results[0].PartnerID;
+
             oConfPost.setProperty('/SelectedData', oConf.oData.results[0].SelectedData.replace(/"/g, '\''));
-            oDataObject.SelectedData = oConf.oData.results[0].SelectedData.replace(/"/g, '\'');
+
             oConfPost.setProperty('/InstlmntNo', oConf.oData.results[0].InstlmntNo);
-            oDataObject.InstlmntNo = oConf.oData.results[0].InstlmntNo;
+
             oConfPost.setProperty('/ZeroDwnPay', oConf.oData.results[0].ZeroDwnPay);
-            oDataObject.ZeroDwnPay = oConf.oData.results[0].ZeroDwnPay;
+
             oConfPost.setProperty('/InitialDate', oConf.oData.results[0].InitialDate);
-            oDataObject.InitialDate = oConf.oData.results[0].InitialDate;
+
             oConfPost.setProperty('/ReasonCode', this.getView().getModel('oDppReasons').getProperty('/selectedKey'));
-            oDataObject.ReasonCode = this.getView().getModel('oDppReasons').getProperty('/selectedKey');
-            oConfPost.setProperty('/Reason', this.getView().getModel('oDppReasons').setProperty('/selectedReason'));
-            oDataObject.Reason = this.getView().getModel('oDppReasons').setProperty('/selectedReason');
+
+            //oConfPost.setProperty('/Reason', this.getView().getModel('oDppReasons').setProperty('/selectedReason'));
+
             /*oConfPost.setProperty('/ReasonCode', oConf.oData.results[0].ReasonCode);
             oConfPost.setProperty('/Reason', oConf.oData.results[0].Reason);*/
 
@@ -611,7 +610,7 @@ sap.ui.define(
             //this.getView().getModel('oDppStepTwoConfirmdData').setProperty('/CONFIRMDATA', aConfirmData);
             //oConfPost.setProperty('/ConfirmData', this.getView().getModel('oDppStepTwoConfirmdData').getJSON().replace(/"/g, '\''));
 
-            this._postDPPConfRequest(oDataObject);
+            this._postDPPConfRequest(oConfPost.oData);
         };
         Controller.prototype._onCheckbook = function (oEvent) {
             if (this._coNum) {

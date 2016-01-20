@@ -48,7 +48,7 @@
                         <ua:Text text="{comp-i18n-app>nrgAppHdrMenuRhs}" class="nrgAppHdrMenu-linkText" />
                     </ua:EventArea>
                     <ua:EventArea id="SVOC" class="nrgAppHdrMenu-link" click="._onQuickLinkClick">
-                        <core:Icon src="sap-icon://nrg-icon/contact-log" class="nrgAppHdrMenu-linkIcon" />
+                        <core:Icon src="sap-icon://nrg-icon/survey" class="nrgAppHdrMenu-linkIcon" />
                         <ua:Text text="{comp-i18n-app>nrgAppHdrMenuSVOC}" class="nrgAppHdrMenu-linkText" />
                     </ua:EventArea>
                 </span>

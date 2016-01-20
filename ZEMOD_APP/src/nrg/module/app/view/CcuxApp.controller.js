@@ -138,7 +138,7 @@ sap.ui.define(
         CustomController.prototype._onQLSVOCClick = function (oControlEvent) {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
             oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "ZRELCUSFS"
+                LINK_ID: "ZRELCUSFS2"
             });
         };
         CustomController.prototype._onQLHighBillClick = function (oControlEvent) {

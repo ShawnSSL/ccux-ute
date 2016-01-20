@@ -111,7 +111,7 @@ sap.ui.define(
                     } else {
                         // Go to transaction launcher
                         oWebUiManager.notifyWebUi('openIndex', {
-                            LINK_ID: "Z_DPP"
+                            LINK_ID: "Z_DEFERRED_PAYMENT_PLAN"
                         });
                     }
                 }
