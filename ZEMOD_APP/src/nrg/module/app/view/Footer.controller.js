@@ -526,6 +526,7 @@ sap.ui.define(
                 mParameters;
 
             // Set up filters
+            this._sInitTab = sInitTab;
             aFilters.push(new Filter({ path: 'Contract', operator: FilterOperator.EQ, value1: oRouting.oData.CoNumber}));
 
             mParameters = {
@@ -558,11 +559,17 @@ sap.ui.define(
                 oPendingSwapsTable,
                 oPendingSwapsTemplate,
                 fnRecievedHandler,
-                oModel = this.getOwnerComponent().getModel('comp-campaign');
-
+                oModel = this.getOwnerComponent().getModel('comp-campaign'),
+                oViewModel = new sap.ui.model.json.JSONModel({
+                    selected : 0,
+                    ReqNumber : "",
+                    ReqName : "",
+                    NoPhone : false
+                });
+            this.getView().setModel(oViewModel, "localModel");
             // Display loading indicator
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
-
+            this._aPendingSelPaths = [];
             // Set up filters
             aFilters.push(new Filter({ path: 'Contract', operator: FilterOperator.EQ, value1: oRouting.oData.CoNumber}));
 
@@ -576,7 +583,6 @@ sap.ui.define(
                 });
                 this._oCancelDialog.addStyleClass("nrgCamHis-dialog");
             }
-            
             oPendingSwapsTable = sap.ui.core.Fragment.byId("FooterPendingSwaps", "idnrgCamPds-pendTable");
             oPendingSwapsTemplate = sap.ui.core.Fragment.byId("FooterPendingSwaps", "idnrgCamPds-pendRow");
             oPendingSwapsTable.setModel(oModel, 'comp-campaign');
@@ -589,7 +595,7 @@ sap.ui.define(
                 }
             }.bind(this);
             oBindingInfo = {
-                model : "comp-app",
+                model : "comp-campaign",
                 path : sPath,
                 filters : aFilters,
                 template : oPendingSwapsTemplate,
@@ -768,7 +774,115 @@ sap.ui.define(
         Controller.prototype._onInvMailAddrCloseClick = function (oEvent) {
             this.invalidMailingAddrPopup.close();
         };
+        /**
+		 * Handler Function for the Pending Swaps Selection
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onPendingSwapsSelected = function (oEvent) {
+            var iSelected = this.getView().getModel("localModel").getProperty("/selected"),
+                sPath,
+                iIndex,
+                sTemp;
 
+            sPath = oEvent.getSource().getParent().getBindingContext("comp-campaign").getPath();
+            iIndex = this._aPendingSelPaths.indexOf(sPath);
+            if (oEvent.getSource().getChecked()) {
+                iSelected = iSelected + 1;
+                sTemp = iIndex < 0 && this._aPendingSelPaths.push(sPath);
+            } else {
+                iSelected = iSelected - 1;
+                sTemp = iIndex > -1 && this._aPendingSelPaths.splice(iIndex, 1);
+            }
+            this.getView().getModel("localModel").setProperty("/selected", iSelected);
+        };
+        /**
+		 * Handle when user clicked on Cancelling of Pending Swaps
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.ProceedwithCancel = function (oEvent) {
+            var oModel = this.getOwnerComponent().getModel('comp-campaign'),
+                aSelectedPendingSwaps,
+                mParameters,
+                oLocalModel,
+                sReqName,
+                sReqNumber,
+                bNoPhone,
+                i18NModel = this.getOwnerComponent().getModel("comp-i18n-campaign"),
+                oRouting = this.getView().getModel('oFooterRouting'),
+                bpNum = oRouting.oData.BpNumber,
+                caNum = oRouting.oData.CaNumber,
+                coNum = oRouting.oData.CoNumber;
+
+            oLocalModel = this.getView().getModel("localModel");
+            sReqName = oLocalModel.getProperty("/ReqName");
+            sReqNumber = oLocalModel.getProperty("/ReqNumber");
+            bNoPhone = oLocalModel.getProperty("/NoPhone");
+            if ((this._aPendingSelPaths) && (this._aPendingSelPaths.length > 0)) {
+                if ((!sReqName) || (sReqName === "")) {
+                    //sap.ui.commons.MessageBox.alert("Please enter Requestor's Name");/nrgCmpOvrEntReqName
+                    ute.ui.main.Popup.Alert({
+                        title: 'Information',
+                        message: i18NModel.getProperty("nrgCmpOvrEntReqName")
+                    });
+                    return;
+                }
+                if ((!bNoPhone) && ((!sReqNumber) || (sReqNumber === ""))) {
+                    //sap.ui.commons.MessageBox.alert("Please enter Requestor's Number or Select No Phone");
+                    ute.ui.main.Popup.Alert({
+                        title: 'Information',
+                        message: i18NModel.getProperty("nrgCmpOvrNoPhoneErrMsg")
+                    });
+                    return;
+                }
+            } else {
+                //sap.ui.commons.MessageBox.alert("Select Pending Swap to cancel");
+                ute.ui.main.Popup.Alert({
+                    title: 'Information',
+                    message: i18NModel.getProperty("nrgCmpOvrPendingSwapSelection")
+                });
+                return;
+            }
+            oModel.setRefreshAfterChange(false);
+            this._aPendingSelPaths.forEach(function (sCurrentPath) {
+                var oContext = oModel.getContext(sCurrentPath);
+                mParameters = {
+                    method : "POST",
+                    urlParameters : {"iDoc" : oContext.getProperty("IdocNo"),
+                                     "ReqNumber" : sReqNumber,
+                                     "Type" : oContext.getProperty("SwapType"),
+                                     "ReqName" : sReqName,
+                                     "Contract" : oContext.getProperty("Contract"),
+                                     "Hist" : oContext.getProperty("HistoryNo")},
+                    success : function (oData, oResponse) {
+                        jQuery.sap.log.info("Odata Read Successfully:::");
+                    }.bind(this),
+                    error: function (oError) {
+                        jQuery.sap.log.info("Eligibility Error occured");
+                    }.bind(this)
+                };
+                oModel.callFunction("/DeleteCampaign", mParameters);
+            });
+            this._oCancelDialog.close();
+            this.navTo("campaignoffers", {bpNum: bpNum, caNum: caNum, coNum: coNum, typeV : (this._sInitTab || "SE") });
+        };
+        /**
+		 * Handle when user clicked on Cancelling of Pending Swaps
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.ContinueWithoutCancel = function (oEvent) {
+            var oRouting = this.getView().getModel('oFooterRouting'),
+                bpNum = oRouting.oData.BpNumber,
+                caNum = oRouting.oData.CaNumber,
+                coNum = oRouting.oData.CoNumber;
+            this._oCancelDialog.close();
+            this.navTo("campaignoffers", {bpNum: bpNum, caNum: caNum, coNum: coNum, typeV : (this._sInitTab || "SE")});
+        };
         return Controller;
     }
 );
