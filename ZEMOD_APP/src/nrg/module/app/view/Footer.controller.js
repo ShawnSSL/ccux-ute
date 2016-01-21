@@ -504,7 +504,7 @@ sap.ui.define(
             if (!sFirstMonthBill) {
                 ute.ui.main.Popup.Alert({
                     title: 'Information',
-                    message: 'Customer has to completed at least One Month Invoice.'
+                    message: 'Ask the customer to call us back after the 1st bill.'
                 });
                 return;
             }
