@@ -494,9 +494,10 @@ sap.ui.define(
                 sTempCOpupz;
 
 
-            oConfPost.setProperty('/ContractAccountNumber', oConf.oData.results[0].ContractAccountNumber);
+            oConfPost.setProperty('/ContAccount', oConf.oData.results[0].ContractAccountNumber);
 
             oConfPost.setProperty('/PartnerID', oConf.oData.results[0].PartnerID);
+            oConfPost.setProperty('/Contract', this._coNum);
 
             oConfPost.setProperty('/SelectedData', oConf.oData.results[0].SelectedData.replace(/"/g, '\''));
 
@@ -605,6 +606,9 @@ sap.ui.define(
             oConfPost.setProperty('/COpupw', sCOpupw);
             oConfPost.setProperty('/COpupk', sCOpupk);
             oConfPost.setProperty('/COpupz', sCOpupz);
+            //oConfPost.setProperty('/DwnPay', );
+            //oConfPost.setProperty('/DwnPayDate', );
+
 
 
             //this.getView().getModel('oDppStepTwoConfirmdData').setProperty('/CONFIRMDATA', aConfirmData);
@@ -1124,39 +1128,36 @@ sap.ui.define(
                 oEligble = this.getView().getModel('oExtEligible'),
                 oReason = this.getView().getModel('oExtExtReasons'),
                 sDwnPayDate = this.getView().byId('nrgBilling-dpp-dwnPayDueDate-id').getValue(),
+                sDwnPayValue = this.getView().byId('nrgBilling-dpp-dwnPayvalue-id').getValue(),
                 sPath,
                 oParameters,
                 oDataObject = {},
                 that = this;
 
-            //oPost.setProperty('/ContractAccountNumber', this._caNum);
+
             oDataObject.Contract = this._coNum;
-            //oPost.setProperty('/PartnerID', oExt.getProperty('/results/0/PartnerID'));
             oDataObject.Partner = this._bpNum;
             oDataObject.ContAccount = this._caNum;
-            //oPost.setProperty('/DefDtNew', oExt.getProperty('/results/0/OpenItems/DefferalDate'));// Date
             oDataObject.DefDtNew = oExt.getProperty('/results/0/OpenItems/DefferalDate');
-            //oPost.setProperty('/DefDtOld', null);//Date
-           // oPost.setProperty('/Message', '');
-            //oPost.setProperty('/Error', '');
-            //oPost.setProperty('/SelectedData', '');
             if (this._bOverRide) {
-                //oPost.setProperty('/OverRide', 'X');
                 oDataObject.OverRide  = 'X';
             } else {
                 oDataObject.OverRide  = '';
             }
             //oPost.setProperty('/DwnPay', oExt.getProperty('/results/0/iDwnPay'));
-            //oDataObject.DwnPay  = oExt.getProperty('/results/0/iDwnPay');
+            oDataObject.DwnPay  = oExt.getProperty('/results/0/iDwnPay');
+            if (oDataObject.DwnPay) {
+                oDataObject.DwnPay = oDataObject.DwnPay.toString();
+            }
             if (sDwnPayDate) {
                 //oPost.setProperty('/DwnPayDate', new Date(sDwnPayDate));//Date
                 oDataObject.DwnPayDate = new Date(sDwnPayDate);
             } //else {
                 //oPost.setProperty('/DwnPayDate', null);
             //}
-            if (oReason.getProperty()) {
+            if (oReason.getProperty("/selectedKey")) {
                 //oPost.setProperty('/ExtReason', oReason.getProperty());
-                oDataObject.ExtReason = oReason.getProperty();
+                oDataObject.ExtReason = oReason.getProperty("/selectedKey");
             }
             if (this._extReason) {
                 //oPost.setProperty('/ExtReason', this._extReason);
