@@ -266,25 +266,6 @@ sap.ui.define(
         };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /*Ends Here*/
         /********************************************************************************************/
 
@@ -1132,25 +1113,49 @@ sap.ui.define(
                 oPageModel = this.getView().getModel('oCoPageModel'),
                 oPage,
                 sPath,
-                oParameters;
+                oParameters,
+                that = this,
+                oContractModel = this.getView().getModel('oDtaVrfyContract'),
+                oAllContractModel = this.getView().getModel('oAllContractsofBuag');
 
             sPath = '/Buags' + '(\'' + sCaNum + '\')/Contracts/';
             oParameters = {
                 success : function (oData) {
                     if (oData) {
-                        // Load the first CO to display
-                        if (oData.results[0]) {
-                            this.getView().getModel('oDtaVrfyContract').setData(oData.results[0]);
-                            // Publish the CO Change event to event bus
-                            this._onCoChange(oData.results[0]);
+                        // Load the first CO to display or if CO found in the routing load that CO.
+                        var bCoFound = false,
+                            sSelectedItem = -1;
+                        if (oData.results) {
+
+                            if (that._coNum) {
+                                oData.results.forEach(function (item, index) {
+                                    if (item && item.ContractID && parseInt(item.ContractID, 10) === parseInt(that._coNum, 10)) {
+                                        oContractModel.setData(item);
+                                        // Publish the CO Change event to event bus
+                                        that._onCoChange(item);
+                                        //oAllContractModel.setProperty('/selectedKey', index.toString());
+                                        sSelectedItem = index.toString();
+                                        bCoFound = true;
+                                    }
+                                });
+                            }
+                            // if CO not found in Routing or CoFound in the Backend list then load first CO only.
+                            if (!bCoFound) {
+                                oContractModel.setData(oData.results[0]);
+                                // Publish the CO Change event to event bus
+                                this._onCoChange(oData.results[0]);
+                                //oAllContractModel.setProperty('/selectedKey', '0');
+                                sSelectedItem = '0';
+                            }
                         }
                         // Reset the CO pagination
                         this._initCoPageModel();
                         // Set up the CO pagination
                         this._setUpCoPageModel(oData.results.length, oData.results);
                         // Refresh the CO dropdown
-                        this.getView().getModel('oAllContractsofBuag').setData(oData.results);
-                        this.getView().getModel('oAllContractsofBuag').setProperty('/selectedKey', '0');
+                        oAllContractModel.setData(oData.results);
+                        oAllContractModel.setProperty('/selectedKey', sSelectedItem);
+
                         // Check and execute the callback function
                         if (fnCallback) { fnCallback(); }
                     }

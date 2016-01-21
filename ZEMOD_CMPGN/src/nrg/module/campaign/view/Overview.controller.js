@@ -111,6 +111,11 @@ sap.ui.define(
                             }
                         }
                     }
+                    if (!sPath) {
+                        if (aContent && aContent.length > 0) {
+                            sPath = aContent[0].getBindingContext("comp-campaign").getPath();
+                        }
+                    }
                    // aContent[0].addStyleClass("nrgCamHisBut-Selected");
                     aEFLDatapaths = this.getModel("comp-campaign").getProperty(sPath + "/EFLs");
                     if ((aEFLDatapaths) && (aEFLDatapaths.length > 0)) {
@@ -133,10 +138,12 @@ sap.ui.define(
                         that.getView().byId('idnrgCamOvrPriceT').removeAllAggregation("content");
                         that.getView().byId('idnrgCamOvrPriceT').addContent(oTemplateView);
                     }
-                    that.getView().bindElement({
-                        model : "comp-campaign",
-                        path : sPath
-                    });
+                    if (sPath) {
+                        that.getView().bindElement({
+                            model : "comp-campaign",
+                            path : sPath
+                        });
+                    }
                 }
                 that.getOwnerComponent().getCcuxApp().setOccupied(false);
                 if (oToggleContainerBinding) {

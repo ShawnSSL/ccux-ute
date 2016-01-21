@@ -709,7 +709,9 @@ sap.ui.define(
                 success : function (oData) {
                     oEligModel.setData(oData);
                     var container = this.getView().byId('nrgBilling-billChkBook-notifications');
-
+                    if (container && container.getContent() && container.getContent().length > 0) {
+                        container.removeAllContent();
+                    }
                 // If already has eligibility alerts, then skip
                     this._eligibilityAlerts = [];
 
