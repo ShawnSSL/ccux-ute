@@ -23,6 +23,12 @@
                 press="._onAvgBillBtnClicked"
                 text="{comp-i18n-billing>nrgBilling-chkbkTools-AvgBill-Btn}">
             </ute:Button>
+             <!-- Balance Bill Re-Average Detail -->
+            <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
+                buttonType="SpecialNav" width="220px" enabled="true"
+                press="._onReAvgBillBtnClicked"
+                text="{comp-i18n-billing>nrgBilling-chkbkTools-ReAvgBill-Btn}">
+            </ute:Button>
             <!-- Deffered Payment -->
             <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
                 buttonType="SpecialNav" width="220px" enabled="true"
