@@ -148,7 +148,9 @@ sap.ui.define(
             this._aRouteHistory.push(oRouteInfo);
             return this;
         };
-
+        Manager.prototype.resetRouteHistory = function () {
+            this._aRouteHistory = [];
+        };
         Manager.prototype._isIdenticalRouteInfo = function (oRouteInfoA, oRouteInfoB) {
             var sArg;
 
