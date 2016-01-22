@@ -56,7 +56,8 @@
             <u:Tag class="nrgFeeAdj-CAArea">
                 <um:Dropdown id="idnrgFeeAdj-DropDownCA"
                                  placeholder="3040103"
-                                 class="nrgFeeAdj-CAArea-DD">
+                                 class="nrgFeeAdj-CAArea-DD"
+                                 select="._onCoSelect">
                     <um:DropdownItem key="1" class="nrgFeeAdj-DdLItem" >
                         <u:Tag text="{comp-feeAdjs>CA}">
                         </u:Tag>

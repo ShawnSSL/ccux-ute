@@ -241,6 +241,29 @@ sap.ui.define(
             oViewModel.setProperty("/Reconnectfee", false);
             oViewModel.setProperty("/reasonDD", false);
         };
+        /**
+		 * Clicked on Reconnect Fee
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype._onCoSelect = function (oEvent) {
+            var oViewModel = this.getView().getModel("view-feeAdj");
+            if (!oViewModel.getProperty("/discNoticefee")) {
+                this.onDiscNoticeFee();
+            }
+            if (!oViewModel.getProperty("/discRecovfee")) {
+                this.onDiscRecovFee();
+            }
+            if (!oViewModel.getProperty("/Latefee")) {
+                this.onLateFee();
+            }
+            if (!oViewModel.getProperty("/Reconnectfee")) {
+                this.onReconnectFee();
+            }
+
+        };
+
         return Controller;
     }
 
