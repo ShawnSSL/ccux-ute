@@ -437,7 +437,7 @@ sap.ui.define(
 
             oParameters = {
                 success : function (oData) {
-                    if (oData) {
+                    if (oData && oData.results && oData.results.length > 0) {
                         this.getView().getModel('oPaymentHdr').setProperty(sBindingPath + '/PaymentItems', oData);
 
                         for (i = 0; i < oData.results.length; i = i + 1) {
@@ -467,7 +467,7 @@ sap.ui.define(
 
             oParameters = {
                 success : function (oData) {
-                    if (oData.results) {
+                    if (oData && oData.results && oData.results.length > 0) {
                         this.getView().getModel('oPaymentHdr').setProperty(sBindingPath + '/PaymentSumry', oData.results[0]);
                     }
                     //oScrlCtaner.scrollTop = oScrlCtaner.scrollHeight;
@@ -550,7 +550,7 @@ sap.ui.define(
 
             oParameters = {
                 success : function (oData) {
-                    if (oData) {
+                    if (oData && oData.results && oData.results.length > 0) {
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             oData.results[i].oCallOut = {};
                             if (oData.results[i].CallOut) {
@@ -633,7 +633,7 @@ sap.ui.define(
 
             oParameters = {
                 success : function (oData) {
-                    if (oData) {
+                    if (oData && oData.results && oData.results.length > 0) {
                         this.getView().getModel('oPostInvoiceItems').setData(oData);
 
                         for (i = 0; i < oData.results.length; i = i + 1) {
