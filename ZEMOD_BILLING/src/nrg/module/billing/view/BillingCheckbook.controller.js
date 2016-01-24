@@ -9,7 +9,7 @@ sap.ui.define(
         'jquery.sap.global',
         'nrg/base/view/BaseController',
         'nrg/base/type/Price',
-        'nrg/module/quickpay/view/QuickPayControl',
+        'nrg/module/quickpay/view/QuickPayPopup',
         'nrg/module/billing/view/EligPopup'
     ],
 
@@ -354,11 +354,15 @@ sap.ui.define(
         };
 
         CustomController.prototype._onPaymentOptionClick = function () {
-            var QuickControl = new QuickPayControl();
+            var QuickControl = new QuickPayControl(),
+                that = this;
             this.getView().addDependent(QuickControl);
             if (this._coNum) {
                 QuickControl.openQuickPay(this._coNum, this._bpNum, this._caNum);
             }
+            QuickControl.attachEvent("PaymentCompleted", function () {
+                that._initChkbookHdr();
+            }, this);
         };
 
         CustomController.prototype._onHighBillFactorClick = function () {
@@ -494,11 +498,8 @@ sap.ui.define(
         CustomController.prototype._initChkbookHdr = function () {
             var sPath;
 
-            if (this.getOwnerComponent()._oMockDataManager._aMockServers.length) {
-                sPath = '/ChkBookHdrs' + '(ContractAccountID=\'' + this._caNum + '\',InvoiceNum=\'8005303668\')';
-            } else {
-                sPath = '/ChkBookHdrs' + '(ContractAccountID=\'' + this._caNum + '\',InvoiceNum=\'\')';
-            }
+            sPath = '/ChkBookHdrs' + '(ContractAccountID=\'' + this._caNum + '\',InvoiceNum=\'\')';
+
 
             this._retrChkbookHdr(sPath);
         };

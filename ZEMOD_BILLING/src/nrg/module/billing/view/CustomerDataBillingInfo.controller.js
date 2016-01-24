@@ -9,7 +9,7 @@ sap.ui.define(
         'jquery.sap.global',
         'nrg/base/view/BaseController',
         'sap/ui/model/json/JSONModel',
-        'nrg/module/quickpay/view/QuickPayControl',
+        'nrg/module/quickpay/view/QuickPayPopup',
         'nrg/base/type/Price',
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator'
@@ -375,13 +375,17 @@ sap.ui.define(
         };
 
         CustomController.prototype.onPayNow = function (oEvent) {
-            var QuickControl = new QuickPayControl();
+            var QuickControl = new QuickPayControl(),
+                that = this;
 
             this._sContract = this._coNum;
             this._sBP = this._bpNum;
             this._sCA = this._caNum;
             this.getView().addDependent(QuickControl);
             QuickControl.openQuickPay(this._sContract, this._sBP, this._sCA);
+            QuickControl.attachEvent("PaymentCompleted", function () {
+                that._initRetrBillInvoices();
+            }, this);
         };
 
         CustomController.prototype._onChkbookLnkClicked = function () {

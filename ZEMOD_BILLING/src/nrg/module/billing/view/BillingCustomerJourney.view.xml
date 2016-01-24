@@ -67,7 +67,7 @@
                                design="Default"
                                press=".onUpdate">
                     </um:button>
-                    <u:Tag class="nrgBllCJ-timeline-referrals" id="idnrgCustomerRef"></u:Tag>
+                    <u:Tag class="nrgBllCJ-timeline-referrals" id="idnrgCustomerRef" visible="{cj-view>/referral}"></u:Tag>
                 </u:Tag>
                 <u:Tag class="nrgBllCJ-main-timeline-icons">
                     <u:Tag text="No Data Available" visible="{cj-view>/icons}" class="nrgBllCj-noData"/>

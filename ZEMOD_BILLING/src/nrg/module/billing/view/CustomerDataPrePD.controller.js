@@ -6,7 +6,7 @@ sap.ui.define(
         'jquery.sap.global',
         'nrg/base/view/BaseController',
         'sap/ui/model/json/JSONModel',
-        'nrg/module/quickpay/view/QuickPayControl'
+        'nrg/module/quickpay/view/QuickPayPopup'
     ],
 
     function (jQuery, Controller, JSONModel, QuickPayControl) {
@@ -21,11 +21,14 @@ sap.ui.define(
         CustomController.prototype.onBeforeRendering = function () {
             this.getOwnerComponent().getCcuxApp().setTitle('BILLING');
             this._initRouting();
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            this._loadPrepayData();
+        };
+        CustomController.prototype._loadPrepayData = function () {
             var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
                 oBindingInfo,
                 sPath = "/PrepaySet(BP='" + this._bpNum + "',CA='" + this._caNum + "')",
                 that = this;
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             oBindingInfo = {
                 success : function (oData) {
                     that.getView().bindElement({
@@ -44,7 +47,6 @@ sap.ui.define(
                 oModel.read(sPath, oBindingInfo);
             }
         };
-
         CustomController.prototype.onAfterRendering = function () {
             this.getOwnerComponent().getCcuxApp().showNavLeft(true);
             this.getOwnerComponent().getCcuxApp().attachNavLeft(this._navLeftCallBack, this);
@@ -74,13 +76,17 @@ sap.ui.define(
         };
 
         CustomController.prototype.onPayNow = function () {
-            var QuickControl = new QuickPayControl();
+            var QuickControl = new QuickPayControl(),
+                that = this;
 
             this._sContract = this._coNum;
             this._sBP = this._bpNum;
             this._sCA = this._caNum;
             this.getView().addDependent(QuickControl);
             QuickControl.openQuickPay(this._sContract, this._sBP, this._sCA);
+            QuickControl.attachEvent("PaymentCompleted", function () {
+                that._loadPrepayData();
+            }, this);
         };
         /*************************************************************************************************************************/
         //Init Functions

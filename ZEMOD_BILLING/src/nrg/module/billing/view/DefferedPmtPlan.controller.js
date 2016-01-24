@@ -9,7 +9,7 @@ sap.ui.define(
         "sap/ui/model/json/JSONModel",
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
-        'nrg/module/quickpay/view/QuickPayControl'
+        'nrg/module/quickpay/view/QuickPayPopup'
     ],
 
     function (CoreController, jQuery, price, HashChanger, JSONModel, Filter, FilterOperator, QuickPayControl) {

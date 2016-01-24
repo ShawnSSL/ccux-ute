@@ -6,7 +6,7 @@ sap.ui.define(
         'jquery.sap.global',
         'nrg/base/view/BaseController',
         'nrg/base/type/Price',
-        'nrg/module/quickpay/view/QuickPayControl'
+        'nrg/module/quickpay/view/QuickPayPopup'
     ],
 
     function (jQuery, Controller, Type_Price, QuickPayControl) {
@@ -77,11 +77,15 @@ sap.ui.define(
         };
 
         CustomController.prototype._onPaymentOptionsClick = function () {
-            var QuickControl = new QuickPayControl();
+            var QuickControl = new QuickPayControl(),
+                that = this;
             this.getView().addDependent(QuickControl);
             if (this._coNum) {
                 QuickControl.openQuickPay(this._coNum, this._bpNum, this._caNum);
             }
+            QuickControl.attachEvent("PaymentCompleted", function () {
+                that._initPpChkbookHdr();
+            }, this);
         };
 
         CustomController.prototype._onHighBillFactorClick = function () {
