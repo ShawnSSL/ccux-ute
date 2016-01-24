@@ -4,7 +4,7 @@
           xmlns:core="sap.ui.core"
           xmlns:u="ute.ui.commons"
           xmlns:um="ute.ui.main">
-    <u:Tag class="nrgQPCC-root">
+    <u:Tag class="nrgQPCC-root" visible="{appView>/PBD}">
         <u:Tag text="{comp-i18n-quickpay>nrgQPPendingBankDraft}" class="nrgQPCC-ttl"/>
             <u:Tag class="nrgQP-Table">
                 <u:Tag class="nrgQPTable-header nrgQP-top">
