@@ -179,6 +179,14 @@
                                         class="nrgBilling-cusDataBil-m-text-title-sub"
                                         text="{path: 'oBillingInvoices>/AmountDue', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                 </ute:Tag>
+                                <ute:Tag class="nrgBilling-cusDataBil-m-row-titleSection">
+                                    <ute:Tag elem="div"
+                                         class="nrgBilling-cusDataBillingInfo-contentTitle"
+                                         text="Unbilled" />
+                                    <ute:Tag elem="span"
+                                        class="nrgBilling-cusDataBil-m-text-title-sub"
+                                        text="{path: 'oBillingInvoices>/UnBilled', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
+                                </ute:Tag>
                             </ute:Tag>
                         </l:MatrixLayoutCell>
 

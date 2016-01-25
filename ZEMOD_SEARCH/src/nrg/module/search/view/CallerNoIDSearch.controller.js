@@ -361,7 +361,6 @@ sap.ui.define(
                 };
                 this._handleBpConfirmed(oPassingEvent);
             }
-
             return;
         };
 
@@ -377,7 +376,7 @@ sap.ui.define(
 
             //Set the loading effect to false
            // oComponent.getCcuxApp().setOccupied(false);
-
+            this.getOwnerComponent().getCcuxApp().setOccupied(false);
             //Navigate to verification page
             if (oSearchCaModel.getProperty('/searchedInCa')) {
                 oRouter.navTo('dashboard.VerificationWithCa', {bpNum: oRouteInfo.BP_NUM, caNum: oSearchCaModel.getProperty('/searchedCaNum')});

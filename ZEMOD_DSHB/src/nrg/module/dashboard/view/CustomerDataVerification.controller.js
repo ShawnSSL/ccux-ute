@@ -1117,10 +1117,11 @@ sap.ui.define(
                 that = this,
                 oContractModel = this.getView().getModel('oDtaVrfyContract'),
                 oAllContractModel = this.getView().getModel('oAllContractsofBuag');
-
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             sPath = '/Buags' + '(\'' + sCaNum + '\')/Contracts/';
             oParameters = {
                 success : function (oData) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     if (oData) {
                         // Load the first CO to display or if CO found in the routing load that CO.
                         var bCoFound = false,

@@ -1,5 +1,8 @@
 /*global sap, ute, jQuery*/
 /*jslint nomen:true*/
+
+
+/********************************************************Deprecated Control **********************************************/
 sap.ui.define(
     [
         'sap/ui/core/Control',
@@ -76,7 +79,19 @@ sap.ui.define(
             this._oPaymentPopup.open();
             return this;
         };
+		// store the original invalidate function
+		QuickPayControl.prototype.forceInvalidate = Control.prototype.invalidate;
 
+		// stop propagating the invalidate to static UIArea before dialog is opened.
+		// otherwise the open animation can't be seen
+		// dialog will be rendered directly to static ui area when the open method is called.
+		QuickPayControl.prototype.invalidate = function (oOrigin) {
+			if (this._oPaymentPopup.isOpen()) {
+				return;
+			} else {
+                this.forceInvalidate(oOrigin);
+            }
+		};
         /* ========================================================================*/
 		/* Method to close the popup                                               */
 		/* ======================================================================= */

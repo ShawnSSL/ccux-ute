@@ -388,10 +388,13 @@ sap.ui.define(
         };
 
         CustomController.prototype._onClearAccPressCallback = function (oEvent) {
-            var oContext, oRouter;
+            var oContext,
+                oRouter,
+                oRouteManager;
 
             this._oApp.setOccupied(false);
             oContext = this.getOwnerComponent().getCcuxContextManager().resetContext();
+            oRouteManager = this.getOwnerComponent().getCcuxRouteManager().resetRouteHistory();
             oRouter = this.getOwnerComponent().getRouter();
 
             oRouter.navTo('app.refresh', null, true);

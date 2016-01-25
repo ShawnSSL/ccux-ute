@@ -39,8 +39,6 @@ sap.ui.define(
                 oModel = this.getOwnerComponent().getModel('comp-cj'),
                 sPath,
                 oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
-                oReferral = this.getView().byId('idnrgCustomerRef'),
-                oReferralTemplate = this.getView().byId('idnrgCustomerRef-temp'),
                 that = this,
                 oDatesJsonModel,
                 oViewModel = new JSONModel({
@@ -48,7 +46,8 @@ sap.ui.define(
                     piechart : false,
                     icons: false,
                     interval1 : false,
-                    interval2: false
+                    interval2: false,
+                    referral: false
                 }),
                 oPieChartModel,
                 oPieChart = this.getView().byId('idnrgCJPieChart'),
@@ -138,14 +137,22 @@ sap.ui.define(
                 aFilterIds,
                 aFilterValues,
                 aFilters,
-                fnRecievedHandler;
+                fnRecievedHandler,
+                oViewModel = this.getView().getModel('cj-view'),
+                that = this;
             aFilterIds = ["BP", "CA", "StartDate", "EndDate"];
             aFilterValues = [this._sBP, this._sCA, dStartDate, dEndDate];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = "/CJReferralSet";
             oReferral.removeContent();
+            oViewModel.setProperty("/referral", false);
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             fnRecievedHandler = function (oEvent) {
+                if ((oEvent) && (oEvent.mParameters) && (oEvent.mParameters.data) && (oEvent.mParameters.data.results) && (oEvent.mParameters.data.results.length > 0)) {
+                    oViewModel.setProperty("/referral", true);
+                }
                 jQuery.sap.log.info("Odata Read successfully");
+                that.getOwnerComponent().getCcuxApp().setOccupied(false);
             };
             oBindingInfo = {
                 model : "comp-cj",
@@ -560,34 +567,47 @@ sap.ui.define(
 		 *
 		 */
         Controller.prototype.onModuleRefresh = function (oControlEvent) {
-            var oFromDate = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgBllCJ-fromDate"),
-                oToDate = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgBllCJ-toDate"),
+            var oFromDate,
+                oToDate,
                 aFilters,
                 aFilterIds,
                 aFilterValues,
                 mParameters,
                 oModel = this.getOwnerComponent().getModel('comp-cj'),
-                oCustomerJourneyModel = this._oDialogFragment.getModel('Cj-module'),
+                oCustomerJourneyModel,
                 that = this,
                 sPath = "/CJModuleSet",
                 sChannel,
-                oCJTable = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-table"),
-                oCJDropDown = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-DD"),
+                oCJTable,
+                oCJDropDown,
                 oFilter1,
-                oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search");
-            oSearchText.setValue("");
+                oSearchText;
+
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            aFilterIds = ["BP", "CA", "StartDate", "EndDate", "ChannelType"];
-            aFilterValues = [this._sBP, this._sCA, (new Date(oFromDate.getValue())), (new Date(oToDate.getValue())), this._ChannelType];
-            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-            if (this._ChannelType !== "CLOG") {
+
+            if (this._ChannelType !== "CLOG") { //it is a customer journey normal view.
+                oCustomerJourneyModel = this._oDialogFragment.getModel('Cj-module');
+                oCJTable = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-table");
+                oCJDropDown = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-DD");
+                oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search");
+                oFromDate = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgBllCJ-fromDate");
+                oToDate = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgBllCJ-toDate");
                 sChannel =  oCJDropDown.getSelectedKey();
                 if (sChannel === "All") {
                     sChannel = "";
                 }
-            } else {
+            } else { // it is a contact log view.
+                oCustomerJourneyModel = this._oContactLogFragment.getModel('Cj-module');
+                oCJTable = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-table");
+                oSearchText = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-search");
+                oFromDate = sap.ui.core.Fragment.byId("ContactLogs", "idnrgBllCJ-fromDate");
+                oToDate = sap.ui.core.Fragment.byId("ContactLogs", "idnrgBllCJ-toDate");
                 sChannel = "";
             }
+            oSearchText.setValue("");
+            aFilterIds = ["BP", "CA", "StartDate", "EndDate", "ChannelType"];
+            aFilterValues = [this._sBP, this._sCA, (new Date(oFromDate.getValue())), (new Date(oToDate.getValue())), this._ChannelType];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             mParameters = {
                 filters : aFilters,
                 success : function (oData) {
@@ -787,13 +807,18 @@ sap.ui.define(
 		 *
 		 */
         Controller.prototype.onExpandAll = function (oEvent) {
-            var aRows = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-table").getRows(),
+            var aRows,
                 oModel = oEvent.getSource().getParent().getModel("Cj-module"),
                 iCount,
                 oTempRow,
                 oContext,
                 sPath,
                 oViewModel = this.getView().getModel('cj-view');
+            if (this._ChannelType !== "CLOG") { //it is a customer journey normal view.
+                aRows = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-table").getRows();
+            } else {
+                aRows = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-table").getRows();
+            }
             for (iCount = 0; iCount < aRows.length; iCount = iCount + 1) {
                 oTempRow = aRows[iCount];
                 oContext = oTempRow.getBindingContext("Cj-module");
@@ -817,12 +842,19 @@ sap.ui.define(
 		 *
 		 */
         Controller.prototype.onSearch = function (oEvent) {
-            var oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search"),
+            var oSearchText,
                 oFilter1,
                 oFilter2,
                 aFilterValues,
                 aFilters,
+                oCJTable;
+            if (this._ChannelType !== "CLOG") { //it is a customer journey normal view.
+                oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search");
                 oCJTable = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-table");
+            } else {
+                oSearchText = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-search");
+                oCJTable = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-table");
+            }
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             oFilter1 = new sap.ui.model.Filter("SingleMessage", sap.ui.model.FilterOperator.Contains, oSearchText.getValue());
             oFilter2 = new sap.ui.model.Filter("ColValues", sap.ui.model.FilterOperator.Contains, oSearchText.getValue());

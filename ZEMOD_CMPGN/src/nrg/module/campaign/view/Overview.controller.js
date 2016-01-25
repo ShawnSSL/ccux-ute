@@ -260,7 +260,7 @@ sap.ui.define(
                 //sap.ui.commons.MessageBox.alert("Customer has to completed atleast One Month Invoice");
                 ute.ui.main.Popup.Alert({
                     title: 'Information',
-                    message: 'Customer has to completed atleast One Month Invoice'
+                    message: 'Ask the customer to call us back after the 1st bill.'
                 });
             } else {
                 this._getPendingSwapsCount(oEvent);

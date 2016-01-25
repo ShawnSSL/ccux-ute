@@ -16,16 +16,15 @@ sap.ui.define(
             }
         });
 
-        CustomRouter.prototype.navTo = function (sName, oParameters, bReplace) {
+        CustomRouter.prototype.navTo = function (sName, oParameters, bReplace) {//Hard coding bReplace = true in the funtion; forcing UI5/Hashchanger not to store any browser history
             var oCcuxApp, fnConfirmCallback, mConfirmParam, oAppRbModel;
 
             oCcuxApp = this._oComponent.getCcuxApp();
-
             if (oCcuxApp && oCcuxApp.isInEdit()) {
                 fnConfirmCallback = function (sAction) {
                     if (sAction === ute.ui.main.Popup.Action.Yes) {
                         oCcuxApp.setInEdit(false);
-                        Router.prototype.navTo.call(this, sName, oParameters, bReplace);
+                        Router.prototype.navTo.call(this, sName, oParameters, true);
                     }
                 }.bind(this);
 
@@ -44,7 +43,7 @@ sap.ui.define(
                 ute.ui.main.Popup.Confirm(mConfirmParam);
 
             } else {
-                Router.prototype.navTo.apply(this, arguments);
+                Router.prototype.navTo.apply(this, [sName, oParameters, true]);
             }
         };
 

@@ -4,13 +4,12 @@
           xmlns:core="sap.ui.core"
           xmlns:u="ute.ui.commons"
           xmlns:um="ute.ui.main">
-    <u:Tag class="nrgQPCC-root">
+    <u:Tag class="nrgQPCC-root" visible="{appView>/ABD}">
         <u:Tag text="{comp-i18n-quickpay>nrgQPPaymentBD}" class="nrgQPCC-ttl"/>
         <u:Tag class="nrgQPCC-dataBD">
             <u:Tag class="nrgQPCC-row nrgQPPay-top">
                 <u:Tag class="nrgQPPay-TF">
                     <u:Textfield placeholder="{comp-i18n-quickpay>nrgQPDefaultNum}"
-                                 change=""
                                  fieldType="Regular"
                                  class="nrgQPCC-input"
                                  width="10rem"
@@ -23,7 +22,6 @@
             <u:Tag class="nrgQPCC-row nrgQPPay-BDtop">
                 <u:Tag class="nrgQPPay-TF">
                     <u:Textfield placeholder="{comp-i18n-quickpay>nrgQPDefaultNum}"
-                                 change=""
                                  fieldType="Regular"
                                  class="nrgQPCC-input"
                                  width="10rem"

@@ -3,54 +3,399 @@
       "results":[
          {
             "__metadata":{
-               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0007672597',CA='000011608439',key='%20%201')",
-               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0007672597',CA='000011608439',key='%20%201')",
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%202')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%202')",
                "type":"ZE_CCUX_CJ_SRV.CJIcons"
             },
-            "BP":"0007672597",
-            "CA":"000011608439",
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":"  2",
+            "Icon":"Website",
+            "Channel":"Website",
+            "TopLabel":"24.11.2015",
+            "Description":"24.11.2015 11:04:22 - Payment Card Request - One Time Payment - 11:04:22",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1448384662000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2017')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2017')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 17",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"17.12.2015 08:39:29 - IVR Billing / Payment Inquiry~17.12.2015 08:39:29 - IVR Billing / Payment Inquiry~17.12.2015 08:39:29 - IVR Billing / Payment Inquiry~17.12.2015 08:39:29 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1450363169000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2016')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2016')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 16",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"18.12.2015 04:43:03 - IVR Billing / Payment Inquiry~18.12.2015 04:43:03 - IVR Billing / Payment Inquiry~18.12.2015 04:43:03 - IVR Billing / Payment Inquiry~18.12.2015 04:43:03 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1450435383000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2019')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2019')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 19",
+            "Icon":"Phone",
+            "Channel":"Phone",
+            "TopLabel":"",
+            "Description":"18.12.2015 07:39:50 - Price Complaint~18.12.2015 07:39:50 - Price Complaint",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1450445990000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2015')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2015')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 15",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"18.12.2015 08:20:09 - IVR Billing / Payment Inquiry~18.12.2015 08:20:09 - IVR Billing / Payment Inquiry~18.12.2015 08:20:09 - IVR Billing / Payment Inquiry~18.12.2015 08:20:09 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1450448409000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2014')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2014')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 14",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"21.12.2015 04:47:33 - IVR Billing / Payment Inquiry~21.12.2015 04:47:33 - IVR Billing / Payment Inquiry~21.12.2015 04:47:33 - IVR Billing / Payment Inquiry~21.12.2015 04:45:10 - IVR Billing / Payment Inquiry~21.12.2015 04:45:10 - IVR Billing / Payment Inquiry~21.12.2015 04:45:10 - IVR Billing / Payment Inquiry~21.12.2015 03:42:53 - IVR Extension denied - Not eligible~21.12.2015 03:42:53 - IVR Extension denied - Not eligible~21.12.2015 03:42:53 - IVR Extension denied - Not eligible~21.12.2015 03:42:53 - IVR Extension denied - Not eligible~21.12.2015 03:42:18 - IVR Billing / Payment Inquiry~21.12.2015 03:42:18 - IVR Billing / Payment Inquiry~21.12.2015 03:42:18 - IVR Billing / Payment Inquiry~21.12.2015 03:42:18 - IVR Billing / Payment Inquiry~21.12.2015 03:29:31 - Average Billing Confirmation~21.12.2015 03:29:31 - Average Billing Confirmation~21.12.2015 03:29:31 - Average Billing Confirmation~21.12.2015 03:29:31 - Average Billing Confirmation~21.12.2015 03:29:15 - Average Billing - Activation~21.12.2015 03:29:15 - Average Billing - Activation~21.12.2015 03:29:15 - Average Billing - Activation~21.12.2015 03:29:15 - Average Billing - Activation~21.12.2015 03:28:10 - IVR Billing / Payment Inquiry~21.12.2015 03:28:10 - IVR Billing / Payment Inquiry~21.12.2015 03:28:10 - IVR Billing / Payment Inquiry~21.12.2015 03:28:10 - IVR Billing / Payment Inquiry~21.12.2015 02:40:09 - IVR Billing / Payment Inquiry~21.12.2015 02:40:09 - IVR Billing / Payment Inquiry~21.12.2015 02:40:09 - IVR Billing / Payment Inquiry~21.12.2015 02:40:09 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1450687209000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2013')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2013')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 13",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"22.12.2015 02:41:46 - IVR Billing / Payment Inquiry~22.12.2015 02:41:46 - IVR Billing / Payment Inquiry~22.12.2015 02:41:46 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1450773706000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%201')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%201')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
             "key":"  1",
-            "Icon":"Miscellaneous",
-            "Channel":"Miscellaneous",
+            "Icon":"Website",
+            "Channel":"Website",
             "TopLabel":"",
-            "Description":"21.12.2015 08:48:49 IVR Billing / Payment Inquiry ~ 21.12.2015 09:44:58 IVR Extension denied - Not eligible ~ 21.12.2015 09:00:30 IVR Billing / Payment Inquiry ~ 21.12.2015 09:18:00 IVR Billing / Payment Inquiry ~ 21.12.2015 09:44:23 IVR Billing / Payment Inquiry ~",
+            "Description":"22.12.2015 03:41:52 - Payment Card Request - One Time Payment - 03:41:52",
             "RightDivider":false,
-            "StartDate":"\/Date(1363192537000+0000)\/",
-            "EndDate":"\/Date(1449596137000+0000)\/",
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1450777312000+0000)\/"
          },
          {
             "__metadata":{
-               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0007672597',CA='000011608439',key='%20%202')",
-               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0007672597',CA='000011608439',key='%20%202')",
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2012')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2012')",
                "type":"ZE_CCUX_CJ_SRV.CJIcons"
             },
-            "BP":"0007672597",
-            "CA":"000011608439",
-            "key":"2",
-            "Icon":"Miscellaneous",
-            "Channel":"Miscellaneous",
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 12",
+            "Icon":"IVR",
+            "Channel":"IVR",
             "TopLabel":"",
-            "Description":"21.12.2015 08:48:49 IVR Billing / Payment Inquiry ~ 21.12.2015 09:44:58 IVR Extension denied - Not eligible ~ 21.12.2015 09:00:30 IVR Billing / Payment Inquiry ~ 21.12.2015 09:18:00 IVR Billing / Payment Inquiry ~ 21.12.2015 09:44:23 IVR Billing / Payment Inquiry ~",
+            "Description":"22.12.2015 03:43:35 - IVR Billing / Payment Inquiry~22.12.2015 03:43:35 - IVR Billing / Payment Inquiry~22.12.2015 03:43:35 - IVR Billing / Payment Inquiry",
             "RightDivider":false,
-            "StartDate":"\/Date(1363192537000+0000)\/",
-            "EndDate":"\/Date(1449596137000+0000)\/",
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1450777415000+0000)\/"
          },
          {
             "__metadata":{
-               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0007672597',CA='000011608439',key='%20%203')",
-               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0007672597',CA='000011608439',key='%20%203')",
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2018')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2018')",
                "type":"ZE_CCUX_CJ_SRV.CJIcons"
             },
-            "BP":"0007672597",
-            "CA":"000011608439",
-            "key":"3",
-            "Icon":"Miscellaneous",
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 18",
+            "Icon":"Phone",
+            "Channel":"Phone",
+            "TopLabel":"",
+            "Description":"22.12.2015 04:51:53 - Credit Card Update Request Sent~22.12.2015 04:51:53 - Credit Card Update Request Sent",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1450781513000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2011')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2011')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 11",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"22.12.2015 09:18:11 - IVR Billing / Payment Inquiry~22.12.2015 09:18:11 - IVR Billing / Payment Inquiry~22.12.2015 09:15:24 - IVR Billing / Payment Inquiry~22.12.2015 09:15:24 - IVR Billing / Payment Inquiry~22.12.2015 08:28:39 - IVR Billing / Payment Inquiry~22.12.2015 08:28:39 - IVR Billing / Payment Inquiry~22.12.2015 08:21:59 - IVR Billing / Payment Inquiry~22.12.2015 08:21:59 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1450794119000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2010')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2010')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 10",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"29.12.2015 04:08:49 - IVR Billing / Payment Inquiry~29.12.2015 04:05:07 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1451383507000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%209')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%209')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":"  9",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"30.12.2015 09:22:20 - IVR Billing / Payment Inquiry~30.12.2015 09:18:48 - IVR Billing / Payment Inquiry~30.12.2015 03:21:23 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1451467283000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%208')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%208')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":"  8",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"04.01.2016 08:15:43 - IVR Billing / Payment Inquiry~04.01.2016 05:57:36 - IVR Billing / Payment Inquiry~04.01.2016 05:16:52 - IVR Billing / Payment Inquiry~04.01.2016 03:05:58 - Payment Card Request - One Time Payment~04.01.2016 03:04:01 - Payment Card Request - One Time Payment~04.01.2016 03:03:58 - IVR Billing / Payment Inquiry~04.01.2016 03:02:21 - IVR Billing / Payment Inquiry~04.01.2016 01:51:06 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1451893866000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2021')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2021')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 21",
+            "Icon":"Correspondence",
+            "Channel":"Correspondence",
+            "TopLabel":"",
+            "Description":"04.01.2016 09:36:10 Average Billing Confirmation",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1451921770000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%207')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%207')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":"  7",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"04.01.2016 09:41:58 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1451922118000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%206')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%206')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":"  6",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"05.01.2016 03:08:28 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1451984908000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%205')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%205')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":"  5",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"06.01.2016 05:03:35 - IVR Billing / Payment Inquiry~06.01.2016 04:57:45 - IVR Extension denied - Not eligible~06.01.2016 04:57:10 - IVR Billing / Payment Inquiry~06.01.2016 02:37:54 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1452069474000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%204')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%204')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":"  4",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"07.01.2016 05:56:28 - IVR Billing / Payment Inquiry~07.01.2016 05:54:06 - IVR Billing / Payment Inquiry~07.01.2016 05:46:16 - IVR Billing / Payment Inquiry~07.01.2016 05:34:47 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1452166487000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%203')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%20%203')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":"  3",
+            "Icon":"IVR",
+            "Channel":"IVR",
+            "TopLabel":"",
+            "Description":"08.01.2016 07:58:16 - IVR Billing / Payment Inquiry~08.01.2016 07:53:24 - IVR Billing / Payment Inquiry~08.01.2016 07:39:47 - IVR Statement Request~08.01.2016 07:39:11 - IVR Billing / Payment Inquiry~08.01.2016 05:08:57 - IVR Billing / Payment Inquiry~08.01.2016 03:37:15 - IVR Billing / Payment Inquiry~08.01.2016 03:36:06 - IVR Billing / Payment Inquiry~08.01.2016 03:34:06 - IVR Billing / Payment Inquiry",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1452245646000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2020')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2020')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 20",
+            "Icon":"Correspondence",
+            "Channel":"Correspondence",
+            "TopLabel":"11.01.2016",
+            "Description":"11.01.2016 10:42:42 12 Months Consumption Report",
+            "RightDivider":false,
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1452530562000+0000)\/"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2022')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJIconsSet(BP='0000224613',CA='000071051899',key='%2022')",
+               "type":"ZE_CCUX_CJ_SRV.CJIcons"
+            },
+            "BP":"0000224613",
+            "CA":"000071051899",
+            "key":" 22",
+            "Icon":"Misc Today",
             "Channel":"Miscellaneous",
             "TopLabel":"",
-            "Description":"21.12.2015 08:48:49 IVR Billing / Payment Inquiry ~ 21.12.2015 09:44:58 IVR Extension denied - Not eligible ~ 21.12.2015 09:00:30 IVR Billing / Payment Inquiry ~ 21.12.2015 09:18:00 IVR Billing / Payment Inquiry ~ 21.12.2015 09:44:23 IVR Billing / Payment Inquiry ~",
+            "Description":"one~two~three~four",
             "RightDivider":false,
-            "StartDate":"\/Date(1363192537000+0000)\/",
-            "EndDate":"\/Date(1449596137000+0000)\/",
+            "StartDate":"\/Date(1446354000000+0000)\/",
+            "EndDate":"\/Date(1453701600000+0000)\/",
+            "DateTime":"\/Date(1448384662000+0000)\/"
          }
       ]
    }

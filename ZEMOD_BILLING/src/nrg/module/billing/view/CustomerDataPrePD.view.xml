@@ -5,7 +5,9 @@
     xmlns:utmain="ute.ui.main"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:c="sap.ui.commons"
+    xmlns:core="sap.ui.core"
     xmlns:l="sap.ui.commons.layout"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     controllerName="nrg.module.billing.view.CustomerDataPrePD">
 
     <ute:Tag class="nrgAppMain-generalContent nrgBilling-cusDataPrePD">
@@ -75,7 +77,7 @@
                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-text-autopayinfo" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AUTO_PAY_INFO}" />
 
                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-matrix">
-                                    <l:MatrixLayout widths="50%,50%" columns="2">
+                                    <l:MatrixLayout widths="50%,50%" width="25rem" columns="2">
                                         <l:MatrixLayoutRow>
                                             <l:MatrixLayoutCell>
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AUTO_PAY_TYPE_DESC} :" />
@@ -87,7 +89,7 @@
                                     </l:MatrixLayout>
                                     <ute:HorizontalDivider
                                         class="nrgBilling-cusDataPrePD-horDvi"/>
-                                    <l:MatrixLayout widths="50%,50%" columns="2">
+                                    <l:MatrixLayout widths="50%,50%" width="25rem" columns="2">
                                         <l:MatrixLayoutRow>
                                             <l:MatrixLayoutCell>
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl2" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-THRESHOLD_AMNT}:" />
@@ -99,7 +101,7 @@
                                     </l:MatrixLayout>
                                     <ute:HorizontalDivider
                                         class="nrgBilling-cusDataPrePD-horDvi"/>
-                                    <l:MatrixLayout widths="50%,50%" columns="2">
+                                    <l:MatrixLayout widths="50%,50%" width="25rem" columns="2">
                                         <l:MatrixLayoutRow>
                                             <l:MatrixLayoutCell>
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl2" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-RELOAD_AMNT}:" />
@@ -111,13 +113,17 @@
                                     </l:MatrixLayout>
                                     <ute:HorizontalDivider
                                         class="nrgBilling-cusDataPrePD-horDvi"/>
-                                    <l:MatrixLayout widths="50%,50%" columns="2">
+                                    <l:MatrixLayout widths="50%,50%" width="25rem" columns="2">
                                         <l:MatrixLayoutRow>
                                             <l:MatrixLayoutCell>
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl3" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-ACCOUNT_BAL}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt3" text="{path: 'comp-feeAdjs>AccountBal', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }" />
+                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt3" text="{path: 'comp-feeAdjs>AccountBal', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }" >
+                                                  <ute:customData>
+                                                      <core:CustomData key="mydata" value="{= ${comp-feeAdjs>AccountBal} >= 0 ? 'true' : 'false'}" writeToDom="true" />
+                                                  </ute:customData>
+                                                </ute:Tag>
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>

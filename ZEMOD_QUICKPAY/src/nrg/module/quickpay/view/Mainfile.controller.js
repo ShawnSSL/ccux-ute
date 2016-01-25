@@ -14,7 +14,9 @@ sap.ui.define(
     function (CoreController, Filter, FilterOperator, jQuery, JSONModel, DateFormat) {
         'use strict';
 
-        var Controller = CoreController.extend('nrg.module.quickpay.view.MainQuick');
+        var Controller = CoreController.extend('nrg.module.quickpay.view.Mainfile');
+
+
 		/* =========================================================== */
 		/* lifecycle method- Init                                      */
 		/* =========================================================== */
@@ -35,7 +37,18 @@ sap.ui.define(
                     reliantPress: ".onAcceptReliant",
                     newBankRouting: "",
                     newBankAccount: "",
-                    selected : 0
+                    selected : 0,
+                    CC: false,
+                    BD: false,
+                    PCC: false,
+                    PBD: false,
+                    REC: false,
+                    RED: false,
+                    PM: true,
+                    ABD: false,
+                    CL: false,
+                    CLI : false,
+                    SR: false
                 }),
                 oContactModel,
                 fnRecievedHandler,
@@ -43,7 +56,7 @@ sap.ui.define(
             this._oFormatYyyymmdd = DateFormat.getInstance({
                 pattern: 'MM/dd/yyyy'
             });
-            this._OwnerComponent = this.getView().getParent().getParent().getController().getOwnerComponent();
+            this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             oContactModel = new sap.ui.model.json.JSONModel();
             this.getView().setModel(oContactModel, "quickpay-cl");
@@ -61,6 +74,29 @@ sap.ui.define(
             });
             oMsgArea.addStyleClass("nrgQPPay-hide");
         };
+
+        /**
+		 * Central function to toggle between screens.
+		 *
+		 * @function onQuickPay
+         * @param {sScreenView} sScreenView string which screen need to be on.
+		 */
+        Controller.prototype._onToggleViews = function (sScreenView) {
+            var oViewModel = this.getView().getModel("appView");
+            oViewModel.setProperty("/CC", false);
+            oViewModel.setProperty("/BD", false);
+            oViewModel.setProperty("/PCC", false);
+            oViewModel.setProperty("/PBD", false);
+            oViewModel.setProperty("/REC", false);
+            oViewModel.setProperty("/RED", false);
+            oViewModel.setProperty("/PM", false);
+            oViewModel.setProperty("/ABD", false);
+            oViewModel.setProperty("/CL", false);
+            oViewModel.setProperty("/CLI", false);
+            oViewModel.setProperty("/SR", false);
+            sScreenView = "/" + sScreenView;
+            oViewModel.setProperty(sScreenView, true);
+        };
 /********************************  Credit card Related functionality Start ***********************************/
         /**
 		 * Show Stop Voice Log Recording msg
@@ -69,8 +105,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onCreditCard = function (oEvent) {
-            var oTBIStopRec = this.getView().byId("idnrgQPPay-TBIStopRec"),
-                fnRecievedHandler,
+            var fnRecievedHandler,
                 oCreditCardDropDown = this.getView().byId("idnrgQPCC-DDL"),
                 oBindingInfo,
                 oCreditCardTemplate = this.getView().byId("idnrgQPCC-DDLItem"),
@@ -84,7 +119,7 @@ sap.ui.define(
                 oCreditCardModel = new sap.ui.model.json.JSONModel(),
                 oMsgArea = this.getView().byId("idnrgQPPay-msgArea"),
                 oAppViewModel = this.getView().getModel("appView");
-            oTBIStopRec.setSelected(true);
+            this._onToggleViews("SR");
             oCreditCardDate.setDefaultDate(this._oFormatYyyymmdd.format(new Date(), true));
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             //oCreditCardDate.setMinDate(new Date());
@@ -263,8 +298,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onPendingCreditCard = function (oEvent) {
-            var oTBIPCC = this.getView().byId("idnrgQPPay-TBIPCC"),
-                oPopup = this.getView().byId("idnrgQPPay-Popup"),
+            var oPopup = this.getView().byId("idnrgQPPay-Popup"),
                 oCloseButton = this.getView().byId("idnrgQPPayBt-close"),
                 oTableRow = this.getView().byId("idnrgQPTable-Row"),
                 oTableRowTemplate = this.getView().byId("idnrgQPTable-Rows"),
@@ -278,7 +312,7 @@ sap.ui.define(
                 oPendingPaymentsModel = new JSONModel(),
                 that = this;
             this._OwnerComponent.getCcuxApp().setOccupied(true);
-            oTBIPCC.setSelected(true);
+            this._onToggleViews("PCC");
             this._aPendingSelPaths = [];
             //this.getView().getParent().setPosition("begin bottom", "begin bottom");
             this.setPosition(0);
@@ -501,8 +535,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onBankDraft = function (oEvent) {
-            var oTBIBD = this.getView().byId("idnrgQPPay-TBIBD"),
-                oPopup = this.getView().byId("idnrgQPPay-Popup"),
+            var oPopup = this.getView().byId("idnrgQPPay-Popup"),
                 oCloseButton = this.getView().byId("idnrgQPPayBt-close"),
                 oBankDraftDate = this.getView().byId("idnrgQPBD-Date"),
                 sCurrentPath,
@@ -527,7 +560,7 @@ sap.ui.define(
             oPopup.removeStyleClass("nrgQPPay-Popup");
             oPopup.addStyleClass("nrgQPPay-PopupWhite");
             oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
-            oTBIBD.setSelected(true);
+            this._onToggleViews("BD");
             this.getView().setModel(oBankDraftModel, "quickpay-bd");
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             sCurrentPath = "/BankDraftSet" + "(BP='" + this._sBP + "',CA='" + this._sCA + "')/WaiveReasonsSet";
@@ -727,8 +760,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onPendingBankDraft = function (oEvent) {
-            var oTBIPBD = this.getView().byId("idnrgQPPay-TBIPBD"),
-                oPopup = this.getView().byId("idnrgQPPay-Popup"),
+            var oPopup = this.getView().byId("idnrgQPPay-Popup"),
                 oCloseButton = this.getView().byId("idnrgQPPayBt-close"),
                 oTableRow = this.getView().byId("idnrgQPTable-BDRow"),
                 oTableRowTemplate = this.getView().byId("idnrgQPTable-BDRows"),
@@ -742,7 +774,7 @@ sap.ui.define(
                 oPendingPaymentsModel = new JSONModel(),
                 that = this;
             that._OwnerComponent.getCcuxApp().setOccupied(true);
-            oTBIPBD.setSelected(true);
+            this._onToggleViews("PBD");
             this._aPendingSelPaths = [];
             oPopup.removeStyleClass("nrgQPPay-Popup");
             oPopup.addStyleClass("nrgQPPay-PopupPayment");
@@ -890,8 +922,8 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onAddBD = function (oEvent) {
-            var oTBIAddBD = this.getView().byId("idnrgQPPay-TBIAddBD");
-            oTBIAddBD.setSelected(true);
+            this._onToggleViews("ABD");
+
         };
         /**
          * Handler for Adding new Bank draft after data
@@ -947,8 +979,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onReliantCard = function (oEvent) {
-            var oTBIRD = this.getView().byId("idnrgQPPay-TBIRD"),
-                oPopup = this.getView().byId("idnrgQPPay-Popup"),
+            var oPopup = this.getView().byId("idnrgQPPay-Popup"),
                 oCloseButton = this.getView().byId("idnrgQPPayBt-close"),
                 oReliantDate = this.getView().byId("idnrgQPCC-RedDate"),
                 oReliantRedeem = this.getView().byId("idnrgQPCC-reliantRedeem");
@@ -956,7 +987,7 @@ sap.ui.define(
             oPopup.addStyleClass("nrgQPPay-PopupWhite");
             oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
             oReliantRedeem.addStyleClass("nrgQPPay-hide");
-            oTBIRD.setSelected(true);
+            this._onToggleViews("RED");
             oReliantDate.setValue(this._oFormatYyyymmdd.format(new Date(), true));
             oReliantDate.setEditable(false);
         };
@@ -1035,7 +1066,6 @@ sap.ui.define(
                 oMsgArea = this.getView().byId("idnrgQPPay-msgArea"),
                 oContext,
                 oReliantCardAmount = this.getView().byId("idnrgQPCC-Amt2"),
-                oTBIPaySucc = this.getView().byId("idnrgQPPay-TBIPaySucc"),
                 that = this,
                 oPopup = this.getView().byId("idnrgQPPay-Popup"),
                 oCloseButton = this.getView().byId("idnrgQPPayBt-close");
@@ -1053,7 +1083,7 @@ sap.ui.define(
                     oPopup.removeStyleClass("nrgQPPay-PopupWhite");
                     oPopup.addStyleClass("nrgQPPay-Popup");
                     oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
-                    oTBIPaySucc.setSelected(true);
+                    that._onToggleViews("CLI");
                     oMsgArea.addStyleClass("nrgQPPay-hide");
                     jQuery.sap.log.info("Create successfull");
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
@@ -1074,8 +1104,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onReceipt = function (oEvent) {
-            var oTBIRC = this.getView().byId("idnrgQPPay-TBIRC"),
-                oPopup = this.getView().byId("idnrgQPPay-Popup"),
+            var oPopup = this.getView().byId("idnrgQPPay-Popup"),
                 oCloseButton = this.getView().byId("idnrgQPPayBt-close"),
                 aFilterIds,
                 aFilterValues,
@@ -1093,7 +1122,7 @@ sap.ui.define(
             oPopup.removeStyleClass("nrgQPPay-Popup");
             oPopup.addStyleClass("nrgQPPay-PopupWhite");
             oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
-            oTBIRC.setSelected(true);
+            this._onToggleViews("REC");
             sCurrentPath = "/ReceiptSet" + "(BP='" + this._sBP + "',CA='" + this._sCA + "')/WaiveReasonsSet";
 /*            WRRecievedHandler = function (oEvent) {
                 jQuery.sap.log.info("Date Received Succesfully");
@@ -1245,13 +1274,12 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onStopRec = function (oEvent) {
-            var oTBICC = this.getView().byId("idnrgQPPay-TBICC"),
-                oPopup = this.getView().byId("idnrgQPPay-Popup"),
+            var oPopup = this.getView().byId("idnrgQPPay-Popup"),
                 oCloseButton = this.getView().byId("idnrgQPPayBt-close");
             oPopup.removeStyleClass("nrgQPPay-Popup");
             oPopup.addStyleClass("nrgQPPay-PopupWhite");
             oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
-            oTBICC.setSelected(true);
+            this._onToggleViews("CC");
         };
 
         /**
@@ -1270,14 +1298,13 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onPaymentSuccess = function () {
-            var oTBIPaySucc = this.getView().byId("idnrgQPPay-TBIPaySucc"),
-                oPopup = this.getView().byId("idnrgQPPay-Popup"),
+            var oPopup = this.getView().byId("idnrgQPPay-Popup"),
                 oCloseButton = this.getView().byId("idnrgQPPayBt-close");
             oPopup.removeStyleClass("nrgQPPay-PopupPayment");
             oPopup.removeStyleClass("nrgQPPay-PopupWhite");
             oPopup.addStyleClass("nrgQPPay-Popup");
             oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
-            oTBIPaySucc.setSelected(true);
+            this._onToggleViews("CLI");
         };
         /**
 		 * Enable Contact Log
@@ -1286,9 +1313,8 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onContactLog = function () {
-            var oTBICL = this.getView().byId("idnrgQPPay-TBICL"),
-                oPopup = this.getView().byId("idnrgQPPay-Popup");
-            oTBICL.setSelected(true);
+            var oPopup = this.getView().byId("idnrgQPPay-Popup");
+            this._onToggleViews("CL");
             oPopup.removeStyleClass("nrgQPPay-Popup");
             oPopup.addStyleClass("nrgQPPay-PopupPayment");
         };

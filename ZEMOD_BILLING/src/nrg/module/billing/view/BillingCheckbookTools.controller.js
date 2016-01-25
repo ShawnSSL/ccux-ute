@@ -75,7 +75,7 @@ sap.ui.define(
 		 *
 		 */
         Controller.prototype._onFeeAdjBtnClicked = function (oEvent) {
-            this.getOwnerComponent().getRouter().navTo("billing.feeAdjs", {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+            this.navTo("billing.feeAdjs", {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
         };
         Controller.prototype._onAvgBillBtnClicked = function () {
             if (!this.ABPPopupCustomControl) {
@@ -85,7 +85,20 @@ sap.ui.define(
             }
             this.ABPPopupCustomControl.prepareABP();
         };
-
+        /**
+		 * Handler for Balance Bill Re-Average Detail.
+		 *
+		 * @function
+		 * @param {oEvent} Type Event object
+         *
+		 *
+		 */
+        Controller.prototype._onReAvgBillBtnClicked = function (oEvent) {
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            oWebUiManager.notifyWebUi('openIndex', {
+                LINK_ID: "Z_BB_REAVG"
+            });
+        };
         Controller.prototype._onDppBtnClicked = function () {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
                 oRouter = this.getOwnerComponent().getRouter(),

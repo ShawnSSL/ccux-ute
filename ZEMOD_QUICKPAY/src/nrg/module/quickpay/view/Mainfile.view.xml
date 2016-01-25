@@ -1,0 +1,72 @@
+<mvc:View
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:u="ute.ui.commons"
+    xmlns:um="ute.ui.main"
+    xmlns:c="sap.ui.commons"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    controllerName="nrg.module.quickpay.view.Mainfile">
+    <u:Tag class="nrgToolsEmpty nrgAppMain-toolsContent nrgAppMain-toolsContent-full">
+
+        <u:Tag class="nrgQPPay-Popup" id="idnrgQPPay-Popup">
+            <u:Tag class="nrgQPPay-PopupHdr">
+                <um:Button press=".onPopupClose"
+                                         class="nrgQPPay-close"
+                                        design="None">
+                   <u:Tag class="nrgQPPayBt-close" id="idnrgQPPayBt-close" />
+                </um:Button>
+            </u:Tag>
+             <u:Tag visible="{appView>/SR}">
+                  <um:Button press=".onStopRec"
+                                 class="nrgQPPay-stopRec"
+                               id="idnrgQPPayBt-stopRec" design="None">
+                     <core:Icon src="sap-icon://nrg-icon/handset" class="nrgQPPay-handset" />
+                     <u:Tag text="{comp-i18n-quickpay>nrgQPStopRecording}" class="nrgQPPay-text"/>
+                 </um:Button>
+             </u:Tag>
+             <core:Fragment fragmentName="nrg.module.quickpay.view.PaymentMethods" type="XML" />
+             <core:Fragment fragmentName="nrg.module.quickpay.view.Creditcard" type="XML" />
+             <core:Fragment fragmentName="nrg.module.quickpay.view.PendingCreditCard" type="XML" />
+             <core:Fragment fragmentName="nrg.module.quickpay.view.BankDraft" type="XML" />
+             <core:Fragment fragmentName="nrg.module.quickpay.view.PendingBankDraft" type="XML" />
+             <core:Fragment fragmentName="nrg.module.quickpay.view.Receipt" type="XML" />
+             <core:Fragment fragmentName="nrg.module.quickpay.view.Redemption" type="XML" />
+             <core:Fragment fragmentName="nrg.module.quickpay.view.AddBankDraft" type="XML" />
+             <core:Fragment fragmentName="nrg.module.quickpay.view.Contactlog" type="XML" />
+             <u:Tag visible="false">
+                <um:Dropdown>
+                        <um:DropdownItem key="{comp-quickpay>CardNumber}" class="nrgQPCC-DdLItem" id="idnrgQPCC-DDLItem">
+                            <u:Tag class="nrgQPCC-DDI">
+                                <core:Icon src="{parts:[{path:'comp-quickpay>CardType'}],
+                                                    formatter:'.formatCCType'}" class="nrgQPCC-icon" />
+                                <u:Tag text="{parts:[{path:'comp-quickpay>CardNumber'}],
+                                                    formatter:'.formatCardNumber'}"
+                                       class="nrgQPCC-DdlValue"/>
+                            </u:Tag>
+                        </um:DropdownItem>
+                        <um:DropdownItem key="{comp-quickpay>ReasonCode}" class="nrgQPCC-DDLWRItem" id="idnrgQPCC-WaiveReasonItem">
+                                  <u:Tag text="{comp-quickpay>ReasonText}" />
+                        </um:DropdownItem>
+                        <um:DropdownItem key="{comp-quickpay>BankKey}" class="nrgQPCC-DdLItem" id="idnrgQPCC-BankDraftItem">
+                            <u:Tag class="nrgQPCC-DDI">
+                               <core:Icon src="sap-icon://nrg-icon/dollar" />
+                                <u:Tag text="{parts:[{path:'comp-quickpay>BankAccNum'}],
+                                                    formatter:'.formatAccountNumber'}"  class="nrgQPCC-DdlValue"/>
+                            </u:Tag>
+                        </um:DropdownItem>
+                </um:Dropdown>
+             </u:Tag>
+            <u:Tag visible="{appView>/CLI}">
+                  <um:Button press=".onContactLog"
+                             class="nrgQPPay-stopRec"
+                             design="None">
+                     <core:Icon src="sap-icon://nrg-icon/verified" class="nrgQPPay-verified" />
+                     <u:Tag text="{comp-i18n-quickpay>nrgQPPaymentAccepted}" class="nrgQPPay-verText"/>
+                 </um:Button>
+            </u:Tag>
+            <u:Tag  class="nrgQPPay-msgArea" id="idnrgQPPay-msgArea">
+                <u:Tag id="idnrgQPPay-msg" class="nrgQPPay-msg" text="{appView>/message}" />
+            </u:Tag>
+        </u:Tag>
+    </u:Tag>
+</mvc:View>
