@@ -1136,39 +1136,28 @@ sap.ui.define(
 
 
             oDataObject.Contract = this._coNum;
-            oDataObject.Partner = this._bpNum;
-            oDataObject.ContAccount = this._caNum;
+            oDataObject.BP = this._bpNum;
+            oDataObject.CA = this._caNum;
             oDataObject.DefDtNew = oExt.getProperty('/results/0/OpenItems/DefferalDate');
             if (this._bOverRide) {
                 oDataObject.OverRide  = 'X';
             } else {
                 oDataObject.OverRide  = '';
             }
-            //oPost.setProperty('/DwnPay', oExt.getProperty('/results/0/iDwnPay'));
             oDataObject.DwnPay  = oExt.getProperty('/results/0/iDwnPay');
-            if (oDataObject.DwnPay) {
+            if (oDataObject.DwnPay || oDataObject.DwnPay === 0) {
                 oDataObject.DwnPay = oDataObject.DwnPay.toString();
             }
             if (sDwnPayDate) {
-                //oPost.setProperty('/DwnPayDate', new Date(sDwnPayDate));//Date
                 oDataObject.DwnPayDate = new Date(sDwnPayDate);
-            } //else {
-                //oPost.setProperty('/DwnPayDate', null);
-            //}
+            }
             if (oReason.getProperty("/selectedKey")) {
-                //oPost.setProperty('/ExtReason', oReason.getProperty());
                 oDataObject.ExtReason = oReason.getProperty("/selectedKey");
             }
             if (this._extReason) {
-                //oPost.setProperty('/ExtReason', this._extReason);
                 oDataObject.ExtReason = this._extReason;
             }
-
-            //oPost.setProperty('/ExtActive', false);
             oDataObject.ExtActive = false;
-            //oPost.setProperty('/ChgOpt', false);
-            //oDataObject.ChgOpt = false;
-
             sPath = '/ExtConfs';
 
             oParameters = {
