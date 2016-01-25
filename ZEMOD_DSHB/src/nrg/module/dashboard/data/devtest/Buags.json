@@ -2,6 +2,84 @@
     "d":{
         "results": [
             {
+                "__metadata" : {
+                  "id" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')",
+                  "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')",
+                  "type" : "ZE_CCUX_SRV.Buag"
+            },
+            "ContractAccountID" : "000003648303",
+            "PartnerID" : "0002926935",
+            "FixedAddressID" : "0157213908",
+            "BusinessAgreementName" : "FERNANDO MARQUEZ",
+            "BadgeSS" : "",
+            "SSText" : "",
+            "BadgeGT" : "",
+            "GTText" : "",
+            "DisplayName" : "( 000003648303-0 ) 2133 JASPER ST / ROSHARON TX 77583-3077",
+            "CheckDigit" : "0",
+            "ThirdPrtyAuth" : "",
+            "Partner" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/Partner"
+              }
+            },
+            "Contracts" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/Contracts"
+              }
+            },
+            "BpAssigns" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/BpAssigns"
+              }
+            },
+            "BuagMailingAddrSet" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/BuagMailingAddrSet"
+              }
+            },
+            "BuagMsgAlrets" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/BuagMsgAlrets"
+              }
+            },
+            "BillingInfo" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/BillingInfo"
+              }
+            },
+            "Payment" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/Payment"
+              }
+            },
+            "BuagDetailSet" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/BuagDetailSet"
+              }
+            },
+            "BuagAddrDetail" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/BuagAddrDetail"
+              }
+            },
+            "Notifycations" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/Notifycations"
+              }
+            },
+            "ContactLogs" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/ContactLogs"
+              }
+            },
+            "ThirdPartyAuth" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('3648303')/ThirdPartyAuth"
+              }
+            }
+          },
+            {
                 "__metadata":{
                     "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('100738')",
                     "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Buags('100738')",

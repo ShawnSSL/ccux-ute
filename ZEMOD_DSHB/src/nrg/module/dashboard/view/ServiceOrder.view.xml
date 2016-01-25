@@ -118,7 +118,7 @@
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c1"
                                                      text="{comp-i18n-dashboard>nrgDashboard-servOrder-enrl-pend}"/>
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c2"
-                                                     text="{oEnrollPndingStats>DESCRIPTION}"/>
+                                                     text="{oEnrollPndingStats>Description}"/>
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c3"
                                                      text="{oEnrollPndingStats>E_BPRC_LL_STATUS}"/>
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c4"
@@ -294,12 +294,11 @@
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c1"
                                                      text="{oCompleteOrds>Type}"/>
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c2"
-                                                     text="{oCompleteOrds>QMNUM}"/>
+                                                     text="{oCompleteOrds>Description}"/>
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c3"
-                                                     text="{oCompleteOrds>Status}"/>
+                                                     text="{oCompleteOrds>E_BPRC_LL_STATUS}"/>
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c4"
-                                                     text="{parts:['oCompleteOrds>Time'],
-                                                            formatter:'._formatDate'}"/>
+                                                     text="{parts:['oCompleteOrds>E_BPRC_LLST_DATE'], formatter:'._formatDate'}"/>
                                         </ute:Tag>
                                     </ute:Tag>
                                 </ute:Tag>

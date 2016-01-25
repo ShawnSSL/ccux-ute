@@ -127,10 +127,8 @@ sap.ui.define(
             this.getView().getModel('oSelectedTabs').setProperty('/pendingSelected', false);
             this.getView().getModel('oSelectedTabs').setProperty('/completeSelected', true);
             if (this.getView().getModel('oESIDDropdown').oData.results) {
-                this._retrCompleteOrds(this._bpNum, this._caNum, this.getView().getModel('oESIDDropdown').oData.results[0].Contract, this.getView().getModel('oESIDDropdown').oData.results[0].ESID);
+                this._retrCompleteOrds(this._bpNum, this._caNum, this.getView().getModel('oESIDDropdown').oData.results[0].ESID);
             }
-
-            //Controller.prototype._retrCompleteOrds = function (sBpNum, sCaNum, sCoNum, sESID) {
         };
 
         Controller.prototype._onESIDSelect = function (oEvent) {
@@ -140,7 +138,7 @@ sap.ui.define(
                 }
             } else {
                 if (this.getView().getModel('oESIDDropdown').oData.results) {
-                    this._retrCompleteOrds(this._bpNum, this._caNum, this.getView().getModel('oESIDDropdown').oData.results[oEvent.mParameters.selectedKey].Contract, this.getView().getModel('oESIDDropdown').oData.results[oEvent.mParameters.selectedKey].ESID);
+                    this._retrCompleteOrds(this._bpNum, this._caNum, this.getView().getModel('oESIDDropdown').oData.results[oEvent.mParameters.selectedKey].ESID);
                 }
             }
         };
@@ -206,7 +204,7 @@ sap.ui.define(
                     if (oData.results.length > 0) {
                         this.getView().getModel('oEnrollHolds').setData(oData);
                         this.getView().getModel('oPndingVisType').setProperty('/visMovein', true);
-                        this._retrEnrollPndingStats(this._bpNum, this._caNum);
+                        this._retrEnrollPndingStats(this._bpNum, this._caNum, sESID);
                     } else {
                         sPath = 'test';
                     }
@@ -214,7 +212,6 @@ sap.ui.define(
                     this._retrReconOrds(this._bpNum, this._caNum, sContract, sESID);
                     this._retrDiscOrds(this._bpNum, this._caNum, sContract, sESID);
                     this._retrOtherOrds(this._bpNum, this._caNum, sContract, sESID);
-
                 }.bind(this),
                 error: function (oError) {
                 }.bind(this)
@@ -225,7 +222,7 @@ sap.ui.define(
             }
         };
 
-        Controller.prototype._retrEnrollPndingStats = function (sBpNum, sCaNum) {
+        Controller.prototype._retrEnrollPndingStats = function (sBpNum, sCaNum, sESID) {
             var sPath,
                 aFilters = [],
                 oParameters,
@@ -233,6 +230,7 @@ sap.ui.define(
 
             aFilters.push(new Filter({ path: 'BP', operator: FilterOperator.EQ, value1: sBpNum}));
             aFilters.push(new Filter({ path: 'CA', operator: FilterOperator.EQ, value1: sCaNum}));
+            aFilters.push(new Filter({ path: 'ESID', operator: FilterOperator.EQ, value1: sESID}));
 
             sPath = '/PendStatS';
 
@@ -344,8 +342,7 @@ sap.ui.define(
             }
         };
 
-
-        Controller.prototype._retrCompleteOrds = function (sBpNum, sCaNum, sCoNum, sESID) {
+        Controller.prototype._retrCompleteOrds = function (sBpNum, sCaNum, sESID) {
             var sPath,
                 aFilters = [],
                 oParameters,
@@ -353,7 +350,6 @@ sap.ui.define(
 
             aFilters.push(new Filter({ path: 'BP', operator: FilterOperator.EQ, value1: sBpNum}));
             aFilters.push(new Filter({ path: 'CA', operator: FilterOperator.EQ, value1: sCaNum}));
-            aFilters.push(new Filter({ path: 'Contract', operator: FilterOperator.EQ, value1: sCoNum}));
             aFilters.push(new Filter({ path: 'ESID', operator: FilterOperator.EQ, value1: sESID}));
 
             sPath = '/ComplOrdS';

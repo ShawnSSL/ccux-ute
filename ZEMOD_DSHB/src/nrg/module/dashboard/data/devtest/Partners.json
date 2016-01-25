@@ -2,6 +2,135 @@
     "d":{
         "results": [
             {
+                "__metadata" : {
+                  "id" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')",
+                  "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')",
+                  "type" : "ZE_CCUX_SRV.Partner"
+                },
+                "PartnerID" : "0002926935",
+                "PartnerType" : "1",
+                "SiebelCustomer" : "",
+                "FullName" : "FERNANDO MARQUEZ",
+                "AuthorisedPartyName" : "",
+                "ContactName" : "",
+                "BadgeCI" : "",
+                "CIColor" : "",
+                "CIHover" : "",
+                "BadgeRX" : "",
+                "RXColor" : "",
+                "RXHover" : "",
+                "BadgeBC" : "",
+                "BCColor" : "",
+                "BCHover" : "",
+                "DL" : "",
+                "SSN" : "XXX-XX-4946",
+                "DUNS" : "",
+                "TaxID" : "",
+                "DLVerification" : "",
+                "SSNVerification" : "X",
+                "Cell" : "832-748-6216",
+                "CellConsum" : "001",
+                "Fax" : "",
+                "FaxConsum" : "",
+                "Email" : "DONOTEMAIL@RELIANT.COM",
+                "EmailConsum" : "001",
+                "DayPhone" : "",
+                "DayConsum" : "",
+                "DayPhoneExt" : "",
+                "DayPhoneType" : "",
+                "EveningPhone" : "",
+                "EveConsum" : "",
+                "EveningPhoneExt" : "",
+                "EveningPhoneType" : "",
+                "SMSUrl" : "http://dev1-ccrportal.reliant.com/esiidlookup/ActivateMobileServlet?businessPartner=0002926935&contractAccount=&contactNo=832-748-6216&companyCode=0121&brandId=RE",
+                "IsSMS" : "",
+                "BpMarkPreferSet" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BpMarkPreferSet"
+                  }
+                },
+                "BpContact" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BpContact"
+                  }
+                },
+                "BpAddress" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BpAddress"
+                  }
+                },
+                "BpName" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BpName"
+                  }
+                },
+                "BpSegs" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BpSegs"
+                  }
+                },
+                "Buags" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/Buags"
+                  }
+                },
+                "BuagMailingAddrSet" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BuagMailingAddrSet"
+                  }
+                },
+                "BpAlert" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BpAlert"
+                  }
+                },
+                "BuagMsgAlrets" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BuagMsgAlrets"
+                  }
+                },
+                "BpTitle" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BpTitle"
+                  }
+                },
+                "BpAccTitle" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BpAccTitle"
+                  }
+                },
+                "Contracts" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/Contracts"
+                  }
+                },
+                "BpPersonal" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BpPersonal"
+                  }
+                },
+                "Notifycations" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/Notifycations"
+                  }
+                },
+                "ContactLogs" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/ContactLogs"
+                  }
+                },
+                "BpSuffix" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/BpSuffix"
+                  }
+                },
+                "EmailNNPs" : {
+                  "__deferred" : {
+                    "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('2926935')/EmailNNPs"
+                  }
+                }
+              },
+            {
                 "__metadata":{
                     "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('64041')",
                     "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('64041')",

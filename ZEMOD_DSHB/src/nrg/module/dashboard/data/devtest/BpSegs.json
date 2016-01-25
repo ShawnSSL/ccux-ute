@@ -18,5 +18,9 @@
     {
         PartnerID: "64041",
         CustomerSeg: "PRIORITY 666"
+    },
+    {
+        PartnerID : "0002926935",
+        CustomerSeg : "RESIDENTIAL HIGH VALUE CUSTOMER"
     }
 ]
