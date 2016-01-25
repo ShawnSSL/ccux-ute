@@ -7,11 +7,10 @@ sap.ui.define(
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
         'sap/ui/core/routing/HashChanger',
-        'nrg/base/type/ContractAccountNumber',
-        'jquery.sap.global'
+        'nrg/base/type/ContractAccountNumber'
     ],
 
-    function (CoreController, Filter, FilterOperator, HashChanger, jQuery) {
+    function (CoreController, Filter, FilterOperator, HashChanger) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.search.view.CallerNoIDSearch');
@@ -260,7 +259,7 @@ sap.ui.define(
                     if (oData.results) {
                         
                         // Scroll down
-                        jQuery('.uteApp-body').animate({scrollTop: jQuery(document).height()}, 'slow');
+                        $('.uteApp-body').animate({scrollTop: $(document).height()}, 'slow');
 
                         if (oData.results.length === 1) {
                             //oComponentContextModel.setProperty('/dashboard/bpNum', oData.results[0].PartnerID);
