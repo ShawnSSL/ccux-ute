@@ -7,10 +7,11 @@ sap.ui.define(
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
         'sap/ui/core/routing/HashChanger',
-        'nrg/base/type/ContractAccountNumber'
+        'nrg/base/type/ContractAccountNumber',
+        'jquery.sap.global'
     ],
 
-    function (CoreController, Filter, FilterOperator, HashChanger) {
+    function (CoreController, Filter, FilterOperator, HashChanger, jQuery) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.search.view.CallerNoIDSearch');
@@ -259,7 +260,7 @@ sap.ui.define(
                     if (oData.results) {
                         
                         // Scroll down
-                        $('.uteApp-body').animate({scrollTop: $(document).height()}, 'slow');
+                        jQuery('.uteApp-body').animate({scrollTop: jQuery(document).height()}, 'slow');
 
                         if (oData.results.length === 1) {
                             //oComponentContextModel.setProperty('/dashboard/bpNum', oData.results[0].PartnerID);
@@ -361,7 +362,6 @@ sap.ui.define(
                 };
                 this._handleBpConfirmed(oPassingEvent);
             }
-
             return;
         };
 
@@ -377,7 +377,7 @@ sap.ui.define(
 
             //Set the loading effect to false
            // oComponent.getCcuxApp().setOccupied(false);
-
+            this.getOwnerComponent().getCcuxApp().setOccupied(false);
             //Navigate to verification page
             if (oSearchCaModel.getProperty('/searchedInCa')) {
                 oRouter.navTo('dashboard.VerificationWithCa', {bpNum: oRouteInfo.BP_NUM, caNum: oSearchCaModel.getProperty('/searchedCaNum')});

@@ -138,18 +138,21 @@ sap.ui.define(
                 aFilterValues,
                 aFilters,
                 fnRecievedHandler,
-                oViewModel = this.getView().getModel('cj-view');
+                oViewModel = this.getView().getModel('cj-view'),
+                that = this;
             aFilterIds = ["BP", "CA", "StartDate", "EndDate"];
             aFilterValues = [this._sBP, this._sCA, dStartDate, dEndDate];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = "/CJReferralSet";
             oReferral.removeContent();
             oViewModel.setProperty("/referral", false);
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             fnRecievedHandler = function (oEvent) {
                 if ((oEvent) && (oEvent.mParameters) && (oEvent.mParameters.data) && (oEvent.mParameters.data.results) && (oEvent.mParameters.data.results.length > 0)) {
                     oViewModel.setProperty("/referral", true);
                 }
                 jQuery.sap.log.info("Odata Read successfully");
+                that.getOwnerComponent().getCcuxApp().setOccupied(false);
             };
             oBindingInfo = {
                 model : "comp-cj",
