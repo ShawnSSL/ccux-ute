@@ -30,8 +30,8 @@
         "Reason":"POSID",
         "Status":"CLOSED",
         "Time":"\/Date(1434344400000+0000)\/"
-      }
-{
+      },
+        {
         "__metadata":{
           "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/EnrollHoldS(Contract='0034910949',ESID='1008901017126656741100',Reason='DEPHOLD%20-250.00')",
           "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/EnrollHoldS(Contract='0034910949',ESID='1008901017126656741100',Reason='DEPHOLD%20-250.00')",
@@ -60,6 +60,7 @@
         "Reason":"POSID",
         "Status":"CLOSED",
         "Time":"\/Date(1434344400000+0000)\/"
-      }    ]
+      }
+    ]
   }
 }
