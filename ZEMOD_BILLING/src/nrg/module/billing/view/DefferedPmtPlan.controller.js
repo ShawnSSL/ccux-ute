@@ -31,34 +31,34 @@ sap.ui.define(
             this.getView().setModel(this.getOwnerComponent().getModel('comp-dppext'), 'oDataSvc');
 
             //Model for screen control
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppScrnControl');
+            this.getView().setModel(new JSONModel(), 'oDppScrnControl');
 
             //Model for DPP eligibility/reason
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppEligible');
+            this.getView().setModel(new JSONModel(), 'oDppEligible');
 
             //Model for DPP denied reasons
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppDeniedReason');
+            this.getView().setModel(new JSONModel(), 'oDppDeniedReason');
 
             //Model for SetUp (DPP Step I)
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppReasons');
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppSetUps');
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppStepOnePost');
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppStepOneSelectedData');
+            this.getView().setModel(new JSONModel(), 'oDppReasons');
+            this.getView().setModel(new JSONModel(), 'oDppSetUps');
+            this.getView().setModel(new JSONModel(), 'oDppStepOnePost');
+            this.getView().setModel(new JSONModel(), 'oDppStepOneSelectedData');
 
             //Model for DppConf (DPP Step II)
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppConfs');
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppConfsChecked');
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppStepTwoPost');
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppStepTwoConfirmdData');
+            this.getView().setModel(new JSONModel(), 'oDppConfs');
+            this.getView().setModel(new JSONModel(), 'oDppConfsChecked');
+            this.getView().setModel(new JSONModel(), 'oDppStepTwoPost');
+            this.getView().setModel(new JSONModel(), 'oDppStepTwoConfirmdData');
 
             //Model for DppComunication (DPPIII)
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDppStepThreeCom');
+            this.getView().setModel(new JSONModel(), 'oDppStepThreeCom');
 
             //Model for Ext Function (EXT Step I)
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oExtEligible');
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oExtExtensions');
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oExtExtReasons');
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oExtPostRequest');
+            this.getView().setModel(new JSONModel(), 'oExtEligible');
+            this.getView().setModel(new JSONModel(), 'oExtExtensions');
+            this.getView().setModel(new JSONModel(), 'oExtExtReasons');
+            this.getView().setModel(new JSONModel(), 'oExtPostRequest');
 
 
             this._initScrnControl();
@@ -290,11 +290,13 @@ sap.ui.define(
 
         Controller.prototype._onExtDeniedOkClick = function () {    //Navigate to DPP setup if 'OK' is clicked
             var oModel = this.getOwnerComponent().getModel("comp-dppext"),
-                that = this;
+                that = this,
+                oContactLogArea = this.getView().byId('idnrgBilling-extDenCL');
             oModel.create("/ExtDeniedS", {
                 "Contract": this._coNum,
                 "ContAccount": this._caNum,
-                "Partner" : this._bpNum
+                "Partner" : this._bpNum,
+                "Message" : (oContactLogArea.getValue() || "")
             }, {
                 success : function (oData, oResponse) {
                     if (oData) {
@@ -311,11 +313,13 @@ sap.ui.define(
         };
         Controller.prototype._onDppDeniedOkClick = function () {    //Navigate to DPP setup if 'OK' is clicked
             var oModel = this.getOwnerComponent().getModel("comp-dppext"),
-                that = this;
+                that = this,
+                oContactLogArea = this.getView().byId('idnrgBilling-DPPDenCL');
             oModel.create("/DPPDenieds", {
                 "Contract": this._coNum,
-                "ContAccount": this._caNum,
-                "Partner" : this._bpNum
+                "CA": this._caNum,
+                "BP" : this._bpNum,
+                "Message" : (oContactLogArea.getValue() || "")
             }, {
                 success : function (oData, oResponse) {
                     if (oData) {
@@ -491,12 +495,13 @@ sap.ui.define(
                 sTempCOpbel,
                 sTempCOpupw,
                 sTempCOpupk,
-                sTempCOpupz;
+                sTempCOpupz,
+                oContactLogArea = this.getView().byId('idnrgBilling-DPPAccCL');
 
 
-            oConfPost.setProperty('/ContAccount', oConf.oData.results[0].ContractAccountNumber);
+            oConfPost.setProperty('/CA', this._caNum);
 
-            oConfPost.setProperty('/PartnerID', oConf.oData.results[0].PartnerID);
+            oConfPost.setProperty('/BP', this._bpNum);
             oConfPost.setProperty('/Contract', this._coNum);
 
             oConfPost.setProperty('/SelectedData', oConf.oData.results[0].SelectedData.replace(/"/g, '\''));
@@ -508,6 +513,7 @@ sap.ui.define(
             oConfPost.setProperty('/InitialDate', oConf.oData.results[0].InitialDate);
 
             oConfPost.setProperty('/ReasonCode', this.getView().getModel('oDppReasons').getProperty('/selectedKey'));
+            oConfPost.setProperty('/Message', (oContactLogArea.getValue() || ""));
 
             //oConfPost.setProperty('/Reason', this.getView().getModel('oDppReasons').setProperty('/selectedReason'));
 
@@ -731,7 +737,7 @@ sap.ui.define(
                 oParameters,
                 sPath;
 
-            sPath = '/DPPCorresps(ContractAccountNumber=\'' + this._caNum + '\',PartnerID=\'' + this._bpNum + '\')';
+            sPath = '/DPPCorresps(CA=\'' + this._caNum + '\',BP=\'' + this._bpNum + '\')';
 
             oParameters = {
                 success : function (oData) {
@@ -770,8 +776,8 @@ sap.ui.define(
                 oSelectedStartDate = new Date();
             }
 
-            aFilterIds = ["ContractAccountNumber", "SelectedData", "InstlmntNo", "ZeroDwnPay", "InitialDate"];
-            aFilterValues = [this._caNum, this.getView().getModel('oDppStepOneSelectedData').getJSON(), this.getView().getModel('oDppStepOnePost').getProperty('/InstlmntNo'), this.getView().getModel('oDppStepOnePost').getProperty('/ZeroDwnPay'), oSelectedStartDate];
+            aFilterIds = ["BP", "CA", "Contract", "SelectedData", "InstlmntNo", "ZeroDwnPay", "InitialDate"];
+            aFilterValues = [this._bpNum, this._caNum, this._coNum, this.getView().getModel('oDppStepOneSelectedData').getJSON(), this.getView().getModel('oDppStepOnePost').getProperty('/InstlmntNo'), this.getView().getModel('oDppStepOnePost').getProperty('/ZeroDwnPay'), oSelectedStartDate];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
 
             sPath = '/DPPConfs';
@@ -805,11 +811,18 @@ sap.ui.define(
         Controller.prototype._retrDisclosureMessage = function () {
             var oODataSvc = this.getView().getModel('oDataSvc'),
                 oParameters,
-                sPath;
+                sPath,
+                aFilterIds,
+                aFilterValues,
+                aFilters;
 
             sPath = '/DPPDisclos';
 
+            aFilterIds = ["Contract", "CA"];
+            aFilterValues = [this._coNum, this._caNum];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oParameters = {
+                filters: aFilters,
                 success : function (oData) {
                     if (oData) {
                         this.sDisCloseMessage = oData.results[0].Message;
@@ -955,8 +968,8 @@ sap.ui.define(
                 aFilterValues,
                 aFilterIds;
 
-            aFilterIds = ["ContractAccountNumber"];
-            aFilterValues = [this._caNum];
+            aFilterIds = ["Contract", "BP", "CA"];
+            aFilterValues = [this._coNum, this._bpNum, this._caNum];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = '/DPPDenieds';
 
@@ -1027,8 +1040,8 @@ sap.ui.define(
             //Model created for later posting
             this.getView().getModel('oDppStepOnePost').setData({});
 
-            aFilterIds = ["ContractAccountNumber"];
-            aFilterValues = [this._caNum];
+            aFilterIds = ["Contract"];
+            aFilterValues = [this._coNum];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = '/DPPSetUps';
 
@@ -1132,12 +1145,14 @@ sap.ui.define(
                 sPath,
                 oParameters,
                 oDataObject = {},
-                that = this;
+                that = this,
+                oContactLogArea = this.getView().byId('idnrgBilling-ExtAccCL');
 
 
             oDataObject.Contract = this._coNum;
             oDataObject.BP = this._bpNum;
             oDataObject.CA = this._caNum;
+            oDataObject.Message = (oContactLogArea.getValue() || "");
             oDataObject.DefDtNew = oExt.getProperty('/results/0/OpenItems/DefferalDate');
             if (this._bOverRide) {
                 oDataObject.OverRide  = 'X';

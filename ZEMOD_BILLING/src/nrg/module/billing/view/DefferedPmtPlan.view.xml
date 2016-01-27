@@ -178,6 +178,14 @@
                 <utmain:Button class="nrgBilling-payment-lbl" text="Make a Payment"
                                press="._onDownPayment"/>
             </ute:Tag>
+            <utmain:Infoline expanded="true" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline">
+                <utmain:headerContent>
+                    <ute:Tag text="{comp-i18n-billing>nrgDppTool-ContactLogttl}" />
+                 </utmain:headerContent>
+                <utmain:content>
+                    <ute:TextArea value="{oExtExtensions>/Message}" width="45rem" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline-textArea" id="idnrgBilling-DPPAccCL"></u:TextArea>
+                 </utmain:content>
+            </utmain:Infoline>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm">
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox">
                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox-icon"><ute:Tag text="{comp-i18n-billing>nrgBilling-dpp-info-i}"/></ute:Tag>
@@ -395,6 +403,14 @@
                     </ute:Tag>
                 </ute:Tag>
             </ute:Tag>
+            <utmain:Infoline expanded="true" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline">
+                <utmain:headerContent>
+                    <ute:Tag text="{comp-i18n-billing>nrgDppTool-ContactLogttl}" />
+                 </utmain:headerContent>
+                <utmain:content>
+                    <ute:TextArea width="45rem" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline-textArea" id="idnrgBilling-DPPDenCL"></u:TextArea>
+                 </utmain:content>
+            </utmain:Infoline>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm">
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-btn-left">
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnOk}"
@@ -480,8 +496,17 @@
                 <utmain:Button class="nrgBilling-payment-lbl" text="Make a Payment"
                                press="._onDownPayment"/>
             </ute:Tag>
+            <utmain:Infoline expanded="true" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline">
+                <utmain:headerContent>
+                    <ute:Tag text="{comp-i18n-billing>nrgDppTool-ContactLogttl}" />
+                 </utmain:headerContent>
+                <utmain:content>
+                    <ute:TextArea value="{oExtExtensions>/Message}" width="45rem" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline-textArea" id="idnrgBilling-ExtAccCL"></u:TextArea>
+                 </utmain:content>
+            </utmain:Infoline>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm">
-                <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox" visible="{parts:['oExtEligible>/ExtActive'], formatter:'._reverseBooleanFormatter'}">
+<!--                <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox" visible="{parts:['oExtEligible>/ExtActive'], formatter:'._reverseBooleanFormatter'}">-->
+                   <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox" visible="false">
                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox-icon"><ute:Tag text="{comp-i18n-billing>nrgBilling-dpp-info-i}"/></ute:Tag>
                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox-txt" text="Customer still owes: "/>
                 </ute:Tag>
@@ -538,6 +563,14 @@
                     </ute:Tag>
                 </ute:Tag>
             </ute:Tag>
+            <utmain:Infoline expanded="true" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline">
+                <utmain:headerContent>
+                    <ute:Tag text="{comp-i18n-billing>nrgDppTool-ContactLogttl}" />
+                 </utmain:headerContent>
+                <utmain:content>
+                    <ute:TextArea width="45rem" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline-textArea" id="idnrgBilling-extDenCL"></u:TextArea>
+                 </utmain:content>
+            </utmain:Infoline>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm">
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-btn-left">
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnOk}"
