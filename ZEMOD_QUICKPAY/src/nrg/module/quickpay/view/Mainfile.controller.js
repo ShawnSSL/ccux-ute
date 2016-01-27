@@ -315,7 +315,7 @@ sap.ui.define(
             this._onToggleViews("PCC");
             this._aPendingSelPaths = [];
             //this.getView().getParent().setPosition("begin bottom", "begin bottom");
-            this.setPosition(0);
+            //this.setPosition(0);
             oPopup.removeStyleClass("nrgQPPay-Popup");
             oPopup.addStyleClass("nrgQPPay-PopupPayment");
             oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
@@ -352,61 +352,70 @@ sap.ui.define(
                 mParameters,
                 that = this;
             that._OwnerComponent.getCcuxApp().setOccupied(true);
-            this._aPendingSelPaths.map(function (sCurrentPath) {
-                var oContext = oPCCModel.getContext(sCurrentPath),
-                    sPath = "/CreditCardPPSet";
-                sPath = "/CreditCardPPSet(BP='" + this._sBP + "',CA='" + this._sCA + "')";
-                mParameters = {
-                    success : function (oData, oResponse) {
-                        var aFilterIds = ["BP", "CA"],
-                            aFilterValues = [this._sBP, this._sCA],
-                            aFilters,
-                            oBindingInfo,
-                            oPendingPaymentsModel = that.getView().getModel("QP-quickpay"),
-                            oTableRow = that.getView().byId("idnrgQPTable-Row");
-                        aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
-                        oBindingInfo = {
-                            filters : aFilters,
-                            success : function (oData) {
-                                that._OwnerComponent.getCcuxApp().setOccupied(false);
-                                ute.ui.main.Popup.Alert({
-                                    title: 'Information',
-                                    message: 'Update Successfull'
-                                });
-                                oPendingPaymentsModel.setData(oData);
-                                oTableRow.setModel(oPendingPaymentsModel);
-                                jQuery.sap.log.info("Odata Read Successfully:::");
+            if ((this._aPendingSelPaths) && (this._aPendingSelPaths.length > 0)) {
+                this._aPendingSelPaths.forEach(function (sCurrentPath) {
+                    var oContext = oPCCModel.getContext(sCurrentPath),
+                        sPath = "/CreditCardPPSet";
+                    sPath = "/CreditCardPPSet(BP='" + this._sBP + "',CA='" + this._sCA + "')";
+                    mParameters = {
+                        success : function (oData, oResponse) {
+                            var aFilterIds = ["BP", "CA"],
+                                aFilterValues = [this._sBP, this._sCA],
+                                aFilters,
+                                oBindingInfo,
+                                oPendingPaymentsModel = that.getView().getModel("QP-quickpay"),
+                                oTableRow = that.getView().byId("idnrgQPTable-Row");
+                            aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
+                            oBindingInfo = {
+                                filters : aFilters,
+                                success : function (oData) {
+                                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                                    ute.ui.main.Popup.Alert({
+                                        title: 'Information',
+                                        message: 'Update Successfull'
+                                    });
+                                    oPendingPaymentsModel.setData(oData);
+                                    oTableRow.setModel(oPendingPaymentsModel);
+                                    jQuery.sap.log.info("Odata Read Successfully:::");
 
-                            }.bind(this),
-                            error: function (oError) {
-                                jQuery.sap.log.info("Error occured");
-                                that._OwnerComponent.getCcuxApp().setOccupied(false);
-                                ute.ui.main.Popup.Alert({
-                                    title: 'Information',
-                                    message: 'Update failed'
-                                });
-                            }.bind(this)
-                        };
-                        if (oModel) {
-                            oModel.read(sPath, oBindingInfo);
-                        }
-                        that._OwnerComponent.getCcuxApp().setOccupied(false);
-                        jQuery.sap.log.info("Odata Read Successfully:::");
-                    }.bind(this),
-                    error: function (oError) {
-                        that._OwnerComponent.getCcuxApp().setOccupied(false);
-                        jQuery.sap.log.info("Eligibility Error occured");
-                    }.bind(this)
-                };
-                oModel.update(sPath, {"CardID" : oContext.getProperty("CardID"),
-                                     "CardNumber" : oContext.getProperty("CardNumber"),
-                                     "ScheduledDate" : oContext.getProperty("ScheduledDate"),
-                                     "Amount" : oContext.getProperty("Amount"),
-                                     "ContractID" : "",
-                                     "BP" : oContext.getProperty("BP"),
-                                     "CA" : oContext.getProperty("CA"),
-                                     "CurrentStatus" : oContext.getProperty("CurrentStatus")}, mParameters);
-            });
+                                }.bind(this),
+                                error: function (oError) {
+                                    jQuery.sap.log.info("Error occured");
+                                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                                    ute.ui.main.Popup.Alert({
+                                        title: 'Information',
+                                        message: 'Update failed'
+                                    });
+                                }.bind(this)
+                            };
+                            if (oModel) {
+                                oModel.read(sPath, oBindingInfo);
+                            }
+                            that._OwnerComponent.getCcuxApp().setOccupied(false);
+                            jQuery.sap.log.info("Odata Read Successfully:::");
+                        }.bind(this),
+                        error: function (oError) {
+                            that._OwnerComponent.getCcuxApp().setOccupied(false);
+                            jQuery.sap.log.info("Eligibility Error occured");
+                        }.bind(this)
+                    };
+                    oModel.update(sPath, {"CardID" : oContext.getProperty("CardID"),
+                                         "CardNumber" : oContext.getProperty("CardNumber"),
+                                         "ScheduledDate" : oContext.getProperty("ScheduledDate"),
+                                         "Amount" : oContext.getProperty("Amount"),
+                                         "ContractID" : "",
+                                         "BP" : oContext.getProperty("BP"),
+                                         "CA" : oContext.getProperty("CA"),
+                                         "CurrentStatus" : oContext.getProperty("CurrentStatus")}, mParameters);
+                });
+            } else {
+                that._OwnerComponent.getCcuxApp().setOccupied(false);
+                ute.ui.main.Popup.Alert({
+                    title: 'Information',
+                    message: 'No Record Selected'
+                });
+            }
+
         };
 
         /**
@@ -854,65 +863,74 @@ sap.ui.define(
                 that = this;
 
             that._OwnerComponent.getCcuxApp().setOccupied(true);
-            this._aPendingSelPaths.map(function (sCurrentPath) {
-                var oContext = oPCCModel.getContext(sCurrentPath),
-                    aFilterIds = ["BP", "CA"],
-                    aFilterValues = [oContext.getProperty("BP"), oContext.getProperty("CA")],
-                    aFilters,
-                    oBindingInfo,
-                    oTableRow = that.getView().byId("idnrgQPTable-BDRow"),
-                    sPath = "/BankDraftPPSet";
-                that.getView().getModel("appView").setProperty("/selected", 0);
-                mParameters = {
-                    method : "POST",
-                    urlParameters : {"RoutingNumber" : oContext.getProperty("RoutingNumber"),
-                                     "AccountNumber" : oContext.getProperty("AccountNumber"),
-                                     "ScheduledDate" : oContext.getProperty("ScheduledDate"),
-                                     "PaymentAmount" : oContext.getProperty("PaymentAmount"),
-                                     "TrackingID" : oContext.getProperty("TrackingID"),
-                                     "ContractID" : "",
-                                     "BP" : oContext.getProperty("BP"),
-                                     "CA" : oContext.getProperty("CA"),
-                                     "CurrentStatus" : oContext.getProperty("CurrentStatus")},
-                    success : function (oData, oResponse) {
-                        jQuery.sap.log.info("Odata Read Successfully:::");
-                        aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
-                        oBindingInfo = {
-                            filters : aFilters,
-                            success : function (oData) {
-                                oPCCModel.setData(oData);
-                                oTableRow.setModel(oPCCModel);
-                                jQuery.sap.log.info("Odata Read Successfully:::");
-                                that._OwnerComponent.getCcuxApp().setOccupied(false);
-                                ute.ui.main.Popup.Alert({
-                                    title: 'Information',
-                                    message: 'Update Successfull'
-                                });
-                            }.bind(this),
-                            error: function (oError) {
-                                jQuery.sap.log.info("Error occured");
-                                that._OwnerComponent.getCcuxApp().setOccupied(false);
-                                ute.ui.main.Popup.Alert({
-                                    title: 'Information',
-                                    message: 'Update Successfull'
-                                });
-                            }.bind(this)
-                        };
-                        if (oModel) {
-                            oModel.read(sPath, oBindingInfo);
-                        }
-                    }.bind(this),
-                    error: function (oError) {
-                        jQuery.sap.log.info("Error occured");
-                        that._OwnerComponent.getCcuxApp().setOccupied(false);
-                        ute.ui.main.Popup.Alert({
-                            title: 'Information',
-                            message: 'Update failed'
-                        });
-                    }.bind(this)
-                };
-                oModel.callFunction("/BankDraftUpdate", mParameters);
-            });
+            if ((this._aPendingSelPaths) && (this._aPendingSelPaths.length > 0)) {
+                this._aPendingSelPaths.forEach(function (sCurrentPath) {
+                    var oContext = oPCCModel.getContext(sCurrentPath),
+                        aFilterIds = ["BP", "CA"],
+                        aFilterValues = [oContext.getProperty("BP"), oContext.getProperty("CA")],
+                        aFilters,
+                        oBindingInfo,
+                        oTableRow = that.getView().byId("idnrgQPTable-BDRow"),
+                        sPath = "/BankDraftPPSet";
+                    that.getView().getModel("appView").setProperty("/selected", 0);
+                    mParameters = {
+                        method : "POST",
+                        urlParameters : {"RoutingNumber" : oContext.getProperty("RoutingNumber"),
+                                         "AccountNumber" : oContext.getProperty("AccountNumber"),
+                                         "ScheduledDate" : oContext.getProperty("ScheduledDate"),
+                                         "PaymentAmount" : oContext.getProperty("PaymentAmount"),
+                                         "TrackingID" : oContext.getProperty("TrackingID"),
+                                         "ContractID" : "",
+                                         "BP" : oContext.getProperty("BP"),
+                                         "CA" : oContext.getProperty("CA"),
+                                         "CurrentStatus" : oContext.getProperty("CurrentStatus")},
+                        success : function (oData, oResponse) {
+                            jQuery.sap.log.info("Odata Read Successfully:::");
+                            aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
+                            oBindingInfo = {
+                                filters : aFilters,
+                                success : function (oData) {
+                                    oPCCModel.setData(oData);
+                                    oTableRow.setModel(oPCCModel);
+                                    jQuery.sap.log.info("Odata Read Successfully:::");
+                                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                                    ute.ui.main.Popup.Alert({
+                                        title: 'Information',
+                                        message: 'Update Successfull'
+                                    });
+                                }.bind(this),
+                                error: function (oError) {
+                                    jQuery.sap.log.info("Error occured");
+                                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                                    ute.ui.main.Popup.Alert({
+                                        title: 'Information',
+                                        message: 'Update Successfull'
+                                    });
+                                }.bind(this)
+                            };
+                            if (oModel) {
+                                oModel.read(sPath, oBindingInfo);
+                            }
+                        }.bind(this),
+                        error: function (oError) {
+                            jQuery.sap.log.info("Error occured");
+                            that._OwnerComponent.getCcuxApp().setOccupied(false);
+                            ute.ui.main.Popup.Alert({
+                                title: 'Information',
+                                message: 'Update failed'
+                            });
+                        }.bind(this)
+                    };
+                    oModel.callFunction("/BankDraftUpdate", mParameters);
+                });
+            } else {
+                that._OwnerComponent.getCcuxApp().setOccupied(false);
+                ute.ui.main.Popup.Alert({
+                    title: 'Information',
+                    message: 'No Record Selected'
+                });
+            }
+
 
         };
         /**
