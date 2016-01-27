@@ -11,7 +11,13 @@
     controllerName="nrg.module.billing.view.CustomerDataPrePD">
 
     <ute:Tag class="nrgAppMain-generalContent nrgBilling-cusDataPrePD">
-        <ute:Tag elem="span" class="nrgBilling-cusDataBil-scrnTitle" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-l-div-ACCOUNT_BALANCE}" />
+        <ute:Tag elem="div" class="nrgBilling-cusDataBil">
+                <ute:Tag elem="span" class="nrgBilling-cusDataBil-scrnTitle" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-l-div-ACCOUNT_BALANCE}" />
+                <utmain:Button class="nrgBilling-cusDataBil-btn" design="Default"
+                   text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-CommPref}"
+                   press="._onCommPreferences"/>
+        </ute:Tag>
+
 
 <!--
         <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-r-btn">
@@ -74,6 +80,7 @@
                             <ute:Tag class="nrgBilling-cusDataPrePD-r-div">
 
                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-text-amntexpln" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AMNT_EXP}" />
+
                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-text-autopayinfo" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AUTO_PAY_INFO}" />
 
                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-matrix">

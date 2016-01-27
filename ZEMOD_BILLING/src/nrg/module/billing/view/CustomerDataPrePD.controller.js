@@ -1,4 +1,4 @@
-/*globals sap*/
+/*globals sap, ute*/
 /*jslint nomen:true*/
 
 sap.ui.define(
@@ -6,10 +6,12 @@ sap.ui.define(
         'jquery.sap.global',
         'nrg/base/view/BaseController',
         'sap/ui/model/json/JSONModel',
-        'nrg/module/quickpay/view/QuickPayPopup'
+        'nrg/module/quickpay/view/QuickPayPopup',
+        'sap/ui/model/Filter',
+        'sap/ui/model/FilterOperator'
     ],
 
-    function (jQuery, Controller, JSONModel, QuickPayControl) {
+    function (jQuery, Controller, JSONModel, QuickPayControl, Filter, FilterOperator) {
         'use strict';
 
         var CustomController = Controller.extend('nrg.module.billing.view.CustomerDataPrePD');
@@ -99,32 +101,197 @@ sap.ui.define(
             this._coNum = oRouteInfo.parameters.coNum;
             return;
         };
-        /*************************************************************************************************************************/
+       /**
+		 * Assign the filter objects based on the input selection
+		 *
+		 * @function
+		 * @param {Array} aFilterIds to be used as sPath for Filters
+         * @param {Array} aFilterValues for each sPath
+		 * @private
+		 */
+        Controller.prototype._createSearchFilterObject = function (aFilterIds, aFilterValues) {
+            var aFilters = [],
+                iCount;
 
-
-
-        /*************************************************************************************************************************/
-        //Handlers
-        /*************************************************************************************************************************/
+            for (iCount = 0; iCount < aFilterIds.length; iCount = iCount + 1) {
+                aFilters.push(new Filter(aFilterIds[iCount], FilterOperator.EQ, aFilterValues[iCount], ""));
+            }
+            return aFilters;
+        };
+       /**
+		 * Go to check book page when link clicked
+		 *
+		 * @function
+		 *
+         *
+		 * @private
+		 */
         CustomController.prototype._onChkbookLnkClicked = function () {
-            var oRouter = this.getOwnerComponent().getRouter();
-
             if (this._coNum) {
-                oRouter.navTo('billing.PrePayCheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                this.navTo('billing.PrePayCheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
             } else {
-                oRouter.navTo('billing.PrePayCheckBookNoCo', {bpNum: this._bpNum, caNum: this._caNum});
+                this.navTo('billing.PrePayCheckBookNoCo', {bpNum: this._bpNum, caNum: this._caNum});
             }
         };
-
+       /**
+		 * Go to High Bill page when link clicked
+		 *
+		 * @function
+		 *
+         *
+		 * @private
+		 */
         CustomController.prototype._onHighbillLnkClicked = function () {
-            var oRouter = this.getOwnerComponent().getRouter();
 
             if (this._coNum) {
-                oRouter.navTo('billing.HighBill', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                this.navTo('billing.HighBill', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
             } else {
-                oRouter.navTo('billing.HighBillNoCo', {bpNum: this._bpNum, caNum: this._caNum});
+                this.navTo('billing.HighBillNoCo', {bpNum: this._bpNum, caNum: this._caNum});
             }
         };
+
+       /**
+		 * Show a popup when Communication preferences button clicked.
+		 *
+		 * @function
+		 *
+         *
+		 * @private
+		 */
+        CustomController.prototype._onCommPreferences = function () {
+            var oModel = this.getOwnerComponent().getModel('comp-billing'),
+                sPath,
+                oBindingInfo,
+                oHistoryView,
+                oCommPrefTag,
+                oScrollTemplate,
+                aFilters,
+                aFilterIds,
+                aFilterValues,
+                oCommPrefTemplate,
+                fnRecievedHandler,
+                that = this;
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            aFilterIds = ["BP", "CA"];
+            aFilterValues = [this._bpNum, this._caNum];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            if (!this._oDialogFragment) {
+                this._oDialogFragment = sap.ui.xmlfragment("CommPref", "nrg.module.billing.view.CommPref", this);
+            }
+            if (this._oCommDialog === undefined) {
+                this._oCommDialog = new ute.ui.main.Popup.create({
+                    title: 'Communication Preferences',
+                    content: this._oDialogFragment
+                });
+            }
+            sPath = "/PrepayCommPrefS";
+            oCommPrefTag = sap.ui.core.Fragment.byId("CommPref", "idnrgCommPrefTag");
+            oCommPrefTag.setModel(new JSONModel(), 'view-custpref');
+            oBindingInfo = {
+                filters : aFilters,
+                success : function (oData) {
+                    oCommPrefTag.getModel('view-custpref').setData(oData);
+                    this._oCommDialog.open();
+                    jQuery.sap.log.info("Odata Read Successfully:::");
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                }.bind(this),
+                error: function (oError) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    jQuery.sap.log.info("Eligibility Error occured");
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sPath, oBindingInfo);
+            }
+        };
+       /**
+		 * When any checkbox is changes track that changes
+		 *
+		 * @function
+		 *
+         *
+		 * @private
+		 */
+        CustomController.prototype.onChanged = function (oEvent) {
+            var sPath = oEvent.getSource().getBindingContext("view-custpref").getPath(),
+                oCommPrefTag = sap.ui.core.Fragment.byId("CommPref", "idnrgCommPrefTag"),
+                oModel = oCommPrefTag.getModel("view-custpref");
+            oModel.setProperty(sPath + "/Changed", true);
+
+        };
+       /**
+		 * Cancel Customer Preferences.
+		 *
+		 * @function
+		 *
+         *
+		 * @private
+		 */
+        CustomController.prototype._onCPCancel = function (oEvent) {
+            this._oCommDialog.close();
+        };
+       /**
+		 * Submit After Communication Preferences Changed
+		 *
+		 * @function
+		 *
+         *
+		 * @private
+		 */
+        CustomController.prototype._onCPSubmit = function (oEvent) {
+            var oCommPrefTag = sap.ui.core.Fragment.byId("CommPref", "idnrgCommPrefTag"),
+                oModel = oCommPrefTag.getModel("view-custpref"),
+                aResults = oModel.oData.results,
+                oBillingModel = this.getOwnerComponent().getModel('comp-billing'),
+                sPath = "/PrepayCommPrefS",
+                iCount = 0,
+                iFailureCount = 0,
+                checkCoRetrComplete,
+                iSuccessCount = 0;
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            aResults.forEach(function (item) {
+                var tempPath = sPath;
+                if (item.Changed) {
+                    iCount = iCount + 1;
+                    tempPath = tempPath + "(BP='" + item.BP + "',CA='" + item.CA + "',AttrSet='" + item.AttrSet + "')";
+                    oBillingModel.update(tempPath, {
+                        Call : item.Call,
+                        Email : item.Email,
+                        SMS : item.SMS
+                    }, {
+                        success : function (oData, oResponse) {
+                            iSuccessCount = iSuccessCount + 1;
+                        },
+                        error : function (oError) {
+                            iFailureCount = iFailureCount + 1;
+                        },
+                        merge : false
+                    });
+                }
+            });
+
+            // Check the completion of CO retrieval
+            checkCoRetrComplete = setInterval(function () {
+                if (iSuccessCount + iFailureCount === iCount) {
+                    if (iSuccessCount === iCount) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Information',
+                            message: 'Communication preferences updated Successfully'
+                        });
+                    } else {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Information',
+                            message: 'Communication preferences update Failed'
+                        });
+                    }
+                    this._oCommDialog.close();
+                    clearInterval(checkCoRetrComplete);
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                }
+            }.bind(this), 100);
+
+        };
+
 
         /*************************************************************************************************************************/
         return CustomController;

@@ -4,11 +4,13 @@
 
     font-family: @nrgFontFamily;
 
-    & > .nrgBilling-cusDataBil-scrnTitle{
+    & .nrgBilling-cusDataBil > .nrgBilling-cusDataBil-scrnTitle{
         font: @nrgFontWeight-bold @nrgFontSize-large @nrgFontFamily;
         color: @nrgColor-grey-dark;
     }
-
+    & .nrgBilling-cusDataBil > .nrgBilling-cusDataBil-btn{
+        float: right;
+    }
     & > .nrgBilling-cusDataPrePD-r-btn{
         width: 200px;
         height: 30px;
@@ -156,7 +158,6 @@
         font: @nrgFontWeight-bold @nrgFontSize-small @nrgFontFamily;
         color: @nrgColor-grey-dark;
     }
-
     & > .nrgBilling-cusDataPrePD-layout > tbody > tr > .nrgBilling-cusDataPrePD-r > .nrgBilling-cusDataPrePD-r-div > .nrgBilling-cusDataPrePD-r-text-autopayinfo{
         font: @nrgFontWeight-bold @nrgFontSize-small @nrgFontFamily;
         color: @nrgColor-grey-light;
@@ -238,5 +239,74 @@
         margin-left: 10px;
         font: @nrgFontWeight-bold @nrgFontSize-small @nrgFontFamily;
         color: @nrgColor-grey-dark;
+    }
+}
+// Dialog CSS for customer preferences.
+.nrgCommPref {
+    width: 60rem;
+    max-width: 60rem;
+    overflow: hidden;
+    height: auto;
+    & > .nrgCommPref-table-headers {
+            width: 100%;
+            margin: 10px 0;
+        & > .nrgCommPref-table-row-column {
+                display: inline-block;
+                font-size: @nrgFontSize-small;
+                font-weight: @nrgFontWeight-semiBold;
+                color: @nrgColor-grey-dark;
+                width : 10%;
+                text-align: center;
+        }
+        & > .nrgCommPref-table-row-desccolumn {
+                display: inline-block;
+                font-size: @nrgFontSize-small;
+                font-weight: @nrgFontWeight-semiBold;
+                color: @nrgColor-grey-dark;
+                width : 60%;
+                text-align: center;
+        }
+        & > .nrgCommPref-table-row-checkcolumn {
+                display: inline-block;
+                font-size: @nrgFontSize-small;
+                font-weight: @nrgFontWeight-semiBold;
+                color: @nrgColor-grey-dark;
+                width : 10%;
+        }
+    }
+    & > .nrgCommPref-table {
+            width: 100%;
+        & > .nrgCommPref-table-row {
+                 width: 100%;
+            	 margin: 10px 0;
+            & > .nrgCommPref-table-row-AttrSet {
+                    display: inline-block;
+                    width: 10%;
+                    text-align: center;
+            }
+            & > .nrgCommPref-table-row-Desc {
+                    display: inline-block;
+                    width: 60%;
+                    text-align: center;
+            }
+            & > .nrgCommPref-table-row-Call {
+                    display: inline-block;
+                    width: 10%;
+            }
+            & > .nrgCommPref-table-row-Email {
+                    display: inline-block;
+                    width: 10%;
+            }
+            & > .nrgCommPref-table-row-Sms {
+                    display: inline-block;
+                    width: 10%;
+            }
+        }
+    }
+    & > .nrgCommPref-buttons {
+            text-align: center;
+        & > span {
+             margin: 10px 10px;
+        }
     }
 }

@@ -1,0 +1,62 @@
+{
+   "d":{
+      "results":[
+         {
+            "__metadata":{
+               "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/PrepayCommPrefS(BP='0002473499',CA='000003040103',AttrSet='PAY1')",
+               "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/PrepayCommPrefS(BP='0002473499',CA='000003040103',AttrSet='PAY1')",
+               "type":"ZE_CCUX_CHKBOOK_SRV.PrepayCommPref"
+            },
+            "BP":"0002473499",
+            "CA":"000003040103",
+            "AttrSet":"PAY1",
+            "AttrDesc":"SMARTSTART PAYMENT NOTIFICATION ALERT",
+            "Call":false,
+            "Email":true,
+            "SMS":true
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/PrepayCommPrefS(BP='0002473499',CA='000003040103',AttrSet='TMD1')",
+               "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/PrepayCommPrefS(BP='0002473499',CA='000003040103',AttrSet='TMD1')",
+               "type":"ZE_CCUX_CHKBOOK_SRV.PrepayCommPref"
+            },
+            "BP":"0002473499",
+            "CA":"000003040103",
+            "AttrSet":"TMD1",
+            "AttrDesc":"SMARTSTART THRESHOLD MONITORING ALERT",
+            "Call":false,
+            "Email":false,
+            "SMS":false
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/PrepayCommPrefS(BP='0002473499',CA='000003040103',AttrSet='TTS1')",
+               "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/PrepayCommPrefS(BP='0002473499',CA='000003040103',AttrSet='TTS1')",
+               "type":"ZE_CCUX_CHKBOOK_SRV.PrepayCommPref"
+            },
+            "BP":"0002473499",
+            "CA":"000003040103",
+            "AttrSet":"TTS1",
+            "AttrDesc":"SMARTSTART TOLLTAG SETUP ALERT",
+            "Call":false,
+            "Email":false,
+            "SMS":false
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/PrepayCommPrefS(BP='0002473499',CA='000003040103',AttrSet='WSB1')",
+               "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/PrepayCommPrefS(BP='0002473499',CA='000003040103',AttrSet='WSB1')",
+               "type":"ZE_CCUX_CHKBOOK_SRV.PrepayCommPref"
+            },
+            "BP":"0002473499",
+            "CA":"000003040103",
+            "AttrSet":"WSB1",
+            "AttrDesc":"SMARTSTART WEEKLY BALANCE SUMMARY ALERT",
+            "Call":false,
+            "Email":false,
+            "SMS":false
+         }
+      ]
+   }
+}
