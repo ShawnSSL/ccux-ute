@@ -33,8 +33,9 @@
             <u:Tag class="nrgFeeAdj-mainArea">
                <u:Tag class="nrgFeeAdj-mainArea-div" visible="{view-feeAdj>/feeDateDD}">
                     <um:Dropdown id="idnrgFeeAdj-DropDownDate"
-                                     placeholder="CHOOSE THE FEE DATE"
-                                     class="nrgFeeAdj-mainArea-DD">
+                                     placeholder="CHOOSE THE FEE"
+                                     class="nrgFeeAdj-mainArea-DD"
+                                     select="._onFeeDDSelect">
                         <um:DropdownItem key="1" class="nrgFeeAdj-DdLItem">
                             <u:Tag text="text1">
                             </u:Tag>
@@ -54,6 +55,7 @@
                 <u:TextArea value="Notes" class="nrgFeeAdj-textArea" width="40rem" height="200px" id="idnrgFeeAdj-textArea"></u:TextArea>
             </u:Tag>
             <u:Tag class="nrgFeeAdj-CAArea">
+               <u:Tag class="nrgFeeAdj-CAArea-Title" text="Select Contract" />
                 <um:Dropdown id="idnrgFeeAdj-DropDownCA"
                                  placeholder="3040103"
                                  class="nrgFeeAdj-CAArea-DD"
@@ -63,13 +65,18 @@
                         </u:Tag>
                     </um:DropdownItem>
                 </um:Dropdown>
-                <u:Button buttonType="SpecialNav" width="100px" enabled="{view-feeAdj>/ok}"
-                    text="OK"
-                    class="nrgFeeAdj-btn"
-                    press=".onSubmit"/>
-                <u:Button buttonType="SpecialNav" width="100px" enabled="true"
-                    text="CANCEL"
-                    class="nrgFeeAdj-btn"/>
+                <u:Tag class="nrgFeeAdj-btns">
+                    <u:Button buttonType="SpecialNav" enabled="{view-feeAdj>/ok}"
+                        text="OK"
+                        class="nrgFeeAdj-btn"
+                        enabled="{view-feeAdj>/ok}"
+                        press=".onSubmit"/>
+                    <u:Button buttonType="SpecialNav" enabled="true"
+                        text="CANCEL"
+                        class="nrgFeeAdj-btn"
+                        press=".onCancel"/>
+                </u:Tag>
+
             </u:Tag>
         </u:Tag>
         <u:Tag visible="false">

@@ -70,9 +70,12 @@
             display: inline-block;
             width: 30%;
             vertical-align: top;
+        & > .nrgFeeAdj-CAArea-Title {
+             margin: 50px 2px 2px 2px;
+        }
         & > .nrgFeeAdj-CAArea-DD {
                 flex: 1;
-                margin: 50px 2px 2px 2px;
+                margin: 0px;
                 font-size: @nrgFontSize-base;
                 font-weight: @nrgFontWeight-semiBold;
                 color: @nrgColor-blue-label;
@@ -113,14 +116,17 @@
                     }
                 }
         }
-        & > .nrgFeeAdj-btn {
-            min-width: 100px;
+        & > .nrgFeeAdj-btns {
+            & > .nrgFeeAdj-btn {
+                min-width: 100px;
+            }
+            & > .nrgFeeAdj-btn:hover {
+                min-width: 100px;
+            }
+            & > .nrgFeeAdj-btn[data-disabled="true"] {
+                    color: @nrgColor-grey-inactive;
+            }
         }
-        & > .nrgFeeAdj-btn:hover {
-            min-width: 100px;
-        }
-        & > .nrgFeeAdj-btn[data-disabled="true"] {
-                color: @nrgColor-grey-inactive;
-        }
+
     }
 }

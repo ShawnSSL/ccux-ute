@@ -43,24 +43,32 @@ sap.ui.define(
             this._sContract = oRouteInfo.parameters.coNum;
             this._sBP = oRouteInfo.parameters.bpNum;
             this._sCA = oRouteInfo.parameters.caNum;
+            this._sCO = oRouteInfo.parameters.coNum;
             this.getView().setModel(oViewModel, "view-feeAdj");
             aFilterIds = ["BP"];
-            aFilterValues = ['2473499'];
+            aFilterValues = [this._sBP];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = "/ContractAcctS";
             fnRecievedHandler = function (oEvent, oData) {
-                var aContent = oCADropDown.getContent();
+                var aContent = oCADropDown.getContent(),
+                    fnDataReceivedHandler;
                 if ((aContent) && (aContent.length > 0)) {
                     oCADropDown.setSelectedKey(aContent[0].getKey());
                     aFilterIds = ["CA"];
-                    aFilterValues = ['000004014634'];
+                    aFilterValues = [oCADropDown.getSelectedKey()];
                     aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
                     sPath = "/DiscNoticeFeeS";
+                    fnDataReceivedHandler = function (oEvent, oData) {
+                        if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
+                            oDisconnectDropDown.setPlaceholder("No Data Available");
+                        }
+                    };
                     oBindingInfo = {
                         model : "comp-feeAdjs",
                         path : sPath,
                         template : oDisconnectTemplate,
-                        filters : aFilters
+                        filters : aFilters,
+                        events: {dataReceived : fnDataReceivedHandler}
                     };
                     oDisconnectDropDown.bindAggregation("content", oBindingInfo);
                 }
@@ -103,19 +111,37 @@ sap.ui.define(
                 oTextArea = this.getView().byId("idnrgFeeAdj-textArea"),
                 oDateDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
                 oReasonDropDown = this.getView().byId("idnrgFeeAdj-DropDownReason"),
-                mParameters = {
-                    method : "POST",
-                    urlParameters : {"Amount" : "25",
-                                             "CA" : oCADropDown.getSelectedKey(),
-                                            "DocNum" : oDateDropDown.getSelectedKey(),
-                                            "Reason" : oReasonDropDown.getSelectedKey(),
-                                            "Text" : oTextArea.getValue()},
-                    success : function (oData) {
-                    }.bind(this),
-                    error: function (oError) {
+                mParameters,
+                sAmount,
+                sPath,
+                oViewModel = this.getView().getModel("view-feeAdj");
+            if (oViewModel.getProperty("/discNoticefee")) {
+                sPath = "/DiscNoticeFeeS";
+            }
+            if (oViewModel.getProperty("/discRecovfee")) {
+                sPath = "/DiscRecovFeeS";
+            }
+            if (oViewModel.getProperty("/Latefee")) {
+                sPath = "/LateFeeS";
+            }
+            if (oViewModel.getProperty("/Reconnectfee")) {
+                sPath = "/ReconReqFeeS";
+            }
+            sPath = sPath + "(CA='" + oCADropDown.getSelectedKey() + "',DocNum='" + oDateDropDown.getSelectedKey() + "')/Amount";
+            sAmount = oModel.getProperty(sPath);
+            mParameters = {
+                method : "POST",
+                urlParameters : {"Amount" : sAmount,
+                                         "CA" : oCADropDown.getSelectedKey(),
+                                        "DocNum" : oDateDropDown.getSelectedKey(),
+                                        "Reason" : oReasonDropDown.getSelectedKey(),
+                                        "Text" : oTextArea.getValue()},
+                success : function (oData) {
+                }.bind(this),
+                error: function (oError) {
 
-                    }.bind(this)
-                };
+                }.bind(this)
+            };
             oModel.callFunction("/RemoveFee", mParameters); // callback function for error
         };
         /**
@@ -133,7 +159,8 @@ sap.ui.define(
                 oBindingInfo,
                 oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
                 oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
-                oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA");
+                oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
+                fnDataReceivedHandler;
             oViewModel.setProperty("/discNoticefee", false);
             oViewModel.setProperty("/discRecovfee", true);
             oViewModel.setProperty("/Latefee", true);
@@ -143,11 +170,17 @@ sap.ui.define(
             aFilterValues = [oCADropDown.getSelectedKey()];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = "/DiscNoticeFeeS";
+            fnDataReceivedHandler = function (oEvent, oData) {
+                if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
+                    oDisconnectDropDown.setPlaceholder("No Data Available");
+                }
+            };
             oBindingInfo = {
                 model : "comp-feeAdjs",
                 path : sPath,
                 template : oDisconnectTemplate,
-                filters : aFilters
+                filters : aFilters,
+                events: {dataReceived : fnDataReceivedHandler}
             };
             oDisconnectDropDown.bindAggregation("content", oBindingInfo);
 
@@ -167,7 +200,8 @@ sap.ui.define(
                 oBindingInfo,
                 oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
                 oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
-                oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA");
+                oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
+                fnDataReceivedHandler;
             oViewModel.setProperty("/discNoticefee", true);
             oViewModel.setProperty("/discRecovfee", false);
             oViewModel.setProperty("/Latefee", true);
@@ -177,11 +211,17 @@ sap.ui.define(
             aFilterValues = [oCADropDown.getSelectedKey()];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = "/DiscRecovFeeS";
+            fnDataReceivedHandler = function (oEvent, oData) {
+                if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
+                    oDisconnectDropDown.setPlaceholder("No Data Available");
+                }
+            };
             oBindingInfo = {
                 model : "comp-feeAdjs",
                 path : sPath,
                 template : oDisconnectTemplate,
-                filters : aFilters
+                filters : aFilters,
+                events: {dataReceived : fnDataReceivedHandler}
             };
             oDisconnectDropDown.bindAggregation("content", oBindingInfo);
         };
@@ -202,7 +242,8 @@ sap.ui.define(
                 oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
                 oReasonDropDown = this.getView().byId("idnrgFeeAdj-DropDownReason"),
-                oReasonDropDownTemplate = this.getView().byId("idnrgFeeAdj-DropDownReason-temp");
+                oReasonDropDownTemplate = this.getView().byId("idnrgFeeAdj-DropDownReason-temp"),
+                fnDataReceivedHandler;
             oViewModel.setProperty("/discNoticefee", true);
             oViewModel.setProperty("/discRecovfee", true);
             oViewModel.setProperty("/Latefee", false);
@@ -212,11 +253,17 @@ sap.ui.define(
             aFilterValues = [oCADropDown.getSelectedKey()];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = "/LateFeeS";
+            fnDataReceivedHandler = function (oEvent, oData) {
+                if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
+                    oDisconnectDropDown.setPlaceholder("No Data Available");
+                }
+            };
             oBindingInfo = {
                 model : "comp-feeAdjs",
                 path : sPath,
                 template : oDisconnectTemplate,
-                filters : aFilters
+                filters : aFilters,
+                events: {dataReceived : fnDataReceivedHandler}
             };
             oDisconnectDropDown.bindAggregation("content", oBindingInfo);
             sPath = "/RemovalReasonS";
@@ -234,12 +281,35 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onReconnectFee = function (oEvent) {
-            var oViewModel = this.getView().getModel("view-feeAdj");
+            var oViewModel = this.getView().getModel("view-feeAdj"),
+                aFilterIds,
+                aFilterValues,
+                aFilters,
+                sPath,
+                oBindingInfo,
+                oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
+                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
+                oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
+                fnDataReceivedHandler;
             oViewModel.setProperty("/discNoticefee", true);
             oViewModel.setProperty("/discRecovfee", true);
             oViewModel.setProperty("/Latefee", true);
             oViewModel.setProperty("/Reconnectfee", false);
             oViewModel.setProperty("/reasonDD", false);
+            sPath = "/ReconReqFeeS";
+            fnDataReceivedHandler = function (oEvent, oData) {
+                if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
+                    oDisconnectDropDown.setPlaceholder("No Data Available");
+                }
+            };
+            oBindingInfo = {
+                model : "comp-feeAdjs",
+                path : sPath,
+                template : oDisconnectTemplate,
+                filters : aFilters,
+                events: {dataReceived : fnDataReceivedHandler}
+            };
+            oDisconnectDropDown.bindAggregation("content", oBindingInfo);
         };
         /**
 		 * Clicked on Reconnect Fee
@@ -263,6 +333,26 @@ sap.ui.define(
             }
 
         };
+        /**
+		 * Enable the Ok button if dropdown selected
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype._onFeeDDSelect = function (oEvent) {
+            var oViewModel = this.getView().getModel("view-feeAdj");
+            oViewModel.setProperty("/ok", true);
+        };
+        /**
+		 * Clicked on Cancel Button
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onCancel = function (oEvent) {
+            this.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
+        };
+
 
         return Controller;
     }
