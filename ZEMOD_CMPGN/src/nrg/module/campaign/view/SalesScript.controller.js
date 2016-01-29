@@ -59,8 +59,8 @@ sap.ui.define(
             this._sCA = oRouteInfo.parameters.caNum;
             sCurrentPath = i18NModel.getProperty("nrgCpgChangeOffSet");
             sCurrentPath = "/CpgChgOfferS";
-            this._sDate = oRouteInfo.parameters.sDate;
-            sCurrentPath = sCurrentPath + "(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',StartDate=" + this._sDate + ")";
+            this._sType = oRouteInfo.parameters.stype;
+            sCurrentPath = sCurrentPath + "(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Type='" + this._sType + "')";
             oContext = oModel.getContext(sCurrentPath);
             if (oContext) {
                 sPromo = oContext.getProperty("Promo");
@@ -186,7 +186,7 @@ sap.ui.define(
                 dStartDate;
 
             sCurrentPath = "/CpgChgOfferS";
-            sCurrentPath = sCurrentPath + "(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',StartDate=" + this._sDate + ")";
+            sCurrentPath = sCurrentPath + "(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Type='" + this._sType + "')";
             oContext = oModel.getContext(sCurrentPath);
             if (oContext) {
                 dStartDate = oContext.getProperty("StartDate");
@@ -356,7 +356,7 @@ sap.ui.define(
                 sEffectDate;
             oModel = this.getOwnerComponent().getModel('comp-campaign');
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            sPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',StartDate=" + this._sDate + ")";
+            sPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Type='" + this._sType + "')";
             oContext = oModel.getContext(sPath);
             sCampaignCode = oContext.getProperty("Campaign");
             //sEndDate = oContext.getProperty("EndDate");

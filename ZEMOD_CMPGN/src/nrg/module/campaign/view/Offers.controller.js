@@ -81,12 +81,6 @@ sap.ui.define(
             oTileContainer = this.getView().byId("idnrgCamOffScroll");
             oTileTemplate = this.getView().byId("idnrgCamOffBt");
             this._oTileTemplate = oTileTemplate;
-/*            if (this._sType === "SE") {
-                oNoDataTag.removeStyleClass("nrgCamOff-hide");
-                oTileContainer.addStyleClass("nrgCamOff-hide");
-                oSelectedButton.addStyleClass("nrgCamOff-btn-selected");
-                this.getOwnerComponent().getCcuxApp().setOccupied(false);
-            } else {*/
             aFilterIds = ["Contract"];
             aFilterValues = [this._sContract];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
@@ -485,18 +479,23 @@ sap.ui.define(
             switch (sButtonText) {
             case "P":
                 aFilterValues = ["P", "C"];
+                this._sType = "P";
                 break;
             case "R":
                 aFilterValues = ["R", "C"];
+                this._sType = "R";
                 break;
             case "S":
                 aFilterValues = ["S", "C"];
+                this._sType = "S";
                 break;
             case "F":
                 aFilterValues = ["F", "C"];
+                this._sType = "F";
                 break;
             default:
                 aFilterValues = ["F", "C"];
+                this._sType = "F";
             }
             oEvent.getSource().addStyleClass("nrgCamOff-btn-selected");
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
@@ -564,6 +563,7 @@ sap.ui.define(
             oFinalSaveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSearchButton.addStyleClass("nrgCamOff-btn-selected");
             that.getOwnerComponent().getCcuxApp().setOccupied(true);
+            this._sType = "SE";
             if ((oSearchField) && (oSearchField.getValue())) {
                 this._bSearchEnabled = true;
                 aFilterIds = ["Contract", "Promo"];
@@ -668,7 +668,7 @@ sap.ui.define(
                 } else {
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     that.getOwnerComponent().setModel(oViewModel, 'comp-campLocal');
-                    this.navTo("campaignchg", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, offercodeNum: sOfferCode, sDate : sDate});
+                    this.navTo("campaignchg", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, offercodeNum: sOfferCode, stype : this._sType});
                 }
             }
 
