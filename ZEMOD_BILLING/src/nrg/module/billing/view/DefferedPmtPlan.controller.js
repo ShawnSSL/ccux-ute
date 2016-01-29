@@ -405,6 +405,7 @@ sap.ui.define(
                     oDppConfs.setProperty('/results/' + i + '/Checked', false);
                 }
             }
+            this._onDppConfItemCheck(oEvent);
         };
 
         Controller.prototype._onStepTwoInstlChange = function (oEvent) {
@@ -659,13 +660,20 @@ sap.ui.define(
                         aSelectedInd.push({IND: oSetUps.getProperty('/results/' + i + '/OpenItems/ItemNumber')});
                     }
                 }
-                oSetUpsPost.setProperty('/SelectedIndices', aSelectedInd);
-                this.getView().getModel('oDppStepOneSelectedData').setProperty('/SELECTEDDATA', oSetUpsPost.getProperty('/SelectedIndices'));
+                if ((aSelectedInd) && (aSelectedInd.length > 0)) {
+                    oSetUpsPost.setProperty('/SelectedIndices', aSelectedInd);
+                    this.getView().getModel('oDppStepOneSelectedData').setProperty('/SELECTEDDATA', oSetUpsPost.getProperty('/SelectedIndices'));
+                    this._selectScrn('StepTwo');//Initiating step 2
+                } else {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DPP REASON',
+                        message: 'Please select at least one open item'
+                    });
+                }
 
-                this._selectScrn('StepTwo');//Initiating step 2
             } else {
                 ute.ui.main.Popup.Alert({
-                    title: 'DPP REASON',
+                    title: 'DPP Open Items',
                     message: 'Please Select DPP Setup Reason'
                 });
             }
@@ -1040,8 +1048,8 @@ sap.ui.define(
             //Model created for later posting
             this.getView().getModel('oDppStepOnePost').setData({});
 
-            aFilterIds = ["Contract"];
-            aFilterValues = [this._coNum];
+            aFilterIds = ["Contract", "BP", "CA"];
+            aFilterValues = [this._coNum, this._bpNum, this._caNum];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = '/DPPSetUps';
 

@@ -6,10 +6,11 @@ sap.ui.define(
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
         'jquery.sap.global',
-        "sap/ui/model/json/JSONModel"
+        'sap/ui/model/json/JSONModel',
+        'nrg/base/type/Price'
     ],
 
-    function (CoreController, Filter, FilterOperator, jQuery, JSONModel) {
+    function (CoreController, Filter, FilterOperator, jQuery, JSONModel, price) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.billing.view.FeeAdjustments');
@@ -39,7 +40,10 @@ sap.ui.define(
                 sPath,
                 oBindingInfo,
                 fnRecievedHandler,
-                that = this;
+                that = this,
+                oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
+            oDisconnectDropDown.removeAllContent();
+            oTextArea.setValue("");
             this._sContract = oRouteInfo.parameters.coNum;
             this._sBP = oRouteInfo.parameters.bpNum;
             this._sCA = oRouteInfo.parameters.caNum;
@@ -60,7 +64,7 @@ sap.ui.define(
                     sPath = "/DiscNoticeFeeS";
                     fnDataReceivedHandler = function (oEvent, oData) {
                         if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
-                            oDisconnectDropDown.setPlaceholder("No Data Available");
+                            oDisconnectDropDown.setPlaceholder("No Fee(s) Found");
                         }
                     };
                     oBindingInfo = {
@@ -160,7 +164,10 @@ sap.ui.define(
                 oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
                 oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
-                fnDataReceivedHandler;
+                fnDataReceivedHandler,
+                oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
+            oTextArea.setValue("");
+            oDisconnectDropDown.removeAllContent();
             oViewModel.setProperty("/discNoticefee", false);
             oViewModel.setProperty("/discRecovfee", true);
             oViewModel.setProperty("/Latefee", true);
@@ -172,7 +179,7 @@ sap.ui.define(
             sPath = "/DiscNoticeFeeS";
             fnDataReceivedHandler = function (oEvent, oData) {
                 if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
-                    oDisconnectDropDown.setPlaceholder("No Data Available");
+                    oDisconnectDropDown.setPlaceholder("No Fee(s) Found");
                 }
             };
             oBindingInfo = {
@@ -201,7 +208,10 @@ sap.ui.define(
                 oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
                 oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
-                fnDataReceivedHandler;
+                fnDataReceivedHandler,
+                oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
+            oTextArea.setValue("");
+            oDisconnectDropDown.removeAllContent();
             oViewModel.setProperty("/discNoticefee", true);
             oViewModel.setProperty("/discRecovfee", false);
             oViewModel.setProperty("/Latefee", true);
@@ -213,7 +223,7 @@ sap.ui.define(
             sPath = "/DiscRecovFeeS";
             fnDataReceivedHandler = function (oEvent, oData) {
                 if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
-                    oDisconnectDropDown.setPlaceholder("No Data Available");
+                    oDisconnectDropDown.setPlaceholder("No Fee(s) Found");
                 }
             };
             oBindingInfo = {
@@ -243,7 +253,10 @@ sap.ui.define(
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
                 oReasonDropDown = this.getView().byId("idnrgFeeAdj-DropDownReason"),
                 oReasonDropDownTemplate = this.getView().byId("idnrgFeeAdj-DropDownReason-temp"),
-                fnDataReceivedHandler;
+                fnDataReceivedHandler,
+                oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
+            oTextArea.setValue("");
+            oDisconnectDropDown.removeAllContent();
             oViewModel.setProperty("/discNoticefee", true);
             oViewModel.setProperty("/discRecovfee", true);
             oViewModel.setProperty("/Latefee", false);
@@ -255,7 +268,7 @@ sap.ui.define(
             sPath = "/LateFeeS";
             fnDataReceivedHandler = function (oEvent, oData) {
                 if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
-                    oDisconnectDropDown.setPlaceholder("No Data Available");
+                    oDisconnectDropDown.setPlaceholder("No Fee(s) Found");
                 }
             };
             oBindingInfo = {
@@ -290,7 +303,10 @@ sap.ui.define(
                 oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
                 oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
-                fnDataReceivedHandler;
+                fnDataReceivedHandler,
+                oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
+            oTextArea.setValue("");
+            oDisconnectDropDown.removeAllContent();
             oViewModel.setProperty("/discNoticefee", true);
             oViewModel.setProperty("/discRecovfee", true);
             oViewModel.setProperty("/Latefee", true);
@@ -299,7 +315,7 @@ sap.ui.define(
             sPath = "/ReconReqFeeS";
             fnDataReceivedHandler = function (oEvent, oData) {
                 if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
-                    oDisconnectDropDown.setPlaceholder("No Data Available");
+                    oDisconnectDropDown.setPlaceholder("No Fee(s) Found");
                 }
             };
             oBindingInfo = {
@@ -352,8 +368,6 @@ sap.ui.define(
         Controller.prototype.onCancel = function (oEvent) {
             this.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
         };
-
-
         return Controller;
     }
 

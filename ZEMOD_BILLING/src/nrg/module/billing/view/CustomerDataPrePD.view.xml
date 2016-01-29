@@ -141,7 +141,7 @@
 
                                 <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-label1" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AVG_DAILY_USAGE}:" />
 
-                                <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-value" text="{comp-feeAdjs>AvgDailyUsage}" />
+                                <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-value" text="{path: 'comp-feeAdjs>AvgDailyUsage', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }"/>
 
                                 <ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-label2" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AUTO_PAY_DATE} - {comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-START}:" />
 

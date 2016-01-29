@@ -36,6 +36,9 @@
                             },
                             "comp-feeAdjs": {
                                 "url": "sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/"
+                            },
+                            "comp-commprefs": {
+                                "url": "sap/opu/odata/sap/ZE_CCUX_BATCH_SRV/"
                             }
                         },
                         "mock": {

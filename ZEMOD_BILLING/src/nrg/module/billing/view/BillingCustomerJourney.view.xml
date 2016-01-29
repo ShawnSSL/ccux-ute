@@ -36,10 +36,11 @@
         <u:Tag class="nrgBllCJ-main">
             <u:Tag class="nrgBllCJ-main-frq">
                 <u:Tag class="nrgBllCJ-main-frq-ttl" text="{comp-i18n-billing>nrgBllCJTitleFreq}"/>
+                <u:Tag text="No Data Available" visible="{cj-view>/piechart}" class="nrgBllCj-noData"/>
                 <u:Tag class="nrgBllCJ-main-frq-pie">
                     <ch:CustJourneyChannelChart width="340" height="240" id="idnrgCJPieChart" totalDoublePress="._onTotalPress" sliceDoublePress="._onSlicePress" />
                 </u:Tag>
-                <u:Tag text="No Data Available" visible="{cj-view>/piechart}" class="nrgBllCj-noData"/>
+
             </u:Tag>
             <u:Tag class="nrgBllCJ-main-timeline">
                 <u:Tag class="nrgBllCJ-main-timeline-details">

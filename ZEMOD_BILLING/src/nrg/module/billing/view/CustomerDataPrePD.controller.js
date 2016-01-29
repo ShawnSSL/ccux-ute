@@ -159,7 +159,7 @@ sap.ui.define(
 		 * @private
 		 */
         CustomController.prototype._onCommPreferences = function () {
-            var oModel = this.getOwnerComponent().getModel('comp-billing'),
+            var oModel = this.getOwnerComponent().getModel('comp-commprefs'),
                 sPath,
                 oBindingInfo,
                 oHistoryView,
@@ -197,7 +197,7 @@ sap.ui.define(
                 }.bind(this),
                 error: function (oError) {
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    jQuery.sap.log.info("Eligibility Error occured");
+                    jQuery.sap.log.info("oData Error occured");
                 }.bind(this)
             };
             if (oModel) {
@@ -242,7 +242,7 @@ sap.ui.define(
             var oCommPrefTag = sap.ui.core.Fragment.byId("CommPref", "idnrgCommPrefTag"),
                 oModel = oCommPrefTag.getModel("view-custpref"),
                 aResults = oModel.oData.results,
-                oBillingModel = this.getOwnerComponent().getModel('comp-billing'),
+                oBillingModel = this.getOwnerComponent().getModel('comp-commprefs'),
                 sPath = "/PrepayCommPrefS",
                 iCount = 0,
                 iFailureCount = 0,

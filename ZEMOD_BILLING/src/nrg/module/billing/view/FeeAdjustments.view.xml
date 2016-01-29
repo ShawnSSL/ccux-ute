@@ -52,7 +52,8 @@
                         </um:DropdownItem>
                     </um:Dropdown>
                  </u:Tag>
-                <u:TextArea value="Notes" class="nrgFeeAdj-textArea" width="40rem" height="200px" id="idnrgFeeAdj-textArea"></u:TextArea>
+                 <u:Tag text="Notes" class="nrgFeeAdj-mainArea-lbl"/>
+                <u:TextArea value="" class="nrgFeeAdj-textArea" width="40rem" height="200px" id="idnrgFeeAdj-textArea"></u:TextArea>
             </u:Tag>
             <u:Tag class="nrgFeeAdj-CAArea">
                <u:Tag class="nrgFeeAdj-CAArea-Title" text="Select Contract" />
@@ -66,7 +67,7 @@
                     </um:DropdownItem>
                 </um:Dropdown>
                 <u:Tag class="nrgFeeAdj-btns">
-                    <u:Button buttonType="SpecialNav" enabled="{view-feeAdj>/ok}"
+                    <u:Button buttonType="SpecialNav"
                         text="OK"
                         class="nrgFeeAdj-btn"
                         enabled="{view-feeAdj>/ok}"
@@ -87,9 +88,11 @@
                     </um:DropdownItem>
                     <um:DropdownItem key="{comp-feeAdjs>DocNum}" class="nrgFeeAdj-DdLItem" id="idnrgFeeAdj-DropDownDate-temp">
                        <u:Tag>
-                            <u:Tag text="{comp-feeAdjs>Description}" />
-                            <u:Tag text="{path: 'comp-feeAdjs>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                            <u:Tag text="{comp-feeAdjs>Amount}" />
+                            <u:Tag text="{comp-feeAdjs>Description}" class="nrgFeeAdj-DdLItem-value"/>
+                            <u:Tag text="{path: 'comp-feeAdjs>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" class="nrgFeeAdj-DdLItem-value"/>
+                            <u:Tag text="{path: 'comp-feeAdjs>Amount',
+                                                            type: 'nrg.base.type.Price',
+                                                            formatOptions: { currencySymbol: '$', currencyAlignment: 'RHS', minFractionDigits: '2', maxFractionDigits: '2' }}" class="nrgFeeAdj-DdLItem-value"/>
                        </u:Tag>
                     </um:DropdownItem>
                     <um:DropdownItem key="{comp-feeAdjs>Text}" class="nrgFeeAdj-DdLItem" id="idnrgFeeAdj-DropDownReason-temp">
