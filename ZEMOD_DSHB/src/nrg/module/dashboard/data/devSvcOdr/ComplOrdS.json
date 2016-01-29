@@ -5,7 +5,7 @@
         "__metadata" : {
           "id" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/ComplOrdS(BP='0002926935',CA='000003648303',ESID='1008901017126656741100',E_BPRC_ID='000013012154',E_BPRC_STEP='000002',E_BPRC_LL_STATUS='3010')",
           "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/ComplOrdS(BP='0002926935',CA='000003648303',ESID='1008901017126656741100',E_BPRC_ID='000013012154',E_BPRC_STEP='000002',E_BPRC_LL_STATUS='3010')",
-          "type" : "ZE_CCUX_SRV_ORD_SRV.PendStat"
+          "type" : "ZE_CCUX_SRV_ORD_SRV.LLStat"
         },
         "BP" : "0002926935",
         "CA" : "000003648303",
@@ -15,14 +15,15 @@
         "E_BPRC_LL_STATUS" : "3010",
         "E_BPRC_LLST_DATE" : "\/Date(1089176400000+0000)\/",
         "E_BPRC_ACTTYPE" : "ESID",
-        "Description" : "Move Out Accepted",
+        "TXset_Code" : "",
+        "Description" : "A10-Move Out Accepted",
         "Type" : "MOVE OUT"
       },
       {
         "__metadata" : {
           "id" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/ComplOrdS(BP='0002926935',CA='000003648303',ESID='1008901017126656741100',E_BPRC_ID='000011232986',E_BPRC_STEP='000007',E_BPRC_LL_STATUS='2001')",
           "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/ComplOrdS(BP='0002926935',CA='000003648303',ESID='1008901017126656741100',E_BPRC_ID='000011232986',E_BPRC_STEP='000007',E_BPRC_LL_STATUS='2001')",
-          "type" : "ZE_CCUX_SRV_ORD_SRV.PendStat"
+          "type" : "ZE_CCUX_SRV_ORD_SRV.LLStat"
         },
         "BP" : "0002926935",
         "CA" : "000003648303",
@@ -32,6 +33,7 @@
         "E_BPRC_LL_STATUS" : "2001",
         "E_BPRC_LLST_DATE" : "\/Date(1079416800000+0000)\/",
         "E_BPRC_ACTTYPE" : "ESID",
+        "TXset_Code" : "",
         "Description" : "Move In Response Received",
         "Type" : "MOVE IN/SWITCH"
       }

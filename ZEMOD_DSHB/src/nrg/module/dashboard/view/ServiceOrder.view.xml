@@ -284,8 +284,10 @@
                                                  text="{comp-i18n-dashboard>nrgDashboard-servOrder-Type}"/>
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c2"
                                                  text="{comp-i18n-dashboard>nrgDashboard-servOrder-Reason}"/>
+<!--
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c3"
-                                                 text="{comp-i18n-dashboard>nrgDashboard-servOrder-Status}"/>
+                                                 text="{comp-i18n-dashboard>nrgDashboard-servOrder-Code}"/>
+                                        -->
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c4"
                                                  text="{comp-i18n-dashboard>nrgDashboard-servOrder-CompleteDate}"/>
                                     </ute:Tag>
@@ -295,8 +297,10 @@
                                                      text="{oCompleteOrds>Type}"/>
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c2"
                                                      text="{oCompleteOrds>Description}"/>
+<!--
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c3"
-                                                     text="{oCompleteOrds>E_BPRC_LL_STATUS}"/>
+                                                     text="{oCompleteOrds>TXset_Code}"/>
+                                            -->
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c4"
                                                      text="{parts:['oCompleteOrds>E_BPRC_LLST_DATE'], formatter:'._formatDate'}"/>
                                         </ute:Tag>
