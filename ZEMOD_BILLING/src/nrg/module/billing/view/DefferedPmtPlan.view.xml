@@ -362,7 +362,7 @@
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnSend}"
                                    press="._onDPPThirdStepSend"/>
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnCncl}"
-                                   press="._onDppDeniedOkClick"/>
+                                   press="._onDppConfCancelClick"/>
                 </ute:Tag>
             </ute:Tag>
         </ute:Tag>
@@ -519,7 +519,7 @@
                                    press="._onDppExtConfirmClick"/>
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnCncl}"
                                    visible="{parts:['oExtEligible>/ExtOverride', 'oExtEligible>/ExtActive', 'oExtEligible>/EligibleYes'], formatter:'._formatShowConfirm'}"
-                                   press="._onDppDeniedOkClick"/>
+                                   press="._onDppConfCancelClick"/>
                     <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnChangeExt}"
                                    visible="{parts:['oExtEligible>/ExtOverride', 'oExtEligible>/ExtActive', 'oExtEligible>/EligibleYes'], formatter:'._formatShowChangeExt'}"
                                    press="._onDppExtChangeClick"/>

@@ -631,12 +631,10 @@ sap.ui.define(
             }
         };
         Controller.prototype._onDppConfCancelClick = function (oEvent) {
-            var oRouter = this.getOwnerComponent().getRouter();
-
             if (this._coNum) {
-                oRouter.navTo('dashboard.VerificationWithCaCo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
             } else {
-                oRouter.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
+                this.navTo('billing.CheckBookNoCo', {bpNum: this._bpNum, caNum: this._caNum});
             }
         };
 

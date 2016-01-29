@@ -56,7 +56,7 @@
                 <u:TextArea value="" class="nrgFeeAdj-textArea" width="40rem" height="200px" id="idnrgFeeAdj-textArea"></u:TextArea>
             </u:Tag>
             <u:Tag class="nrgFeeAdj-CAArea">
-               <u:Tag class="nrgFeeAdj-CAArea-Title" text="Select Contract" />
+               <u:Tag class="nrgFeeAdj-CAArea-Title" text="Contract Account" />
                 <um:Dropdown id="idnrgFeeAdj-DropDownCA"
                                  placeholder="3040103"
                                  class="nrgFeeAdj-CAArea-DD"

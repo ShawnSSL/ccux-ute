@@ -57,9 +57,9 @@ sap.ui.define(
                 var aContent = oCADropDown.getContent(),
                     fnDataReceivedHandler;
                 if ((aContent) && (aContent.length > 0)) {
-                    oCADropDown.setSelectedKey(aContent[0].getKey());
+                    oCADropDown.setSelectedKey(this._sCA);
                     aFilterIds = ["CA"];
-                    aFilterValues = [oCADropDown.getSelectedKey()];
+                    aFilterValues = [this._sCA];
                     aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
                     sPath = "/DiscNoticeFeeS";
                     fnDataReceivedHandler = function (oEvent, oData) {

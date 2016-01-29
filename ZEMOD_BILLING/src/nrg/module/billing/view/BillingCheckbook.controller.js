@@ -361,7 +361,10 @@ sap.ui.define(
                 QuickControl.openQuickPay(this._coNum, this._bpNum, this._caNum);
             }
             QuickControl.attachEvent("PaymentCompleted", function () {
-                that._initChkbookHdr();
+                this._initChkbookHdr();
+                this._initPaymentHdr();
+                this._initPostInvoiceItems();
+                this._retrieveNotification();
             }, this);
         };
 
