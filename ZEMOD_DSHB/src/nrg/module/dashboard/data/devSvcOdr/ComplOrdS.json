@@ -15,8 +15,8 @@
         "E_BPRC_LL_STATUS" : "3010",
         "E_BPRC_LLST_DATE" : "\/Date(1089176400000+0000)\/",
         "E_BPRC_ACTTYPE" : "ESID",
-        "TXset_Code" : "A13,A78",
-        "Description" : "Move Out Accepted",
+        "TXset_Code" : "",
+        "Description" : "A10-Move Out Accepted",
         "Type" : "MOVE OUT"
       },
       {
@@ -33,7 +33,7 @@
         "E_BPRC_LL_STATUS" : "2001",
         "E_BPRC_LLST_DATE" : "\/Date(1079416800000+0000)\/",
         "E_BPRC_ACTTYPE" : "ESID",
-        "TXset_Code" : "A13",
+        "TXset_Code" : "",
         "Description" : "Move In Response Received",
         "Type" : "MOVE IN/SWITCH"
       }
