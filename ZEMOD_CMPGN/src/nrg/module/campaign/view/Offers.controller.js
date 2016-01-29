@@ -668,7 +668,7 @@ sap.ui.define(
                 } else {
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     that.getOwnerComponent().setModel(oViewModel, 'comp-campLocal');
-                    this.navTo("campaignchg", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, offercodeNum: sOfferCode, stype : this._sType});
+                    this.navTo("campaignchg", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, offercodeNum: sOfferCode, stype : this._sType, sPromo : sPromo});
                 }
             }
 
@@ -876,7 +876,7 @@ sap.ui.define(
                         that.getOwnerComponent().getCcuxApp().setOccupied(false);
                         that._oLoyalityDialog.close();
                         that.getOwnerComponent().setModel(oLoyalModel, 'comp-campLocal');
-                        that.navTo("campaignchg", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, offercodeNum: sOfferCode, sDate : sDate});
+                        that.navTo("campaignchg", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, offercodeNum: sOfferCode, stype : this._sType, sPromo : sPromo});
                     }
                 }.bind(this),
                 error: function (oError) {

@@ -35,11 +35,11 @@
                     "target": [ "campaign.Overview", "dashboard.CustomerDataSummary", "campaign.Tools" , "app.Footer" ]
                 },
                 "campaignchg": {
-                    "pattern": "campaign/cmpchg/bp/{bpNum}/ca/{caNum}/co/{coNum}/offercode/{offercodeNum}/type/{stype}",
+                    "pattern": "campaign/cmpchg/bp/{bpNum}/ca/{caNum}/co/{coNum}/offercode/{offercodeNum}/type/{stype}/promo/{sPromo}",
                     "target": [ "campaign.Change", "dashboard.CustomerDataSummary", "campaign.Tools" , "app.Footer" ]
                 },
                 "campaignSS": {
-                    "pattern": "campaign/cmpss/bp/{bpNum}/ca/{caNum}/co/{coNum}/offercode/{offercodeNum}/type/{stype}",
+                    "pattern": "campaign/cmpss/bp/{bpNum}/ca/{caNum}/co/{coNum}/offercode/{offercodeNum}/type/{stype}/promo/{sPromo}",
                     "target": [ "campaign.SalesScript", "dashboard.CustomerDataSummary", "campaign.Tools" , "app.Footer" ]
                 },
                 "campaignoffers": {

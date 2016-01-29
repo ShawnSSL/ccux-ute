@@ -51,7 +51,7 @@
                                 <core:Fragment fragmentName="nrg.module.campaign.view.Cons" id="Cons1" type="XML" />
                             </u:Tag>
                             <u:Tag id="idnrgCamOff-SecondCardC" class="nrgCamOff-SecondCardC">
-                                <core:Fragment fragmentName="nrg.module.campaign.view.Cons" id="Cons2" type="XML" />
+<!--                                <core:Fragment fragmentName="nrg.module.campaign.view.Cons" id="Cons2" type="XML" />-->
                             </u:Tag>
                        </u:Tag>
                     </um:TabPanelItem>
