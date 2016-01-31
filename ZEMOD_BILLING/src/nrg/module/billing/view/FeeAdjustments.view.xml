@@ -58,7 +58,6 @@
             <u:Tag class="nrgFeeAdj-CAArea">
                <u:Tag class="nrgFeeAdj-CAArea-Title" text="Contract Account" />
                 <um:Dropdown id="idnrgFeeAdj-DropDownCA"
-                                 placeholder="3040103"
                                  class="nrgFeeAdj-CAArea-DD"
                                  select="._onCoSelect">
                     <um:DropdownItem key="1" class="nrgFeeAdj-DdLItem" >
@@ -82,8 +81,8 @@
         </u:Tag>
         <u:Tag visible="false">
                 <um:Dropdown>
-                    <um:DropdownItem key="{comp-feeAdjs>CA}" class="nrgFeeAdj-DdLItem" id="idnrgFeeAdj-DropDownCA-temp">
-                        <u:Tag text="{comp-feeAdjs>CA}">
+                    <um:DropdownItem key="{parts:['comp-feeAdjs>CA'], formatter:'._parseCAValue'}" class="nrgFeeAdj-DdLItem" id="idnrgFeeAdj-DropDownCA-temp">
+                        <u:Tag text="{parts:['comp-feeAdjs>CA'], formatter:'._parseCAValue'}">
                         </u:Tag>
                     </um:DropdownItem>
                     <um:DropdownItem key="{comp-feeAdjs>DocNum}" class="nrgFeeAdj-DdLItem" id="idnrgFeeAdj-DropDownDate-temp">
@@ -92,7 +91,7 @@
                             <u:Tag text="{path: 'comp-feeAdjs>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" class="nrgFeeAdj-DdLItem-value"/>
                             <u:Tag text="{path: 'comp-feeAdjs>Amount',
                                                             type: 'nrg.base.type.Price',
-                                                            formatOptions: { currencySymbol: '$', currencyAlignment: 'RHS', minFractionDigits: '2', maxFractionDigits: '2' }}" class="nrgFeeAdj-DdLItem-value"/>
+                                                            formatOptions: { currencySymbol: '$', currencyAlignment: 'LHS', minFractionDigits: '2', maxFractionDigits: '2' }}" class="nrgFeeAdj-DdLItem-value"/>
                        </u:Tag>
                     </um:DropdownItem>
                     <um:DropdownItem key="{comp-feeAdjs>Text}" class="nrgFeeAdj-DdLItem" id="idnrgFeeAdj-DropDownReason-temp">
