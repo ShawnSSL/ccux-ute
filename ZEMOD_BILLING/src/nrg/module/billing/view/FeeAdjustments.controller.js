@@ -33,7 +33,7 @@ sap.ui.define(
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
                 oCATemplate = this.getView().byId("idnrgFeeAdj-DropDownCA-temp"),
                 oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
-                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
+                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp").clone(),
                 aFilterIds,
                 aFilterValues,
                 aFilters,
@@ -57,9 +57,10 @@ sap.ui.define(
                 var aContent = oCADropDown.getContent(),
                     fnDataReceivedHandler;
                 if ((aContent) && (aContent.length > 0)) {
-                    oCADropDown.setSelectedKey(this._sCA);
+                    that._sCA =  parseInt(that._sCA, 10);
+                    oCADropDown.setSelectedKey(that._sCA);
                     aFilterIds = ["CA"];
-                    aFilterValues = [this._sCA];
+                    aFilterValues = [that._sCA];
                     aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
                     sPath = "/DiscNoticeFeeS";
                     fnDataReceivedHandler = function (oEvent, oData) {
@@ -162,7 +163,7 @@ sap.ui.define(
                 sPath,
                 oBindingInfo,
                 oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
-                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
+                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp").clone(),
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
                 fnDataReceivedHandler,
                 oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
@@ -206,7 +207,7 @@ sap.ui.define(
                 sPath,
                 oBindingInfo,
                 oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
-                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
+                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp").clone(),
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
                 fnDataReceivedHandler,
                 oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
@@ -249,10 +250,10 @@ sap.ui.define(
                 sPath,
                 oBindingInfo,
                 oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
-                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
+                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp").clone(),
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
                 oReasonDropDown = this.getView().byId("idnrgFeeAdj-DropDownReason"),
-                oReasonDropDownTemplate = this.getView().byId("idnrgFeeAdj-DropDownReason-temp"),
+                oReasonDropDownTemplate = this.getView().byId("idnrgFeeAdj-DropDownReason-temp").clone(),
                 fnDataReceivedHandler,
                 oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
             oTextArea.setValue("");
@@ -301,7 +302,7 @@ sap.ui.define(
                 sPath,
                 oBindingInfo,
                 oDisconnectDropDown = this.getView().byId("idnrgFeeAdj-DropDownDate"),
-                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp"),
+                oDisconnectTemplate = this.getView().byId("idnrgFeeAdj-DropDownDate-temp").clone(),
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
                 fnDataReceivedHandler,
                 oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
@@ -348,6 +349,19 @@ sap.ui.define(
                 this.onReconnectFee();
             }
 
+        };
+        /**
+		 * Enable the Ok button if dropdown selected
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype._parseCAValue = function (oValue) {
+            if (oValue) {
+                return parseInt(oValue, 10);
+            } else {
+                return "";
+            }
         };
         /**
 		 * Enable the Ok button if dropdown selected

@@ -27,6 +27,7 @@ sap.ui.define(
         CustomController.prototype.onBeforeRendering = function () {
 
             this.getOwnerComponent().getCcuxApp().setTitle('BILLING');
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this._initRoutingInfo();
             var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
                 oBindingInfo,
@@ -47,6 +48,7 @@ sap.ui.define(
                 }.bind(this),
                 error: function (oError) {
                     jQuery.sap.log.info("Odata Error occured");
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
             if (oModel) {
@@ -206,6 +208,7 @@ sap.ui.define(
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
 
@@ -229,12 +232,14 @@ sap.ui.define(
 
             oParameters = {
                 success : function (oData) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     if (oData) {
                         this.getView().getModel('oPmtSummary').setData(oData.results[0]);
                     }
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
 

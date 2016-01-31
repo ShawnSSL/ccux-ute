@@ -426,22 +426,38 @@ sap.ui.define(
         Controller.prototype._onDistributeDiffClick = function (oEvent) {
             var oDppConfs = this.getView().getModel('oDppConfs'),
                 i,
-                iSelSum = 0,
-                iSelNum;
+                fNonSelSum = 0, // to calculate the non-selected rows total.
+                iSelNum = 0, // to count the selected row count
+                iNonSelNum = 0, // to count the Non-selected row count
+                fTotalAmount = oDppConfs.getProperty("/results/0/TotOutStd"),
+                fDividedAmount;
 
+            if (fTotalAmount) {
+                fTotalAmount = parseFloat(fTotalAmount); // This is the total amount from backend.
+            }
+            // First calculate the sum which is not checked in the open items.
             for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
-                if (oDppConfs.getProperty('/results/' + i + '/Checked')) {
-                    iSelSum = parseFloat(iSelSum) + parseFloat(oDppConfs.getProperty('/results/' + i + '/ConfirmdItems/Amount'));
-                    iSelNum = i + 1;
+                if (!oDppConfs.getProperty('/results/' + i + '/Checked')) {
+                    fNonSelSum = parseFloat(fNonSelSum) + parseFloat(oDppConfs.getProperty('/results/' + i + '/ConfirmdItems/Amount'));
+                    iNonSelNum = iNonSelNum + 1;
+                } else {
+                    iSelNum = iSelNum + 1;
+                }
+            }
+
+            if (iSelNum) {
+                fDividedAmount = (fTotalAmount - fNonSelSum) / iSelNum;
+                if (fDividedAmount) {
+                    fDividedAmount = fDividedAmount.toFixed(2);
                 }
             }
 
             for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
                 if (oDppConfs.getProperty('/results/' + i + '/Checked')) {
-                    oDppConfs.setProperty('/results/' + i + '/ConfirmdItems/Amount', parseFloat(iSelSum) / parseFloat(iSelNum));
+                    oDppConfs.setProperty('/results/' + i + '/ConfirmdItems/Amount', fDividedAmount);
                 }
             }
-
+            // Remove all checks after distributing the values
             for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
                 oDppConfs.setProperty('/results/' + i + '/Checked', false);
             }

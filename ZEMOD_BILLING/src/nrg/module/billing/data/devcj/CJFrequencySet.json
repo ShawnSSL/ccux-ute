@@ -3,14 +3,79 @@
       "results":[
          {
             "__metadata":{
-               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0001115656',CA='000001260713')",
-               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0001115656',CA='000001260713')",
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
                "type":"ZE_CCUX_CJ_SRV.CJFrequency"
             },
-            "BP":"0001115656",
-            "CA":"000001260713",
-            "Channel":"Correspondence",
+            "BP":"0002344712",
+            "CA":"000002872587",
+            "Channel":"IVR",
             "Count":"  2",
+            "StartDate":null,
+            "EndDate":null
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "type":"ZE_CCUX_CJ_SRV.CJFrequency"
+            },
+            "BP":"0002344712",
+            "CA":"000002872587",
+            "Channel":"Phone",
+            "Count":"  1",
+            "StartDate":null,
+            "EndDate":null
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "type":"ZE_CCUX_CJ_SRV.CJFrequency"
+            },
+            "BP":"0002344712",
+            "CA":"000002872587",
+            "Channel":"Chat",
+            "Count":"  1",
+            "StartDate":null,
+            "EndDate":null
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "type":"ZE_CCUX_CJ_SRV.CJFrequency"
+            },
+            "BP":"0002344712",
+            "CA":"000002872587",
+            "Channel":"Survey",
+            "Count":"  1",
+            "StartDate":null,
+            "EndDate":null
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "type":"ZE_CCUX_CJ_SRV.CJFrequency"
+            },
+            "BP":"0002344712",
+            "CA":"000002872587",
+            "Channel":"Mobile",
+            "Count":"  1",
+            "StartDate":null,
+            "EndDate":null
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CJ_SRV/CJFrequencySet(BP='0002344712',CA='000002872587')",
+               "type":"ZE_CCUX_CJ_SRV.CJFrequency"
+            },
+            "BP":"0002344712",
+            "CA":"000002872587",
+            "Channel":"Website",
+            "Count":"  3",
             "StartDate":null,
             "EndDate":null
          }

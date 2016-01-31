@@ -23,6 +23,7 @@ sap.ui.define(
 
         CustomController.prototype.onBeforeRendering = function () {
             this.getOwnerComponent().getCcuxApp().setTitle('BILLING');
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this._initRoutingInfo();
             var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
                 oBindingInfo,
@@ -395,12 +396,15 @@ sap.ui.define(
 
             oParameters = {
                 success : function (oData) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     if (oData) {
                         this.getView().getModel('oPaymentHdr').setProperty(sBindingPath + '/Payments', oData);
                     }
+
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
 
@@ -550,7 +554,8 @@ sap.ui.define(
                 i,
                 j,
                 oCurDate = new Date(),
-                oScrlCtaner = this.getView().byId('nrgChkbookScrollContainer');
+                oScrlCtaner = this.getView().byId('nrgChkbookScrollContainer'),
+                that = this;
 
             oParameters = {
                 success : function (oData) {
@@ -617,10 +622,13 @@ sap.ui.define(
                         this._retrPaymentItmes(oData.results[i].InvoiceNum, '/results/' + i);
 
                         //oScrlCtaner.scrollTo(0, 1000, 1000);
+                    } else {
+                        this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     }
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
 

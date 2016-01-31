@@ -1,0 +1,174 @@
+{
+   "d":{
+      "results":[
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000118752390')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000118752390')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000118752390",
+            "Date":"\/Date(1397797200000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000119304087')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000119304087')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000119304087",
+            "Date":"\/Date(1402981200000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000120246365')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000120246365')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000120246365",
+            "Date":"\/Date(1408338000000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000120702249')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000120702249')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000120702249",
+            "Date":"\/Date(1409893200000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000121049219')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000121049219')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000121049219",
+            "Date":"\/Date(1410843600000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000122829362')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000122829362')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000122829362",
+            "Date":"\/Date(1415858400000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000123662736')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000123662736')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000123662736",
+            "Date":"\/Date(1418623200000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000125303420')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000125303420')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000125303420",
+            "Date":"\/Date(1424325600000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000126795258')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000126795258')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000126795258",
+            "Date":"\/Date(1430370000000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"8.26"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000127117972')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000127117972')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000127117972",
+            "Date":"\/Date(1430802000000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000127492122')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000127492122')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000127492122",
+            "Date":"\/Date(1432011600000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000128475994')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000128475994')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000128475994",
+            "Date":"\/Date(1434603600000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000129523737')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000129523737')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000129523737",
+            "Date":"\/Date(1437368400000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"8.36"
+         },
+         {
+            "__metadata":{
+               "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000130848659')",
+               "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/DiscNoticeFeeS(CA='28822',DocNum='000130848659')",
+               "type":"ZE_CCUX_BILLING_SRV.Fee"
+            },
+            "CA":"28822",
+            "DocNum":"000130848659",
+            "Date":"\/Date(1440046800000+0000)\/",
+            "Description":"Disconnect Notice Fee",
+            "Amount":"10.00"
+         }
+      ]
+   }
+}

@@ -24,6 +24,7 @@ sap.ui.define(
 
         Controller.prototype.onBeforeRendering = function () {
 
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this.getOwnerComponent().getCcuxApp().setTitle('CUSTOMER DATA');
 
             this.getView().setModel(this.getOwnerComponent().getModel('comp-dashboard'), 'oODataSvc');
@@ -1117,7 +1118,7 @@ sap.ui.define(
                 that = this,
                 oContractModel = this.getView().getModel('oDtaVrfyContract'),
                 oAllContractModel = this.getView().getModel('oAllContractsofBuag');
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+
             sPath = '/Buags' + '(\'' + sCaNum + '\')/Contracts/';
             oParameters = {
                 success : function (oData) {
@@ -1163,6 +1164,8 @@ sap.ui.define(
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    if (fnCallback) { fnCallback(); }
                 }.bind(this)
             };
 
