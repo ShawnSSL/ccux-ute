@@ -237,9 +237,7 @@
                                 <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl">
                                     <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr">
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c1"
-                                                 text="{comp-i18n-dashboard>nrgDashboard-servOrder-Type}"/>
-                                        <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c2"
-                                                 text="{comp-i18n-dashboard>nrgDashboard-servOrder-Reason}"/>
+                                                 text="{comp-i18n-dashboard>nrgDashboard-servOrder-Description}"/>
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c3"
                                                  text="{comp-i18n-dashboard>nrgDashboard-servOrder-Status}"/>
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c4"
@@ -249,8 +247,6 @@
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-row">
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c1"
                                                      text="{oOtherOrds>Type}"/>
-                                            <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c2"
-                                                     text="{oOtherOrds>QMNUM}"/>
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c3"
                                                      text="{oOtherOrds>Status}"/>
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c4"
@@ -284,10 +280,6 @@
                                                  text="{comp-i18n-dashboard>nrgDashboard-servOrder-Type}"/>
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c2"
                                                  text="{comp-i18n-dashboard>nrgDashboard-servOrder-Reason}"/>
-<!--
-                                        <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c3"
-                                                 text="{comp-i18n-dashboard>nrgDashboard-servOrder-Code}"/>
-                                        -->
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c4"
                                                  text="{comp-i18n-dashboard>nrgDashboard-servOrder-CompleteDate}"/>
                                     </ute:Tag>
@@ -297,10 +289,6 @@
                                                      text="{oCompleteOrds>Type}"/>
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c2"
                                                      text="{oCompleteOrds>Description}"/>
-<!--
-                                            <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c3"
-                                                     text="{oCompleteOrds>TXset_Code}"/>
-                                            -->
                                             <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c4"
                                                      text="{parts:['oCompleteOrds>E_BPRC_LLST_DATE'], formatter:'._formatDate'}"/>
                                         </ute:Tag>
