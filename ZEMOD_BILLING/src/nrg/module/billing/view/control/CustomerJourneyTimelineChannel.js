@@ -102,7 +102,7 @@ sap.ui.define(
             }, this);*/
         };
         CustomControl.prototype.onfocusout = function (oEvent) {
-            this.setSelected(false);
+            //this.setSelected(false);
         };
         CustomControl.prototype._onChannelDoubleClick = function (oEvent) {
             this._bDoubleClick = true;
@@ -130,6 +130,51 @@ sap.ui.define(
             }
         };
         CustomControl.prototype.adjustDescription = function () {
+            var $this = this.$(),
+                $offset = $this.offset(),
+                $ChannelContainer = jQuery(".nrgCJT-channelContainer"),
+                $ChannelContainerOffSet = $ChannelContainer.offset(),
+                oDescription,
+                oLeft,
+                oDescriptionTitle,
+                iDescriptionTTlLeft,
+                iTotalDescWidth,
+                iTotalDescTitleWidth;
+            if ((this.getDomRef()) && (this.getDomRef().firstChild) && (this.getDomRef().firstChild) && (this.getDomRef().firstChild.nextSibling) && (this.getDomRef().firstChild.nextSibling.nextSibling)) {
+                oDescription = this.getDomRef().firstChild.nextSibling.nextSibling;
+            } else {
+                return;
+            }
+            oLeft = ($offset.left - $ChannelContainerOffSet.left);
+            oLeft *= -1;
+            jQuery(oDescription).css({
+			    "top" : '6.5rem',
+			    "left" : oLeft
+		    });
+            iTotalDescWidth = jQuery(oDescription).innerWidth();
+            if (oDescription) {
+                oDescriptionTitle = oDescription.firstChild;
+            } else {
+                return;
+            }
+            iDescriptionTTlLeft = Math.abs(oLeft) + 5;
+            iTotalDescTitleWidth = jQuery(oDescriptionTitle).innerWidth();
+            // if Description is overflowing the box, the re-adjust its starting point.
+            if ((iTotalDescTitleWidth + iDescriptionTTlLeft) > iTotalDescWidth) {
+                iDescriptionTTlLeft = (iTotalDescWidth - iTotalDescTitleWidth) - 10;
+            }
+            jQuery(oDescriptionTitle).css({
+			    "top" : '-1rem',
+			    "left" : iDescriptionTTlLeft
+		    });
+            if ((jQuery(oDescriptionTitle).offset().left - $offset.left) > 10) {
+                jQuery(oDescriptionTitle).css({
+                    "top" : '-1rem',
+                    "left" : '7px'
+                });
+            }
+        };
+        CustomControl.prototype.adjustDescriptionOld = function () {
             var oDescription,
                 oNavBackDomRef,
                 oDescriptionTitle,

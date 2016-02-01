@@ -85,27 +85,29 @@
 .nrgCJTChannel > .nrgCJTChannel-desc {
     border: 2px solid gray;
 	position: absolute;
-	width: 35rem;
+	width: 38rem;
 	height: 7rem;
     display:none;
     color: @nrgColor-grey-semiDark;
 	white-space: normal;
 }
 .nrgCJTChannel-desc-title {
-    position: relative;
+    position: absolute;
+    min-width: 5rem;
 	top: -1rem;
 	margin-left: 0em;
 	display: inline;
 	background-color: #eaeff4;
 	left: 0rem;
 	padding: 2px 8px 2px 8px;
+    text-align: center;
 }
 .nrgCJTChannel-desc-text {
-    max-height: 6rem;
-	overflow: hidden;
+	overflow-x: hidden;
 	position: relative;
-	top: -1rem;
-	height: 6rem;
+	height: 100%;
+	max-height: 100%;
+	overflow-y: auto;
 }
 .nrgCJTChannel > .nrgCJTChannel-emblem > .nrgCJTChannel-topLabel {
     display: block;
