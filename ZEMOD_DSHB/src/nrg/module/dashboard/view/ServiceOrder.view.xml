@@ -77,7 +77,7 @@
                                 </ute:Tag>
                             </ute:Tag>
                             <ute:Tag class="nrgDashboard-cusSerOdr-rgtArea-ctnt-detail-ctnt">
-                                <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl">
+                                <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl" visible="{parts:['oEnrollHolds>/results'], formatter:'._formatVisMvi'}">
                                     <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr">
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c1"
                                                  text="{comp-i18n-dashboard>nrgDashboard-servOrder-Type}"/>
@@ -102,7 +102,7 @@
                                         </ute:Tag>
                                     </ute:Tag>
                                 </ute:Tag>
-                                <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl">
+                                <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl" visible="{parts:['oEnrollPndingStats>/results'], formatter:'._formatVisMvi'}">
                                     <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr">
                                         <ute:Tag class="nrgDashboard-cusSerOdr-rcdc-tbl-hdr-cell nrgDashboard-cusSerOdr-rcdc-tbl-hdr-c1"
                                                  text="{comp-i18n-dashboard>nrgDashboard-servOrder-Type}"/>
