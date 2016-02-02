@@ -351,10 +351,7 @@ sap.ui.define(
             oExtElgble.setProperty('/ExtActive', false);
         };
 
-        Controller.prototype._onDppExtConfirmClick = function () {
-            //Send the Extension request out.
-            this._postExtRequest();
-        };
+
 
         Controller.prototype._onDPPThirdStepSend = function () {
             this._postDPPCommunication();
@@ -513,7 +510,9 @@ sap.ui.define(
                 sTempCOpupw,
                 sTempCOpupk,
                 sTempCOpupz,
-                oContactLogArea = this.getView().byId('idnrgBilling-DPPAccCL');
+                oContactLogArea = this.getView().byId('idnrgBilling-DPPAccCL'),
+                sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue(),
+                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayvalue-id').getValue();
 
 
             oConfPost.setProperty('/CA', this._caNum);
@@ -528,6 +527,10 @@ sap.ui.define(
             oConfPost.setProperty('/ZeroDwnPay', oConf.oData.results[0].ZeroDwnPay);
 
             oConfPost.setProperty('/InitialDate', oConf.oData.results[0].InitialDate);
+
+            oConfPost.setProperty('/DwnPay', sDwnPayValue || 0);
+
+            oConfPost.setProperty('/DwnPayDate', sDwnPayDate || new Date());
 
             oConfPost.setProperty('/ReasonCode', this.getView().getModel('oDppReasons').getProperty('/selectedKey'));
             oConfPost.setProperty('/Message', (oContactLogArea.getValue() || ""));
@@ -1155,15 +1158,51 @@ sap.ui.define(
                 oODataSvc.read(sPath, oParameters);
             }
         };
+        Controller.prototype._onDppExtConfirmClick = function () {
+            //Send the Extension request out.
+            var oEligble = this.getView().getModel('oExtEligible'),
+                oExt = this.getView().getModel('oExtExtensions'),
+                _popupCallback,
+                that = this;
 
+            if (oEligble.getProperty('/ExtPending')) {
+                if (oExt.getProperty('/results/0/iDwnPay') === 0) {
+                    _popupCallback = function (sAction) {
+                        switch (sAction) {
+                        case ute.ui.main.Popup.Action.Yes:
+                            that._postExtRequest();
+                            break;
+                        case ute.ui.main.Popup.Action.No:
+                            that._onCheckbook();
+                            break;
+                        case ute.ui.main.Popup.Action.Ok:
+                            break;
+                        }
+                    };
+                    ute.ui.main.Popup.Confirm({
+                        title: 'PENDING EXTENSION',
+                        message: 'Customer already has a pending extension. Would you like to continue?',
+                        callback: _popupCallback
+                    });
+
+                }
+                if (oExt.getProperty('/results/0/iDwnPay') > 0) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Information',
+                        message: 'Customer already has a pending extension'
+                    });
+                }
+            }
+
+        };
         Controller.prototype._postExtRequest = function () {
             var oODataSvc = this.getView().getModel('oDataSvc'),
                 oPost = this.getView().getModel('oExtPostRequest'),
                 oExt = this.getView().getModel('oExtExtensions'),
                 oEligble = this.getView().getModel('oExtEligible'),
                 oReason = this.getView().getModel('oExtExtReasons'),
-                sDwnPayDate = this.getView().byId('nrgBilling-dpp-dwnPayDueDate-id').getValue(),
-                sDwnPayValue = this.getView().byId('nrgBilling-dpp-dwnPayvalue-id').getValue(),
+                sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue(),
+                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayvalue-id').getValue(),
                 sPath,
                 oParameters,
                 oDataObject = {},

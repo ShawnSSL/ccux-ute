@@ -172,9 +172,9 @@
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="{parts:['oDppEligible>/DPPOverride', 'oDppEligible>/DPPActive', 'oDppEligible>/EligibleYes'], formatter:'._formatShowDownPayment'}">
                 <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Amount"/>
                 <ute:Textfield class="nrgBilling-payment-lbl"
-                                       fieldType="Regular" width="8rem" value="{oExtExtensions>/results/0/iDwnPay}" />
-                <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Due Date"/>
-                <ute:DatePicker width="8rem" class="nrgBilling-payment-lbl" />
+                                       fieldType="Regular" width="8rem" value="0" id="nrgBilling-dpp-dwnPayvalue-id"/>
+                <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Due Date" />
+                <ute:DatePicker width="8rem" class="nrgBilling-payment-lbl" id="nrgBilling-dpp-dwnPayDueDate-id" />
                 <utmain:Button class="nrgBilling-payment-lbl" text="Make a Payment"
                                press="._onDownPayment"/>
             </ute:Tag>
@@ -490,9 +490,9 @@
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="{parts:['oExtEligible>/ExtOverride', 'oExtEligible>/NewExtActive', 'oExtEligible>/EligibleYes'], formatter:'._formatShowDownPayment'}">
                 <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Amount"/>
                 <ute:Textfield class="nrgBilling-payment-lbl"
-                                       fieldType="Regular" width="8rem" value="{oExtExtensions>/results/0/iDwnPay}" id="nrgBilling-dpp-dwnPayvalue-id"/>
+                                       fieldType="Regular" width="8rem" value="{oExtExtensions>/results/0/iDwnPay}" id="nrgBilling-ext-dwnPayvalue-id"/>
                 <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Due Date"/>
-                <ute:DatePicker width="8rem" class="nrgBilling-payment-lbl" id="nrgBilling-dpp-dwnPayDueDate-id"/>
+                <ute:DatePicker width="8rem" class="nrgBilling-payment-lbl" id="nrgBilling-ext-dwnPayDueDate-id"/>
                 <utmain:Button class="nrgBilling-payment-lbl" text="Make a Payment"
                                press="._onDownPayment"/>
             </ute:Tag>

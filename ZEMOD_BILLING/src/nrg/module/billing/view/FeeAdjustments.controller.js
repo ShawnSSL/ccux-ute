@@ -66,6 +66,8 @@ sap.ui.define(
                     fnDataReceivedHandler = function (oEvent, oData) {
                         if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
                             oDisconnectDropDown.setPlaceholder("No Fee(s) Found");
+                        } else if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length > 0)) {
+                            oDisconnectDropDown.setPlaceholder("CHOOSE THE FEE");
                         }
                     };
                     oBindingInfo = {
@@ -120,23 +122,23 @@ sap.ui.define(
                 sAmount,
                 sPath,
                 oViewModel = this.getView().getModel("view-feeAdj");
-            if (oViewModel.getProperty("/discNoticefee")) {
+            if (!oViewModel.getProperty("/discNoticefee")) {
                 sPath = "/DiscNoticeFeeS";
             }
-            if (oViewModel.getProperty("/discRecovfee")) {
+            if (!oViewModel.getProperty("/discRecovfee")) {
                 sPath = "/DiscRecovFeeS";
             }
-            if (oViewModel.getProperty("/Latefee")) {
+            if (!oViewModel.getProperty("/Latefee")) {
                 sPath = "/LateFeeS";
             }
-            if (oViewModel.getProperty("/Reconnectfee")) {
+            if (!oViewModel.getProperty("/Reconnectfee")) {
                 sPath = "/ReconReqFeeS";
             }
             sPath = sPath + "(CA='" + oCADropDown.getSelectedKey() + "',DocNum='" + oDateDropDown.getSelectedKey() + "')/Amount";
             sAmount = oModel.getProperty(sPath);
             mParameters = {
                 method : "POST",
-                urlParameters : {"Amount" : sAmount,
+                urlParameters : {"Amount" : sAmount || 0,
                                          "CA" : oCADropDown.getSelectedKey(),
                                         "DocNum" : oDateDropDown.getSelectedKey(),
                                         "Reason" : oReasonDropDown.getSelectedKey(),
@@ -181,6 +183,8 @@ sap.ui.define(
             fnDataReceivedHandler = function (oEvent, oData) {
                 if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
                     oDisconnectDropDown.setPlaceholder("No Fee(s) Found");
+                } else if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length > 0)) {
+                    oDisconnectDropDown.setPlaceholder("CHOOSE THE FEE");
                 }
             };
             oBindingInfo = {
@@ -225,6 +229,8 @@ sap.ui.define(
             fnDataReceivedHandler = function (oEvent, oData) {
                 if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
                     oDisconnectDropDown.setPlaceholder("No Fee(s) Found");
+                } else if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length > 0)) {
+                    oDisconnectDropDown.setPlaceholder("CHOOSE THE FEE");
                 }
             };
             oBindingInfo = {
@@ -270,6 +276,8 @@ sap.ui.define(
             fnDataReceivedHandler = function (oEvent, oData) {
                 if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
                     oDisconnectDropDown.setPlaceholder("No Fee(s) Found");
+                } else if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length > 0)) {
+                    oDisconnectDropDown.setPlaceholder("CHOOSE THE FEE");
                 }
             };
             oBindingInfo = {
@@ -317,6 +325,8 @@ sap.ui.define(
             fnDataReceivedHandler = function (oEvent, oData) {
                 if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
                     oDisconnectDropDown.setPlaceholder("No Fee(s) Found");
+                } else if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length > 0)) {
+                    oDisconnectDropDown.setPlaceholder("CHOOSE THE FEE");
                 }
             };
             oBindingInfo = {
