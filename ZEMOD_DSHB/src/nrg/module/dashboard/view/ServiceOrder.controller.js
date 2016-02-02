@@ -101,6 +101,10 @@ sap.ui.define(
             return bPndSelected && bTypeOrder;
         };
 
+        Controller.prototype._formatVisMvi = function (results) {
+            return (!(!results));   // false if results is empty
+        };
+
         Controller.prototype._formatDate = function (oDate) {
             var sFormattedDate;
 

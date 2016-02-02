@@ -147,6 +147,10 @@
                                             link="false"
                                             design="Error"
                                             text="EXTN"/>
+                                        <utapp:FooterNotificationItem visible="{oEligibility>/BBPActv}"
+                                            link="false"
+                                            design="Error"
+                                            text="BBP"/>
                                     </ute:Tag>
                                 </ute:Tag>
                             </ute:Tag>
