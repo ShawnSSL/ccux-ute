@@ -120,33 +120,45 @@ sap.ui.define(
                 oReasonDropDown = this.getView().byId("idnrgFeeAdj-DropDownReason"),
                 mParameters,
                 sAmount,
+                sReason,
                 sPath,
                 oViewModel = this.getView().getModel("view-feeAdj");
             if (!oViewModel.getProperty("/discNoticefee")) {
                 sPath = "/DiscNoticeFeeS";
+                sReason = "DISC_NOTIC";
             }
             if (!oViewModel.getProperty("/discRecovfee")) {
                 sPath = "/DiscRecovFeeS";
+                sReason = "DISC_RECVR";
             }
             if (!oViewModel.getProperty("/Latefee")) {
                 sPath = "/LateFeeS";
+                sReason = oReasonDropDown.getSelectedKey();
             }
             if (!oViewModel.getProperty("/Reconnectfee")) {
                 sPath = "/ReconReqFeeS";
+                sReason = "RECON_REQ";
             }
             sPath = sPath + "(CA='" + oCADropDown.getSelectedKey() + "',DocNum='" + oDateDropDown.getSelectedKey() + "')/Amount";
             sAmount = oModel.getProperty(sPath);
             mParameters = {
                 method : "POST",
                 urlParameters : {"Amount" : sAmount || 0,
-                                         "CA" : oCADropDown.getSelectedKey(),
-                                        "DocNum" : oDateDropDown.getSelectedKey(),
-                                        "Reason" : oReasonDropDown.getSelectedKey(),
-                                        "Text" : oTextArea.getValue()},
+                                 "CA" : oCADropDown.getSelectedKey(),
+                                 "DocNum" : oDateDropDown.getSelectedKey(),
+                                 "Reason" : sReason,
+                                 "Text" : oTextArea.getValue()},
                 success : function (oData) {
+                    ute.ui.main.Popup.Alert({
+                        title: "Fee Adjustment",
+                        message: "Succeeded"
+                    });
                 }.bind(this),
                 error: function (oError) {
-
+                    ute.ui.main.Popup.Alert({
+                        title: "Fee Adjustment",
+                        message: "Failed"
+                    });
                 }.bind(this)
             };
             oModel.callFunction("/RemoveFee", mParameters); // callback function for error
@@ -170,7 +182,9 @@ sap.ui.define(
                 fnDataReceivedHandler,
                 oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
             oTextArea.setValue("");
+
             oDisconnectDropDown.removeAllContent();
+
             oViewModel.setProperty("/discNoticefee", false);
             oViewModel.setProperty("/discRecovfee", true);
             oViewModel.setProperty("/Latefee", true);
@@ -216,7 +230,9 @@ sap.ui.define(
                 fnDataReceivedHandler,
                 oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
             oTextArea.setValue("");
+
             oDisconnectDropDown.removeAllContent();
+
             oViewModel.setProperty("/discNoticefee", true);
             oViewModel.setProperty("/discRecovfee", false);
             oViewModel.setProperty("/Latefee", true);
@@ -263,7 +279,9 @@ sap.ui.define(
                 fnDataReceivedHandler,
                 oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
             oTextArea.setValue("");
+
             oDisconnectDropDown.removeAllContent();
+
             oViewModel.setProperty("/discNoticefee", true);
             oViewModel.setProperty("/discRecovfee", true);
             oViewModel.setProperty("/Latefee", false);
@@ -315,7 +333,9 @@ sap.ui.define(
                 fnDataReceivedHandler,
                 oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
             oTextArea.setValue("");
+
             oDisconnectDropDown.removeAllContent();
+
             oViewModel.setProperty("/discNoticefee", true);
             oViewModel.setProperty("/discRecovfee", true);
             oViewModel.setProperty("/Latefee", true);
@@ -358,7 +378,6 @@ sap.ui.define(
             if (!oViewModel.getProperty("/Reconnectfee")) {
                 this.onReconnectFee();
             }
-
         };
         /**
 		 * Enable the Ok button if dropdown selected
@@ -394,5 +413,4 @@ sap.ui.define(
         };
         return Controller;
     }
-
 );

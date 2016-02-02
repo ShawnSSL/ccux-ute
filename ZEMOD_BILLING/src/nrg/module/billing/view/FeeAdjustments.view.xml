@@ -87,14 +87,16 @@
                     </um:DropdownItem>
                     <um:DropdownItem key="{comp-feeAdjs>DocNum}" class="nrgFeeAdj-DdLItem" id="idnrgFeeAdj-DropDownDate-temp">
                        <u:Tag>
+                            <u:Tag text="{comp-feeAdjs>DocNum}" class="nrgFeeAdj-DdLItem-value"/>
+                            <u:Tag text="{path: 'comp-feeAdjs>Date', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'MM/dd/yyyy'} }" class="nrgFeeAdj-DdLItem-value"/>
                             <u:Tag text="{comp-feeAdjs>Description}" class="nrgFeeAdj-DdLItem-value"/>
-                            <u:Tag text="{path: 'comp-feeAdjs>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" class="nrgFeeAdj-DdLItem-value"/>
                             <u:Tag text="{path: 'comp-feeAdjs>Amount',
-                                                            type: 'nrg.base.type.Price',
-                                                            formatOptions: { currencySymbol: '$', currencyAlignment: 'LHS', minFractionDigits: '2', maxFractionDigits: '2' }}" class="nrgFeeAdj-DdLItem-value"/>
+                                          type: 'nrg.base.type.Price',
+                                          formatOptions: { currencySymbol: '$', currencyAlignment: 'LHS', minFractionDigits: '2', maxFractionDigits: '2' }}"
+                                   class="nrgFeeAdj-DdLItem-value"/>
                        </u:Tag>
                     </um:DropdownItem>
-                    <um:DropdownItem key="{comp-feeAdjs>Text}" class="nrgFeeAdj-DdLItem" id="idnrgFeeAdj-DropDownReason-temp">
+                    <um:DropdownItem key="{comp-feeAdjs>Code}" class="nrgFeeAdj-DdLItem" id="idnrgFeeAdj-DropDownReason-temp">
                         <u:Tag text="{comp-feeAdjs>Text}" />
                     </um:DropdownItem>
                 </um:Dropdown>
