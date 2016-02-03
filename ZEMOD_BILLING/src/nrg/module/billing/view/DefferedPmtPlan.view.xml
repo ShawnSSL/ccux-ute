@@ -169,7 +169,7 @@
                         <ute:DatePicker id="nrgBilling-dpp-DppDueDate-id"/>
                 </ute:Tag>
             </ute:Tag>
-            <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="{parts:['oDppEligible>/DPPOverride', 'oDppEligible>/DPPActive', 'oDppEligible>/EligibleYes'], formatter:'._formatShowDownPayment'}">
+            <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="false">
                 <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Amount"/>
                 <ute:Textfield class="nrgBilling-payment-lbl"
                                        fieldType="Regular" width="8rem" value="0" id="nrgBilling-dpp-dwnPayvalue-id"/>
@@ -424,7 +424,7 @@
         <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{oDppScrnControl>/EXTGrant}">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-ExtTitle}"/>
             <ute:Tag class="nrgBilling-dPmtPln-link">
-                <utmain:Button text="{comp-i18n-billing>nrgBilling-dpp-LinkMain}" design="None" press="._onCheckbook"/>
+                <utmain:Button text="{comp-i18n-billing>nrgBilling-EXT-LinkMain}" design="None" press="._onMain"/>
             </ute:Tag>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-divider"/>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-top">
@@ -484,7 +484,7 @@
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-newdate" visible="{parts:['oExtEligible>/ExtActive'], formatter:'._reverseBooleanFormatter'}">
                     <ute:Tag elem="span" class="nrgBilling-dlcn-lbl"
                         text="{comp-i18n-billing>nrgBilling-dpp-ExtNewDate}"/>
-                    <ute:DatePicker id="nrgBilling-dpp-ExtNewDate-id"/>
+                    <ute:DatePicker id="nrgBilling-dpp-ExtNewDate-id" />
                 </ute:Tag>
             </ute:Tag>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="{parts:['oExtEligible>/ExtOverride', 'oExtEligible>/NewExtActive', 'oExtEligible>/EligibleYes'], formatter:'._formatShowDownPayment'}">

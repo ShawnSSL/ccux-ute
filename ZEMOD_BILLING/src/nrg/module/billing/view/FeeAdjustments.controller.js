@@ -27,7 +27,8 @@ sap.ui.define(
                     reasonDD: false,
                     ok: false,
                     feeSelected : false,
-                    textArea : false
+                    textArea : "",
+                    textAreaValue : false
 			    }),
                 oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
@@ -43,7 +44,7 @@ sap.ui.define(
                 that = this,
                 oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
             oDisconnectDropDown.removeAllContent();
-            oTextArea.setValue("");
+            //oTextArea.setValue("");
             this._sContract = oRouteInfo.parameters.coNum;
             this._sBP = oRouteInfo.parameters.bpNum;
             this._sCA = oRouteInfo.parameters.caNum;
@@ -122,7 +123,8 @@ sap.ui.define(
                 sAmount,
                 sReason,
                 sPath,
-                oViewModel = this.getView().getModel("view-feeAdj");
+                oViewModel = this.getView().getModel("view-feeAdj"),
+                that = this;
             if (!oViewModel.getProperty("/discNoticefee")) {
                 sPath = "/DiscNoticeFeeS";
                 sReason = "DISC_NOTIC";
@@ -134,6 +136,13 @@ sap.ui.define(
             if (!oViewModel.getProperty("/Latefee")) {
                 sPath = "/LateFeeS";
                 sReason = oReasonDropDown.getSelectedKey();
+                if (!sReason) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Information',
+                        message: 'Please select a Reason'
+                    });
+                    return;
+                }
             }
             if (!oViewModel.getProperty("/Reconnectfee")) {
                 sPath = "/ReconReqFeeS";
@@ -149,16 +158,25 @@ sap.ui.define(
                                  "Reason" : sReason,
                                  "Text" : oTextArea.getValue()},
                 success : function (oData) {
-                    ute.ui.main.Popup.Alert({
-                        title: "Fee Adjustment",
-                        message: "Succeeded"
-                    });
+                    if (oData.Success) {
+                        ute.ui.main.Popup.Alert({
+                            title: "Success",
+                            message: oData.Message
+                        });
+                    } else {
+                        ute.ui.main.Popup.Alert({
+                            title: "Failure",
+                            message: oData.Message
+                        });
+                    }
+                    that.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
                 }.bind(this),
                 error: function (oError) {
                     ute.ui.main.Popup.Alert({
                         title: "Fee Adjustment",
                         message: "Failed"
                     });
+                    that.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
                 }.bind(this)
             };
             oModel.callFunction("/RemoveFee", mParameters); // callback function for error
@@ -190,6 +208,7 @@ sap.ui.define(
             oViewModel.setProperty("/Latefee", true);
             oViewModel.setProperty("/Reconnectfee", true);
             oViewModel.setProperty("/reasonDD", false);
+            oViewModel.setProperty("/textArea", "");
             aFilterIds = ["CA"];
             aFilterValues = [oCADropDown.getSelectedKey()];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
@@ -238,6 +257,7 @@ sap.ui.define(
             oViewModel.setProperty("/Latefee", true);
             oViewModel.setProperty("/Reconnectfee", true);
             oViewModel.setProperty("/reasonDD", false);
+            oViewModel.setProperty("/textArea", "");
             aFilterIds = ["CA"];
             aFilterValues = [oCADropDown.getSelectedKey()];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
@@ -277,16 +297,18 @@ sap.ui.define(
                 oReasonDropDown = this.getView().byId("idnrgFeeAdj-DropDownReason"),
                 oReasonDropDownTemplate = this.getView().byId("idnrgFeeAdj-DropDownReason-temp").clone(),
                 fnDataReceivedHandler,
-                oTextArea = this.getView().byId("idnrgFeeAdj-textArea");
+                oTextArea = this.getView().byId("idnrgFeeAdj-textArea"),
+                fnDataReceivedHandler2;
             oTextArea.setValue("");
 
             oDisconnectDropDown.removeAllContent();
-
+            oReasonDropDown.removeAllContent();
             oViewModel.setProperty("/discNoticefee", true);
             oViewModel.setProperty("/discRecovfee", true);
             oViewModel.setProperty("/Latefee", false);
             oViewModel.setProperty("/Reconnectfee", true);
             oViewModel.setProperty("/reasonDD", true);
+            oViewModel.setProperty("/textArea", "");
             aFilterIds = ["CA"];
             aFilterValues = [oCADropDown.getSelectedKey()];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
@@ -306,11 +328,19 @@ sap.ui.define(
                 events: {dataReceived : fnDataReceivedHandler}
             };
             oDisconnectDropDown.bindAggregation("content", oBindingInfo);
+            fnDataReceivedHandler2 = function (oEvent, oData) {
+                if ((oReasonDropDown.getContent()) && (oReasonDropDown.getContent().length === 0)) {
+                    oReasonDropDown.setPlaceholder("No Reason(s) Found");
+                } else if ((oReasonDropDown.getContent()) && (oReasonDropDown.getContent().length > 0)) {
+                    oReasonDropDown.setPlaceholder("CHOOSE THE REASON");
+                }
+            };
             sPath = "/RemovalReasonS";
             oBindingInfo = {
                 model : "comp-feeAdjs",
                 path : sPath,
-                template : oReasonDropDownTemplate
+                template : oReasonDropDownTemplate,
+                events: {dataReceived : fnDataReceivedHandler2}
             };
             oReasonDropDown.bindAggregation("content", oBindingInfo);
         };
@@ -341,6 +371,7 @@ sap.ui.define(
             oViewModel.setProperty("/Latefee", true);
             oViewModel.setProperty("/Reconnectfee", false);
             oViewModel.setProperty("/reasonDD", false);
+            oViewModel.setProperty("/textArea", "");
             sPath = "/ReconReqFeeS";
             fnDataReceivedHandler = function (oEvent, oData) {
                 if ((oDisconnectDropDown.getContent()) && (oDisconnectDropDown.getContent().length === 0)) {
@@ -403,6 +434,20 @@ sap.ui.define(
             oViewModel.setProperty("/ok", true);
         };
         /**
+		 * formatting function to enable button or not based on the other field selections.
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype._enableButton = function (sTextArea, bOkFlag) {
+            if ((sTextArea) && (bOkFlag)) {
+                return true;
+            } else {
+                return false;
+            }
+
+        };
+        /**
 		 * Clicked on Cancel Button
 		 *
 		 * @function
@@ -411,6 +456,17 @@ sap.ui.define(
         Controller.prototype.onCancel = function (oEvent) {
             this.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
         };
+        /**
+		 * Clicked on Cancel Button
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype._onTextAreaValue = function (oEvent) {
+            var oViewModel = this.getView().getModel("view-feeAdj");
+            oViewModel.setProperty("/textAreaValue", true);
+        };
+
         return Controller;
     }
 );

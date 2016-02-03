@@ -88,10 +88,15 @@ sap.ui.define(
         };
 
         Controller.prototype._onDownPayment = function (oEvent) {
-            var QuickControl = new QuickPayControl();
+            var QuickControl = new QuickPayControl(),
+                that = this;
 
             this.getView().addDependent(QuickControl);
             QuickControl.openQuickPay(this._coNum, this._bpNum, this._caNum);
+            QuickControl.attachEvent("PaymentCompleted", function () {
+                that._retrExtensions();
+            }, this);
+
         };
         Controller.prototype._startScrnControl = function () {
             var oScrnControl = this.getView().getModel('oDppScrnControl'),
@@ -642,6 +647,14 @@ sap.ui.define(
 
             this._postDPPConfRequest(oConfPost.oData);
         };
+
+        Controller.prototype._onMain = function (oEvent) {
+            if (this._coNum) {
+                this.navTo('dashboard.VerificationWithCaCo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+            } else {
+                this.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
+            }
+        };
         Controller.prototype._onCheckbook = function (oEvent) {
             if (this._coNum) {
                 this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
@@ -1163,8 +1176,43 @@ sap.ui.define(
             var oEligble = this.getView().getModel('oExtEligible'),
                 oExt = this.getView().getModel('oExtExtensions'),
                 _popupCallback,
-                that = this;
+                that = this,
+                sCurrentOpenItemDate = oExt.getProperty('/results/0/OpenItems/DefferalDate'),
+                sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtNewDate-id').getValue();
 
+            if (!sCurrentOpenItemDate) {
+                sCurrentOpenItemDate = oExt.getProperty('/results/1/OpenItems/DefferalDate');
+            }
+
+            if (sCurrentOpenItemDate && sNewDateSelected) {
+                sCurrentOpenItemDate = new Date(sCurrentOpenItemDate);
+                if (sCurrentOpenItemDate) {
+                    sCurrentOpenItemDate.setHours("00");
+                    sCurrentOpenItemDate.setMinutes("00");
+                    sCurrentOpenItemDate.setSeconds("00");
+                }
+                sNewDateSelected = new Date(sNewDateSelected);
+                if (sNewDateSelected) {
+                    sNewDateSelected.setHours("00");
+                    sNewDateSelected.setMinutes("00");
+                    sNewDateSelected.setSeconds("00");
+                }
+
+                if (sCurrentOpenItemDate.getTime() === sNewDateSelected.getTime()) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Information',
+                        message: 'Please change a date or select Cancel to end the transaction.'
+                    });
+                    return;
+                }
+                if (sCurrentOpenItemDate.getTime() > sNewDateSelected.getTime()) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Information',
+                        message: 'Deferral date is before due date.'
+                    });
+                    return;
+                }
+            }
             if (oEligble.getProperty('/ExtPending')) {
                 if (oExt.getProperty('/results/0/iDwnPay') === 0) {
                     _popupCallback = function (sAction) {
@@ -1207,14 +1255,15 @@ sap.ui.define(
                 oParameters,
                 oDataObject = {},
                 that = this,
-                oContactLogArea = this.getView().byId('idnrgBilling-ExtAccCL');
+                oContactLogArea = this.getView().byId('idnrgBilling-ExtAccCL'),
+                sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtNewDate-id').getValue();
 
 
             oDataObject.Contract = this._coNum;
             oDataObject.BP = this._bpNum;
             oDataObject.CA = this._caNum;
             oDataObject.Message = (oContactLogArea.getValue() || "");
-            oDataObject.DefDtNew = oExt.getProperty('/results/0/OpenItems/DefferalDate');
+            oDataObject.DefDtNew = sNewDateSelected;
             if (this._bOverRide) {
                 oDataObject.OverRide  = 'X';
             } else {
