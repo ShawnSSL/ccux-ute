@@ -192,8 +192,8 @@ sap.ui.define(
             if (oContext) {
                 dStartDate = oContext.getProperty("StartDate");
             }
-            aFilterIds = ["Contract", "OfferCode", "TxtName", "StartDate"];
-            aFilterValues = [this._sContract, this._sOfferCode, "OVW", dStartDate];
+            aFilterIds = ["Contract", "OfferCode", "TxtName", "Promo"];
+            aFilterValues = [this._sContract, this._sOfferCode, "OVW", this._sPromo];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sCurrentPath = "/ScriptS";
             this._oOverviewDialog.setWidth("750px");
@@ -203,7 +203,7 @@ sap.ui.define(
             this._oOverviewDialog.addStyleClass("nrgCamOvs-dialog");
             oDropDownList = this.getView().byId("idnrgCamOvsDdL");
             aContent = oDropDownList.getContent();
-            oDropDownListItemTemplate = aContent[0].clone();
+            oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();
             fnRecievedHandler = function () {
                 aContent = oDropDownList.getContent();
                 if ((aContent !== undefined) && (aContent.length > 0)) {
@@ -215,6 +215,7 @@ sap.ui.define(
                     });
 
                 }
+                that._oOverviewDialog.open();
                 obinding.detachDataReceived(fnRecievedHandler);
                 that.getOwnerComponent().getCcuxApp().setOccupied(false);
             };
@@ -229,8 +230,6 @@ sap.ui.define(
             obinding = oDropDownList.getBinding("content");
             this.getView().addDependent(this._oOverviewDialog);
             this.getOwnerComponent().getCcuxApp().setOccupied(false);
-            this._oOverviewDialog.open();
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
         };
         /**
 		 * Back to Overview page function

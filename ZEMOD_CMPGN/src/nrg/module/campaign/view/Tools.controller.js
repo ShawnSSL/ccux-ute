@@ -170,6 +170,7 @@ sap.ui.define(
                 }
             };
             oPendingSwapsTable.setModel(oModel, 'comp-campaign');
+            this._oDialogFragment.setModel(this.getView().getModel("localModel"), 'localModel');
             mParameters = {
                 model : "comp-campaign",
                 path : sPath,
@@ -201,13 +202,22 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onPendingSwapsSelected = function (oEvent) {
-            var iSelected = this.getView().getModel("localModel").getProperty("/selected"),
+            var iSelected = this._oDialogFragment.getModel("localModel").getProperty("/selected"),
                 sPath,
                 iIndex,
                 sTemp;
 
             sPath = oEvent.getSource().getParent().getBindingContext("comp-campaign").getPath();
+            if (this._aPendingSelPaths.length === 1) {
+                ute.ui.main.Popup.Alert({
+                    title: 'Information',
+                    message: 'Only One Pending Swap allowed'
+                });
+                oEvent.getSource().setChecked(false);
+                return;
+            }
             iIndex = this._aPendingSelPaths.indexOf(sPath);
+
             if (oEvent.getSource().getChecked()) {
                 iSelected = iSelected + 1;
                 sTemp = iIndex < 0 && this._aPendingSelPaths.push(sPath);
@@ -215,7 +225,7 @@ sap.ui.define(
                 iSelected = iSelected - 1;
                 sTemp = iIndex > -1 && this._aPendingSelPaths.splice(iIndex, 1);
             }
-            this.getView().getModel("localModel").setProperty("/selected", iSelected);
+            this._oDialogFragment.getModel("localModel").setProperty("/selected", iSelected);
 
         };
 
@@ -227,7 +237,7 @@ sap.ui.define(
 		 */
         Controller.prototype.onSelected = function (oEvent) {
             if (oEvent.getSource().getChecked()) {
-                this.getView().getModel("localModel").setProperty("/ReqNumber", "");// No Phone checkbox selected
+                this._oDialogFragment.getModel("localModel").setProperty("/ReqNumber", "");// No Phone checkbox selected
             }
         };
         /**
@@ -245,7 +255,7 @@ sap.ui.define(
                 sReqNumber,
                 bNoPhone;
 
-            oLocalModel = this.getView().getModel("localModel");
+            oLocalModel = this._oDialogFragment.getModel("localModel");
             sReqName = oLocalModel.getProperty("/ReqName");
             sReqNumber = oLocalModel.getProperty("/ReqNumber");
             bNoPhone = oLocalModel.getProperty("/NoPhone");
