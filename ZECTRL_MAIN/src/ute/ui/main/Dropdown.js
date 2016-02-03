@@ -106,6 +106,37 @@ sap.ui.define(
             }
             this.removeAllAggregation('content');
         };
+        /**
+         * Bind an aggregation to the model.(Before Standard is called call overridden to make sure actual aggregation is cleared)
+         *
+         * The bound aggregation will use the given template, clone it for each item
+         * which exists in the bound list and set the appropriate binding context.
+         * This is a generic method which can be used to bind any aggregation to the
+         * model. A managed object may flag aggregations in the metamodel with
+         * bindable="bindable" to get typed bind<i>Something</i> methods for those aggregations.
+         *
+         * @param {string} sName the aggregation to bind
+         * @param {object} oBindingInfo the binding info
+         * @param {string} oBindingInfo.path the binding path
+         * @param {sap.ui.base.ManagedObject} oBindingInfo.template the template to clone for each item in the aggregation
+         * @param {boolean} [oBindingInfo.templateShareable=true] option to enable that the template will be shared which means that it won't be destroyed or cloned automatically
+         * @param {function} oBindingInfo.factory the factory function
+         * @param {number} oBindingInfo.startIndex the first entry of the list to be created
+         * @param {number} oBindingInfo.length the amount of entries to be created (may exceed the sizelimit of the model)
+         * @param {sap.ui.model.Sorter|sap.ui.model.Sorter[]} [oBindingInfo.sorter] the initial sort order (optional)
+         * @param {sap.ui.model.Filter[]} [oBindingInfo.filters] the predefined filters for this aggregation (optional)
+         * @param {object} [oBindingInfo.parameters] a map of parameters which is passed to the binding
+         * @param {function} [oBindingInfo.groupHeaderFactory] a factory function to generate custom group visualization (optional)
+         *
+         * @return {sap.ui.base.ManagedObject} reference to the instance itself
+         * @public
+         */
+        CustomControl.prototype.bindAggregation = function (sName, oBindingInfo) {
+            if (this.getAggregation("_headerContent")) {
+                this.setAggregation('_headerContent', null); // Null is the only way to remove singular Aggregation(or 0..1 Aggregation).
+            }
+            return Control.prototype.bindAggregation.apply(this, arguments);
+        };
 
         CustomControl.prototype.insertContent = function (oContent, iIndex) {
             oContent.attachPress(this._onDropdownItemPress, this);
