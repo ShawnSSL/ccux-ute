@@ -262,7 +262,7 @@
                                 <ute:Tag  class="nrgDashboard-cusDataVerify-middle-addr">
                                     <ute:TextView
                                         class="nrgDashboard-cusDataVerify-mContent-add"
-                                        text="{oDtaVrfyContract>/HouseNum1} {oDtaVrfyContract>/Street}"/>
+                                        text="{oDtaVrfyContract>/HouseNum1} {oDtaVrfyContract>/Street} {oDtaVrfyContract>/HouseNum2}"/>
                                     <ute:TextView
                                         class="nrgDashboard-cusDataVerify-mContent-add"
                                         text="{oDtaVrfyContract>/City1}, {oDtaVrfyContract>/Region} {oDtaVrfyContract>/PostCode1}"/>
