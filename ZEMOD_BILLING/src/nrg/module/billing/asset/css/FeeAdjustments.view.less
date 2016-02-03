@@ -128,14 +128,13 @@
                 }
         }
         & > .nrgFeeAdj-btns {
-            & > .nrgFeeAdj-btn {
-                min-width: 100px;
-            }
+            & > .nrgFeeAdj-btn.uteBtn.uteBtn-special.uteBtn-general-nav:hover:enabled {
+                    min-width: 100px;
+                    color: @nrgColor-white;
+	                background-color: @nrgColor-blue-light;
+             }
             & > .nrgFeeAdj-btn:hover {
                 min-width: 100px;
-            }
-            & > .nrgFeeAdj-btn[data-disabled="true"] {
-                    color: @nrgColor-grey-inactive;
             }
         }
 

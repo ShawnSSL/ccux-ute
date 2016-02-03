@@ -53,7 +53,7 @@
                     </um:Dropdown>
                  </u:Tag>
                  <u:Tag text="Notes" class="nrgFeeAdj-mainArea-lbl"/>
-                <u:TextArea value="{view-feeAdj>/textArea}" class="nrgFeeAdj-textArea" width="40rem" height="200px" id="idnrgFeeAdj-textArea" change="._onTextAreaValue"></u:TextArea>
+                <u:TextArea value="{view-feeAdj>/textArea}" class="nrgFeeAdj-textArea" width="40rem" height="200px" id="idnrgFeeAdj-textArea" liveChange="._onTextAreaValue"></u:TextArea>
             </u:Tag>
             <u:Tag class="nrgFeeAdj-CAArea">
                <u:Tag class="nrgFeeAdj-CAArea-Title" text="Contract Account" />

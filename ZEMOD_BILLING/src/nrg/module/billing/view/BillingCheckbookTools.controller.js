@@ -101,9 +101,9 @@ sap.ui.define(
         };
         Controller.prototype._onDppBtnClicked = function () {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
-                oRouter = this.getOwnerComponent().getRouter(),
                 oRetrDone = false,
-                checkRetrComplete;
+                checkRetrComplete,
+                that = this;
 
             // Display the loading indicator
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
@@ -120,7 +120,7 @@ sap.ui.define(
                     // Check active or not
                     if (!oEligibilityModel.oData.DPPActv) {
                         // Go to DPP page
-                        oRouter.navTo('billing.DefferedPmtPlan', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                        that.navTo('billing.DefferedPmtExt', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
                     } else {
                         // Go to transaction launcher
                         oWebUiManager.notifyWebUi('openIndex', {
@@ -132,35 +132,33 @@ sap.ui.define(
         };
 
         Controller.prototype._onExtnBtnClicked = function () {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
-                oRouter = this.getOwnerComponent().getRouter(),
-                oRetrDone = false;
-
-            oRouter.navTo('billing.DefferedPmtExt', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
-            // Display the loading indicator
-            /*this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            var oEligModel = this.getOwnerComponent().getModel('comp-dppext'),
+                oParameters,
+                sPath,
+                that = this;
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             // Retrieve Notification
-            this._retrieveEligibility(function () {oRetrDone = true;});
-            // Check retrieval done
-            var checkRetrComplete = setInterval (function () {
-                if (oRetrDone) {
-                    var oEligibilityModel = this.getView().getModel('oEligibility');
-                    // Dismiss the loading indicator
-                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    // Upon successfully retrieving the data, stop checking the completion of retrieving data
-                    clearInterval(checkRetrComplete);
-                    // Check active or not
-                    if (!oEligibilityModel.oData.EXTNActv) {
-                        // Go to EXTN page
-                        oRouter.navTo('billing.DefferedPmtExt', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
-                    } else {
-                        // Go to transaction launcher
-                        oWebUiManager.notifyWebUi('openIndex', {
-                            LINK_ID: "Z_EXTN"
+            sPath = '/ExtElgbles(\'' + this._coNum + '\')';
+            oParameters = {
+                success : function (oData) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    if (oData && oData.NoAmtDue) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Information',
+                            message: 'No Amount Due'
                         });
+                    } else {
+                        that.navTo('billing.DefferedPmtExt', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
                     }
-                }
-            }.bind(this), 100); */
+
+                }.bind(this),
+                error: function (oError) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                }.bind(this)
+            };
+            if (oEligModel && this._coNum) {
+                oEligModel.read(sPath, oParameters);
+            }
         };
 
         return Controller;
