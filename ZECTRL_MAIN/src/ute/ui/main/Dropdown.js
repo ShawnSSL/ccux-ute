@@ -100,6 +100,13 @@ sap.ui.define(
             return this;
         };
 
+        CustomControl.prototype.removeAllContent = function () {
+            if (this.getAggregation("_headerContent")) {
+                this.setAggregation('_headerContent', null); // Null is the only way to remove singular Aggregation(or 0..1 Aggregation).
+            }
+            this.removeAllAggregation('content');
+        };
+
         CustomControl.prototype.insertContent = function (oContent, iIndex) {
             oContent.attachPress(this._onDropdownItemPress, this);
 
@@ -124,7 +131,9 @@ sap.ui.define(
         CustomControl.prototype._syncHeaderContent = function () {
             var aContent = this.getContent() || [];
 
-            this.removeAggregation('_headerContent');
+            if (this.getAggregation("_headerContent")) {
+                this.setAggregation('_headerContent', null);// Null is the only way to remove singular Aggregation(or 0..1 Aggregation).
+            }
 
             aContent.forEach(function (oContent) {
                 if (oContent.getKey() === this.getSelectedKey()) {
