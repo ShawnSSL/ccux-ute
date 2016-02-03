@@ -574,18 +574,19 @@ sap.ui.define(
             aFilters.push(new Filter({ path: 'Contract', operator: FilterOperator.EQ, value1: oRouting.oData.CoNumber}));
 
             // Initiate dialogs
-            if (!this._oPedingSwapsDialog) { this._oPedingSwapsDialog = sap.ui.xmlfragment("FooterPendingSwaps", "nrg.module.app.view.FooterPendingSwaps", this); }
+            if (!this._oPedingSwapsFragment) { this._oPedingSwapsFragment = sap.ui.xmlfragment("FooterPendingSwaps", "nrg.module.app.view.FooterPendingSwaps", this); }
             if (!this._oCancelDialog) {
                 this._oCancelDialog = new ute.ui.main.Popup.create({
                     title: 'Change Campaign - Cancel',
                     close: this._handleDialogClosed,
-                    content: this._oPedingSwapsDialog
+                    content: this._oPedingSwapsFragment
                 });
                 this._oCancelDialog.addStyleClass("nrgCamHis-dialog");
             }
             oPendingSwapsTable = sap.ui.core.Fragment.byId("FooterPendingSwaps", "idnrgCamPds-pendTable");
             oPendingSwapsTemplate = sap.ui.core.Fragment.byId("FooterPendingSwaps", "idnrgCamPds-pendRow");
             oPendingSwapsTable.setModel(oModel, 'comp-campaign');
+            this._oPedingSwapsFragment.setModel(this.getView().getModel("localModel"), 'localModel');
             fnRecievedHandler = function () {
                 var oBinding = oPendingSwapsTable.getBinding("rows");
                 this._oCancelDialog.open();
@@ -781,12 +782,20 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onPendingSwapsSelected = function (oEvent) {
-            var iSelected = this.getView().getModel("localModel").getProperty("/selected"),
+            var iSelected = this._oPedingSwapsFragment.getModel("localModel").getProperty("/selected"),
                 sPath,
                 iIndex,
                 sTemp;
 
             sPath = oEvent.getSource().getParent().getBindingContext("comp-campaign").getPath();
+            if (this._aPendingSelPaths.length === 1) {
+                ute.ui.main.Popup.Alert({
+                    title: 'Information',
+                    message: 'Only One Pending Swap allowed'
+                });
+                oEvent.getSource().setChecked(false);
+                return;
+            }
             iIndex = this._aPendingSelPaths.indexOf(sPath);
             if (oEvent.getSource().getChecked()) {
                 iSelected = iSelected + 1;
@@ -795,7 +804,7 @@ sap.ui.define(
                 iSelected = iSelected - 1;
                 sTemp = iIndex > -1 && this._aPendingSelPaths.splice(iIndex, 1);
             }
-            this.getView().getModel("localModel").setProperty("/selected", iSelected);
+            this._oPedingSwapsFragment.getModel("localModel").setProperty("/selected", iSelected);
         };
         /**
 		 * Handle when user clicked on Cancelling of Pending Swaps
@@ -817,7 +826,7 @@ sap.ui.define(
                 caNum = oRouting.oData.CaNumber,
                 coNum = oRouting.oData.CoNumber;
 
-            oLocalModel = this.getView().getModel("localModel");
+            oLocalModel = this._oPedingSwapsFragment.getModel("localModel");
             sReqName = oLocalModel.getProperty("/ReqName");
             sReqNumber = oLocalModel.getProperty("/ReqNumber");
             bNoPhone = oLocalModel.getProperty("/NoPhone");
@@ -882,6 +891,17 @@ sap.ui.define(
                 coNum = oRouting.oData.CoNumber;
             this._oCancelDialog.close();
             this.navTo("campaignoffers", {bpNum: bpNum, caNum: caNum, coNum: coNum, typeV : (this._sInitTab || "SE")});
+        };
+        /**
+		 * Handler Function for the History Popup close
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onSelected = function (oEvent) {
+            if (oEvent.getSource().getChecked()) {
+                this._oPedingSwapsFragment.getModel("localModel").setProperty("/ReqNumber", "");// No Phone checkbox selected
+            }
         };
         return Controller;
     }

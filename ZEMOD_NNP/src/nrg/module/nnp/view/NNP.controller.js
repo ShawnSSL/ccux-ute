@@ -227,10 +227,10 @@ sap.ui.define(
                 }.bind(this)
             };
             if (oModel) {
-                if ((oNNP.oData) && (oNNP.oData.messages)) {
+                if ((oNNP.oData) && (oNNP.oData.hasOwnProperty("messages"))) {
                     delete oNNP.oData.messages;
                 }
-                if ((oNNP.oData) && (oNNP.oData.showmsg)) {
+                if ((oNNP.oData) && (oNNP.oData.hasOwnProperty("showmsg"))) {
                     delete oNNP.oData.showmsg;
                 }
                 oModel.update(sPath, oNNP.oData, oParameters);
