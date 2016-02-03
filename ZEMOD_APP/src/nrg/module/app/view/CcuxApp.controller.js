@@ -8,16 +8,21 @@ sap.ui.define(
         'nrg/module/app/view/AppHeader',
         'sap/ui/model/json/JSONModel',
         'sap/ui/model/Filter',
-        'sap/ui/model/FilterOperator'
+        'sap/ui/model/FilterOperator',
+        'jquery.sap.global'
     ],
 
-    function (Controller, App, AppHeader, JSONModel, Filter, FilterOperator) {
+    function (Controller, App, AppHeader, JSONModel, Filter, FilterOperator, jQuery) {
         'use strict';
 
         var CustomController = Controller.extend('nrg.module.app.view.CcuxApp');
 
         CustomController.prototype.onBeforeRendering = function () {
 
+        };
+        CustomController.prototype.onAfterRendering = function () {
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            oWebUiManager.attachEvent("clearAccount2", jQuery.proxy(this._onClearAccPressCallback, this));
         };
 
         CustomController.prototype.onInit = function () {

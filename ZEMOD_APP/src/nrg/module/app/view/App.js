@@ -19,7 +19,9 @@ sap.ui.define(
 
                 this._oController = oController;
                 this._oBusyDialog = new BusyDialog();
+                //this._oBusyDialog.setShowCancelButton(true);
                 this._bEdit = false;
+                this._iBusyCounter = 0;
 
                 this._oAppHeader = new AppHeader(oController, this);
                 this._oAppHeader.init();
@@ -75,10 +77,17 @@ sap.ui.define(
 
         App.prototype.setOccupied = function (bOccupied) {
             bOccupied = !!bOccupied;
-
             if (bOccupied) {
-                this._oBusyDialog.open();
+                this._iBusyCounter = this._iBusyCounter + 1;
             } else {
+                this._iBusyCounter = this._iBusyCounter - 1;
+                if (this._iBusyCounter < 0) {
+                    this._iBusyCounter = 0;
+                }
+            }
+            if (this._iBusyCounter === 1) {
+                this._oBusyDialog.open();
+            } else if (this._iBusyCounter === 0) {
                 this._oBusyDialog.close();
             }
 
