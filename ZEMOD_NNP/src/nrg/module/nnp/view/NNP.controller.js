@@ -226,6 +226,16 @@ sap.ui.define(
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
+            if ((oNNP.getProperty('/Ecd') === 'Y') || (oNNP.getProperty('/Mkt') === 'Y') || (oNNP.getProperty('/Offer') === 'Y') || (oNNP.getProperty('/Ee') === 'Y')) {
+                if (!sBpEmail) {
+                    this._OwnerComponent.getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'Email delete',
+                        message: 'Cannot save without Email Address when preferences set to YES.'
+                    });
+                    return;
+                }
+            }
             if (oModel) {
                 if ((oNNP.oData) && (oNNP.oData.hasOwnProperty("messages"))) {
                     delete oNNP.oData.messages;
