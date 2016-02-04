@@ -43,7 +43,9 @@ sap.ui.define(
                 aResults = [],
                 that = this,
                 sCurrentDate,
-                oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
+                oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
+                oRejectRsns = that.getView().byId('idnrgRejectRsns'),
+                oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl');
             this._i18NModel = this.getOwnerComponent().getModel("comp-i18n-campaign");
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this._sContract = oRouteInfo.parameters.coNum;
@@ -78,7 +80,13 @@ sap.ui.define(
             });
             that.getView().byId('idnrgCamChgPriceT').removeAllAggregation("content");
             that.getView().byId('idnrgCamChgPriceT').addContent(oTemplateView);
-            jQuery.sap.log.info("Odata Read Successfully:::");
+            sCurrentPath = "/RejectRsnS";
+            mParameters = {
+                model : "comp-campaign",
+                path : sCurrentPath,
+                template : oRejectsRsnsTemp
+            };
+            oRejectRsns.bindAggregation("content", mParameters);
         };
         /**
 		 * Binds the view to the object path. Makes sure that view displays

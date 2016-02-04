@@ -50,7 +50,10 @@ sap.ui.define(
                 oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
                 i18NModel,
                 oContext,
-                sPromo = "";
+                sPromo = "",
+                oRejectRsns = that.getView().byId('idnrgRejectRsnsMD'),
+                oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl');
+            this.getView().setModel(this.getOwnerComponent().getModel('comp-dashboard'), 'oODataSvc');// This is to just to make NNP not to relaod.
             i18NModel = this.getOwnerComponent().getModel("comp-i18n-campaign");
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this._sContract = oRouteInfo.parameters.coNum;
@@ -95,6 +98,13 @@ sap.ui.define(
                 events: {dataReceived : fnRecievedHandler}
             };
             oDropDownList.bindAggregation("content", mParameters);
+            sCurrentPath = "/RejectRsnS";
+            mParameters = {
+                model : "comp-campaign",
+                path : sCurrentPath,
+                template : oRejectsRsnsTemp
+            };
+            oRejectRsns.bindAggregation("content", mParameters);
         };
 
         /**
@@ -184,7 +194,9 @@ sap.ui.define(
                 aFilterValues,
                 oModel = this.getOwnerComponent().getModel('comp-campaign'),
                 oContext,
-                dStartDate;
+                dStartDate,
+                oRejectRsns = that.getView().byId('idnrgRejectRsnsOV'),
+                oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl');
 
             sCurrentPath = "/CpgChgOfferS";
             sCurrentPath = sCurrentPath + "(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Type='" + this._sType + "',Promo='" + this._sPromo + "')";
@@ -228,7 +240,14 @@ sap.ui.define(
             };
             oDropDownList.bindAggregation("content", mParameters);
             obinding = oDropDownList.getBinding("content");
-            this.getView().addDependent(this._oOverviewDialog);
+            //this.getView().addDependent(this._oOverviewDialog);
+            sCurrentPath = "/RejectRsnS";
+            mParameters = {
+                model : "comp-campaign",
+                path : sCurrentPath,
+                template : oRejectsRsnsTemp
+            };
+            oRejectRsns.bindAggregation("content", mParameters);
             this.getOwnerComponent().getCcuxApp().setOccupied(false);
         };
         /**
@@ -493,6 +512,7 @@ sap.ui.define(
                 }.bind(this)
             };
             oModel.callFunction("/RejectCampaign", mParameters); // callback function for error
+            this._oOverviewDialog.close();
         };
         return Controller;
     }

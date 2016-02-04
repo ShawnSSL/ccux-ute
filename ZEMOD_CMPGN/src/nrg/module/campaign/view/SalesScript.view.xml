@@ -60,9 +60,8 @@
                     class="nrgCamSS-btn"
                     press=".onAccept">
                 </u:Button>
-                <um:Dropdown id="dd001"
-                             content="{comp-campaign>/RejectRsnS}"
-                             selectedKey="2" select=".onDisposition"
+                <um:Dropdown id="idnrgRejectRsnsMD"
+                             select=".onDisposition"
                              placeholder="Non-Disposition Reason"
                              class="nrgCamSSRr-DdL nrgCamSS-left">
                     <um:DropdownItem key="{comp-campaign>RejectionCode}" class="nrgCamSSRr-DdLItem">
@@ -91,9 +90,8 @@
                     class="nrgCamOvs-btn"
                     press=".onOvsAccept">
                 </u:Button>
-                <um:Dropdown id="dd002"
-                             content="{comp-campaign>/RejectRsnS}"
-                             selectedKey="2" select=".onDisposition"
+                <um:Dropdown id="idnrgRejectRsnsOV"
+                             select=".onDisposition"
                              placeholder="Non-Disposition Reason"
                              class="nrgCamSSRr-DdL nrgCamSS-left">
                     <um:DropdownItem key="{comp-campaign>RejectionCode}" class="nrgCamSSRr-DdLItem">
@@ -110,6 +108,13 @@
                 </um:DropdownItem>
             </um:Dropdown>
         </u:Tag>
+      </u:Tag>
+      <u:Tag visible="false">
+            <um:Dropdown>
+                <um:DropdownItem key="{comp-campaign>RejectionCode}" class="nrgCamSSRr-DdLItem" id="idnrgRejectRsnsTempl">
+                    <u:Tag text="{comp-campaign>Description}" />
+                </um:DropdownItem>
+            </um:Dropdown>
       </u:Tag>
    </u:Tag>
 </mvc:View>
