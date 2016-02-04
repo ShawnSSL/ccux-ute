@@ -32,12 +32,12 @@
             "routes": {
                 "search.SearchNoID": {
                     "pattern": "search/SearchNoID",
-                    "target": [ "search.CallerNoIDSearch", "search.CallerNoIDEnrollment", "search.EmptyTools" ]
+                    "target": [ "search.CallerNoIDSearch", "search.CallerNoIDEnrollment", "search.EmptyTools" , "app.Footer" ]
                 },
 
                 "search.SearchNoIDREBS": {
                     "pattern": "search/SearchNoIDREBS",
-                    "target": [ "search.CallerNoIDSearchREBS", "search.CallerNoIDEnrollment", "search.EmptyTools" ]
+                    "target": [ "search.CallerNoIDSearchREBS", "search.CallerNoIDEnrollment", "search.EmptyTools", "app.Footer" ]
                 }
             },
 
@@ -60,6 +60,10 @@
                 "search.CallerNoIDEnrollment": {
                     "viewName": "nrg.module.search.view.CallerNoIDEnrollment",
                     "controlId": "idAppSummary"
+                },
+                "app.Footer": {
+                    "viewName": "nrg.module.app.view.Footer",
+                    "controlId": "idAppFooter"
                 }
             }
         }

@@ -59,7 +59,7 @@
             "routes": {
                 "app.refresh": {
                     "pattern": "app/refresh",
-                    "target": [ "app.GeneralRefresh", "app.SummaryRefresh", "app.ToolsRefresh" ]
+                    "target": [ "app.GeneralRefresh", "app.SummaryRefresh", "app.ToolsRefresh" , "app.FooterRefresh" ]
                 }
             },
             "targets": {
@@ -75,6 +75,10 @@
 
                 "app.ToolsRefresh": {
                     "viewName": "nrg.module.app.view.ToolsRefresh",
+                    "controlId": "idAppTools"
+                },
+                "app.FooterRefresh": {
+                    "viewName": "nrg.module.app.view.FooterRefresh",
                     "controlId": "idAppTools"
                 }
             }
