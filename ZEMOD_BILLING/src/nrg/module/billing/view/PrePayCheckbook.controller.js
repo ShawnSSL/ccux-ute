@@ -29,7 +29,24 @@ sap.ui.define(
             this._initPpChkbookHdr();
             this._initPpPmtHdr();
         };
+        /**********************************************************************************************************************************************************/
+        //Init functions
+        /**********************************************************************************************************************************************************/
+        CustomController.prototype._initRoutingInfo = function () {
+            var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
 
+            this._bpNum = oRouteInfo.parameters.bpNum;
+            this._caNum = oRouteInfo.parameters.caNum;
+            this._coNum = oRouteInfo.parameters.coNum;
+        };
+        CustomController.prototype.onAfterRendering = function () {
+
+            // Update Footer
+            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+
+            // Retrieve Notification
+
+        };
         /**********************************************************************************************************************************************************/
         //Formatters
         /**********************************************************************************************************************************************************/
@@ -109,16 +126,7 @@ sap.ui.define(
             }
         };
 
-        /**********************************************************************************************************************************************************/
-        //Init functions
-        /**********************************************************************************************************************************************************/
-        CustomController.prototype._initRoutingInfo = function () {
-            var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
 
-            this._bpNum = oRouteInfo.parameters.bpNum;
-            this._caNum = oRouteInfo.parameters.caNum;
-            this._coNum = oRouteInfo.parameters.coNum;
-        };
 
         CustomController.prototype._initPpChkbookHdr = function () {
             var sPath;
@@ -152,9 +160,11 @@ sap.ui.define(
                     if (oData) {
                         this.getView().getModel('oPpPmtHdr').setProperty(sBindingPath + '/PpPmtItmes', oData);
                     }
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
 
@@ -172,9 +182,11 @@ sap.ui.define(
                     if (oData) {
                         this.getView().getModel('oPpChkbkHdr').setData(oData);
                     }
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
 
@@ -200,10 +212,12 @@ sap.ui.define(
                             }
                         }
                         this.getView().getModel('oPpPmtHdr').setData(oData);
+                        this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     }
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
 

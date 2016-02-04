@@ -125,6 +125,7 @@ sap.ui.define(
                 sPath,
                 oViewModel = this.getView().getModel("view-feeAdj"),
                 that = this;
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             if (!oViewModel.getProperty("/discNoticefee")) {
                 sPath = "/DiscNoticeFeeS";
                 sReason = "DISC_NOTIC";
@@ -137,6 +138,7 @@ sap.ui.define(
                 sPath = "/LateFeeS";
                 sReason = oReasonDropDown.getSelectedKey();
                 if (!sReason) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Information',
                         message: 'Please select a Reason'
@@ -158,23 +160,25 @@ sap.ui.define(
                                  "Reason" : sReason,
                                  "Text" : oTextArea.getValue()},
                 success : function (oData) {
-                    if (oData.Success) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    if (oData && oData.Success) {
                         ute.ui.main.Popup.Alert({
-                            title: "Success",
-                            message: oData.Message
+                            title: "Fee Adjustments",
+                            message: "The late fee has been successfully removed."
                         });
                     } else {
                         ute.ui.main.Popup.Alert({
-                            title: "Failure",
-                            message: oData.Message
+                            title: "Fee Adjustments",
+                            message: "Late Fee has not been removed."
                         });
                     }
                     that.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
                 }.bind(this),
                 error: function (oError) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
-                        title: "Fee Adjustment",
-                        message: "Failed"
+                        title: "Fee Adjustments",
+                        message: "Late Fee has not been removed."
                     });
                     that.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
                 }.bind(this)

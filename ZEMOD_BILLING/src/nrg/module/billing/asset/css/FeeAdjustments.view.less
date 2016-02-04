@@ -134,7 +134,15 @@
 	                background-color: @nrgColor-blue-light;
              }
             & > .nrgFeeAdj-btn:hover {
-                min-width: 100px;
+                    min-width: 100px;
+            }
+            & > .nrgFeeAdj-btn {
+                    min-width: 100px;
+            }
+            & > .nrgFeeAdj-btn[disabled]:hover {
+                    min-width: 100px;
+                	background-color: @nrgColor-blue-pearl;
+                    color: @nrgColor-blue-light;
             }
         }
 
