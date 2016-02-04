@@ -1197,20 +1197,21 @@ sap.ui.define(
                     sNewDateSelected.setMinutes("00");
                     sNewDateSelected.setSeconds("00");
                 }
-
-                if (sCurrentOpenItemDate.getTime() === sNewDateSelected.getTime()) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'Information',
-                        message: 'Please change a date or select Cancel to end the transaction.'
-                    });
-                    return;
-                }
-                if (sCurrentOpenItemDate.getTime() > sNewDateSelected.getTime()) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'Information',
-                        message: 'Deferral date is before due date.'
-                    });
-                    return;
+                if (oEligble.getProperty('/ExtActive')) {
+                    if (sCurrentOpenItemDate.getTime() === sNewDateSelected.getTime()) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Information',
+                            message: 'Please change a date or select Cancel to end the transaction.'
+                        });
+                        return;
+                    }
+                    if (sCurrentOpenItemDate.getTime() > sNewDateSelected.getTime()) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Information',
+                            message: 'Deferral date is before due date.'
+                        });
+                        return;
+                    }
                 }
             }
             if (oEligble.getProperty('/ExtPending')) {

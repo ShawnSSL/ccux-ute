@@ -628,7 +628,8 @@ sap.ui.define(
                 oViewModel,
                 sPromo,
                 sLPReqName,
-                that = this;
+                that = this,
+                sType;
             that.getOwnerComponent().getCcuxApp().setOccupied(true);
             oContext = oEvent.getSource().getBindingContext("comp-campaign");
             if (oContext) {
@@ -636,6 +637,7 @@ sap.ui.define(
                 sDate = sPath.substring(sPath.lastIndexOf("=") + 1, sPath.lastIndexOf(")"));
                 sOfferCode = oContext.getProperty("OfferCode");
                 sLPCode = oContext.getProperty("LPcode");
+                sType = oContext.getProperty("Type");
                 sPromo = oContext.getProperty("Promo");
                 sLPReqName = oContext.getProperty("LPReqName");
                 oViewModel = new JSONModel({
@@ -668,7 +670,7 @@ sap.ui.define(
                 } else {
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     that.getOwnerComponent().setModel(oViewModel, 'comp-campLocal');
-                    this.navTo("campaignchg", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, offercodeNum: sOfferCode, stype : this._sType, sPromo : sPromo});
+                    this.navTo("campaignchg", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, offercodeNum: sOfferCode, stype : sType, sPromo : sPromo});
                 }
             }
 
