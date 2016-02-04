@@ -578,13 +578,15 @@ sap.ui.define(
                 sTemp;
 
             sPath = oEvent.getSource().getParent().getBindingContext("comp-campaign").getPath();
-            if (this._aPendingSelPaths.length === 1) {
-                ute.ui.main.Popup.Alert({
-                    title: 'Information',
-                    message: 'Only One Pending Swap allowed'
-                });
-                oEvent.getSource().setChecked(false);
-                return;
+            if (oEvent.getSource().getChecked()) {
+                if (this._aPendingSelPaths.length === 1) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Information',
+                        message: 'Only One Pending Swap allowed'
+                    });
+                    oEvent.getSource().setChecked(false);
+                    return;
+                }
             }
             iIndex = this._aPendingSelPaths.indexOf(sPath);
             if (oEvent.getSource().getChecked()) {

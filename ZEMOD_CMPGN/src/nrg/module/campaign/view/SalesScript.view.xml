@@ -69,7 +69,7 @@
                     </um:DropdownItem>
                 </um:Dropdown>
             </u:Tag>
-          <u:Dialog id="idnrgCamOvsDialog">
+          <u:Dialog id="idnrgCamOvsDialog" showCloseButton="false">
             <u:Tag>
                 <um:Dropdown selectedKey="EN" id="idnrgCamOvsDdL" class="nrgCamOVSLng-DdL" select=".onOvwLngSelected" >
                     <um:DropdownItem key="{comp-campaign>TxtLang}" id="idnrgCamOvsLngLtIt" class="nrgCamOVSLng-DdLItem">
