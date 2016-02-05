@@ -71,7 +71,7 @@
             </u:Tag>
           <u:Dialog id="idnrgCamOvsDialog" showCloseButton="false">
             <u:Tag>
-                <um:Dropdown selectedKey="EN" id="idnrgCamOvsDdL" class="nrgCamOVSLng-DdL" select=".onOvwLngSelected" >
+                <um:Dropdown id="idnrgCamOvsDdL" class="nrgCamOVSLng-DdL" select=".onOvwLngSelected" >
                     <um:DropdownItem key="{comp-campaign>TxtLang}" id="idnrgCamOvsLngLtIt" class="nrgCamOVSLng-DdLItem">
                         <u:Tag text="{parts:[{path:'comp-campaign>TxtLang'}],
                                                     formatter:'.formatType'}"/>
@@ -101,7 +101,7 @@
             </u:Tag>
           </u:Dialog>
         <u:Tag class="nrgCamSS-hide">
-            <um:Dropdown select=".onMandLngSelected" class="nrgCamSSLng-DdL">
+            <um:Dropdown class="nrgCamSSLng-DdL">
                 <um:DropdownItem key="{comp-campaign>TxtLang}" id="idnrgCamSSLngLtIt" class="nrgCamSSLng-DdLItem">
                     <u:Tag text="{parts:[{path:'comp-campaign>TxtLang'}],
                                                 formatter:'.formatType'}"/>
