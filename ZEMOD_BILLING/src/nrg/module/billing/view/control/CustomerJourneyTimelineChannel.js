@@ -92,7 +92,10 @@ sap.ui.define(
                 return;
             }
             this.$().addClass('nrgCJTChannel-selected');
-            this.adjustDescription();
+            if (this.getDescription()) {
+                this.adjustDescription();
+            }
+
 /*            this._aChannelRegistry.forEach(function (oChannel) {
                 if (oChannel !== this) {
                     oChannel.$().removeClass('nrgCJTChannel-selected');
@@ -126,7 +129,9 @@ sap.ui.define(
 
             this.setProperty('selected', bSelected, true);
             if (bSelected) {
-                this.adjustDescription();
+                if (this.getDescription()) {
+                    this.adjustDescription();
+                }
             }
         };
         CustomControl.prototype.adjustDescription = function () {

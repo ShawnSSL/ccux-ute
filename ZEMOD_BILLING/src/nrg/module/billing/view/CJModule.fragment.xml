@@ -62,6 +62,7 @@
                 <u:Textfield fieldType="Regular"
                              width="7rem"
                              editable="true"
+                             enterKeyPress=".onSearch"
                              class="nrgCJModule-selPanel-fields-fd nrgCJModule-Search"
                              id="idnrgCJModule-search"/>
                 <u:Tag class="nrgCJModule-selPanel-fields-fd">
@@ -94,6 +95,7 @@
                            press=".onExpandAll"/>
         </u:Tag>
         <u:Tag class="nrgCJModule-tableTag">
+           <u:Tag text="No Data Available" visible="{CJ-local>/NoData}" class="nrgCJModule-noData"/>
             <u:Table width="98%"
                      id="idnrgCJModule-table"
                      class="nrgCJModule-table"

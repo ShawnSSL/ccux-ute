@@ -445,7 +445,8 @@ sap.ui.define(
             }
             this._oContactLogFragment.setModel(oCustomerJourneyModel, 'Cj-module');
             this._oContactLogFragment.setModel(new JSONModel({
-                visible: false
+                visible: false,
+                NoData : false
             }), 'CJ-local');
             sPath = "/CJModuleSet";
             oCJTable = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-table");
@@ -461,7 +462,12 @@ sap.ui.define(
             mParameters = {
                 filters : aFilters,
                 success : function (oData) {
-                    oCustomerJourneyModel.setData(that.convertCJModuleData(oData.results));
+                    if ((oData) && (oData.results) && (oData.results.length === 0)) {
+                        that._oContactLogFragment.getModel('CJ-local').setProperty("/NoData", true);
+                    }
+                    if ((oData) && (oData.results) && (oData.results.length > 0)) {
+                        oCustomerJourneyModel.setData(that.convertCJModuleData(oData.results));
+                    }
                     that._oContactLogDialog.open();
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     jQuery.sap.log.info("Odata Read Successfully:::");
@@ -537,14 +543,21 @@ sap.ui.define(
                 ]
             }), 'timeline');
             this._oDialogFragment.setModel(new JSONModel({
-                visible: true
+                visible: true,
+                NoData : false
             }), 'CJ-local');
             oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search");
             oSearchText.setValue("");
             mParameters = {
                 filters : aFilters,
                 success : function (oData) {
-                    oCustomerJourneyModel.setData(that.convertCJModuleData(oData.results));
+                    if ((oData) && (oData.results) && (oData.results.length === 0)) {
+                        that._oDialogFragment.getModel('CJ-local').setProperty("/NoData", true);
+                    }
+                    if ((oData) && (oData.results) && (oData.results.length > 0)) {
+                        oCustomerJourneyModel.setData(that.convertCJModuleData(oData.results));
+                    }
+
                     that._oCJDialog.open();
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     jQuery.sap.log.info("Odata Read Successfully:::");
@@ -581,12 +594,13 @@ sap.ui.define(
                 oCJTable,
                 oCJDropDown,
                 oFilter1,
-                oSearchText;
+                oSearchText,
+                oLocalModel;
 
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
-
             if (this._ChannelType !== "CLOG") { //it is a customer journey normal view.
                 oCustomerJourneyModel = this._oDialogFragment.getModel('Cj-module');
+                oLocalModel = this._oDialogFragment.getModel('CJ-local');
                 oCJTable = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-table");
                 oCJDropDown = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-DD");
                 oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search");
@@ -598,12 +612,14 @@ sap.ui.define(
                 }
             } else { // it is a contact log view.
                 oCustomerJourneyModel = this._oContactLogFragment.getModel('Cj-module');
+                oLocalModel = this._oContactLogFragment.getModel('CJ-local');
                 oCJTable = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-table");
                 oSearchText = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-search");
                 oFromDate = sap.ui.core.Fragment.byId("ContactLogs", "idnrgBllCJ-fromDate");
                 oToDate = sap.ui.core.Fragment.byId("ContactLogs", "idnrgBllCJ-toDate");
                 sChannel = "";
             }
+            oLocalModel.setProperty("/NoData", false);
             oSearchText.setValue("");
             aFilterIds = ["BP", "CA", "StartDate", "EndDate", "ChannelType"];
             aFilterValues = [this._sBP, this._sCA, (new Date(oFromDate.getValue())), (new Date(oToDate.getValue())), this._ChannelType];
@@ -615,6 +631,9 @@ sap.ui.define(
                     oFilter1 = new sap.ui.model.Filter("ChannelType", sap.ui.model.FilterOperator.Contains, sChannel);
                     aFilters = new sap.ui.model.Filter({filters: [oFilter1], and: false });
                     oCJTable.getBinding("rows").filter(aFilters);
+                    if ((oCJTable.getRows()) && (oCJTable.getRows().length === 0)) {
+                        oLocalModel.setProperty("/NoData", true);
+                    }
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     jQuery.sap.log.info("Odata Read Successfully:::");
                 }.bind(this),
@@ -787,7 +806,14 @@ sap.ui.define(
             var sChannel = oEvent.getSource().getChannel(),
                 oFilter1,
                 aFilters,
-                oCJTable = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-table");
+                oCJTable = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-table"),
+                oLocalModel;
+            if (this._ChannelType !== "CLOG") { //it is a customer journey normal view.
+                oLocalModel = this._oDialogFragment.getModel('CJ-local');
+            } else { // it is a contact log view.
+                oLocalModel = this._oContactLogFragment.getModel('CJ-local');
+            }
+            oLocalModel.setProperty("/NoData", false);
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             oEvent.getSource().setSelected(!oEvent.getSource().getSelected());
             if (sChannel === "All") {
@@ -796,6 +822,9 @@ sap.ui.define(
             oFilter1 = new sap.ui.model.Filter("ChannelType", sap.ui.model.FilterOperator.Contains, sChannel);
             aFilters = new sap.ui.model.Filter({filters: [oFilter1], and: false });
             oCJTable.getBinding("rows").filter(aFilters);
+            if ((oCJTable.getRows()) && (oCJTable.getRows().length === 0)) {
+                oLocalModel.setProperty("/NoData", true);
+            }
             this.getOwnerComponent().getCcuxApp().setOccupied(false);
         };
         /**
@@ -847,19 +876,27 @@ sap.ui.define(
                 oFilter2,
                 aFilterValues,
                 aFilters,
-                oCJTable;
+                oCJTable,
+                oLocalModel;
+
             if (this._ChannelType !== "CLOG") { //it is a customer journey normal view.
                 oSearchText = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-search");
                 oCJTable = sap.ui.core.Fragment.byId("CustomerJourney", "idnrgCJModule-table");
+                oLocalModel = this._oDialogFragment.getModel('CJ-local');
             } else {
                 oSearchText = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-search");
                 oCJTable = sap.ui.core.Fragment.byId("ContactLogs", "idnrgCJModule-table");
+                oLocalModel = this._oContactLogFragment.getModel('CJ-local');
             }
+            oLocalModel.setProperty("/NoData", false);
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             oFilter1 = new sap.ui.model.Filter("SingleMessage", sap.ui.model.FilterOperator.Contains, oSearchText.getValue());
             oFilter2 = new sap.ui.model.Filter("ColValues", sap.ui.model.FilterOperator.Contains, oSearchText.getValue());
             aFilters = new sap.ui.model.Filter({filters: [oFilter1, oFilter2], and: false });
             oCJTable.getBinding("rows").filter(aFilters);
+            if ((oCJTable.getRows()) && (oCJTable.getRows().length === 0)) {
+                oLocalModel.setProperty("/NoData", true);
+            }
             this.getOwnerComponent().getCcuxApp().setOccupied(false);
         };
         return Controller;
