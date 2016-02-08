@@ -49,8 +49,6 @@ sap.ui.define(
                 sPath,
                 oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
                 i18NModel,
-                oContext,
-                sPromo = "",
                 oRejectRsns = that.getView().byId('idnrgRejectRsnsMD'),
                 oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl');
             this.getView().setModel(this.getOwnerComponent().getModel('comp-dashboard'), 'oODataSvc');// This is to just to make NNP not to relaod.
@@ -65,14 +63,10 @@ sap.ui.define(
             this._sType = oRouteInfo.parameters.stype;
             this._sPromo = oRouteInfo.parameters.sPromo;
             sCurrentPath = sCurrentPath + "(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Type='" + this._sType + "',Promo='" + this._sPromo + "')";
-            oContext = oModel.getContext(sCurrentPath);
-            if (oContext) {
-                sPromo = oContext.getProperty("Promo");
-            }
             this._bindView(sCurrentPath);
             sCurrentPath = sCurrentPath + "/Scripts";
             aFilterIds = ["Promo", "TxtName"];
-            aFilterValues = [sPromo, 'MAND'];
+            aFilterValues = [this._sPromo, 'MAND'];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oDropDownList = this.getView().byId("idnrgCamSSDdL");
             oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();
