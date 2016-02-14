@@ -1053,7 +1053,10 @@ sap.ui.define(
                         // Set select key for all CAs for CA dropdown
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             oData.results[i].iIndex = i.toString();
-                            if (oData.results[i].ContractAccountID === sCaNum) { iSearchedCaIndex = i; }
+                            if (oData.results[i].ContractAccountID && sCaNum) {
+                                if (parseInt(oData.results[i].ContractAccountID, 10) === parseInt(sCaNum, 10)) { iSearchedCaIndex = i; }
+                            }
+
                         }
                         // Load all the CAs for CA dropdown
                         this.getView().getModel('oAllBuags').setData(oData.results);
@@ -1096,16 +1099,19 @@ sap.ui.define(
                 i;
 
             for (i = 0; i < oAllCaModel.oData.length; i = i + 1) {
-                if (oAllCaModel.oData[i].ContractAccountID === sCaNum) {
-                    // Load as default to display
-                    this.getView().getModel('oDtaVrfyBuags').setData(oAllCaModel.oData[i]);
-                    // Retrieve the Mailing Address for the selected CA
-                    this._retrCaMailingAddr(
-                        this.getView().getModel('oDtaVrfyBuags').getProperty('/PartnerID'),
-                        this.getView().getModel('oDtaVrfyBuags').getProperty('/ContractAccountID'),
-                        this.getView().getModel('oDtaVrfyBuags').getProperty('/FixedAddressID')
-                    );
+                if (oAllCaModel.oData[i].ContractAccountID && sCaNum) {
+                    if (parseInt(oAllCaModel.oData[i].ContractAccountID, 10) ===  parseInt(sCaNum, 10)) {
+                        // Load as default to display
+                        this.getView().getModel('oDtaVrfyBuags').setData(oAllCaModel.oData[i]);
+                        // Retrieve the Mailing Address for the selected CA
+                        this._retrCaMailingAddr(
+                            this.getView().getModel('oDtaVrfyBuags').getProperty('/PartnerID'),
+                            this.getView().getModel('oDtaVrfyBuags').getProperty('/ContractAccountID'),
+                            this.getView().getModel('oDtaVrfyBuags').getProperty('/FixedAddressID')
+                        );
+                    }
                 }
+
             }
         };
 
