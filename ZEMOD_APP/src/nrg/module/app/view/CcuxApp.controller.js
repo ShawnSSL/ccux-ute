@@ -23,8 +23,17 @@ sap.ui.define(
         CustomController.prototype.onAfterRendering = function () {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
             oWebUiManager.attachEvent("clearAccount2", jQuery.proxy(this._onClearAccPressCallback, this));
+            oWebUiManager.attachEvent("dashboardgo", jQuery.proxy(this._onGoDashBoardCallback, this));
+            oWebUiManager.attachEvent("ToggleBusy", jQuery.proxy(this._onToggleBusy, this));
         };
+        CustomController.prototype._onToggleBusy = function (oEvent) {
+            if (oEvent.mParameters.busy) {
+                this._oApp.setOccupied(true);
+            } else {
+                this._oApp.setOccupied(false);
+            }
 
+        };
         CustomController.prototype.onInit = function () {
             this._oApp = new App(this);
 
@@ -199,6 +208,17 @@ sap.ui.define(
             }
         };
 
+        CustomController.prototype._onGoDashBoardCallback = function (oControlEvent, oPayLoad) {
+            var oRouter;
+            this._oApp.setOccupied(false);
+            oRouter = this.getOwnerComponent().getRouter();
+            if (oControlEvent.mParameters.bpNum && oControlEvent.mParameters.caNum) {
+                oRouter.navTo('dashboard.VerificationWithCa', {
+                    bpNum: oControlEvent.mParameters.bpNum,
+                    caNum: oControlEvent.mParameters.caNum
+                });
+            }
+        };
         CustomController.prototype._onQLDashboardClick = function (oControlEvent) {
             var oContext, oRouter;
 

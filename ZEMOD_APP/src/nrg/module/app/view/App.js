@@ -20,6 +20,13 @@ sap.ui.define(
                 this._oController = oController;
                 this._oBusyDialog = new BusyDialog();
                 //this._oBusyDialog.setShowCancelButton(true);
+                /*
+                ** Over riding std escape function to avoid closing Busy dialog.
+                */
+                this._oBusyDialog.onsapescape = function (oEvent) {
+                    oEvent.preventDefault();
+                    oEvent.stopPropagation();
+                };
                 this._bEdit = false;
                 this._iBusyCounter = 0;
 
