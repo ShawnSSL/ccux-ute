@@ -221,7 +221,8 @@ sap.ui.define(
                 error: function (oError) {
                     ute.ui.main.Popup.Alert({
                         title: 'Email save',
-                        message: 'Update Failed'
+                        message: 'Update Failed',
+                        callback : oAlertCallBack
                     });
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
                 }.bind(this)
