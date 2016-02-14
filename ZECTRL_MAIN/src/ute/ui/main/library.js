@@ -122,6 +122,13 @@ sap.ui.define(
             oDialog.addStyleClass('uteMPopup');
             oDialog.setModal(true);
             oDialog.setResizable(false);
+            /*
+            ** Over riding std escape function to avoid closing popup
+            */
+            oDialog.onsapescape = function (oEvent) {
+                oEvent.preventDefault();
+                oEvent.stopPropagation();
+            };
 
             if (mParams) {
                 if (mParams.design) {
