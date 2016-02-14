@@ -60,7 +60,8 @@ sap.ui.define(
                     consumptionFirstCard : true, // true for first Card change, false for second card change for Consumption
                     pinFirstCardInvoice : false,
                     pinFirstCardConsumption : false,
-                    pin: false
+                    pin: false,
+                    Contract : ""
 			    }),
                 bInvoiceFirstCard = true;
             this.resetView();
@@ -73,6 +74,7 @@ sap.ui.define(
             this._sBP = oRouteInfo.parameters.bpNum;
             this._sCA = oRouteInfo.parameters.caNum;
             this._sType = oRouteInfo.parameters.typeV;
+            oViewModel.setProperty("/Contract", this._sContract);
             if ((!this._sType) || (this._sType === undefined) || (this._sType === null) || (this._sType === "")) {
                 this._sType = "SE";
             }
@@ -90,7 +92,8 @@ sap.ui.define(
             // Handler function for tile container
             fnRecievedHandler = function (oEvent) {
                 var aContent = oTileContainer.getContent(),
-                    oBinding = oTileContainer.getBinding("content");
+                    oBinding = oTileContainer.getBinding("content"),
+                    iBindCount = 0;
                 if ((aContent !== undefined) && (aContent.length > 0)) {
                     oNoDataTag.addStyleClass("nrgCamOff-hide");
                     oTileContainer.removeStyleClass("nrgCamOff-hide");
@@ -102,7 +105,7 @@ sap.ui.define(
                     oBinding.filter(aFilters, "Application");
                     if ((oTileContainer.getContent()) && (oTileContainer.getContent().length > 0)) {
                         oTileContainer.getContent().forEach(function (item) {
-                            if (item) {
+                            if (item && iBindCount < 2) {
                                 if (item.getBindingContext("comp-campaign").getProperty("Type") !== "C") {
                                     if (bInvoiceFirstCard) {
                                         that._changeSelectedObject(item, 0, true);
@@ -114,6 +117,7 @@ sap.ui.define(
                                         that._bindCard(item, 2);
                                         oViewModel.setProperty("/invoiceFirstCard", true); // enable false to make sure next turn is first card in invoice
                                     }
+                                    iBindCount = iBindCount + 1;
                                 }
                             }
                         });
@@ -126,6 +130,7 @@ sap.ui.define(
                 if (oBinding) {
                     oBinding.detachDataReceived(fnRecievedHandler);
                 }
+                iBindCount = 0;
             };
             factoryFuntion = function () {
 				return oTileTemplate.clone(Math.floor((Math.random() * 1000) + 1));
@@ -582,7 +587,6 @@ sap.ui.define(
                         oBinding.sOperationMode = "Client";
                         oBinding.aAllKeys = oEvent.getSource().aKeys;
                         oBinding.filter(aFilters, "Application");
-                        oSearchField.setValue("");
                         that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     } else {
                         oNoDataTag.removeStyleClass("nrgCamOff-hide");
@@ -913,8 +917,10 @@ sap.ui.define(
                 oSaveButton = this.getView().byId("idCamToggleBtn-S"),
                 oFinalSaveButton = this.getView().byId("idCamToggleBtn-F"),
                 oSearchButton = this.getView().byId("idCamToggleBtn-SE"),
-                oTableTag;
+                oTableTag,
+                oSearchField = this.getView().byId("idnrgCamOff-search");
 
+            oSearchField.setValue("");
             if (oFirstCardInvoice.getBindingContext("comp-campaign")) {
                 oFirstCardInvoice.unbindElement("comp-campaign");
             }

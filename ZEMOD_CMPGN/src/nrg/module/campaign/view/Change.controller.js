@@ -55,7 +55,7 @@ sap.ui.define(
             this._sCA = oRouteInfo.parameters.caNum;
             sCurrentPath = "/CpgChgOfferS";
             this._sPromo = oRouteInfo.parameters.sPromo;
-            sCurrentPath = sCurrentPath + "(Contract='" + this._sContract + "',OfferCode='" + this._sNewOfferCode + "',Type='" + this._sType + "',Promo='" + this._sPromo + "')";
+            sCurrentPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sNewOfferCode + "',Promo='" + this._sPromo + "',Type='" + this._sType + "')";
             oModel = this.getOwnerComponent().getModel('comp-campaign');
             oTemplateModel = new sap.ui.model.json.JSONModel();
             this._bindView(sCurrentPath);

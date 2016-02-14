@@ -1,4 +1,4 @@
-/*globals sap*/
+/*globals sap, ute*/
 /*jslint nomen:true*/
 
 sap.ui.define(
@@ -51,6 +51,11 @@ sap.ui.define(
                 i18NModel,
                 oRejectRsns = that.getView().byId('idnrgRejectRsnsMD'),
                 oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl');
+            // To Avoid reloading after NNP opens up
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEditEmailNNP');
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEditEmailValidate');
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oLocalModel');
+            // To Avoid reloading after NNP opens up
             this.getView().setModel(this.getOwnerComponent().getModel('comp-dashboard'), 'oODataSvc');// This is to just to make NNP not to relaod.
             i18NModel = this.getOwnerComponent().getModel("comp-i18n-campaign");
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
@@ -58,15 +63,13 @@ sap.ui.define(
             this._sOfferCode = oRouteInfo.parameters.offercodeNum;
             this._sBP = oRouteInfo.parameters.bpNum;
             this._sCA = oRouteInfo.parameters.caNum;
-            sCurrentPath = i18NModel.getProperty("nrgCpgChangeOffSet");
-            sCurrentPath = "/CpgChgOfferS";
             this._sType = oRouteInfo.parameters.stype;
             this._sPromo = oRouteInfo.parameters.sPromo;
-            sCurrentPath = sCurrentPath + "(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Type='" + this._sType + "',Promo='" + this._sPromo + "')";
+            sCurrentPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Promo='" + this._sPromo + "',Type='" + this._sType + "')";
             this._bindView(sCurrentPath);
             sCurrentPath = sCurrentPath + "/Scripts";
-            aFilterIds = ["Promo", "TxtName"];
-            aFilterValues = [this._sPromo, 'MAND'];
+            aFilterIds = ["TxtName"];
+            aFilterValues = ['MAND'];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oDropDownList = this.getView().byId("idnrgCamSSDdL");
             oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();
@@ -148,7 +151,6 @@ sap.ui.define(
                 NNPPopupControl = new NNPPopup();
             NNPPopupControl.attachEvent("NNPCompleted", this.invokeOverviewScript, this);
             this.getView().addDependent(NNPPopupControl);
-            this._oOverviewDialog = this.getView().byId("idnrgCamOvsDialog");
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             sCurrentPath = "/NNPS('" + this._sBP + "')";
             oBindingInfo = {
@@ -183,40 +185,48 @@ sap.ui.define(
                 sPath,
                 that = this,
                 fnRecievedHandler,
-                oOverScriptTV = this.getView().byId("idnrgCamOvsOvTv"),
+                oOverScriptTV,// need to point it to fragment
                 aFilterIds,
                 aFilterValues,
                 oModel = this.getOwnerComponent().getModel('comp-campaign'),
                 oContext,
                 dStartDate,
-                oRejectRsns = that.getView().byId('idnrgRejectRsnsOV'),
+                oRejectRsns,
                 oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl');
 
-            sCurrentPath = "/CpgChgOfferS";
-            sCurrentPath = sCurrentPath + "(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Type='" + this._sType + "',Promo='" + this._sPromo + "')";
-            oContext = oModel.getContext(sCurrentPath);
-            if (oContext) {
-                dStartDate = oContext.getProperty("StartDate");
+            if (!this._oDialogFragment) {
+                this._oDialogFragment = sap.ui.xmlfragment("OverViewScripts", "nrg.module.campaign.view.OverviewScript", this);
             }
-            aFilterIds = ["Contract", "OfferCode", "TxtName", "Promo"];
-            aFilterValues = [this._sContract, this._sOfferCode, "OVW", this._sPromo];
+            this._oDialogFragment.setModel(oModel, 'view-campaign');
+            if (this._oOverviewDialog === undefined) {
+                this._oOverviewDialog = new ute.ui.main.Popup.create({
+                    title: 'OVERVIEW SCRIPT',
+                    close: this._handleDialogClosed,
+                    content: this._oDialogFragment
+                });
+                this._oOverviewDialog.setShowCloseButton(false);
+            }
+            sCurrentPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Promo='" + this._sPromo + "',Type='" + this._sType + "')";
+            sCurrentPath = sCurrentPath + "/Scripts";
+            aFilterIds = ["TxtName"];
+            aFilterValues = ["OVW"];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-            sCurrentPath = "/ScriptS";
             this._oOverviewDialog.setWidth("750px");
             this._oOverviewDialog.setHeight("auto");
-            this._oOverviewDialog.setTitle("OVERVIEW SCRIPT");
-            this._oOverviewDialog.setModal(true);
             this._oOverviewDialog.addStyleClass("nrgCamOvs-dialog");
-            oDropDownList = this.getView().byId("idnrgCamOvsDdL");
+
+            oOverScriptTV = sap.ui.core.Fragment.byId("OverViewScripts", "idnrgCamOvsOvTv");
+
+            oDropDownList = sap.ui.core.Fragment.byId("OverViewScripts", "idnrgCamOvsDdL");
             aContent = oDropDownList.getContent();
-            oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();
+            oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtItOv").clone();
             fnRecievedHandler = function () {
                 aContent = oDropDownList.getContent();
                 if ((aContent !== undefined) && (aContent.length > 0)) {
-                    sPath = aContent[0].getBindingContext("comp-campaign").getPath();
+                    sPath = aContent[0].getBindingContext("view-campaign").getPath();
                     oDropDownList.setSelectedKey("EN");
                     oOverScriptTV.bindElement({
-                        model : "comp-campaign",
+                        model : "view-campaign",
                         path : sPath
                     });
 
@@ -226,7 +236,7 @@ sap.ui.define(
                 that.getOwnerComponent().getCcuxApp().setOccupied(false);
             };
             mParameters = {
-                model : "comp-campaign",
+                model : "view-campaign",
                 path : sCurrentPath,
                 template : oDropDownListItemTemplate,
                 filters : aFilters,
@@ -235,9 +245,11 @@ sap.ui.define(
             oDropDownList.bindAggregation("content", mParameters);
             obinding = oDropDownList.getBinding("content");
             //this.getView().addDependent(this._oOverviewDialog);
+            oRejectRsns = sap.ui.core.Fragment.byId('OverViewScripts', 'idnrgRejectRsnsOV');
+            oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTemplOV');
             sCurrentPath = "/RejectRsnS";
             mParameters = {
-                model : "comp-campaign",
+                model : "view-campaign",
                 path : sCurrentPath,
                 template : oRejectsRsnsTemp
             };
@@ -310,20 +322,20 @@ sap.ui.define(
 		 */
         Controller.prototype.onOvwLngSelected = function (oEvent) {
             var sPath,
-                oOverScriptTV = this.getView().byId("idnrgCamOvsOvTv"),
+                oOverScriptTV = sap.ui.core.Fragment.byId("OverViewScripts", "idnrgCamOvsOvTv"),
                 sSelectedKey,
-                oDropDownList = this.getView().byId("idnrgCamOvsDdL");
+                oDropDownList = sap.ui.core.Fragment.byId("OverViewScripts", "idnrgCamOvsDdL");
             sSelectedKey = oEvent.getSource().getProperty("selectedKey");
             if ((oDropDownList) && (oDropDownList.getContent())) {
                 oDropDownList.getContent().forEach(function (item) {
-                    var oContext = item.getBindingContext("comp-campaign");
+                    var oContext = item.getBindingContext("view-campaign");
                     if (sSelectedKey === oContext.getProperty("TxtLang")) {
                         sPath = oContext.getPath();
                     }
                 });
             }
             oOverScriptTV.bindElement({
-                model : "comp-campaign",
+                model : "view-campaign",
                 path : sPath
             });
         };
@@ -369,7 +381,7 @@ sap.ui.define(
                 sEffectDate;
             oModel = this.getOwnerComponent().getModel('comp-campaign');
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            sPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Type='" + this._sType + "',Promo='" + this._sPromo + "')";
+            sPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Promo='" + this._sPromo + "',Type='" + this._sType + "')";
             oContext = oModel.getContext(sPath);
             sCampaignCode = oContext.getProperty("Campaign");
             //sEndDate = oContext.getProperty("EndDate");
@@ -426,7 +438,8 @@ sap.ui.define(
                     jQuery.sap.log.info("Odata Read Successfully:::" + oData.Code);
                 }.bind(this),
                 error: function (oError) {
-                    jQuery.sap.log.info("Eligibility Error occured");
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    jQuery.sap.log.info("Error occured in the backend");
                 }.bind(this)
             };
             oModel.callFunction("/AcceptCampaign", mParameters); // callback function for error
@@ -466,7 +479,7 @@ sap.ui.define(
                 sPromo,
                 that = this;
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            sPath = oEvent.getSource().getBindingContext("comp-campaign").getPath();
+            sPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Promo='" + this._sPromo + "',Type='" + this._sType + "')";
             oContext = oModel.getContext(sPath);
             sCampaignCode = oContext.getProperty("Campaign");
             sBrand = oContext.getProperty("Brand");

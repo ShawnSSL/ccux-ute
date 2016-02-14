@@ -69,41 +69,14 @@
                     </um:DropdownItem>
                 </um:Dropdown>
             </u:Tag>
-          <u:Dialog id="idnrgCamOvsDialog" showCloseButton="false">
-            <u:Tag>
-                <um:Dropdown id="idnrgCamOvsDdL" class="nrgCamOVSLng-DdL" select=".onOvwLngSelected" >
-                    <um:DropdownItem key="{comp-campaign>TxtLang}" id="idnrgCamOvsLngLtIt" class="nrgCamOVSLng-DdLItem">
-                        <u:Tag text="{parts:[{path:'comp-campaign>TxtLang'}],
-                                                    formatter:'.formatType'}"/>
-                    </um:DropdownItem>
-                </um:Dropdown>
-            </u:Tag>
-            <u:Tag class="nrgCamOvs-Dsc">
-                    <core:HTML content='&lt;div class=&quot;nrgCamOvs-left nrgCamOvs-top nrgCamOvs-OVW&quot;&gt;{comp-campaign>TxtLine}&lt;/div&gt;' id="idnrgCamOvsOvTv">
-                    </core:HTML>
-            </u:Tag>
-            <u:Tag class="nrgCamOvs-btnTag nrgCamOvs-top" >
-                <u:Button
-                    id="idnrgCamOvsBtn-Ok"
-                    text="{comp-i18n-campaign>nrgCmpSSBtnOk}"
-                    enabled="true"
-                    class="nrgCamOvs-btn"
-                    press=".onOvsAccept">
-                </u:Button>
-                <um:Dropdown id="idnrgRejectRsnsOV"
-                             select=".onDisposition"
-                             placeholder="Non-Disposition Reason"
-                             class="nrgCamSSRr-DdL nrgCamSS-left">
-                    <um:DropdownItem key="{comp-campaign>RejectionCode}" class="nrgCamSSRr-DdLItem">
-                        <u:Tag text="{comp-campaign>Description}" />
-                    </um:DropdownItem>
-                </um:Dropdown>
-            </u:Tag>
-          </u:Dialog>
         <u:Tag class="nrgCamSS-hide">
             <um:Dropdown class="nrgCamSSLng-DdL">
                 <um:DropdownItem key="{comp-campaign>TxtLang}" id="idnrgCamSSLngLtIt" class="nrgCamSSLng-DdLItem">
                     <u:Tag text="{parts:[{path:'comp-campaign>TxtLang'}],
+                                                formatter:'.formatType'}"/>
+                </um:DropdownItem>
+                <um:DropdownItem key="{view-campaign>TxtLang}" id="idnrgCamSSLngLtItOv" class="nrgCamSSLng-DdLItem">
+                    <u:Tag text="{parts:[{path:'view-campaign>TxtLang'}],
                                                 formatter:'.formatType'}"/>
                 </um:DropdownItem>
             </um:Dropdown>
@@ -113,6 +86,9 @@
             <um:Dropdown>
                 <um:DropdownItem key="{comp-campaign>RejectionCode}" class="nrgCamSSRr-DdLItem" id="idnrgRejectRsnsTempl">
                     <u:Tag text="{comp-campaign>Description}" />
+                </um:DropdownItem>
+                <um:DropdownItem key="{view-campaign>RejectionCode}" class="nrgCamSSRr-DdLItem" id="idnrgRejectRsnsTemplOV">
+                    <u:Tag text="{view-campaign>Description}" />
                 </um:DropdownItem>
             </um:Dropdown>
       </u:Tag>

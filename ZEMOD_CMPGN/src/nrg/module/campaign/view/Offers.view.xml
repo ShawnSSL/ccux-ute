@@ -15,9 +15,10 @@
         <u:Tag class="nrgCmpOff">
             <div>
                 <u:Tag class="nrgCamOff-ttl" text="{comp-i18n-campaign>nrgCmpOffTtl}" />
+                <u:Tag class="nrgCamOff-ttl" text="Contract: {localModel>/Contract}" />
                  <um:Button press=".backToOverview"
                             text="{comp-i18n-campaign>nrgCmpBckOverview}"
-                            class="nrgCamOff-Back"
+                            class="nrgCamOff-BackBtn"
                             design="None">
                 </um:button>
             </div>
@@ -143,6 +144,8 @@
                             <u:Tag class="nrgCamOff-feeinfo">
                                 <u:Tag class="nrgCamOff-Canfee" text="Cancel : ${comp-campaign>CncFee}" />
                                 <u:Tag class="nrgCamOff-Inc" text="Incentive: ${comp-campaign>Incentive}" />
+                                <u:Tag class="nrgCamOff-Off" text="Off: {comp-campaign>OfferCode}" />
+                                <u:Tag class="nrgCamOff-Off" text="CC: {comp-campaign>Campaign}" />
                             </u:Tag>
                         </u:Tag>
 
