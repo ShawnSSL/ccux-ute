@@ -99,6 +99,19 @@ sap.ui.define(
                 LINK_ID: "Z_BB_REAVG"
             });
         };
+        Controller.prototype._onRetroAverageBillingClick = function () {
+            if (!this.ABPPopupCustomControl) {
+                this.ABPPopupCustomControl = new ABPPopup({ isRetro: true });
+
+                this.ABPPopupCustomControl._oABPPopup.setTitle('RETRO AVERAGE BILLING PLAN: ACTIVATE');
+
+                //this.ABPPopupCustomControl._oABPPopup.setTitle('The title you want to change to.');
+
+                this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
+                this.getView().addDependent(this.ABPPopupCustomControl);
+            }
+            this.ABPPopupCustomControl.prepareABP();
+        };
         Controller.prototype._onDppBtnClicked = function () {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
                 oRetrDone = false,

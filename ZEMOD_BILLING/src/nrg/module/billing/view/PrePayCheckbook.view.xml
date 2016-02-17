@@ -173,6 +173,12 @@
             </m:ScrollContainer>
         </ute:Tag>
         <ute:Tag class="nrgBilling-ppChkBk-rghtDiv">
+            <!-- Title -->
+            <ute:Tag elem="span" class="nrgBilling-billChkBook-notiTitle"
+                text="{comp-i18n-billing>nrgBilling-billChkBook-NOTI_TITLE}" />
+            <ute:Tag id="nrgBilling-billChkBook-notifications" class="nrgBilling-billChkBook-notifications">
+
+            </ute:Tag>
         </ute:Tag>
     </ute:Tag>
 </mvc:View>
