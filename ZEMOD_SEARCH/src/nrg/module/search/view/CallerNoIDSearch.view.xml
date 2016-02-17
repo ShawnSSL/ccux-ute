@@ -12,10 +12,10 @@
         <ute:content>
 
             <ute:Tag class="nrgSearch-calrNoIDSearch-title" >
-<!--                <core:Icon src="sap-icon://nrg-icon/notification"
-                           class="nrgSearch-calrNoIDSearch-titleIcon"/>-->
+                <core:Icon src="sap-icon://nrg-icon/notification"
+                           class="nrgSearch-calrNoIDSearch-titleIcon"/>
                 <ute:Tag elem="span" class="nrgSearch-calrNoIDSearch-titleSpan"
-                     text="{comp-i18n-search>nrgSearchCallerNoIDSearchTitle}" visible="false">
+                     text="{comp-i18n-search>nrgSearchCallerNoIDSearchTitle}">
                 </ute:Tag>
             </ute:Tag>
 
