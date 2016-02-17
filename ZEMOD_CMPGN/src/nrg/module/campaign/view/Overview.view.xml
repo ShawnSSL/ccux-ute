@@ -14,6 +14,11 @@
    <u:Tag class="nrgAppMain-generalContent nrgAppMain-generalContent-full">
       <u:Tag class="nrgCamOvrT">
          <u:Tag class="nrgCamOvr-Title" text="{comp-i18n-campaign>nrgCmpOvrTtl}" />
+             <um:Button press=".backToDashboard"
+                        text="{comp-i18n-campaign>nrgCmpBckDashBoard}"
+                        class="nrgCamOff-Back"
+                        design="None">
+            </um:button>
             <article class="nrgCamOvr-offerToolbar nrgCamOvr-top">
                 <um:Button id="idCamCustReqOfferBtn"
                            press=".onCustomerRequestedOffers"

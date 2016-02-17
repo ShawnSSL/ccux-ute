@@ -687,6 +687,22 @@ sap.ui.define(
                 this._oDialogFragment.getModel("localModel").setProperty("/ReqNumber", "");// No Phone checkbox selected
             }
         };
+
+        /**
+		 * Handler Function for the Backbutton to dashboard
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.backToDashboard = function (oEvent) {
+            if (this._sBP && this._sCA && this._sContract) {
+                this.navTo('dashboard.VerificationWithCaCo', {
+                    bpNum: this._sBP,
+                    caNum: this._sCA,
+                    coNum: this._sContract
+                });
+            }
+        };
         return Controller;
     }
 

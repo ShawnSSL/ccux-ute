@@ -144,8 +144,8 @@
                             <u:Tag class="nrgCamOff-feeinfo">
                                 <u:Tag class="nrgCamOff-Canfee" text="Cancel : ${comp-campaign>CncFee}" />
                                 <u:Tag class="nrgCamOff-Inc" text="Incentive: ${comp-campaign>Incentive}" />
-                                <u:Tag class="nrgCamOff-Off" text="Off: {comp-campaign>OfferCode}" />
-                                <u:Tag class="nrgCamOff-Off" text="CC: {comp-campaign>Campaign}" />
+<!--                                <u:Tag class="nrgCamOff-Off" text="Off: {comp-campaign>OfferCode}" />
+                                <u:Tag class="nrgCamOff-Off" text="CC: {comp-campaign>Campaign}" />-->
                             </u:Tag>
                         </u:Tag>
 

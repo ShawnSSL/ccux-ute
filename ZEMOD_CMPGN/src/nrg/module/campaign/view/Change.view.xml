@@ -95,6 +95,9 @@
                     <u:TableColumn>
                          <c:Label text="Description"/>
                     </u:TableColumn>
+                    <u:TableColumn>
+                         <c:Label text="Campaign"/>
+                    </u:TableColumn>
                 </u:columns>
                 <u:rows>
                     <u:TableRow>
@@ -106,6 +109,7 @@
                         <c:Label text="{comp-campaign>CncFee}"/>
                         <c:Label text="{comp-campaign>Incentive}"/>
                         <c:Label text="{comp-campaign>IncenDesc}"/>
+                        <c:Label text="{comp-campaign>Campaign}"/>
                     </u:TableRow>
                 </u:rows>
             </u:Table>
