@@ -191,7 +191,20 @@ sap.ui.define(
                 parameters: oCurrentRoute.arguments
             };
         };
+        Manager.prototype.getPreviousRouteInfo = function () {
+            var oPreviousRoute;
 
+            if (this._aRouteHistory.length === 0 || this._aRouteHistory.length === 1) {
+                return null;
+            }
+
+            oPreviousRoute = this._aRouteHistory[this._aRouteHistory.length - 2];
+
+            return {
+                name: oPreviousRoute.name,
+                parameters: oPreviousRoute.arguments
+            };
+        };
         Manager.prototype.destroy = function () {
             this._unsubscribeWebUi();
             BaseObject.prototype.destroy.apply(this, arguments);
