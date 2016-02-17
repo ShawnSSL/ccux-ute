@@ -1060,7 +1060,7 @@ sap.ui.define(
             this._updateConsCmp(oEvent.getSource().getBindingContext("comp-campaign"));
         };
         // Fire search function when detect user hit the enter key in the search textfields
-        Controller.prototype.updateCmp = function (oEvent) {
+        Controller.prototype.updateConsCmp = function (oEvent) {
             this._updateConsCmp(oEvent.getSource().getBindingContext("comp-campaign"));
         };
         // Fire search function when detect user hit the enter key in the search textfields

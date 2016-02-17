@@ -1,0 +1,31 @@
+<core:FragmentDefinition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:c="sap.ui.commons"
+    xmlns:core="sap.ui.core"
+    xmlns:u="ute.ui.commons"
+    xmlns:um="ute.ui.main">
+<u:Tag>
+    <u:Tag class="nrgCamOvs-Dsc" id="idnrgSwapDesc">
+
+    </u:Tag>
+    <u:Tag class="nrgCamOvs-btnTag nrgCamOvs-top">
+        <u:Button
+            text="YES"
+            enabled="true"
+            class="nrgCamOvs-btn"
+            press=".onSwapYes">
+        </u:Button>
+        <u:Button
+            text="NO"
+            enabled="true"
+            class="nrgCamOvs-btn"
+            press=".onSwapNo">
+        </u:Button>
+        <u:Button
+            text="Other Deposit Alternatives"
+            enabled="true"
+            class="nrgCamOvs-btn"
+            press=".onSwapOther">
+        </u:Button>
+    </u:Tag>
+</u:Tag>

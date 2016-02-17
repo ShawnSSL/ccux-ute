@@ -137,7 +137,6 @@ sap.ui.define(
             }
             return aFilters;
         };
-
         /**
 		 * Action to be taken when the User clicks on Accept of Sales Script
 		 *
@@ -145,6 +144,111 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onAccept = function (oEvent) {
+            var sCurrentPath,
+                oModel = this.getOwnerComponent().getModel('comp-campaign'),
+                oBindingInfo,
+                that = this;
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            sCurrentPath = "/PrepayS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Scored=false)";
+            oBindingInfo = {
+                success : function (oData) {
+                    if (oData) {
+                        if (oData.Flag === 'N') {
+                            that.onNNP();
+                        }
+                        if (oData.Flag === 'E') {
+                            sap.ui.commons.MessageBox.alert(oData.Script);
+                        }
+                        if (oData.Flag === 'Y') {
+                            if (!that._oSwapFragment) {
+                                that._oSwapFragment = sap.ui.xmlfragment("SwapScripts", "nrg.module.campaign.view.SwapScript", that);
+                            }
+                            if (that._oSwapDialog === undefined) {
+                                that._oSwapDialog = new ute.ui.main.Popup.create({
+                                    title: 'SWAP DEPOSIT SCRIPT',
+                                    content: this._oSwapFragment
+                                });
+                                that._oSwapDialog.setShowCloseButton(false);
+                            }
+                            var oDescription = sap.ui.core.Fragment.byId("SwapScripts", "idnrgSwapDesc");
+                            oDescription.setText(oData.Script);
+                            that._oSwapDialog.open();
+                        }
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(true);
+
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sCurrentPath, oBindingInfo);
+            }
+
+        };
+        /**
+		 * Action to be taken when the User clicks on Yes of the swap script
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onSwapYes = function (oEvent) {
+            var sCurrentPath,
+                oModel = this.getOwnerComponent().getModel('comp-campaign'),
+                oBindingInfo,
+                that = this;
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            sCurrentPath = "/DepositS(Contract='" + this._sContract + "')";
+            oBindingInfo = {
+                success : function (oData) {
+                    if (oData) {
+                        if (oData.Proceed) {
+                            that.onNNP();
+                            that._oSwapDialog.close();
+                        } else {
+                            // launch transaction launcher
+                            var oWebUiManager = that.getOwnerComponent().getCcuxWebUiManager();
+                            oWebUiManager.notifyWebUi('openIndex', {
+                                LINK_ID: "Z_OT_PAYMT"
+                            });
+                        }
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(true);
+
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sCurrentPath, oBindingInfo);
+            }
+        };
+        /**
+		 * Action to be taken when the User clicks on No of the swap script
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onSwapNo = function (oEvent) {
+            this._oSwapDialog.close();
+        };
+        /**
+		 * Action to be taken when the User clicks on Other Deposit Alternatives of swap script
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onSwapOther = function (oEvent) {
+            this._oSwapDialog.close();
+            this.onNNP();
+        };
+        /**
+		 * Action to be taken after Swap Script query to launch NNP
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onNNP = function (oEvent) {
             var sCurrentPath,
                 oModel = this.getOwnerComponent().getModel('comp-campaign'),
                 oBindingInfo,
