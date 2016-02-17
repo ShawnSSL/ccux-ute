@@ -265,7 +265,8 @@
                                         text="{oDtaVrfyContract>/HouseNum1} {oDtaVrfyContract>/Street} {oDtaVrfyContract>/HouseNum2}"/>
                                     <ute:TextView
                                         class="nrgDashboard-cusDataVerify-mContent-add"
-                                        text="{oDtaVrfyContract>/City1}, {oDtaVrfyContract>/Region} {oDtaVrfyContract>/PostCode1}"/>
+                                        text="{parts:[{path:'oDtaVrfyContract>/City1'}, {path:'oDtaVrfyContract>/Region'}, {path:'oDtaVrfyContract>/PostCode1'}],
+                                                    formatter:'.formatAddress2'}"/>
                                 </ute:Tag>
                             </ute:Tag>
                             <!-- Pagination for Multiple COs -->

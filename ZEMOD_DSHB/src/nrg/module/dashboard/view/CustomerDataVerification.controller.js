@@ -175,7 +175,8 @@ sap.ui.define(
         Controller.prototype._handleUpdate = function () {
             var oModel = this.getView().getModel('oODataSvc'),
                 sPath,
-                oParameters;
+                oParameters,
+                oDataBPVrfy = this.getView().getModel('oDtaVrfyBP').oData;
 
             sPath = '/Partners' + '(\'' + this.getView().getModel('oDtaVrfyBP').getProperty('/PartnerID') + '\')';
             oParameters = {
@@ -195,11 +196,15 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oModel) {
-                oModel.update(sPath, this.getView().getModel('oDtaVrfyBP').oData, oParameters);
+            if (oModel && oDataBPVrfy) {
+                if (oDataBPVrfy.hasOwnProperty("OrgBP")) {
+                    delete oDataBPVrfy.OrgBP;
+                }
+                if (oDataBPVrfy.hasOwnProperty("PsnBP")) {
+                    delete oDataBPVrfy.PsnBP;
+                }
+                oModel.update(sPath, oDataBPVrfy, oParameters);
             }
-
-
         };
 
         Controller.prototype._formatEmailMkt = function (sIndicator) {
@@ -710,7 +715,7 @@ sap.ui.define(
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this),
                 error: function (oError) {
-                    sap.ui.commons.MessageBox.alert("Email Validate Service Error");
+                   // sap.ui.commons.MessageBox.alert("Email Validate Service Error");
                     ute.ui.main.Popup.Alert({
                         title: 'Email address validation',
                         message: 'Email Validate Service Error'
@@ -963,10 +968,12 @@ sap.ui.define(
                         // Determine if Seibel Customer
                         if (oData.SiebelCustomer === 'X' || oData.SiebelCustomer === 'x') {this._showSiebelAlert(); }
                         // Determine the SMS button
-                        if (oData.Cell) {this.getView().getModel('oCfrmStatus').setProperty('/ShowSMSBtn', true); }
+                        this.getView().getModel('oCfrmStatus').setProperty('/ShowSMSBtn', true);// change to show always
+
                         // Load the BP info
                         this.getView().getModel('oDtaVrfyBP').setData(oData);
                         // Determine if BP is residentail or organization
+                        if (!oData.Cell) {this.getView().getModel('oDtaVrfyBP').setProperty('/IsSMS', 'X'); }
                         if (oData.PartnerType === '1') {
                             this.getView().getModel('oDtaVrfyBP').setProperty('/OrgBP', false);
                             this.getView().getModel('oDtaVrfyBP').setProperty('/PsnBP', true);
@@ -1166,6 +1173,9 @@ sap.ui.define(
 
                         // Check and execute the callback function
                         if (fnCallback) { fnCallback(); }
+                    } else {
+                        // Reset the CO pagination
+                        this._initCoPageModel();
                     }
                 }.bind(this),
                 error: function (oError) {
@@ -1587,6 +1597,20 @@ sap.ui.define(
             var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData;
 
             this.navTo('dashboard.ServiceOrder', {bpNum: oRouteInfo.bpNum, caNum: oRouteInfo.caNum, coNum: oRouteInfo.coNum});
+
+        };
+        Controller.prototype.formatAddress2 = function (city, region, postalcode) {
+            var sTemp = "";
+            if (city) {
+                sTemp += city + ",";
+            }
+            if (region) {
+                sTemp += " " + region;
+            }
+            if (postalcode) {
+                sTemp += " " + postalcode;
+            }
+            return sTemp;
 
         };
 
