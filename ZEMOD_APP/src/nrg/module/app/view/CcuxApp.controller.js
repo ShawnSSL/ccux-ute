@@ -210,7 +210,7 @@ sap.ui.define(
 
         CustomController.prototype._onGoDashBoardCallback = function (oControlEvent, oPayLoad) {
             var oRouter;
-            this._oApp.setOccupied(false);
+            //this._oApp.setOccupied(false);
             oRouter = this.getOwnerComponent().getRouter();
             if (oControlEvent.mParameters.bpNum && oControlEvent.mParameters.caNum) {
                 oRouter.navTo('dashboard.VerificationWithCa', {
