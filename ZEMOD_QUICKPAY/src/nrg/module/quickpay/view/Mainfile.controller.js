@@ -978,6 +978,7 @@ sap.ui.define(
                     if ((oData.Error) && (oData.Error === "X")) {
                         that.getView().getModel("appView").setProperty("/message", oData.Message);
                     } else {
+                        that.getView().getModel("appView").setProperty("/message", "");
                         that.onBankDraft();
                     }
                     that._OwnerComponent.getCcuxApp().setOccupied(false);

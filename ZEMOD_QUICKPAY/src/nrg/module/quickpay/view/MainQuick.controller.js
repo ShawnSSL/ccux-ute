@@ -233,6 +233,7 @@ sap.ui.define(
                         if (oData.Error === "") {
                             oContactModel.setData(oData);
                             that.onPaymentSuccess();
+                            that.getView().getModel("appView").setProperty("/message", "");
                             oMsgArea.addStyleClass("nrgQPPay-hide");
                         } else {
                             that.getView().getModel("appView").setProperty("/message", oData.Message);
@@ -928,6 +929,7 @@ sap.ui.define(
                     if ((oData.Error) && (oData.Error === "X")) {
                         that.getView().getModel("appView").setProperty("/message", oData.Message);
                     } else {
+                        that.getView().getModel("appView").setProperty("/message", "");
                         that.onBankDraft();
                     }
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
