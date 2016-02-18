@@ -132,7 +132,7 @@
                 },
                 "billing.DefferedPmtExt": {
                     "pattern": "billing/defferedpaymentext/bp/{bpNum}/ca/{caNum}/co/{coNum}",
-                    "target":["billing.DefferedPmtPlan", "dashboard.CustomerDataSummary", "billing.DppTools", "app.Footer"]
+                    "target":["billing.Extension", "dashboard.CustomerDataSummary", "billing.DppTools", "app.Footer"]
                 }
             },
 
@@ -175,6 +175,10 @@
                 },
                 "billing.DefferedPmtPlan": {
                     "viewName": "nrg.module.billing.view.DefferedPmtPlan",
+                    "controlId": "idAppGeneral"
+                },
+                "billing.Extension": {
+                    "viewName": "nrg.module.billing.view.Extension",
                     "controlId": "idAppGeneral"
                 },
                 "billing.DppTools": {

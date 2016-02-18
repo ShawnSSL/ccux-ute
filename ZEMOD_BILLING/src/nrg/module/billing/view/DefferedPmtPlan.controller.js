@@ -54,13 +54,6 @@ sap.ui.define(
             //Model for DppComunication (DPPIII)
             this.getView().setModel(new JSONModel(), 'oDppStepThreeCom');
 
-            //Model for Ext Function (EXT Step I)
-            this.getView().setModel(new JSONModel(), 'oExtEligible');
-            this.getView().setModel(new JSONModel(), 'oExtExtensions');
-            this.getView().setModel(new JSONModel(), 'oExtExtReasons');
-            this.getView().setModel(new JSONModel(), 'oExtPostRequest');
-
-
             this._initScrnControl();
             this._startScrnControl();
         };
@@ -104,11 +97,8 @@ sap.ui.define(
 				sUrlHash = oHashChanger.getHash(),
                 aSplitHash = sUrlHash.split('/');
 
-            if (aSplitHash[1] === 'defferedpaymentplan') {
-                this._isDppElgble();
-            } else if (aSplitHash[1] === 'defferedpaymentext') {
-                this._isExtElgble();
-            }
+            this._isDppElgble();
+
 
             //oScrnControl.setProperty('/StepOne', true);
         };
@@ -293,29 +283,6 @@ sap.ui.define(
             oDPPComunication.setProperty('/AddrCheck', true);
         };
 
-        Controller.prototype._onExtDeniedOkClick = function () {    //Navigate to DPP setup if 'OK' is clicked
-            var oModel = this.getOwnerComponent().getModel("comp-dppext"),
-                that = this,
-                oContactLogArea = this.getView().byId('idnrgBilling-extDenCL');
-            oModel.create("/ExtDeniedS", {
-                "Contract": this._coNum,
-                "ContAccount": this._caNum,
-                "Partner" : this._bpNum,
-                "Message" : (oContactLogArea.getValue() || "")
-            }, {
-                success : function (oData, oResponse) {
-                    if (oData) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'Extension',
-                            message: oData.Message
-                        });
-                        that.navTo('billing.CheckBook', {bpNum: that._bpNum, caNum: that._caNum, coNum: that._coNum});
-                    }
-                },
-                error : function (oError) {
-                }
-            });
-        };
         Controller.prototype._onDppDeniedOkClick = function () {    //Navigate to DPP setup if 'OK' is clicked
             var oModel = this.getOwnerComponent().getModel("comp-dppext"),
                 that = this,
@@ -961,42 +928,6 @@ sap.ui.define(
             }
         };
 
-        Controller.prototype._isExtElgble = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                aFilters,
-                aFilterValues,
-                aFilterIds;
-
-            //aFilterIds = ["Contract"];
-            //aFilterValues = [this._coNum];
-            //aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-            sPath = "/ExtElgbles('" + this._coNum + "')";  //(ContractAccountNumber=\'' + this._caNum + '\',ExtActive=false)';
-
-            oParameters = {
-                //filters : aFilters,
-                success : function (oData) {
-                    if (oData) {
-                        oData.NewExtActive = oData.ExtActive;
-                        this.getView().getModel('oExtEligible').setData(oData);
-                        if (this.getView().getModel('oExtEligible').getProperty('/EligibleYes')) {
-                            this._selectScrn('EXTGrant');
-                        } else {
-                            this._selectScrn('EXTDenied');
-                        }
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    //Need to put error message
-                }.bind(this)
-            };
-
-            if (oODataSvc && this._coNum) {
-                oODataSvc.read(sPath, oParameters);
-            }
-        };
-
         Controller.prototype._retrDppDeniedReason = function () {
             var oODataSvc = this.getView().getModel('oDataSvc'),
                 oParameters,
@@ -1111,66 +1042,6 @@ sap.ui.define(
             }
         };
 
-        Controller.prototype._retrExtReasons = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                i;
-
-            sPath = '/ExtReasons';
-
-            oParameters = {
-                success : function (oData) {
-                    if (oData) {
-                        this.getView().getModel('oExtExtReasons').setData(oData);
-                        this.getView().getModel('oExtExtReasons').setProperty('/selectedKey', '2800');
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    //Need to put error message
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.read(sPath, oParameters);
-            }
-        };
-
-        Controller.prototype._retrExtensions = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                i,
-                extDate,
-                aFilters,
-                aFilterValues,
-                aFilterIds;
-
-            aFilterIds = ["Contract"];
-            aFilterValues = [this._coNum];
-            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-
-            sPath = '/Extensions';//(ContractAccountNumber=\'' + this._caNum + '\',ExtActive=false)/ExtensionSet';
-
-            oParameters = {
-                filters: aFilters,
-                success : function (oData) {
-                    if (oData) {
-                        this.getView().getModel('oExtExtensions').setData(oData);
-                        this.getView().getModel('oExtExtensions').setProperty('/results/0/iDwnPay', 0);
-                        extDate = this._formatInvoiceDate(oData.results[0].OpenItems.DefferalDate.getDate(), oData.results[0].OpenItems.DefferalDate.getMonth() + 1, oData.results[0].OpenItems.DefferalDate.getFullYear());
-                        this.getView().byId('nrgBilling-dpp-ExtNewDate-id').setDefaultDate(extDate);
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    //Need to put error message
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.read(sPath, oParameters);
-            }
-        };
         Controller.prototype._onDppExtConfirmClick = function () {
             //Send the Extension request out.
             var oEligble = this.getView().getModel('oExtEligible'),
@@ -1241,74 +1112,6 @@ sap.ui.define(
                         message: 'Customer already has a pending extension'
                     });
                 }
-            }
-
-        };
-        Controller.prototype._postExtRequest = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oPost = this.getView().getModel('oExtPostRequest'),
-                oExt = this.getView().getModel('oExtExtensions'),
-                oEligble = this.getView().getModel('oExtEligible'),
-                oReason = this.getView().getModel('oExtExtReasons'),
-                sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue(),
-                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayvalue-id').getValue(),
-                sPath,
-                oParameters,
-                oDataObject = {},
-                that = this,
-                oContactLogArea = this.getView().byId('idnrgBilling-ExtAccCL'),
-                sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtNewDate-id').getValue();
-
-
-            oDataObject.Contract = this._coNum;
-            oDataObject.BP = this._bpNum;
-            oDataObject.CA = this._caNum;
-            oDataObject.Message = (oContactLogArea.getValue() || "");
-            oDataObject.DefDtNew = sNewDateSelected;
-            if (this._bOverRide) {
-                oDataObject.OverRide  = 'X';
-            } else {
-                oDataObject.OverRide  = '';
-            }
-            oDataObject.DwnPay  = oExt.getProperty('/results/0/iDwnPay');
-            if (oDataObject.DwnPay || oDataObject.DwnPay === 0) {
-                oDataObject.DwnPay = oDataObject.DwnPay.toString();
-            }
-            if (sDwnPayDate) {
-                oDataObject.DwnPayDate = new Date(sDwnPayDate);
-            }
-            if (oReason.getProperty("/selectedKey")) {
-                oDataObject.ExtReason = oReason.getProperty("/selectedKey");
-            }
-            if (this._extReason) {
-                oDataObject.ExtReason = this._extReason;
-            }
-            oDataObject.ExtActive = false;
-            sPath = '/ExtConfs';
-
-            oParameters = {
-                merge: false,
-                success : function (oData) {
-                    if (oData) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'Extension',
-                            message: oData.Message
-                        });
-                        if (!oData.Error) {
-                            that._onCheckbook();
-                        }
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'Extension',
-                        message: 'Extension request failed'
-                    });
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.create(sPath, oDataObject, oParameters);
             }
 
         };

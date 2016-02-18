@@ -174,9 +174,9 @@
         </ute:Tag>
         <ute:Tag class="nrgBilling-ppChkBk-rghtDiv">
             <!-- Title -->
-            <ute:Tag elem="span" class="nrgBilling-billChkBook-notiTitle"
+            <ute:Tag elem="span" class="nrgBilling-ppChkBk-notiTitle"
                 text="{comp-i18n-billing>nrgBilling-billChkBook-NOTI_TITLE}" />
-            <ute:Tag id="nrgBilling-billChkBook-notifications" class="nrgBilling-billChkBook-notifications">
+            <ute:Tag id="idnrgBilling-ppChkBk-notifications" class="nrgBilling-ppChkBk-notifications">
 
             </ute:Tag>
         </ute:Tag>

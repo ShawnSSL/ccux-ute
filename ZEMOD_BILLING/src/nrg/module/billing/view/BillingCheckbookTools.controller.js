@@ -133,7 +133,7 @@ sap.ui.define(
                     // Check active or not
                     if (!oEligibilityModel.oData.DPPActv) {
                         // Go to DPP page
-                        that.navTo('billing.DefferedPmtExt', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                        that.navTo('billing.DefferedPmtPlan', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
                     } else {
                         // Go to transaction launcher
                         oWebUiManager.notifyWebUi('openIndex', {

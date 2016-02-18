@@ -1,9 +1,10 @@
 .nrgBilling-ppChkBk{
     padding: 25px;
+    display: flex;
 
     & > .nrgBilling-ppChkBk-lftDiv {
         display: inline-block;
-        width: 782px;
+        flex: 0 0 782px;
         border-right: 1px solid @nrgColor-blue-darkPale;
     }
 
@@ -202,9 +203,44 @@
         border-right: none;
     }
 
+    // Notification Area
     & > .nrgBilling-ppChkBk-rghtDiv {
-        display: inline-block;
-        width: 278px;
-        height: 50px;
+        width: 100%;
+        height: auto;
+        margin-left: 20px;
+        margin-top: 2px;
+
+        // Title
+        & > .nrgBilling-ppChkBk-notiTitle {
+            color: @nrgColor-grey-dark;
+            font-weight: @nrgFontWeight-semiBold;
+            font-size: @nrgFontSize-base;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        // Alerts
+        & > .nrgBilling-ppChkBk-notifications {
+
+            & > .uteAppFtrNotifItem {
+
+                & > .uteAppFtrNotifItem-icon {
+                    font-size: 20px;
+                }
+
+                & > .uteAppFtrNotifItem-text {
+                    font-size: 15px;
+                    color: @nrgColor-grey-light;
+                }
+            }
+
+            & > .uteAppFtrNotifItem.uteAppFtrNotifItem-link {
+
+                & > .uteAppFtrNotifItem-text {
+                    color: @nrgColor-blue-link;
+                }
+            }
+        }
     }
+
 }

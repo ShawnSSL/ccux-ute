@@ -21,14 +21,17 @@ sap.ui.define(
 
         CustomController.prototype.onBeforeRendering = function () {
             this.getView().setModel(this.getOwnerComponent().getModel('comp-billing'), 'oDataSvc');
+            this.getView().setModel(this.getOwnerComponent().getModel('comp-eligibility'), 'oDataEligSvc');
 
             //Model to keep checkbook header
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oPpChkbkHdr');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oPpPmtHdr');
-
+            // Model for eligibility alerts
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEligibility');
             this._initRoutingInfo();
             this._initPpChkbookHdr();
             this._initPpPmtHdr();
+            this._retrieveNotification();
         };
         /**********************************************************************************************************************************************************/
         //Init functions
@@ -241,7 +244,7 @@ sap.ui.define(
             oParameters = {
                 success : function (oData) {
                     oEligModel.setData(oData);
-                    var container = this.getView().byId('nrgBilling-billChkBook-notifications');
+                    var container = this.getView().byId('idnrgBilling-ppChkBk-notifications');
                     if (container && container.getContent() && container.getContent().length > 0) {
                         container.removeAllContent();
                     }
