@@ -117,8 +117,12 @@ sap.ui.define(
                     $Input.val(sNewValue);
                     this._curpos = sNewValue.length;
                     $Input.cursorPos(this._curpos);
+                    this.fireChange({
+                        newValue: sNewValue
+                    }); // oldValue is not that easy in ComboBox and anyway not in API... thus skip it
                 }
             }
+
         };
 
        /**
