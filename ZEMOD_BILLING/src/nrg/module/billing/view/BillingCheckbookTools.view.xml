@@ -31,13 +31,13 @@
             </ute:Button>
             <!-- Deffered Payment -->
             <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
-                buttonType="SpecialNav" width="220px" enabled="true"
+                buttonType="SpecialNav" width="220px" enabled="{oEligibility>/DPPElig}"
                 press="._onDppBtnClicked"
                 text="{comp-i18n-billing>nrgBilling-chkbkTools-Dpp-Btn}">
             </ute:Button>
             <!-- Extension -->
             <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
-                buttonType="SpecialNav" width="220px" enabled="true"
+                buttonType="SpecialNav" width="220px" enabled="{oEligibility>/EXTNElig}"
                 press="._onExtnBtnClicked"
                 text="{comp-i18n-billing>nrgBilling-chkbkTools-Extn-Btn}">
             </ute:Button>

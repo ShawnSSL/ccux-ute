@@ -30,6 +30,7 @@ sap.ui.define(
             this._bpNum = oRouteInfo.bpNum;
             this._caNum = oRouteInfo.caNum;
             this._coNum = oRouteInfo.coNum;
+            this._retrieveEligibility();
         };
 
         Controller.prototype.onAfterRendering = function () {
@@ -112,8 +113,8 @@ sap.ui.define(
             }
             this.ABPPopupCustomControl.prepareABP();
         };
-        Controller.prototype._onDppBtnClicked = function () {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
+        Controller.prototype._onDppBtnClicked = function (oEvent) {
+/*            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
                 oRetrDone = false,
                 checkRetrComplete,
                 that = this;
@@ -133,7 +134,7 @@ sap.ui.define(
                     // Check active or not
                     if (!oEligibilityModel.oData.DPPActv) {
                         // Go to DPP page
-                        that.navTo('billing.DefferedPmtPlan', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+
                     } else {
                         // Go to transaction launcher
                         oWebUiManager.notifyWebUi('openIndex', {
@@ -141,11 +142,23 @@ sap.ui.define(
                         });
                     }
                 }
-            }.bind(this), 100);
+            }.bind(this), 100);*/
+            var oBindingContext = oEvent.getSource().getBindingContext("oEligibility"),
+                oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            if (oBindingContext) {
+                if (oBindingContext.getProperty("/DPPActv")) {
+                    oWebUiManager.notifyWebUi('openIndex', {
+                        LINK_ID: "Z_DPP"
+                    });
+                } else {
+                    this.navTo('billing.DefferedPmtPlan', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                }
+            }
+
         };
 
-        Controller.prototype._onExtnBtnClicked = function () {
-            var oEligModel = this.getOwnerComponent().getModel('comp-dppext'),
+        Controller.prototype._onExtnBtnClicked = function (oEvent) {
+/*            var oEligModel = this.getOwnerComponent().getModel('comp-dppext'),
                 oParameters,
                 sPath,
                 that = this;
@@ -171,7 +184,8 @@ sap.ui.define(
             };
             if (oEligModel && this._coNum) {
                 oEligModel.read(sPath, oParameters);
-            }
+            }*/
+            this.navTo('billing.DefferedPmtExt', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
         };
 
         return Controller;
