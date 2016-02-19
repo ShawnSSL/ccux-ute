@@ -59,7 +59,6 @@ sap.ui.define(
         };
 
         Controller.prototype.onAfterRendering = function () {
-            this.getView().byId('nrgBilling-dpp-ExtNewDate-id').attachBrowserEvent('select', this._handleExtDateChange, this);
             this.getView().byId('nrgBilling-dpp-DppStartDate-id').attachBrowserEvent('select', this._handleDppStartDateChange, this);
             this.getView().byId('nrgBilling-dpp-DppDueDate-id').attachBrowserEvent('select', this._handleDppFirstDueDateChange, this);
         };
@@ -1042,79 +1041,7 @@ sap.ui.define(
             }
         };
 
-        Controller.prototype._onDppExtConfirmClick = function () {
-            //Send the Extension request out.
-            var oEligble = this.getView().getModel('oExtEligible'),
-                oExt = this.getView().getModel('oExtExtensions'),
-                _popupCallback,
-                that = this,
-                sCurrentOpenItemDate = oExt.getProperty('/results/0/OpenItems/DefferalDate'),
-                sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtNewDate-id').getValue();
 
-            if (!sCurrentOpenItemDate) {
-                sCurrentOpenItemDate = oExt.getProperty('/results/1/OpenItems/DefferalDate');
-            }
-
-            if (sCurrentOpenItemDate && sNewDateSelected) {
-                sCurrentOpenItemDate = new Date(sCurrentOpenItemDate);
-                if (sCurrentOpenItemDate) {
-                    sCurrentOpenItemDate.setHours("00");
-                    sCurrentOpenItemDate.setMinutes("00");
-                    sCurrentOpenItemDate.setSeconds("00");
-                }
-                sNewDateSelected = new Date(sNewDateSelected);
-                if (sNewDateSelected) {
-                    sNewDateSelected.setHours("00");
-                    sNewDateSelected.setMinutes("00");
-                    sNewDateSelected.setSeconds("00");
-                }
-                if (oEligble.getProperty('/ExtActive')) {
-                    if (sCurrentOpenItemDate.getTime() === sNewDateSelected.getTime()) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'Information',
-                            message: 'Please change a date or select Cancel to end the transaction.'
-                        });
-                        return;
-                    }
-                    if (sCurrentOpenItemDate.getTime() > sNewDateSelected.getTime()) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'Information',
-                            message: 'Deferral date is before due date.'
-                        });
-                        return;
-                    }
-                }
-            }
-            if (oEligble.getProperty('/ExtPending')) {
-                if (oExt.getProperty('/results/0/iDwnPay') === 0) {
-                    _popupCallback = function (sAction) {
-                        switch (sAction) {
-                        case ute.ui.main.Popup.Action.Yes:
-                            that._postExtRequest();
-                            break;
-                        case ute.ui.main.Popup.Action.No:
-                            that._onCheckbook();
-                            break;
-                        case ute.ui.main.Popup.Action.Ok:
-                            break;
-                        }
-                    };
-                    ute.ui.main.Popup.Confirm({
-                        title: 'PENDING EXTENSION',
-                        message: 'Customer already has a pending extension. Would you like to continue?',
-                        callback: _popupCallback
-                    });
-
-                }
-                if (oExt.getProperty('/results/0/iDwnPay') > 0) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'Information',
-                        message: 'Customer already has a pending extension'
-                    });
-                }
-            }
-
-        };
 
         return Controller;
     }
