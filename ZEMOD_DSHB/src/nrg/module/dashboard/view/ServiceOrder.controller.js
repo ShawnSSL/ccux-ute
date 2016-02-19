@@ -68,7 +68,13 @@ sap.ui.define(
             this._initESIDDropdown();
 
         };
-
+        /* =========================================================== */
+		/* lifecycle method- After Rendering                          */
+		/* =========================================================== */
+        Controller.prototype.onAfterRendering = function () {
+            // Update Footer
+            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+        };
         Controller.prototype._handleBsnsRlCallback = function (oEvent) {
             var oTemp = oEvent;
             return;

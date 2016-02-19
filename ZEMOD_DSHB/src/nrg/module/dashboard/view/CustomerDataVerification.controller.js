@@ -79,6 +79,8 @@ sap.ui.define(
             this._caNum = oRouteInfo.parameters.caNum;
             this._coNum = oRouteInfo.parameters.coNum;
 
+
+
             this._initToggleArea();
             this._initDtaVrfRetr();
             this._initCfrmStatus();
@@ -150,6 +152,7 @@ sap.ui.define(
             this.getView().byId('id_confmBtn').setVisible(true);
             this.getView().byId('id_unConfmBtn').setVisible(false);
             this.getView().byId('id_updtBtn').setEnabled(true);
+            this.getView().byId('id_updtBtn').setVisible(true);
         };
         /*Controller.prototype._onCaChange = function (oEvent) {
             var sNewSelectedBuagIndex;
