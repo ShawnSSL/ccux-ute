@@ -320,11 +320,17 @@ sap.ui.define(
             oParameters = {
                 filters: aFilters,
                 success : function (oData) {
-                    if (oData) {
+                    var iCount = 0;
+                    if (oData && oData.results) {
                         this.getView().getModel('oExtExtensions').setData(oData);
                         this.getView().getModel('oExtExtensions').setProperty('/results/0/iDwnPay', 0);
-                        extDate = this._formatInvoiceDate(oData.results[0].OpenItems.DefferalDate.getDate(), oData.results[0].OpenItems.DefferalDate.getMonth() + 1, oData.results[0].OpenItems.DefferalDate.getFullYear());
-                        oLocalModel.setProperty("/extDate", extDate);
+                        for (iCount = 0; iCount < oData.results.length; iCount = iCount + 1) {
+                            if ((oData.results[iCount]) && (oData.results[iCount].OpenItems) && (oData.results[iCount].OpenItems.DefferalDate)) {
+                                extDate = this._formatInvoiceDate(oData.results[iCount].OpenItems.DefferalDate.getDate(), oData.results[iCount].OpenItems.DefferalDate.getMonth() + 1, oData.results[iCount].OpenItems.DefferalDate.getFullYear());
+                                oLocalModel.setProperty("/extDate", extDate);
+                                break;
+                            }
+                        }
                         if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                             this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').setDefaultDate(extDate);
                         } else {

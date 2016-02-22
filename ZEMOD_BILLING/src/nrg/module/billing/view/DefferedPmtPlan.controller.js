@@ -55,7 +55,7 @@ sap.ui.define(
             this.getView().setModel(new JSONModel(), 'oDppStepThreeCom');
 
             this._initScrnControl();
-            this._startScrnControl();
+            this._isDppElgble();
         };
 
         Controller.prototype.onAfterRendering = function () {
@@ -75,10 +75,43 @@ sap.ui.define(
             oScrnControl.setProperty('/StepTwo', false);
             oScrnControl.setProperty('/StepThree', false);
             oScrnControl.setProperty('/DPPDenied', false);
-            oScrnControl.setProperty('/EXTGrant', false);
-            oScrnControl.setProperty('/EXTDenied', false);
         };
+        Controller.prototype._isDppElgble = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                aFilters,
+                aFilterValues,
+                aFilterIds;
 
+           // aFilterIds = ["Contract"];
+            //aFilterValues = [this._coNum];
+            //aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            sPath = "/DPPElgbles('" + this._coNum + "')";
+
+            //sPath = '/DPPElgbles(ContractAccountNumber=\'' + this._caNum + '\',DPPReason=\'\')';
+
+            oParameters = {
+               //filters : aFilters,
+                success : function (oData) {
+                    if (oData) {
+                        this.getView().getModel('oDppEligible').setData(oData);
+                        if (oData.EligibleYes) {
+                            this._selectScrn('StepOne');
+                        } else {
+                            this._selectScrn('DPPDenied');
+                        }
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                }.bind(this)
+            };
+
+            if (oODataSvc && this._coNum) {
+                oODataSvc.read(sPath, oParameters);
+            }
+        };
         Controller.prototype._onDownPayment = function (oEvent) {
             var QuickControl = new QuickPayControl(),
                 that = this;
@@ -90,17 +123,6 @@ sap.ui.define(
             }, this);
 
         };
-        Controller.prototype._startScrnControl = function () {
-            var oScrnControl = this.getView().getModel('oDppScrnControl'),
-                oHashChanger = new HashChanger(),
-				sUrlHash = oHashChanger.getHash(),
-                aSplitHash = sUrlHash.split('/');
-
-            this._isDppElgble();
-
-
-            //oScrnControl.setProperty('/StepOne', true);
-        };
 
         Controller.prototype._selectScrn = function (sSelectedScrn) {
             var oScrnControl = this.getView().getModel('oDppScrnControl');
@@ -109,8 +131,6 @@ sap.ui.define(
             oScrnControl.setProperty('/StepTwo', false);
             oScrnControl.setProperty('/StepThree', false);
             oScrnControl.setProperty('/DPPDenied', false);
-            oScrnControl.setProperty('/EXTGrant', false);
-            oScrnControl.setProperty('/EXTDenied', false);
             oScrnControl.setProperty('/' + sSelectedScrn, true);
 
             if (sSelectedScrn === 'StepOne') {
@@ -123,11 +143,6 @@ sap.ui.define(
                 this._retrDppComunication();
             } else if (sSelectedScrn === 'DPPDenied') {
                 this._retrDppDeniedReason();
-            } else if (sSelectedScrn === 'EXTGrant') {
-                this._retrExtReasons();
-                this._retrExtensions();
-            } else if (sSelectedScrn === 'EXTDenied') {
-                this._retrExtensions();
             } else {
                 return;
             }
@@ -339,10 +354,6 @@ sap.ui.define(
                     oDppReason.setProperty('/selectedReason', oDppReason.oData[i].Reason);
                 }
             }
-        };
-
-        Controller.prototype._onExtReasonSelect = function (oEvent) {
-            this._extReason = oEvent.mParameters.Reason;
         };
 
         Controller.prototype._onSelectAllCheck = function (oEvent) {
@@ -890,42 +901,7 @@ sap.ui.define(
             });
         };
 
-        Controller.prototype._isDppElgble = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                aFilters,
-                aFilterValues,
-                aFilterIds;
 
-           // aFilterIds = ["Contract"];
-            //aFilterValues = [this._coNum];
-            //aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-            sPath = "/DPPElgbles('" + this._coNum + "')";
-
-            //sPath = '/DPPElgbles(ContractAccountNumber=\'' + this._caNum + '\',DPPReason=\'\')';
-
-            oParameters = {
-               //filters : aFilters,
-                success : function (oData) {
-                    if (oData) {
-                        this.getView().getModel('oDppEligible').setData(oData);
-                        if (oData.EligibleYes) {
-                            this._selectScrn('StepOne');
-                        } else {
-                            this._selectScrn('DPPDenied');
-                        }
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    //Need to put error message
-                }.bind(this)
-            };
-
-            if (oODataSvc && this._coNum) {
-                oODataSvc.read(sPath, oParameters);
-            }
-        };
 
         Controller.prototype._retrDppDeniedReason = function () {
             var oODataSvc = this.getView().getModel('oDataSvc'),
