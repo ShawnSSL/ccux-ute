@@ -148,30 +148,6 @@ sap.ui.define(
         /****************************************************************************************************************/
 
 
-        Controller.prototype._onComEmailCheck = function () {
-            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
-
-            oDPPComunication.setProperty('/eMailCheck', true);
-            oDPPComunication.setProperty('/FaxCheck', false);
-            oDPPComunication.setProperty('/AddrCheck', false);
-        };
-
-        Controller.prototype._onComFaxCheck = function () {
-            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
-
-            oDPPComunication.setProperty('/eMailCheck', false);
-            oDPPComunication.setProperty('/FaxCheck', true);
-            oDPPComunication.setProperty('/AddrCheck', false);
-        };
-
-        Controller.prototype._onComAddrCheck = function () {
-            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
-
-            oDPPComunication.setProperty('/eMailCheck', false);
-            oDPPComunication.setProperty('/FaxCheck', false);
-            oDPPComunication.setProperty('/AddrCheck', true);
-        };
-
         Controller.prototype._onExtDisplayOkClick = function () {    //Navigate to Checkbook if 'OK' is clicked
             this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
         };
@@ -240,7 +216,8 @@ sap.ui.define(
                 oLocalModel = this.getView().getModel('oLocalModel'),
                 currentDate,
                 total_days,
-                oExtDiffDate;
+                oExtDiffDate,
+                oEligble = this.getView().getModel('oExtEligible');
 
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                 oExtDiffDate = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id');
@@ -260,10 +237,12 @@ sap.ui.define(
                 oExtDiffDate.setValue(oLocalModel.getProperty("/extDate"));
                 extDate = oLocalModel.getProperty("/extDate");
             }
-
-            for (i = 0; i < oExtensions.oData.results.length; i = i + 1) {
-                oExtensions.setProperty('/results/' + i + '/OpenItems/DefferalDate', extDate);
+            if (!oEligble.getProperty('/ExtActive')) {
+                for (i = 0; i < oExtensions.oData.results.length; i = i + 1) {
+                    oExtensions.setProperty('/results/' + i + '/OpenItems/DefferalDate', extDate);
+                }
             }
+
         };
 
         /****************************************************************************************************************/
@@ -432,6 +411,8 @@ sap.ui.define(
                         message: 'Customer already has a pending extension'
                     });
                 }
+            } else {
+                that._postExtRequest();
             }
 
         };

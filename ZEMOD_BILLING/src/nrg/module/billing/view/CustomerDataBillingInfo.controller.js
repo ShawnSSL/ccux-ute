@@ -251,11 +251,18 @@ sap.ui.define(
         CustomController.prototype._retrInvPmts = function (sInvNum) {
             var oChbkOData = this.getView().getModel('oDataSvc'),
                 sPath,
-                oParameters;
+                oParameters,
+                aFilterIds,
+                aFilterValues,
+                aFilters;
 
-            sPath = '/PaymentHdrs(\'' + sInvNum + '\')/Payments';
-
+            //sPath = '/PaymentHdrs(\'' + sInvNum + '\')/Payments';
+            sPath = '/Payments';
+            aFilterIds = ["InvoiceNum", "Paidamt", "PostInv"];
+            aFilterValues = [sInvNum, 0.00, true];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oParameters = {
+                filters: aFilters,
                 success : function (oData) {
                     if (oData) {
                         this.getView().getModel('oPmtPayments').setData(oData);
