@@ -168,16 +168,18 @@ sap.ui.define(
                                     title: 'SWAP DEPOSIT SCRIPT',
                                     content: this._oSwapFragment
                                 });
+                                that._oSwapDialog.addStyleClass("nrgCamOvs-dialog");
                                 that._oSwapDialog.setShowCloseButton(false);
+                                that.getOwnerComponent().getCcuxApp().setOccupied(false);
                             }
                             var oDescription = sap.ui.core.Fragment.byId("SwapScripts", "idnrgSwapDesc");
-                            oDescription.setText(oData.Script);
+                            oDescription.setContent(oData.Script);
                             that._oSwapDialog.open();
                         }
                     }
                 }.bind(this),
                 error: function (oError) {
-                    this.getOwnerComponent().getCcuxApp().setOccupied(true);
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
 
                 }.bind(this)
             };
@@ -213,9 +215,10 @@ sap.ui.define(
                             });
                         }
                     }
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this),
                 error: function (oError) {
-                    this.getOwnerComponent().getCcuxApp().setOccupied(true);
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
 
                 }.bind(this)
             };

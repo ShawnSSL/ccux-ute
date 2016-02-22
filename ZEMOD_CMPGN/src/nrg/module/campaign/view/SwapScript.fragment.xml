@@ -4,11 +4,12 @@
     xmlns:core="sap.ui.core"
     xmlns:u="ute.ui.commons"
     xmlns:um="ute.ui.main">
-<u:Tag>
-    <u:Tag class="nrgCamOvs-Dsc" id="idnrgSwapDesc">
-
+<u:Tag class="nrgCamSwpScr">
+    <u:Tag class="nrgCamOvs-Dsc">
+            <core:HTML content='&lt;div class=&quot;nrgCamOvs-left nrgCamOvs-top nrgCamOvs-OVW&quot;&gt;{view-campaign>TxtLine}&lt;/div&gt;' id="idnrgSwapDesc">
+            </core:HTML>
     </u:Tag>
-    <u:Tag class="nrgCamOvs-btnTag nrgCamOvs-top">
+    <u:Tag class="nrgCamSwpScr-btnTag">
         <u:Button
             text="YES"
             enabled="true"
