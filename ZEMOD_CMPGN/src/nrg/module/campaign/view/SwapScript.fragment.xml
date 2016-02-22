@@ -6,7 +6,7 @@
     xmlns:um="ute.ui.main">
 <u:Tag class="nrgCamSwpScr">
     <u:Tag class="nrgCamOvs-Dsc">
-            <core:HTML content='&lt;div class=&quot;nrgCamOvs-left nrgCamOvs-top nrgCamOvs-OVW&quot;&gt;{view-campaign>TxtLine}&lt;/div&gt;' id="idnrgSwapDesc">
+            <core:HTML content='&lt;div class=&quot;nrgCamOvs-top&quot;&gt;{comp-campaign>Script}&lt;/div&gt;' id="idnrgSwapDesc">
             </core:HTML>
     </u:Tag>
     <u:Tag class="nrgCamSwpScr-btnTag">

@@ -9,10 +9,11 @@ sap.ui.define(
         'jquery.sap.global',
         'ute/ui/commons/Dialog',
         "sap/ui/model/json/JSONModel",
-        'nrg/module/nnp/view/NNPPopup'
+        'nrg/module/nnp/view/NNPPopup',
+        'sap/ui/model/odata/ODataUtils'
     ],
 
-    function (CoreController, Filter, FilterOperator, jQuery, Dialog, JSONModel, NNPPopup) {
+    function (CoreController, Filter, FilterOperator, jQuery, Dialog, JSONModel, NNPPopup, ODataUtils) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.campaign.view.SalesScript');
@@ -147,12 +148,14 @@ sap.ui.define(
             var sCurrentPath,
                 oModel = this.getOwnerComponent().getModel('comp-campaign'),
                 oBindingInfo,
-                that = this;
+                that = this,
+                bScored = false;
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            sCurrentPath = "/PrepayS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Scored=false)";
+            sCurrentPath = "/PrepayS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Scored=" + ODataUtils.formatValue(bScored, 'Edm.Boolean') + ")";
             oBindingInfo = {
                 success : function (oData) {
                     if (oData) {
+                        sCurrentPath = "/PrepayS(Contract='" + that._sContract + "',OfferCode='" + that._sOfferCode + "',Scored=" + ODataUtils.formatValue(oData.Scored, 'Edm.Boolean') + ")";
                         if (oData.Flag === 'N') {
                             that.onNNP();
                         }
@@ -162,6 +165,7 @@ sap.ui.define(
                         if (oData.Flag === 'Y') {
                             if (!that._oSwapFragment) {
                                 that._oSwapFragment = sap.ui.xmlfragment("SwapScripts", "nrg.module.campaign.view.SwapScript", that);
+                                that._oSwapFragment.setModel(oModel, 'comp-campaign');
                             }
                             if (that._oSwapDialog === undefined) {
                                 that._oSwapDialog = new ute.ui.main.Popup.create({
@@ -173,7 +177,11 @@ sap.ui.define(
                                 that.getOwnerComponent().getCcuxApp().setOccupied(false);
                             }
                             var oDescription = sap.ui.core.Fragment.byId("SwapScripts", "idnrgSwapDesc");
-                            oDescription.setContent(oData.Script);
+                            oDescription.bindElement({
+                                model : "comp-campaign",
+                                path : sCurrentPath
+                            });
+                            //oDescription.setContent(oData.Script);
                             that._oSwapDialog.open();
                         }
                     }
