@@ -62,7 +62,13 @@ sap.ui.define(
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this._sContract = oRouteInfo.parameters.coNum;
             this._sOfferCode = oRouteInfo.parameters.offercodeNum;
-            this._sBP = oRouteInfo.parameters.bpNum;
+            if (this._sBP !== oRouteInfo.parameters.bpNum) {
+                this._sBP = oRouteInfo.parameters.bpNum;
+                //Model to hold credit info
+                this._bFirstTime = true;
+                this._bScored = false;
+                this.getView().setModel(new sap.ui.model.json.JSONModel(), 'view-credit');
+            }
             this._sCA = oRouteInfo.parameters.caNum;
             this._sType = oRouteInfo.parameters.stype;
             this._sPromo = oRouteInfo.parameters.sPromo;
@@ -149,18 +155,34 @@ sap.ui.define(
                 oModel = this.getOwnerComponent().getModel('comp-campaign'),
                 oBindingInfo,
                 that = this,
-                bScored = false;
+                oCreditModel = that.getView().getModel('view-credit');
+
+
+            if (!this._bScored) {
+                this._bScored = false;
+            }
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            sCurrentPath = "/PrepayS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Scored=" + ODataUtils.formatValue(bScored, 'Edm.Boolean') + ")";
+            sCurrentPath = "/PrepayS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Scored=" + ODataUtils.formatValue(this._bScored, 'Edm.Boolean') + ")";
             oBindingInfo = {
                 success : function (oData) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     if (oData) {
-                        sCurrentPath = "/PrepayS(Contract='" + that._sContract + "',OfferCode='" + that._sOfferCode + "',Scored=" + ODataUtils.formatValue(oData.Scored, 'Edm.Boolean') + ")";
+                        if (that._bFirstTime || (that._bScored !== oData.Scored)) {
+                            oCreditModel.setData(oData);
+                            that._bScored = oData.Scored;
+                            that._bFirstTime = false;
+                        } else {
+                            oCreditModel.setProperty("/DisconnReqDep", oData.DisconnReqDep);
+                            oCreditModel.setProperty("/DepAmt", oData.DepAmt);
+                        }
+                        sCurrentPath = "/PrepayS(Contract='" + that._sContract + "',OfferCode='" + that._sOfferCode + "',Scored=" + ODataUtils.formatValue(that._bScored, 'Edm.Boolean') + ")";
                         if (oData.Flag === 'N') {
                             that.onNNP();
+                            return;
                         }
                         if (oData.Flag === 'E') {
                             sap.ui.commons.MessageBox.alert(oData.Script);
+                            return;
                         }
                         if (oData.Flag === 'Y') {
                             if (!that._oSwapFragment) {
@@ -174,7 +196,7 @@ sap.ui.define(
                                 });
                                 that._oSwapDialog.addStyleClass("nrgCamOvs-dialog");
                                 that._oSwapDialog.setShowCloseButton(false);
-                                that.getOwnerComponent().getCcuxApp().setOccupied(false);
+
                             }
                             var oDescription = sap.ui.core.Fragment.byId("SwapScripts", "idnrgSwapDesc");
                             oDescription.bindElement({
@@ -183,6 +205,7 @@ sap.ui.define(
                             });
                             //oDescription.setContent(oData.Script);
                             that._oSwapDialog.open();
+                            return;
                         }
                     }
                 }.bind(this),
@@ -207,6 +230,8 @@ sap.ui.define(
                 oModel = this.getOwnerComponent().getModel('comp-campaign'),
                 oBindingInfo,
                 that = this;
+
+            this._PrepayAltPay = false;
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             sCurrentPath = "/DepositS(Contract='" + this._sContract + "')";
             oBindingInfo = {
@@ -241,6 +266,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onSwapNo = function (oEvent) {
+            this._PrepayAltPay = false;
             this._oSwapDialog.close();
         };
         /**
@@ -250,6 +276,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onSwapOther = function (oEvent) {
+            this._PrepayAltPay = true;
             this._oSwapDialog.close();
             this.onNNP();
         };
@@ -493,7 +520,14 @@ sap.ui.define(
                 sLpFirstName,
                 sLpLastName,
                 sLPRefId,
-                sEffectDate;
+                sEffectDate,
+                sCreditDate,
+                sCreditRTG,
+                sCreditScore,
+                sCreditSource,
+                sDepAmt,
+                bDisconnReqDep,
+                oCreditModel = this.getView().getModel('view-credit');
             oModel = this.getOwnerComponent().getModel('comp-campaign');
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             sPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Promo='" + this._sPromo + "',Type='" + this._sType + "')";
@@ -515,28 +549,46 @@ sap.ui.define(
             sLpLastName = oLocalModel.getProperty("/lastName");
             sLPRefId = oLocalModel.getProperty("/lprefId");
             sCA = this._sCA;
+            //sPath = "/PrepayS(Contract='" + that._sContract + "',OfferCode='" + that._sOfferCode + "',Scored=" + ODataUtils.formatValue(that._bScored, 'Edm.Boolean') + ")";
+            //oContext = oModel.getContext(sPath);
+
+            sCreditDate = oCreditModel.getProperty("/CreditDate");
+            sCreditRTG = oCreditModel.getProperty("/CreditRTG");
+            sCreditScore = oCreditModel.getProperty("/CreditScore");
+            sCreditSource = oCreditModel.getProperty("/CreditSource");
+            sDepAmt = oCreditModel.getProperty("/DepAmt");
+            bDisconnReqDep = oCreditModel.getProperty("/DisconnReqDep");
             mParameters = {
                 method : "POST",
-                urlParameters : {"CampaignCode" : sCampaignCode,
-                                         "EffectDate" : sEffectDate,
-                                        "LP_Code" : sLpCode,
-                                        "LP_FirstName" : sLpFirstName,
-                                        "LP_LastName" : sLpLastName,
-                                        "LP_RefID" : sLPRefId,
-                                        "OfferCode" : sOfferCode,
-                                        "OfferTitle" : sOfferTitle,
-                                        "PromoCode" : sPromo,
-                                       /* "StartDate" : sStartDate,*/
-                                        "Contract" : sContract,
-                                        "PromoRank" : sPromoRank,
-                                        "Brand" : sBrand,
-                                        "CA" : sCA,
-                                        "Type": sType,
-                                        "BP": this._sBP,
-                                        "BusinessRole" : "ZU_CALL_CTR",
-                                        "ESID": ''},
+                urlParameters : {
+                    "BP": this._sBP,
+                    "Brand" : sBrand,
+                    "BusinessRole" : "ZU_CALL_CTR",
+                    "CA" : sCA,
+                    "CampaignCode" : ODataUtils.formatValue(sCampaignCode, 'Edm.Boolean'),
+                    "ConnID" : "",
+                    "Contract" : sContract,
+                    "CreditDate" : sCreditDate || new Date(),
+                    "CreditRTG" : sCreditRTG,
+                    "CreditScore" : sCreditScore,
+                    "CreditSource" : sCreditSource,
+                    "DepAmt" : sDepAmt,// decimal
+                    "DisconnReqDep" : bDisconnReqDep,//boolean
+                    "EffectDate" : sEffectDate,
+                    "LP_Code" : sLpCode,
+                    "LP_FirstName" : sLpFirstName,
+                    "LP_LastName" : sLpLastName,
+                    "LP_RefID" : sLPRefId,
+                    "OfferCode" : sOfferCode,
+                    "OfferTitle" : sOfferTitle,
+                    "PrepayAltPay" : this._PrepayAltPay || false,//boolean
+                    "PromoCode" : sPromo,
+                    "PromoRank" : sPromoRank,//Int16
+                    "Type": sType
+                },
                 success : function (oData) {
                     var oWebUiManager;
+                    jQuery.sap.log.info("Odata Read Successfully:::" + oData.Code);
                     if ((oData !== undefined) && (oData.Code === "S")) {
                         that.getOwnerComponent().getCcuxApp().setOccupied(false);
                         sap.ui.commons.MessageBox.alert("SWAP is completed");
@@ -545,16 +597,18 @@ sap.ui.define(
                             LINK_ID: "ZVASOPTSLN"
                         });
                         this.navTo("campaign", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "P"});
+                        return;
                     } else {
                         that.getOwnerComponent().getCcuxApp().setOccupied(false);
                         sap.ui.commons.MessageBox.alert("SWAP Failed");
                         this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, typeV : "P"});
+                        return;
                     }
-                    jQuery.sap.log.info("Odata Read Successfully:::" + oData.Code);
                 }.bind(this),
                 error: function (oError) {
-                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    jQuery.sap.log.info("Error occured in the backend");
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    sap.ui.commons.MessageBox.alert("Swap Failed");
+                    this.navTo("campaign", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "C"});
                 }.bind(this)
             };
             oModel.callFunction("/AcceptCampaign", mParameters); // callback function for error
