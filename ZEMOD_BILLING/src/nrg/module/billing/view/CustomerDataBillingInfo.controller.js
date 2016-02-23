@@ -258,8 +258,8 @@ sap.ui.define(
 
             //sPath = '/PaymentHdrs(\'' + sInvNum + '\')/Payments';
             sPath = '/Payments';
-            aFilterIds = ["InvoiceNum", "Paidamt", "PostInv"];
-            aFilterValues = [sInvNum, 0.00, true];
+            aFilterIds = ['CA'];
+            aFilterValues = [this._caNum];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oParameters = {
                 filters: aFilters,
