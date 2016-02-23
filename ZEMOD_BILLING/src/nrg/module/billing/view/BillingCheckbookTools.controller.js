@@ -114,35 +114,6 @@ sap.ui.define(
             this.ABPPopupCustomControl.prepareABP();
         };
         Controller.prototype._onDppBtnClicked = function (oEvent) {
-/*            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
-                oRetrDone = false,
-                checkRetrComplete,
-                that = this;
-
-            // Display the loading indicator
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            // Retrieve Notification
-            this._retrieveEligibility(function () {oRetrDone = true; });
-            // Check retrieval done
-            checkRetrComplete = setInterval(function () {
-                if (oRetrDone) {
-                    var oEligibilityModel = this.getView().getModel('oEligibility');
-                    // Dismiss the loading indicator
-                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    // Upon successfully retrieving the data, stop checking the completion of retrieving data
-                    clearInterval(checkRetrComplete);
-                    // Check active or not
-                    if (!oEligibilityModel.oData.DPPActv) {
-                        // Go to DPP page
-
-                    } else {
-                        // Go to transaction launcher
-                        oWebUiManager.notifyWebUi('openIndex', {
-                            LINK_ID: "Z_DPP"
-                        });
-                    }
-                }
-            }.bind(this), 100);*/
             var oBindingContext = oEvent.getSource().getBindingContext("oEligibility"),
                 oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
             if (oBindingContext) {
@@ -158,33 +129,6 @@ sap.ui.define(
         };
 
         Controller.prototype._onExtnBtnClicked = function (oEvent) {
-/*            var oEligModel = this.getOwnerComponent().getModel('comp-dppext'),
-                oParameters,
-                sPath,
-                that = this;
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            // Retrieve Notification
-            sPath = '/ExtElgbles(\'' + this._coNum + '\')';
-            oParameters = {
-                success : function (oData) {
-                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    if (oData && oData.NoAmtDue) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'Information',
-                            message: 'No Amount Due'
-                        });
-                    } else {
-                        that.navTo('billing.DefferedPmtExt', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
-                    }
-
-                }.bind(this),
-                error: function (oError) {
-                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
-                }.bind(this)
-            };
-            if (oEligModel && this._coNum) {
-                oEligModel.read(sPath, oParameters);
-            }*/
             this.navTo('billing.DefferedPmtExt', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
         };
 

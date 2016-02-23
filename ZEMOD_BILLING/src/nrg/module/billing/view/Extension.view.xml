@@ -69,7 +69,7 @@
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-newdate">
                     <ute:Tag elem="span" class="nrgBilling-dlcn-lbl"
                         text="{comp-i18n-billing>nrgBilling-dpp-ExtNewDate}"/>
-                    <ute:DatePicker id="nrgBilling-dpp-ExtGrantDate-id" />
+                    <ute:DatePicker id="nrgBilling-dpp-ExtGrantDate-id" change="._handleExtDateChange"/>
                 </ute:Tag>
             </ute:Tag>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="{oExtEligible>/ExtOverride}">
@@ -163,7 +163,7 @@
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-newdate">
                     <ute:Tag elem="span" class="nrgBilling-dlcn-lbl"
                         text="{comp-i18n-billing>nrgBilling-dpp-ExtNewDate}"/>
-                    <ute:DatePicker id="nrgBilling-dpp-ExtChangeDate-id" />
+                    <ute:DatePicker id="nrgBilling-dpp-ExtChangeDate-id" change="._handleExtDateChange"/>
                 </ute:Tag>
             </ute:Tag>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="{oExtEligible>/ExtOverride}">
