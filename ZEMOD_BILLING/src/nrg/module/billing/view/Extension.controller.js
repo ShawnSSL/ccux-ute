@@ -154,7 +154,7 @@ sap.ui.define(
         Controller.prototype._onExtDeniedOkClick = function () {    //Navigate to DPP setup if 'OK' is clicked
             var oModel = this.getOwnerComponent().getModel("comp-dppext"),
                 that = this,
-                oLocalModel = this.getOwnerComponent().getModel("oLocalModel");
+                oLocalModel = this.getView().getModel("oLocalModel");
             oModel.create("/ExtDeniedS", {
                 "Contract": this._coNum,
                 "ContAccount": this._caNum,
@@ -217,7 +217,8 @@ sap.ui.define(
                 currentDate,
                 total_days,
                 oExtDiffDate,
-                oEligble = this.getView().getModel('oExtEligible');
+                oEligble = this.getView().getModel('oExtEligible'),
+                bReturn = true;
 
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                 oExtDiffDate = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id');
@@ -236,13 +237,14 @@ sap.ui.define(
                 });
                 oExtDiffDate.setValue(oLocalModel.getProperty("/extDate"));
                 extDate = oLocalModel.getProperty("/extDate");
+                bReturn = false;
             }
             if (!oEligble.getProperty('/ExtActive')) {
                 for (i = 0; i < oExtensions.oData.results.length; i = i + 1) {
                     oExtensions.setProperty('/results/' + i + '/OpenItems/DefferalDate', extDate);
                 }
             }
-
+            return bReturn;
         };
 
         /****************************************************************************************************************/
@@ -412,6 +414,7 @@ sap.ui.define(
                     });
                 }
             } else {
+
                 that._postExtRequest();
             }
 
@@ -423,15 +426,20 @@ sap.ui.define(
                 oEligble = this.getView().getModel('oExtEligible'),
                 oReason = this.getView().getModel('oExtExtReasons'),
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue(),
-                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayvalue-id').getValue(),
+                sDwnPayValue,
                 sPath,
                 oParameters,
                 oDataObject = {},
                 that = this,
                 sContactLogArea,
                 sNewDateSelected,
-                oLocalModel = this.getView().getModel('oLocalModel');
+                oLocalModel = this.getView().getModel('oLocalModel'),
+                bValidate = false;
 
+            bValidate = this._handleExtDateChange();
+            if (!bValidate) {
+                return;
+            }
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').getValue();
                 sContactLogArea = oLocalModel.getProperty("/GrantCL");
