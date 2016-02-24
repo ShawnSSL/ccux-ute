@@ -119,6 +119,7 @@ sap.ui.define(
                 oCreditCardModel = new sap.ui.model.json.JSONModel(),
                 oMsgArea = this.getView().byId("idnrgQPPay-msgArea"),
                 oAppViewModel = this.getView().getModel("appView");
+            this._bCreditCard = true;
             this._onToggleViews("SR");
             oCreditCardDate.setDefaultDate(this._oFormatYyyymmdd.format(new Date(), true));
             this._OwnerComponent.getCcuxApp().setOccupied(true);
@@ -396,7 +397,7 @@ sap.ui.define(
                         }.bind(this),
                         error: function (oError) {
                             that._OwnerComponent.getCcuxApp().setOccupied(false);
-                            jQuery.sap.log.info("Eligibility Error occured");
+                            jQuery.sap.log.info("Odata Error occured");
                         }.bind(this)
                     };
                     oModel.update(sPath, {"CardID" : oContext.getProperty("CardID"),
@@ -502,7 +503,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onDeclineCredit = function (oEvent) {
-            this.getView().getParent().close();
+            this.onPopupClose(oEvent);
         };
                 /**
 		 * When New Credit Card is added and Refresh list for new credit card.
@@ -1308,6 +1309,20 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onPopupClose = function (oEvent) {
+            var sPath = "/RecordingSet(BP='" + this._sBP + "',CA='" + this._sCA + "')",
+                mParameters = {
+                    success : function (oData, oResponse) {
+                    }.bind(this),
+                    error: function (oError) {
+                    }.bind(this)
+                },
+                oModel = this.getView().getModel('comp-quickpay');
+            if (this._bCreditCard) {
+                oModel.update(sPath, {
+                    "Resume" : true
+                }, mParameters);
+                this._bCreditCard = false;
+            }
             this.getView().getParent().close();
         };
         /**
