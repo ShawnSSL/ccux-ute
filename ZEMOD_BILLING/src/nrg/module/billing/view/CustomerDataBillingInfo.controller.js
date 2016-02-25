@@ -12,10 +12,11 @@ sap.ui.define(
         'nrg/module/quickpay/view/QuickPayPopup',
         'nrg/base/type/Price',
         'sap/ui/model/Filter',
-        'sap/ui/model/FilterOperator'
+        'sap/ui/model/FilterOperator',
+        'nrg/module/billing/view/ABPPopup'
     ],
 
-    function (jQuery, Controller, JSONModel, QuickPayControl, Type_Price, Filter, FilterOperator) {
+    function (jQuery, Controller, JSONModel, QuickPayControl, Type_Price, Filter, FilterOperator, ABPPopup) {
         'use strict';
 
         var CustomController = Controller.extend('nrg.module.billing.view.CustomerDataBillingInfo');
@@ -727,8 +728,60 @@ sap.ui.define(
 
 
 
+        /**
+		 * Handler for DPP Active press
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onDPPActive = function (oEvent) {
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            oWebUiManager.notifyWebUi('openIndex', {
+                LINK_ID: "Z_DPP"
+            });
+        };
+        /**
+		 * Handler for ABP Active press
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onABPActive = function (oEvent) {
+            if (!this.ABPPopupCustomControl) {
+                this.ABPPopupCustomControl = new ABPPopup({ isRetro: false });
+                this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
+                this.getView().addDependent(this.ABPPopupCustomControl);
+            }
+            this.ABPPopupCustomControl.prepareABP();
+        };
+        /**
+		 * Handler for EXT Active press
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onExtActive = function (oEvent) {
+            this.navTo('billing.DefferedPmtExt', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+        };
+        /**
+		 * Handler for DPP Active press
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onRBBActive = function (oEvent) {
+            if (!this.ABPPopupCustomControl) {
+                this.ABPPopupCustomControl = new ABPPopup({ isRetro: true });
 
+                this.ABPPopupCustomControl._oABPPopup.setTitle('RETRO AVERAGE BILLING PLAN: ACTIVATE');
 
+                //this.ABPPopupCustomControl._oABPPopup.setTitle('The title you want to change to.');
+
+                this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
+                this.getView().addDependent(this.ABPPopupCustomControl);
+            }
+            this.ABPPopupCustomControl.prepareABP();
+        };
 
         /**
 		 * Handler for Dunning Lock Press

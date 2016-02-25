@@ -322,6 +322,8 @@ sap.ui.define(
                     this._oDate = this._oFormatYyyymmdd.parse(sNewValue);
                     if (!this._oDate || this._oDate.getTime() < this._oMinDate.getTime() || this._oDate.getTime() > this._oMaxDate.getTime()) {
 				        this._oDate = undefined;
+                        // just format date to right pattern, because maybe a fallback pattern is used in the parsing
+                        oInput.val(oldVal);
 				    } else {
 
                         // just format date to right pattern, because maybe a fallback pattern is used in the parsing

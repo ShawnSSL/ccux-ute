@@ -3,16 +3,15 @@
 sap.ui.define(
     [
         'nrg/base/view/BaseController',
-        'jquery.sap.global',
         'nrg/base/type/Price',
-        'sap/ui/core/routing/HashChanger',
         "sap/ui/model/json/JSONModel",
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
-        'nrg/module/quickpay/view/QuickPayPopup'
+        'nrg/module/quickpay/view/QuickPayPopup',
+        'nrg/module/billing/view/EligPopup'
     ],
 
-    function (CoreController, jQuery, price, HashChanger, JSONModel, Filter, FilterOperator, QuickPayControl) {
+    function (CoreController, price, JSONModel, Filter, FilterOperator, QuickPayControl, EligPopup) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.billing.view.Extension');
@@ -31,7 +30,9 @@ sap.ui.define(
             this._isExt = oRouteInfo.isExt;
 
             this.getView().setModel(this.getOwnerComponent().getModel('comp-dppext'), 'oDataSvc');
-
+            this.getView().setModel(this.getOwnerComponent().getModel('comp-eligibility'), 'oDataEligSvc');
+            // Model for eligibility alerts
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEligibility');
             //Model for screen control
             this.getView().setModel(new JSONModel(), 'oDppScrnControl');
 
@@ -49,6 +50,7 @@ sap.ui.define(
 
             this._initScrnControl();
             this._isExtElgble();
+            this._retrieveNotification();
 
         };
         Controller.prototype.resetInfo = function () {
@@ -58,6 +60,8 @@ sap.ui.define(
         Controller.prototype.onAfterRendering = function () {
             this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').attachBrowserEvent('select', this._handleExtDateChange, this);
             this.getView().byId('nrgBilling-dpp-ExtChangeDate-id').attachBrowserEvent('select', this._handleExtDateChange, this);
+            this.getView().byId('nrgBilling-ext-dwnPayDueCreateDate-id').attachBrowserEvent('select', this._handleExtDateChange, this);
+            this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').attachBrowserEvent('select', this._handleDownPaymentDate, this);
         };
 
         /****************************************************************************************************************/
@@ -181,6 +185,7 @@ sap.ui.define(
             } else {
                 this._selectScrn('EXTGrant');
             }
+            this._bOverRide = true;
         };
 
         Controller.prototype._onExtChangeClick = function () {
@@ -209,6 +214,16 @@ sap.ui.define(
             }
         };
 
+        Controller.prototype._handleDownPaymentDate = function (oEvent) {
+            var oExtDownPayDate;
+            if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
+                oExtDownPayDate = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id');
+
+            } else {
+                oExtDownPayDate = this.getView().byId('nrgBilling-dpp-ExtChangeDate-id');
+            }
+
+        };
         Controller.prototype._handleExtDateChange = function (oEvent) {
             var extDate,
                 oExtensions = this.getView().getModel('oExtExtensions'),
@@ -344,8 +359,12 @@ sap.ui.define(
                 _popupCallback,
                 that = this,
                 sCurrentOpenItemDate = oExt.getProperty('/results/0/OpenItems/DefferalDate'),
-                sNewDateSelected;
-
+                sNewDateSelected,
+                sCurrentDate = new Date(),
+                bValidate = this._handleExtDateChange();
+            if (!bValidate) {
+                return;
+            }
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').getValue();
 
@@ -369,6 +388,11 @@ sap.ui.define(
                     sNewDateSelected.setMinutes("00");
                     sNewDateSelected.setSeconds("00");
                 }
+                if (sCurrentDate) {
+                    sCurrentDate.setHours("00");
+                    sCurrentDate.setMinutes("00");
+                    sCurrentDate.setSeconds("00");
+                }
                 if (oEligble.getProperty('/ExtActive')) {
                     if (sCurrentOpenItemDate.getTime() === sNewDateSelected.getTime()) {
                         ute.ui.main.Popup.Alert({
@@ -377,14 +401,15 @@ sap.ui.define(
                         });
                         return;
                     }
-                    if (sCurrentOpenItemDate.getTime() > sNewDateSelected.getTime()) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'Information',
-                            message: 'Deferral date is before due date.'
-                        });
-                        return;
-                    }
                 }
+                if (sCurrentOpenItemDate.getTime() > sNewDateSelected.getTime()) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Information',
+                        message: 'Deferral date is before due date.'
+                    });
+                    return;
+                }
+
             }
             if (oEligble.getProperty('/ExtPending')) {
                 if (oExt.getProperty('/results/0/iDwnPay') === 0) {
@@ -433,13 +458,8 @@ sap.ui.define(
                 that = this,
                 sContactLogArea,
                 sNewDateSelected,
-                oLocalModel = this.getView().getModel('oLocalModel'),
-                bValidate = false;
+                oLocalModel = this.getView().getModel('oLocalModel');
 
-            bValidate = this._handleExtDateChange();
-            if (!bValidate) {
-                return;
-            }
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').getValue();
                 sContactLogArea = oLocalModel.getProperty("/GrantCL");
@@ -552,7 +572,105 @@ sap.ui.define(
             }
             return aFilters;
         };
+        /*-------------------------------------- Notificatiob Area (Jerry 11/18/2015) ---------------------------------------*/
 
+        Controller.prototype._retrieveNotification = function () {
+            var sPath = '/EligCheckS(\'' + this._coNum + '\')',
+                oModel = this.getView().getModel('oDataEligSvc'),
+                oEligModel = this.getView().getModel('oEligibility'),
+                oParameters,
+                alert,
+                i;
+
+            oParameters = {
+                success : function (oData) {
+                    oEligModel.setData(oData);
+                    var container = this.getView().byId('idnrgBilling-ext-notifications');
+                    if (container && container.getContent() && container.getContent().length > 0) {
+                        container.removeAllContent();
+                    }
+                // If already has eligibility alerts, then skip
+                    this._eligibilityAlerts = [];
+
+                    // Check ABP
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.ABPElig) ? "Eligible for ABP" : "Not eligible for ABP",
+                        linkPress: this._openEligABPPopup.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
+
+                    // Check EXTN
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.EXTNElig) ? "Eligible for EXTN" : "Not eligible for EXTN",
+                        linkPress: this._openEligEXTNPopup.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
+
+                    // Check RBB
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.RBBElig) ? "Eligible for Retro-AB" : "Not eligible for Retro-AB",
+                        linkPress: this._openEligRBBPopup.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
+
+                    // Check DPP
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.DPPElig) ? "Eligible for DPP" : "Not eligible for DPP"
+                    });
+
+                    this._eligibilityAlerts.push(alert);
+
+                    // Insert all alerts to DOM
+                    for (i = 0; i < this._eligibilityAlerts.length; i = i + 1) {
+                        this._eligibilityAlerts[i].placeAt(container);
+                    }
+                }.bind(this),
+                error: function (oError) {
+
+                }.bind(this)
+            };
+
+            if (oModel && this._coNum) {
+                oModel.read(sPath, oParameters);
+            }
+        };
+        Controller.prototype._openEligABPPopup = function () {
+            if (!this.EligABPPopupCustomControl) {
+                this.EligABPPopupCustomControl = new EligPopup({ eligType: "ABP" });
+                this.EligABPPopupCustomControl.attachEvent("EligCompleted", function () {}, this);
+                this.getView().addDependent(this.EligABPPopupCustomControl);
+                this.EligABPPopupCustomControl._oEligPopup.setTitle('ELIGIBILITY CRITERIA - AVERAGE BILLING PLAN');
+            }
+            this.EligABPPopupCustomControl.prepare();
+        };
+
+        Controller.prototype._openEligEXTNPopup = function () {
+            if (!this.EligEXTNPopupCustomControl) {
+                this.EligEXTNPopupCustomControl = new EligPopup({ eligType: "EXTN" });
+                this.EligEXTNPopupCustomControl.attachEvent("EligCompleted", function () {}, this);
+                this.getView().addDependent(this.EligEXTNPopupCustomControl);
+                this.EligEXTNPopupCustomControl._oEligPopup.setTitle('ELIGIBILITY CRITERIA - EXTENSION');
+            }
+            this.EligEXTNPopupCustomControl.prepare();
+        };
+
+        Controller.prototype._openEligRBBPopup = function () {
+            if (!this.EligRBBPopupCustomControl) {
+                this.EligRBBPopupCustomControl = new EligPopup({ eligType: "RBB" });
+                this.EligRBBPopupCustomControl.attachEvent("EligCompleted", function () {}, this);
+                this.getView().addDependent(this.EligRBBPopupCustomControl);
+                this.EligRBBPopupCustomControl._oEligPopup.setTitle('ELIGIBILITY CRITERIA - RETRO BILLING PLAN');
+            }
+            this.EligRBBPopupCustomControl.prepare();
+        };
         return Controller;
     }
 );
