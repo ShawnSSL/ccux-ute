@@ -13,11 +13,11 @@
    <u:Tag class="nrgAppMain-generalContent nrgAppMain-generalContent-full">
       <u:Tag class="nrgCamSS">
          <u:Tag class="nrgCamSS-ttl" text="{comp-i18n-campaign>nrgCmpSSTtl}" />
-             <um:Button press=".backToOverview"
+<!--             <um:Button press=".backToOverview"
                         text="{comp-i18n-campaign>nrgCmpBckOverview}"
                         class="nrgCamOff-Back"
                         design="None">
-            </um:button>
+            </um:button>-->
             <l:MatrixLayout class="nrgCamSS-mtx nrgCamSS-top">
                 <l:MatrixLayoutRow>
                     <l:MatrixLayoutCell>

@@ -167,11 +167,11 @@ sap.ui.define(
                     if ((oData !== undefined) && (oData.Code === "S")) {
                         this.getOwnerComponent().getCcuxApp().setOccupied(false);
                         sap.ui.commons.MessageBox.alert("Disposition process is completed");
-                        this.navTo("campaign", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "C"});
+                        this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "N"});
                     } else {
                         this.getOwnerComponent().getCcuxApp().setOccupied(false);
                         sap.ui.commons.MessageBox.alert("Disposition process is Failed");
-                        this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, typeV : "P"});
+                        this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, typeV : "N"});
                     }
                     jQuery.sap.log.info("Odata Read Successfully:::" + oData.Code);
                 }.bind(this),
@@ -190,7 +190,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.backToOverview = function (oEvent) {
-            this.navTo("campaign", {bpNum: this._sBP, caNum: this._sCA, coNum : this._sContract, typeV : "C"});
+            this.navTo("campaignoffers", {bpNum: this._sBP, caNum: this._sCA, coNum : this._sContract, typeV : "N"});
         };
         /**
 		 * Converts in to EFL Json format required by Template view.

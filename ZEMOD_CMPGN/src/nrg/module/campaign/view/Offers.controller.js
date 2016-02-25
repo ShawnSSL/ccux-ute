@@ -34,126 +34,129 @@ sap.ui.define(
 		/* lifecycle method- Before Rendering                          */
 		/* =========================================================== */
         Controller.prototype.onBeforeRendering = function () {
-            var oModel,
-                sCurrentPath,
-                sEligibilityPath,
-                mParameters,
-                aFilters,
-                oTileContainer,
-                oTileTemplate,
-                oTagContainer = this.getView().byId("idnrgCamOff-Dummydisc"),
-                oTagTemplate = this.getView().byId("idnrgCamOff-DummyRow").clone(),
-                iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
-                aFilterIds,
-                aFilterValues,
-                fnRecievedHandler,
-                that = this,
-                oNoDataTag,
-                oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
-                i18NModel,
-                oSelectedButton,
-                oSorter = new sap.ui.model.Sorter("Type", false),
-                factoryFuntion,
-                oViewModel = new JSONModel({
-                    invoice : true,  // true for invoice & false for consumption
-                    invoiceFirstCard : true,  // true for first Card change, false for second card change for Invoice
-                    consumptionFirstCard : true, // true for first Card change, false for second card change for Consumption
-                    pinFirstCardInvoice : false,
-                    pinFirstCardConsumption : false,
-                    pin: false,
-                    Contract : ""
-			    }),
-                bInvoiceFirstCard = true;
-            this.resetView();
-            this._aSelectedComparisionCards = [];
-            this._bSearchEnabled = false;
-            this.getView().setModel(oViewModel, "localModel");
-            i18NModel = this.getOwnerComponent().getModel("comp-i18n-campaign");
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            this._sContract = oRouteInfo.parameters.coNum;
-            this._sBP = oRouteInfo.parameters.bpNum;
-            this._sCA = oRouteInfo.parameters.caNum;
-            this._sType = oRouteInfo.parameters.typeV;
-            oViewModel.setProperty("/Contract", this._sContract);
-            if ((!this._sType) || (this._sType === undefined) || (this._sType === null) || (this._sType === "")) {
-                this._sType = "SE";
-            }
-            oNoDataTag = this.getView().byId("idnrgCamHisNoData");
-            oSelectedButton = this.getView().byId("idCamToggleBtn-" + this._sType);
-            oTileContainer = this.getView().byId("idnrgCamOffScroll");
-            oTileTemplate = this.getView().byId("idnrgCamOffBt");
-            this._oTileTemplate = oTileTemplate;
-            aFilterIds = ["Contract"];
-            aFilterValues = [this._sContract];
-            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-            sCurrentPath = i18NModel.getProperty("nrgCpgChangeOffSet");
-            oModel = this.getOwnerComponent().getModel('comp-campaign');
-            oSelectedButton.addStyleClass("nrgCamOff-btn-selected");
-            // Handler function for tile container
-            fnRecievedHandler = function (oEvent) {
-                var aContent = oTileContainer.getContent(),
-                    oBinding = oTileContainer.getBinding("content"),
-                    iBindCount = 0;
-                if ((aContent !== undefined) && (aContent.length > 0)) {
-                    oNoDataTag.addStyleClass("nrgCamOff-hide");
-                    oTileContainer.removeStyleClass("nrgCamOff-hide");
-                    aFilterIds = ["Type", "Type"];
-                    aFilterValues = ["C", that._sType];
-                    aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
-                    oBinding.sOperationMode = "Client";
-                    oBinding.aAllKeys = oEvent.getSource().aKeys;
-                    oBinding.filter(aFilters, "Application");
-                    if ((oTileContainer.getContent()) && (oTileContainer.getContent().length > 0)) {
-                        oTileContainer.getContent().forEach(function (item) {
-                            if (item && iBindCount < 2) {
-                                if (item.getBindingContext("comp-campaign").getProperty("Type") !== "C") {
-                                    if (bInvoiceFirstCard) {
-                                        that._changeSelectedObject(item, 0, true);
-                                        that._bindCard(item, 1);
-                                        bInvoiceFirstCard = false;
-                                        oViewModel.setProperty("/invoiceFirstCard", false); // enable false to make sure next turn is second card in invoice
-                                    } else {
-                                        that._changeSelectedObject(item, 1, true);
-                                        that._bindCard(item, 2);
-                                        oViewModel.setProperty("/invoiceFirstCard", true); // enable false to make sure next turn is first card in invoice
+            if ((this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo().parameters) &&  (this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo().parameters.typeV !== "N")) {
+                var oModel,
+                    sCurrentPath,
+                    sEligibilityPath,
+                    mParameters,
+                    aFilters,
+                    oTileContainer,
+                    oTileTemplate,
+                    oTagContainer = this.getView().byId("idnrgCamOff-Dummydisc"),
+                    oTagTemplate = this.getView().byId("idnrgCamOff-DummyRow").clone(),
+                    aFilterIds,
+                    aFilterValues,
+                    fnRecievedHandler,
+                    that = this,
+                    oNoDataTag,
+                    oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
+                    i18NModel,
+                    oSelectedButton,
+                    oSorter = new sap.ui.model.Sorter("Type", false),
+                    factoryFuntion,
+                    oViewModel = new JSONModel({
+                        invoice : true,  // true for invoice & false for consumption
+                        invoiceFirstCard : true,  // true for first Card change, false for second card change for Invoice
+                        consumptionFirstCard : true, // true for first Card change, false for second card change for Consumption
+                        pinFirstCardInvoice : false,
+                        pinFirstCardConsumption : false,
+                        pin: false,
+                        Contract : ""
+                    }),
+                    bInvoiceFirstCard = true;
+                this._sContract = oRouteInfo.parameters.coNum;
+                this._sBP = oRouteInfo.parameters.bpNum;
+                this._sCA = oRouteInfo.parameters.caNum;
+                this._sType = oRouteInfo.parameters.typeV;
+                this.resetView();
+                this._aSelectedComparisionCards = [];
+                this._bSearchEnabled = false;
+                this.getView().setModel(oViewModel, "localModel");
+                i18NModel = this.getOwnerComponent().getModel("comp-i18n-campaign");
+                this.getOwnerComponent().getCcuxApp().setOccupied(true);
+
+                oViewModel.setProperty("/Contract", this._sContract);
+                if ((!this._sType) || (this._sType === undefined) || (this._sType === null) || (this._sType === "")) {
+                    this._sType = "SE";
+                }
+                oNoDataTag = this.getView().byId("idnrgCamHisNoData");
+                oSelectedButton = this.getView().byId("idCamToggleBtn-" + this._sType);
+                oTileContainer = this.getView().byId("idnrgCamOffScroll");
+                oTileTemplate = this.getView().byId("idnrgCamOffBt");
+                this._oTileTemplate = oTileTemplate;
+                aFilterIds = ["Contract"];
+                aFilterValues = [this._sContract];
+                aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+                sCurrentPath = i18NModel.getProperty("nrgCpgChangeOffSet");
+                oModel = this.getOwnerComponent().getModel('comp-campaign');
+                oSelectedButton.addStyleClass("nrgCamOff-btn-selected");
+                // Handler function for tile container
+                fnRecievedHandler = function (oEvent) {
+                    var aContent = oTileContainer.getContent(),
+                        oBinding = oTileContainer.getBinding("content"),
+                        iBindCount = 0;
+                    if ((aContent !== undefined) && (aContent.length > 0)) {
+                        oNoDataTag.addStyleClass("nrgCamOff-hide");
+                        oTileContainer.removeStyleClass("nrgCamOff-hide");
+                        aFilterIds = ["Type", "Type"];
+                        aFilterValues = ["C", that._sType];
+                        aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
+                        oBinding.sOperationMode = "Client";
+                        oBinding.aAllKeys = oEvent.getSource().aKeys;
+                        oBinding.filter(aFilters, "Application");
+                        if ((oTileContainer.getContent()) && (oTileContainer.getContent().length > 0)) {
+                            oTileContainer.getContent().forEach(function (item) {
+                                if (item && iBindCount < 2) {
+                                    if (item.getBindingContext("comp-campaign").getProperty("Type") !== "C") {
+                                        if (bInvoiceFirstCard) {
+                                            that._changeSelectedObject(item, 0, true);
+                                            that._bindCard(item, 1);
+                                            bInvoiceFirstCard = false;
+                                            oViewModel.setProperty("/invoiceFirstCard", false); // enable false to make sure next turn is second card in invoice
+                                        } else {
+                                            that._changeSelectedObject(item, 1, true);
+                                            that._bindCard(item, 2);
+                                            oViewModel.setProperty("/invoiceFirstCard", true); // enable false to make sure next turn is first card in invoice
+                                        }
+                                        iBindCount = iBindCount + 1;
                                     }
-                                    iBindCount = iBindCount + 1;
                                 }
-                            }
-                        });
+                            });
+                        }
+                    } else {
+                        oNoDataTag.removeStyleClass("nrgCamOff-hide");
+                        oTileContainer.addStyleClass("nrgCamOff-hide");
                     }
-                } else {
-                    oNoDataTag.removeStyleClass("nrgCamOff-hide");
-                    oTileContainer.addStyleClass("nrgCamOff-hide");
-                }
-                that.getOwnerComponent().getCcuxApp().setOccupied(false);
-                if (oBinding) {
-                    oBinding.detachDataReceived(fnRecievedHandler);
-                }
-                iBindCount = 0;
-            };
-            factoryFuntion = function () {
-				return oTileTemplate.clone(Math.floor((Math.random() * 1000) + 1));
-			};
-            mParameters = {
-                model : "comp-campaign",
-                path : sCurrentPath,
-                factory : factoryFuntion,
-                filters : aFilters,
-                sorter: oSorter,
-                parameters : {expand: "EFLs"},
-                events: {dataReceived : fnRecievedHandler}
-            };
-            oTileContainer.bindAggregation("content", mParameters);
-            sCurrentPath = "/CustMsgS";
-            mParameters = {
-                model : "comp-campaign",
-                path : sCurrentPath,
-                template : oTagTemplate,
-                filters : aFilters
-               /* events: {dataReceived : fnTagDataRecHandler}*/
-            };
-            oTagContainer.bindAggregation("content", mParameters);
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    if (oBinding) {
+                        oBinding.detachDataReceived(fnRecievedHandler);
+                    }
+                    iBindCount = 0;
+                };
+                factoryFuntion = function () {
+                    return oTileTemplate.clone(Math.floor((Math.random() * 1000) + 1));
+                };
+                mParameters = {
+                    model : "comp-campaign",
+                    path : sCurrentPath,
+                    factory : factoryFuntion,
+                    filters : aFilters,
+                    sorter: oSorter,
+                    parameters : {expand: "EFLs"},
+                    events: {dataReceived : fnRecievedHandler}
+                };
+                oTileContainer.bindAggregation("content", mParameters);
+                sCurrentPath = "/CustMsgS";
+                mParameters = {
+                    model : "comp-campaign",
+                    path : sCurrentPath,
+                    template : oTagTemplate,
+                    filters : aFilters
+                   /* events: {dataReceived : fnTagDataRecHandler}*/
+                };
+                oTagContainer.bindAggregation("content", mParameters);
+            }
+
             //}
         };
        /**

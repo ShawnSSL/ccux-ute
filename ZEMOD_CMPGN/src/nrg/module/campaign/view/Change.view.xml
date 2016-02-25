@@ -14,7 +14,7 @@
       <u:Tag class="nrgCamChg">
          <u:Tag class="nrgCamChg-ttl" text="{comp-i18n-campaign>nrgCmpChgTtl}" />
              <um:Button press=".backToOverview"
-                        text="{comp-i18n-campaign>nrgCmpBckOverview}"
+                        text="{comp-i18n-campaign>nrgCmpBck}"
                         class="nrgCamOff-Back"
                         design="None">
             </um:button>

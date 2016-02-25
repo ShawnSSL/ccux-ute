@@ -601,14 +601,14 @@ sap.ui.define(
                     } else {
                         that.getOwnerComponent().getCcuxApp().setOccupied(false);
                         sap.ui.commons.MessageBox.alert("SWAP Failed");
-                        this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, typeV : "P"});
+                        this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, typeV : "N"});
                         return;
                     }
                 }.bind(this),
                 error: function (oError) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     sap.ui.commons.MessageBox.alert("Swap Failed");
-                    this.navTo("campaign", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "C"});
+                    this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "N"});
                 }.bind(this)
             };
             oModel.callFunction("/AcceptCampaign", mParameters); // callback function for error
@@ -623,7 +623,7 @@ sap.ui.define(
 		 */
         Controller.prototype.onOvsDecline = function (oEvent) {
             this._oOverviewDialog.close();
-            this.navTo("campaignoffers", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, typeV : "P"});
+            this.navTo("campaignoffers", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, typeV : "N"});
         };
 
         /**
@@ -674,11 +674,11 @@ sap.ui.define(
                     if ((oData !== undefined) && (oData.Code === "S")) {
                         this.getOwnerComponent().getCcuxApp().setOccupied(false);
                         sap.ui.commons.MessageBox.alert("Disposition process is completed");
-                        this.navTo("campaign", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "C"});
+                        this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "N"});
                     } else {
                         this.getOwnerComponent().getCcuxApp().setOccupied(false);
                         sap.ui.commons.MessageBox.alert("Disposition process is Failed");
-                        this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, typeV : "P"});
+                        this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, typeV : "N"});
                     }
                     jQuery.sap.log.info("Odata Read Successfully:::" + oData.Code);
                 }.bind(this),

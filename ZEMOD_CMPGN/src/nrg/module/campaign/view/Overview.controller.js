@@ -87,10 +87,10 @@ sap.ui.define(
                             } else if ((!sTempValue) && (sTempValue !== "C")) {
                                 aContent[iCount].setEnabled(false);
                                 that._sFlag = "C";
-                                ute.ui.main.Popup.Alert({
+/*                                ute.ui.main.Popup.Alert({
                                     title: 'Information',
                                     message: 'Pending Campaign is not available'
-                                });
+                                });*/
                             }
                         }
                     }
