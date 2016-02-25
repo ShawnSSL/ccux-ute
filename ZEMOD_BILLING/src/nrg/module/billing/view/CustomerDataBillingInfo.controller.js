@@ -38,7 +38,7 @@ sap.ui.define(
                 success : function (oData) {
                     if (oData && oData.Prepay) {
                         if (that._coNum) {
-                            that.navTo('billing.BillingPrePaid', {bpNum: that._bpNum, caNum: that._caNum, coNum: this._coNum});
+                            that.navTo('billing.BillingPrePaid', {bpNum: that._bpNum, caNum: that._caNum, coNum: that._coNum});
                         } else {
                             that.navTo('billing.BillingPrePaidNoCo', {bpNum: that._bpNum, caNum: that._caNum});
                         }
@@ -339,6 +339,13 @@ sap.ui.define(
         };
         CustomController.prototype._formatBoolCurChrg_Rev = function (sIndicator) {
             if (sIndicator === 'X' || sIndicator === 'x') {
+                return false;
+            } else {
+                return true;
+            }
+        };
+        CustomController.prototype._formatVisElig = function (sIndicator) {
+            if (!sIndicator) {
                 return false;
             } else {
                 return true;

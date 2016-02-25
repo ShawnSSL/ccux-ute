@@ -131,8 +131,13 @@
                                         class="nrgBilling-cusDataBillingInfo-contentValue"
                                         text="{path: 'oBillingInvoices>/AmountDue', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                     <ute:Tag class="FooterNotificationCenter">
+<<<<<<< HEAD
                                         <utapp:FooterNotificationItem visible="{oEligibility>/DPPActv}"
                                             link="true"
+=======
+<!--                                        <utapp:FooterNotificationItem visible="{oEligibility>/DPPActv}"
+                                            link="false"
+>>>>>>> Master/master
                                             design="Error"
                                             text="DPP"
                                             linkPress=".onDPPActive"/>
@@ -152,6 +157,28 @@
                                             text="EXTN"
                                             linkPress=".onExtActive"/>
                                         <utapp:FooterNotificationItem visible="{oEligibility>/BBPActv}"
+                                            link="false"
+                                            design="Error"
+                                            text="BBP"/>
+-->
+                                        <utapp:FooterNotificationItem visible="{parts:['oEligibility>/DPPActv'], formatter:'._formatVisElig'}"
+                                            link="false"
+                                            design="Error"
+                                            text="DPP"/>
+
+                                        <utapp:FooterNotificationItem visible="{parts:['oEligibility>/ABPActv'], formatter:'._formatVisElig'}"
+                                            link="false"
+                                            design="Error"
+                                            text="ABP"/>
+                                        <utapp:FooterNotificationItem visible="{parts:['oEligibility>/RBBActv'], formatter:'._formatVisElig'}"
+                                            link="false"
+                                            design="Error"
+                                            text="Retro ABP"/>
+                                        <utapp:FooterNotificationItem visible="{parts:['oEligibility>/EXTNActv'], formatter:'._formatVisElig'}"
+                                            link="false"
+                                            design="Error"
+                                            text="EXTN"/>
+                                        <utapp:FooterNotificationItem visible="{parts:['oEligibility>/BBPActv'], formatter:'._formatVisElig'}"
                                             link="false"
                                             design="Error"
                                             text="BBP"/>

@@ -1,0 +1,15 @@
+{
+  "d" : {
+        "results" : [
+            {
+                "__metadata" : {
+                  "id" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/PrepayFlagS('000011608439')",
+                  "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_BILLING_SRV/PrepayFlagS('000011608439')",
+                  "type" : "ZE_CCUX_BILLING_SRV.PrepayFlag"
+                },
+                "CA" : "000011608439",
+                "Prepay" : false
+            }
+        ]
+  }
+}
