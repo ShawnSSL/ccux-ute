@@ -51,7 +51,8 @@ sap.ui.define(
                 oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
                 i18NModel,
                 oRejectRsns = that.getView().byId('idnrgRejectRsnsMD'),
-                oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl');
+                oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl'),
+                oContext;
             // To Avoid reloading after NNP opens up
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEditEmailNNP');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEditEmailValidate');
@@ -73,10 +74,11 @@ sap.ui.define(
             this._sType = oRouteInfo.parameters.stype;
             this._sPromo = oRouteInfo.parameters.sPromo;
             sCurrentPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Promo='" + this._sPromo + "',Type='" + this._sType + "')";
+            oContext = oModel.getContext(sCurrentPath);
             this._bindView(sCurrentPath);
             sCurrentPath = sCurrentPath + "/Scripts";
-            aFilterIds = ["TxtName"];
-            aFilterValues = ['MAND'];
+            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer'];
+            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer")];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oDropDownList = this.getView().byId("idnrgCamSSDdL");
             oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();

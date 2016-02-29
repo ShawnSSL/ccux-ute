@@ -87,7 +87,7 @@ sap.ui.define(
             var i, oAllBuags = this.getView().getModel('oSmryAllBuags');
 
             for (i = 0; i < oAllBuags.getProperty('/results').length; i = i + 1) {
-                if (oAllBuags.getProperty('/results')[i].ContractAccountID === data.caNum) {
+                if (parseInt(oAllBuags.getProperty('/results')[i].ContractAccountID, 10) === parseInt(data.caNum, 10)) {
                     this._selectBuag(i);
                     return;
                 }
@@ -202,7 +202,7 @@ sap.ui.define(
 
                         if (this._caNum) {
                             for (i = 0; i < oData.results.length; i = i + 1) {
-                                if (oData.results[i].ContractAccountID === this._caNum) {
+                                if (parseInt(oData.results[i].ContractAccountID, 10) === parseInt(this._caNum, 10)) {
                                     this.getView().getModel('oSmryBuagInf').setData(oData.results[i]);
                                 }
                             }
@@ -249,7 +249,7 @@ sap.ui.define(
 
                         if (this._caNum) {
                             for (i = 0; i < oData.Buags.results.length; i = i + 1) {
-                                if (oData.Buags.results[i].ContractAccountID === this._caNum) {
+                                if (parseInt(oData.Buags.results[i].ContractAccountID, 10) === parseInt(this._caNum, 10)) {
                                     caIndex = i;
                                 }
                             }
