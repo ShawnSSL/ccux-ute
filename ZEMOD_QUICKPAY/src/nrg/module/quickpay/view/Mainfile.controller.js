@@ -180,7 +180,7 @@ sap.ui.define(
                 parameters: {countMode : "None"},
                 events: {dataReceived : WRRecievedHandler}
             };
-            oWaiveReasonDropDown.bindAggregation("content", oBindingInfo);
+            oWaiveReasonDropDown.bindAggregation("items", oBindingInfo);
         };
         /**
 		 * When Credit Card is Accepted

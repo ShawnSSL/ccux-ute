@@ -1,6 +1,7 @@
 <mvc:View
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:u="ute.ui.commons"
+    xmlns:m="sap.m"
     xmlns:um="ute.ui.main"
     xmlns:c="sap.ui.commons"
     xmlns:core="sap.ui.core"
@@ -44,7 +45,7 @@
                                        class="nrgQPCC-DdlValue"/>
                             </u:Tag>
                         </um:DropdownItem>
-                        <um:DropdownItem key="{comp-quickpay>ReasonCode}" class="nrgQPCC-DDLWRItem" id="idnrgQPCC-WaiveReasonItem">
+                        <um:DropdownItem key="{comp-quickpay>ReasonCode}"  >
                                   <u:Tag text="{comp-quickpay>ReasonText}" />
                         </um:DropdownItem>
                         <um:DropdownItem key="{comp-quickpay>BankKey}" class="nrgQPCC-DdLItem" id="idnrgQPCC-BankDraftItem">
@@ -55,6 +56,9 @@
                             </u:Tag>
                         </um:DropdownItem>
                 </um:Dropdown>
+                <m:ComboBox>
+				    <core:Item key="{comp-quickpay>ReasonCode}" text="{comp-quickpay>ReasonText}" id="idnrgQPCC-WaiveReasonItem" class="nrgQPCC-DDLWRItem"/>
+			    </m:ComboBox>
              </u:Tag>
             <u:Tag visible="{appView>/CLI}">
                   <um:Button press=".onContactLog"

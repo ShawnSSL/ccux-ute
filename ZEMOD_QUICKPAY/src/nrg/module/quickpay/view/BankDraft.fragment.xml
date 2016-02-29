@@ -3,6 +3,7 @@
           xmlns:c="sap.ui.commons"
           xmlns:core="sap.ui.core"
           xmlns:u="ute.ui.commons"
+          xmlns:m="sap.m"
           xmlns:um="ute.ui.main">
     <u:Tag class="nrgQPCC-root" visible="{appView>/BD}">
         <u:Tag text="{comp-i18n-quickpay>nrgQPPaymentBD}" class="nrgQPCC-ttl"/>
@@ -47,13 +48,10 @@
             </u:Tag>
         </u:Tag>
             <u:Tag class="nrgQPPay-top">
-                    <um:Dropdown placeholder="{comp-i18n-quickpay>nrgQPProcessingFee}"
-                                 class="nrgQPCC-DDLWR"
-                                 id="idnrgQPBD-WaiveReason">
-                        <um:DropdownItem class="nrgQPCC-DDLWRItem">
-                                  <u:Tag text="Reason1" />
-                        </um:DropdownItem>
-                </um:Dropdown>
+                <m:ComboBox id="idnrgQPBD-WaiveReason"
+                         class="nrgQPCC-DDLWR">
+                    <core:Item key="{ProductId}" text="{Name}" />
+                </m:ComboBox>
             </u:Tag>
             <u:Tag class="nrgQPPay-top nrgQPPay-left" >
                 <um:Button press=".onAcceptBankDraft"

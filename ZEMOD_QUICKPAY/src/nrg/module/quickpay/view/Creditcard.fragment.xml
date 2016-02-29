@@ -1,6 +1,7 @@
 <core:FragmentDefinition
     xmlns="http://www.w3.org/1999/xhtml"
           xmlns:c="sap.ui.commons"
+          xmlns:m="sap.m"
           xmlns:core="sap.ui.core"
           xmlns:u="ute.ui.commons"
           xmlns:um="ute.ui.main">
@@ -67,15 +68,10 @@
             </u:Tag>
         </u:Tag>
             <u:Tag class="nrgQPPay-top">
-                    <um:Dropdown id="idnrgQPCC-WR"
-                             placeholder="{comp-i18n-quickpay>nrgQPProcessingFee}"
+                    <m:ComboBox id="idnrgQPCC-WR"
                              class="nrgQPCC-DDLWR">
-                    <um:DropdownItem class="nrgQPCC-DDLWRItem">
-                        <u:Tag>
-                              <u:Tag text="Reason1" />
-                        </u:Tag>
-                    </um:DropdownItem>
-                </um:Dropdown>
+                        <core:Item key="{ProductId}" text="{Name}" />
+                    </m:ComboBox>
             </u:Tag>
             <u:Tag class="nrgQPPay-top nrgQPPay-left" >
                 <um:Button press=".onAcceptCredit"
