@@ -51,74 +51,52 @@
                     background-color: @nrgColor-green-lightMint;
                     color:@nrgColor-green-pale;
                     float:left;
-
-                    &   > .nrgCamOff-btnInfo {
-                            & > .nrgCamOff-ttlinfo  {
-                                    display:inline-block;
-                                    width: 60%;
-                            }
-                            & > .nrgCamOff-feeinfo  {
-                                    display:inline-block;
-                                    width: 40%;
-                                    float: right;
-                                    text-align: right;
-                                    font-weight: @nrgFontWeight-semiBold;
-                            }
-                            & > .nrgCamOff-ttlinfo > .nrgCamOff-btnTtl {
-                                    font-size: @nrgFontSize-small;
-                                    font-weight: @nrgFontWeight-regular;
-                                    padding-top: 5px;
-                                    height: 35px;
-                                    overflow: hidden;
-                            }
-                            & > .nrgCamOff-feeinfo > .nrgCamOff-Canfee {
-                                    font-size: @nrgFontSize-small;
-                                    font-weight: @nrgFontWeight-regular;
-                                    padding-top: 5px;
-                                    overflow: hidden;
-                                    color: @nrgCamOffers-redcolor;
-                            }
-                            & > .nrgCamOff-feeinfo > .nrgCamOff-Inc {
-                                    font-size: @nrgFontSize-small;
-                                    font-weight: @nrgFontWeight-regular;
-                                    overflow: hidden;
-                                    color: @nrgCamOffers-yellowcolor;
-                            }
-                            & > .nrgCamOff-feeinfo > .nrgCamOff-Off {
-                                    font-size: @nrgFontSize-small;
-                                    font-weight: @nrgFontWeight-regular;
-                                    overflow: hidden;
-                            }
-                            & > .nrgCamOff-btnCF{
-                                    font-size: @nrgFontSize-smaller;
-                                    font-weight: @nrgFontWeight-regular;
-                                    text-align: right;
-                            }
-                            & > .nrgCamOff-ttlinfo > .nrgCamOff-btnPC{
-                                    font-size: @nrgFontSize-smaller;
-                                    font-weight: @nrgFontWeight-regular;
-                                    display:inline-block;
-                            }
+                    & > .nrgCamOff-feeinfo  {
+                            display:inline-block;
+                            width: 100%;
+                            font-weight: @nrgFontWeight-semiBold;
                     }
-
-                    & > .nrgCamOff-btnPrc{
-                            font-size: @nrgFontSize-veryJumbo;
+                    & > .nrgCamOff-btnTtl {
+                            font-size: @nrgFontSize-small;
                             font-weight: @nrgFontWeight-regular;
-                            margin-left: 45px;
-                            margin-top: 0px;
-                            line-height: 32px;
+                            height: 35px;
+                            overflow: hidden;
+                            display: inline-block;
                     }
-                    & > .nrgCamOff-btnPrcLbl{
+                    & > .nrgCamOff-btnPC{
+                            font-size: @nrgFontSize-smaller;
+                            font-weight: @nrgFontWeight-regular;
+                            display:inline-block;
+                            vertical-align: top;
+                    }
+                    & > .nrgCamOff-feeinfo > .nrgCamOff-Canfee {
+                            font-size: @nrgFontSize-small;
+                            font-weight: @nrgFontWeight-regular;
+                            overflow: hidden;
+                            color: @nrgCamOffers-redcolor;
+                            margin-left: 9.5rem;
+                    }
+                    & > .nrgCamOff-feeinfo > .nrgCamOff-Inc {
+                            font-size: @nrgFontSize-small;
+                            font-weight: @nrgFontWeight-regular;
+                            overflow: hidden;
+                            color: @nrgCamOffers-yellowcolor;
+                            display: inline-block;
+                        	margin-left: 4.5rem;
+                    }
+                    & > .nrgCamOff-feeinfo > .nrgCamOff-btnPrcLbl{
                             font-size: @nrgFontSize-small;
                             font-weight: @nrgFontWeight-regular;
                             display: inline-block;
-                            float: right;
-                            margin-top: 10px;
+                            vertical-align: top;
                     }
-                    & > .nrgCamOff-btnCurrent{
+                    & > .nrgCamOff-btnPrc{
+                            font-size: @nrgFontSize-veryJumbo;
+                            font-weight: @nrgFontWeight-regular;
+                           	margin-left: 2rem;
+                            margin-top: 0.5rem;
+                            line-height: 32px;
                             display: inline-block;
-                            color: @nrgColor-white;
-                            margin-top: 10px;
                     }
 
             }
@@ -346,6 +324,7 @@
                     font-weight: @nrgFontWeight-semiBold;
                 	overflow: hidden;
                     color: @nrgColor-orange-notice;
+                    vertical-align: middle;
             }
             & > .nrgCamOff-dummy {
                     width: 15%;

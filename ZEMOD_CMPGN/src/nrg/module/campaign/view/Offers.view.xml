@@ -26,7 +26,7 @@
                 <u:Tag class="nrgCmpOff-compare">
                     <u:Tag class="nrgCamOff-ttlC" text="{comp-i18n-campaign>nrgCmpOffCompareBy}" />
                     <um:TabBar id="nrgTabBar" design="None" class="nrgCamOff-tabBar" select=".onComparisionChanged">
-                        <um:TabBarItem key="Invoice" design="None"  selected="true" class="nrgCamOff-tabBarItem" id="idnrgCamoff-Invoice">
+                        <um:TabBarItem key="Invoice" design="None" class="nrgCamOff-tabBarItem" id="idnrgCamoff-Invoice">
                             <u:Tag text="{comp-i18n-campaign>nrgCmpOffCpInvoice}" />
                         </um:TabBarItem>
                        <div class="nrgCmpOff-div"/>
@@ -135,25 +135,17 @@
                                id="idnrgCamOffBt"
                                design="None"
                                enabled="{= ${comp-campaign>Type} !== 'C' }">
-                          <u:Tag class="nrgCamOff-btnInfo">
-                            <u:Tag class="nrgCamOff-ttlinfo">
-                                <u:Tag class="nrgCamOff-btnTtl" text="{comp-campaign>OfferTitle}" />
-                                <u:Tag class="nrgCamOff-btnPC"
-                                       text="({comp-campaign>Promo})"/>
-                            </u:Tag>
-                            <u:Tag class="nrgCamOff-feeinfo">
-                                <u:Tag class="nrgCamOff-Canfee" text="Cancel : ${comp-campaign>CncFee}" />
-                                <u:Tag class="nrgCamOff-Inc" text="Incentive: ${comp-campaign>Incentive}" />
-<!--                                <u:Tag class="nrgCamOff-Off" text="Off: {comp-campaign>OfferCode}" />
-                                <u:Tag class="nrgCamOff-Off" text="CC: {comp-campaign>Campaign}" />-->
-                            </u:Tag>
-                        </u:Tag>
-
+                        <u:Tag class="nrgCamOff-btnTtl" text="{parts:[{path: 'comp-campaign>Type'}, {path: 'comp-campaign>OfferTitle'}], formatter:'._formatOfferTitle'}" />
+                        <u:Tag class="nrgCamOff-btnPC" text="({comp-campaign>Promo})"/>
                         <u:Tag class="nrgCamOff-btnPrc" text="{path: 'comp-campaign>EFLPrice',
                                                             type: 'nrg.base.type.Price',
                                                             formatOptions: { currencySymbol: '¢', currencyAlignment: 'RHS', minFractionDigits: '1', maxFractionDigits: '1' }}" />
-                        <u:Tag class="nrgCamOff-btnCurrent" text="{= ${comp-campaign>Type} === 'C' ? 'Current Plan' : ''}"/>
-                        <u:Tag class="nrgCamOff-btnPrcLbl" text="(for {comp-campaign>EFLLevel}kWh)" />
+
+                        <u:Tag class="nrgCamOff-feeinfo">
+                            <u:Tag class="nrgCamOff-Canfee" text="Cancel : ${comp-campaign>CncFee}" />
+                            <u:Tag class="nrgCamOff-btnPrcLbl" text="(for {comp-campaign>EFLLevel}kWh)" />
+                            <u:Tag class="nrgCamOff-Inc" text="Incentive: ${comp-campaign>Incentive}" />
+                        </u:Tag>
                     </um:Button>
             </u:Tag>
            <!-- Place holder for templates to reuse for Bind Aggregation method. Above will be always Display:none -->

@@ -247,7 +247,7 @@ sap.ui.define(
                         oViewModel.setProperty("/consumptionFirstCard", false);
 
                     } else {
-                        this._changeSelectedObject(oSelectedObject, 0);
+                        this._changeSelectedObject(oSelectedObject, 1);
                         this._bindCard(oSelectedObject, 4);
                         oViewModel.setProperty("/consumptionFirstCard", true);
                     }
@@ -921,7 +921,8 @@ sap.ui.define(
                 oFinalSaveButton = this.getView().byId("idCamToggleBtn-F"),
                 oSearchButton = this.getView().byId("idCamToggleBtn-SE"),
                 oTableTag,
-                oSearchField = this.getView().byId("idnrgCamOff-search");
+                oSearchField = this.getView().byId("idnrgCamOff-search"),
+                aTabBarItems = this.getView().byId("nrgTabBar").getContent();
 
             oSearchField.setValue("");
             if (oFirstCardInvoice.getBindingContext("comp-campaign")) {
@@ -957,6 +958,17 @@ sap.ui.define(
             oSaveButton.removeStyleClass("nrgCamOff-btn-selected");
             oFinalSaveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSearchButton.removeStyleClass("nrgCamOff-btn-selected");
+            aTabBarItems.forEach(function (item) {
+                if ((item.getSelected)) {
+                    if ((item.getKey()) && (item.getKey() ===  "Invoice")) {
+                        item.setSelected(true);
+                    } else {
+                        if (item.getSelected()) {
+                            item.setSelected(false);
+                        }
+                    }
+                }
+            });
         };
         /**
 		 * Converts in to EFL Json format required by Template view.
@@ -1143,6 +1155,23 @@ sap.ui.define(
                 }
             } else {
                 this.getOwnerComponent().getCcuxApp().setOccupied(false);
+            }
+        };
+
+        // format offer Title.
+        Controller.prototype._formatOfferTitle = function (sType, sOfferTitle) {
+            if (sType === 'C') {
+                if (sOfferTitle) {
+                    return 'CURRENT PLAN : ' + sOfferTitle;
+                } else {
+                    return '';
+                }
+            } else {
+                if (sOfferTitle) {
+                    return sOfferTitle;
+                } else {
+                    return '';
+                }
             }
         };
         return Controller;
