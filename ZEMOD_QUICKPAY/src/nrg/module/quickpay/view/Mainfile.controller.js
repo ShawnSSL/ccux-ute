@@ -619,7 +619,7 @@ sap.ui.define(
                 parameters: {countMode : "None"},
                 events: {dataReceived : WRRecievedHandler}
             };
-            oWaiveReasonDropDown.bindAggregation("content", oBindingInfo);
+            oWaiveReasonDropDown.bindAggregation("items", oBindingInfo);
             sCurrentPath = "/BankDraftSet" + "(BP='" + this._sBP + "',CA='" + this._sCA + "')/BankAccountSet";
             oBindingInfo = {
                 model : "comp-quickpay",
