@@ -10,10 +10,12 @@ sap.ui.define(
         'nrg/base/view/BaseController',
         'nrg/base/type/Price',
         'nrg/module/quickpay/view/QuickPayPopup',
-        'nrg/module/billing/view/EligPopup'
+        'nrg/module/billing/view/EligPopup',
+        'sap/ui/model/Filter',
+        'sap/ui/model/FilterOperator'
     ],
 
-    function (jQuery, Controller, Type_Price, QuickPayControl, EligPopup) {
+    function (jQuery, Controller, Type_Price, QuickPayControl, EligPopup, Filter, FilterOperator) {
         'use strict';
 
         var CustomController = Controller.extend('nrg.module.billing.view.BillingCheckbook');
@@ -636,14 +638,36 @@ sap.ui.define(
                 oChbkOData.read(sPath, oParameters);
             }
         };
+       /**
+		 * Assign the filter objects based on the input selection
+		 *
+		 * @function
+		 * @param {Array} aFilterIds to be used as sPath for Filters
+         * @param {Array} aFilterValues for each sPath
+		 * @private
+		 */
+        Controller.prototype._createSearchFilterObject = function (aFilterIds, aFilterValues) {
+            var aFilters = [],
+                iCount;
 
+            for (iCount = 0; iCount < aFilterIds.length; iCount = iCount + 1) {
+                aFilters.push(new Filter(aFilterIds[iCount], FilterOperator.EQ, aFilterValues[iCount], ""));
+            }
+            return aFilters;
+        };
         CustomController.prototype._retrPostInvoiceItems = function (sPath) {
             var oChbkOData = this.getView().getModel('oDataSvc'),
                 oParameters,
                 oScrlCtaner = this.getView().byId('nrgChkbookScrollContainer'),
-                i;
-
+                i,
+                aFilterIds,
+                aFilterValues,
+                aFilters;
+            aFilterIds = ["IsCheckBook"];
+            aFilterValues = [true];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oParameters = {
+                filters: aFilters,
                 success : function (oData) {
                     if (oData && oData.results && oData.results.length > 0) {
                         this.getView().getModel('oPostInvoiceItems').setData(oData);

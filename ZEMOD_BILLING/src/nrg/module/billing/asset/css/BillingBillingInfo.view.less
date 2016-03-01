@@ -240,7 +240,7 @@
                 & .nrgBilling-cusDataBil-m-text-title {
                     font: @nrgFontWeight-bold @nrgFontSize-base @nrgFontFamily;
                     color: @nrgColor-grey-dark;
-                    width: 180px;
+                    width: 18rem;
                 }
 
                 & .nrgBilling-cusDataBil-m-text-title-sub {
@@ -248,39 +248,49 @@
                     font: @nrgFontWeight-semiBold @nrgFontSize-base @nrgFontFamily;
                 }
                 & .nrgBilling-cusDataBillingInfo-contentTitle {
-                    width: 180px;
+                    width: 18rem;
 
                     & .uteMLbl-text {
                         font: @nrgFontWeight-regular @nrgFontSize-base @nrgFontFamily;
                         color: @nrgColor-grey-dark;
                     }
                 }
+
             }
 
             & .nrgBilling-cusDataBil-m-row-contentSection {
                 padding: 10px 0;
                 display: flex;
                 align-items: baseline;
-
                 & .nrgBilling-cusDataBillingInfo-contentTitle {
-                    width: 180px;
-
+                    width: 18rem;
+	                max-width: 18rem;
                     & .uteMLbl-text {
                         font: @nrgFontWeight-regular @nrgFontSize-base @nrgFontFamily;
                         color: @nrgColor-grey-dark;
                     }
                 }
-
+                & .nrgBilling-cusDataBillingInfo-contentTitlenew {
+                    display: inline-block;
+                    height: 25px;
+                    font: @nrgFontWeight-regular @nrgFontSize-base @nrgFontFamily;
+                    color: @nrgColor-grey-dark;
+                    width: 18rem;
+	                max-width: 18rem;
+                }
                 & .nrgBilling-cusDataBillingInfo-contentValue {
-                    margin-right: 20px;
-
-                    .uteMBtn-text{
+                     .uteMBtn-text{
                         font: @nrgFontWeight-semiBold @nrgFontSize-base @nrgFontFamily;
                         color: @nrgColor-blue-link;
                         border-bottom: #5092ce;
                         border-bottom-style: solid;
                         border-bottom-width: thin;
                     }
+                }
+                & .nrgBilling-cusDataBillingInfo-contentValuenew {
+                    display: inline-block;
+                    font: @nrgFontWeight-semiBold @nrgFontSize-base @nrgFontFamily;
+                    color: @nrgColor-blue-link;
                 }
 
                 & .FooterNotificationCenter {
@@ -306,9 +316,6 @@
 
         }
     }
-
-    
-
     & > .nrgBilling-cusDataBil-layout > tbody > tr > .nrgBilling-cusDataBil-r{
         padding: 0;
         margin: 0;

@@ -192,15 +192,26 @@
                                          text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-m-div-POST_INVOICE}" />
                                 </ute:Tag>
                                 <ute:Tag class="nrgBilling-cusDataBil-m-row-contentSection">
-                                    <utmain:Label
+                                        <ute:Tag id="idnrgBillPostInvoice">
+                                        </ute:Tag>
+<!--                                    <utmain:Label
                                         text="Payments"
                                         class="nrgBilling-cusDataBillingInfo-contentTitle" />
                                     <utmain:Button
                                         design="None" visible="true"
                                         press="._onPaymentsClicked"
                                         class="nrgBilling-cusDataBillingInfo-contentValue"
-                                        text="{path: 'oPmtPayments>/results/0/Paidamt', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
+                                        text="{path: 'oPmtPayments>/results/0/Paidamt', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>-->
                                 </ute:Tag>
+                                <ute:Tag visible="false">
+                                    <ute:Tag id="idnrgBillPostInvoiceTemp">
+                                        <ute:Tag text="{comp-billing>ItemDesc}" class="nrgBilling-cusDataBillingInfo-contentTitlenew"/>
+                                        <ute:Tag class="nrgBilling-cusDataBillingInfo-contentValuenew"
+                                               text="{path: 'comp-billing>ValueLt', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"
+                                                />
+                                    </ute:Tag>
+                                </ute:Tag>
+
                             </ute:Tag>
                             <!-- Total Amount Due -->
                             <ute:Tag class="nrgBilling-cusDataBil-m-row last">

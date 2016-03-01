@@ -87,6 +87,7 @@ sap.ui.define(
 
             this._initRetrBillInvoices();
             this._initBillingMsgs();
+            this._initPostInvoice();
 
             // Get DPP/ABP/RetroABP/EXTN notification
             this._retreInvoiceNotification();
@@ -136,9 +137,7 @@ sap.ui.define(
                 oBillingMsgTagTemplate = this.getView().byId("idnrgBillingMsgsTemp"),
                 oDunningMsgTag = this.getView().byId("idnrgBilDunMsgs"),
                 oDunningMsgTagTemplate = this.getView().byId("idnrgBilDunMsgsTemp"),
-                sPath = "/AlertsSet",
-                fnTableDataRecdHandler = function (oEvent) {
-                };
+                sPath = "/AlertsSet";
             aFilterIds = ["BP", "CA", "Identifier"];
             aFilterValues = [this._bpNum, this._caNum, "BILLING"];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
@@ -146,8 +145,7 @@ sap.ui.define(
                 model : "comp-billing",
                 path : sPath,
                 template : oBillingMsgTagTemplate,
-                filters : aFilters,
-                events: {dataReceived : fnTableDataRecdHandler}
+                filters : aFilters
             };
             oBillingMsgTag.bindAggregation("content", oBindingInfo1);
             aFilterIds = ["BP", "CA", "Identifier"];
@@ -157,8 +155,7 @@ sap.ui.define(
                 model : "comp-billing",
                 path : sPath,
                 template : oDunningMsgTagTemplate,
-                filters : aFilters,
-                events: {dataReceived : fnTableDataRecdHandler}
+                filters : aFilters
             };
             oDunningMsgTag.bindAggregation("content", oBindingInfo2);
         };
@@ -192,6 +189,31 @@ sap.ui.define(
         };
 
 
+        CustomController.prototype._initPostInvoice = function () {
+            var sPath,
+                oParameters,
+                oBindingInfo,
+                oPostInvoiceTag = this.getView().byId("idnrgBillPostInvoice"),
+                oPostInvoiceTagTemp = this.getView().byId("idnrgBillPostInvoiceTemp"),
+                aFilterIds,
+                aFilterValues,
+                aFilters,
+                fnTableDataRecdHandler = function (oEvent) {
+                };
+
+            sPath = '/PostInvoices';
+            aFilterIds = ["ContractAccountNumber", "IsCheckBook"];
+            aFilterValues = [this._caNum, false];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            oBindingInfo = {
+                model : "comp-billing",
+                path : sPath,
+                template : oPostInvoiceTagTemp,
+                filters : aFilters,
+                events: {dataReceived : fnTableDataRecdHandler}
+            };
+            oPostInvoiceTag.bindAggregation("content", oBindingInfo);
+        };
         CustomController.prototype._initRetrBillInvoices = function () {
             var oChbkOData = this.getView().getModel('oDataSvc'),
                 sPath,
@@ -376,7 +398,7 @@ sap.ui.define(
             }
         };
 
-        CustomController.prototype._onPaymentsClicked = function (oEvent) {
+/*        CustomController.prototype._onPaymentsClicked = function (oEvent) {
             var i18nModel =  this.getOwnerComponent().getModel('comp-i18n-billing'),
                 popupTitle = i18nModel.getProperty("nrgBilling-paymentsPopup-PAYMENTS");
 
@@ -392,7 +414,7 @@ sap.ui.define(
             }
 
             this._oPaymentsPopup.open();
-        };
+        };*/
 
         CustomController.prototype.onPayNow = function (oEvent) {
             var QuickControl = new QuickPayControl(),
