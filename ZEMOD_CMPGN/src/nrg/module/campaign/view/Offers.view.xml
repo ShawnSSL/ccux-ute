@@ -135,8 +135,10 @@
                                id="idnrgCamOffBt"
                                design="None"
                                enabled="{= ${comp-campaign>Type} !== 'C' }">
-                        <u:Tag class="nrgCamOff-btnTtl" text="{parts:[{path: 'comp-campaign>Type'}, {path: 'comp-campaign>OfferTitle'}], formatter:'._formatOfferTitle'}" />
-                        <u:Tag class="nrgCamOff-btnPC" text="({comp-campaign>Promo})"/>
+                        <u:Tag class="nrgCamOff-btnT">
+                            <u:Tag class="nrgCamOff-btnTtl" text="{parts:[{path: 'comp-campaign>Type'}, {path: 'comp-campaign>OfferTitle'}], formatter:'._formatOfferTitle'}" />
+                            <u:Tag class="nrgCamOff-btnPC" text="({comp-campaign>Promo})"/>
+                        </u:Tag>
                         <u:Tag class="nrgCamOff-btnPrc" text="{path: 'comp-campaign>EFLPrice',
                                                             type: 'nrg.base.type.Price',
                                                             formatOptions: { currencySymbol: '¢', currencyAlignment: 'RHS', minFractionDigits: '1', maxFractionDigits: '1' }}" />
