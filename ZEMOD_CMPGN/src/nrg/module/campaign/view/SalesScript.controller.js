@@ -77,8 +77,8 @@ sap.ui.define(
             oContext = oModel.getContext(sCurrentPath);
             this._bindView(sCurrentPath);
             sCurrentPath = sCurrentPath + "/Scripts";
-            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode'];
-            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign")];
+            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName'];
+            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND'];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oDropDownList = this.getView().byId("idnrgCamSSDdL");
             oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();
@@ -351,10 +351,11 @@ sap.ui.define(
                 this._oOverviewDialog.setShowCloseButton(false);
             }
             sCurrentPath = "/CpgChgOfferS(Contract='" + this._sContract + "',OfferCode='" + this._sOfferCode + "',Promo='" + this._sPromo + "',Type='" + this._sType + "')";
-            sCurrentPath = sCurrentPath + "/Scripts";
-            aFilterIds = ["TxtName"];
-            aFilterValues = ["OVW"];
+            oContext = oModel.getContext(sCurrentPath);
+            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName'];
+            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), "OVW"];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            sCurrentPath = sCurrentPath + "/Scripts";
             this._oOverviewDialog.setWidth("750px");
             this._oOverviewDialog.setHeight("auto");
             this._oOverviewDialog.addStyleClass("nrgCamOvs-dialog");
