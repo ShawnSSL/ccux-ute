@@ -360,7 +360,6 @@ sap.ui.define(
                 that = this,
                 sCurrentOpenItemDate = oExt.getProperty('/results/0/OpenItems/DefferalDate'),
                 sNewDateSelected,
-                sCurrentDate = new Date(),
                 bValidate = this._handleExtDateChange();
             if (!bValidate) {
                 return;
@@ -387,11 +386,6 @@ sap.ui.define(
                     sNewDateSelected.setHours("00");
                     sNewDateSelected.setMinutes("00");
                     sNewDateSelected.setSeconds("00");
-                }
-                if (sCurrentDate) {
-                    sCurrentDate.setHours("00");
-                    sCurrentDate.setMinutes("00");
-                    sCurrentDate.setSeconds("00");
                 }
                 if (oEligble.getProperty('/ExtActive')) {
                     if (sCurrentOpenItemDate.getTime() === sNewDateSelected.getTime()) {
@@ -476,7 +470,7 @@ sap.ui.define(
             if (this._bOverRide) {
                 oDataObject.OverRide  = 'X';
             } else {
-                oDataObject.OverRide  = '';
+                oDataObject.OverRide  = 'N';
             }
             oDataObject.DwnPay  = oExt.getProperty('/results/0/iDwnPay');
             if (oDataObject.DwnPay || oDataObject.DwnPay === 0) {
@@ -484,7 +478,10 @@ sap.ui.define(
             }
             if (sDwnPayDate) {
                 oDataObject.DwnPayDate = new Date(sDwnPayDate);
+            } else {
+                oDataObject.DwnPayDate = new Date();
             }
+
             if (oReason.getProperty("/selectedKey")) {
                 oDataObject.ExtReason = oReason.getProperty("/selectedKey");
             }
