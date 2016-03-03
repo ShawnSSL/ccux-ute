@@ -326,7 +326,17 @@ sap.ui.define(
                 oPayload[basisParameterName] = oHistoryModel.oData[i].Basis;
                 oPayload[adjustParameterName] = (parseFloat(oHistoryModel.oData[i].AdjAmount) || 0).toString();
             }
+            if (oHistoryModel.oData.length < 12) {
+                for (i = oHistoryModel.oData.length; i < 12; i = i + 1) {
+                    periodParameterName = 'Prd' + this._pad(i + 1);
+                    basisParameterName = 'Bbs' + this._pad(i + 1);
+                    adjustParameterName = 'Amt' + this._pad(i + 1);
 
+                    oPayload[periodParameterName] = '0.0';
+                    oPayload[basisParameterName] = '0.0';
+                    oPayload[adjustParameterName] = '0.0';
+                }
+            }
             if (oModel) {
                 mParameters = {
                     method : "POST",

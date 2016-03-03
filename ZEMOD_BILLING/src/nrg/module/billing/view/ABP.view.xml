@@ -40,7 +40,7 @@
                     </ute:Tag>
                     <m:ScrollContainer class="nrgBilling-avgBillingPopup-amountDue-history-scrollArea" height="200px" horizontal="false" vertical="true">
                         <ute:Tag content="{oAmountHistory>/}">
-                            <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-row">
+                            <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-row" visible="{= ${oAmountHistory>AmtUsdAbp} !== 0.00}">
                                 <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-month"
                                     text="{oAmountHistory>Period}"/>
                                 <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-usage"
