@@ -191,7 +191,7 @@
                                          class="nrgBilling-cusDataBil-m-text-title"
                                          text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-m-div-POST_INVOICE}" />
                                 </ute:Tag>
-                                <ute:Tag class="nrgBilling-cusDataBil-m-row-contentSection">
+                                <ute:Tag class="nrgBilling-cusDataBil-m-row-contentSectionNew nrgBilling-cusDataBil-m-row-contentSection">
                                         <ute:Tag id="idnrgBillPostInvoice">
                                         </ute:Tag>
 <!--                                    <utmain:Label
@@ -205,10 +205,13 @@
                                 </ute:Tag>
                                 <ute:Tag visible="false">
                                     <ute:Tag id="idnrgBillPostInvoiceTemp">
-                                        <ute:Tag text="{comp-billing>ItemDesc}" class="nrgBilling-cusDataBillingInfo-contentTitlenew"/>
+                                        <ute:Tag text="{parts:[{path: 'comp-billing>ItemDesc'},
+                                                        {path: 'comp-billing>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }],
+                                                         formatter:'._formatPostInvoice'}"
+                                                  class="nrgBilling-cusDataBillingInfo-contentTitlenew"/>
                                         <ute:Tag class="nrgBilling-cusDataBillingInfo-contentValuenew"
                                                text="{path: 'comp-billing>ValueLt', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"
-                                                />
+                                               />
                                     </ute:Tag>
                                 </ute:Tag>
 

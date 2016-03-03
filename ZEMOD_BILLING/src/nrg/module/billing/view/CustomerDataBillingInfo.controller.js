@@ -853,6 +853,24 @@ sap.ui.define(
             oDunningLocksTable.bindRows(oBindingInfo);
             this._oDunningDialog.open();
         };
+        /**
+		 * Formatter function
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype._formatPostInvoice = function (sDesc, sDate) {
+            if (sDesc) {
+                if (sDesc === 'Payment') {
+                    return sDesc + ' on ' + sDate;
+                } else {
+                    return sDesc;
+                }
+            } else {
+                return '';
+            }
+        };
+
         return CustomController;
     }
 );
