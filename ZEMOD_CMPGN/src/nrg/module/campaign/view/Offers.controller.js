@@ -305,11 +305,7 @@ sap.ui.define(
          * @private
 		 */
         Controller.prototype._bindCard = function (object, iCounter) {
-            var oFirstCardInvoice = this.getView().byId("idnrgCamOff-firstCardI"),
-                oSecondCardInvoice = this.getView().byId("idnrgCamOff-SecondCardI"),
-                oFirstCardConsumption = this.getView().byId("idnrgCamOff-firstCardC"),
-                oSecondCardConsumption = this.getView().byId("idnrgCamOff-SecondCardC"),
-                oSelectedObject,
+            var oSelectedObject,
                 sPath = object.getBindingContext("comp-campaign").getPath(),
                 aEFLDatapaths,
                 iCount,
@@ -953,6 +949,7 @@ sap.ui.define(
             if (oTableTag) {
                 oTableTag.removeContent(0);
             }
+            this.getOwnerComponent().getModel('comp-campaign').updateBindings(true);
             oProactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oReactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSaveButton.removeStyleClass("nrgCamOff-btn-selected");
