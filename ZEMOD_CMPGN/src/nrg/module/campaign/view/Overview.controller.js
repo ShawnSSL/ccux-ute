@@ -274,6 +274,7 @@ sap.ui.define(
 		 */
         Controller.prototype.onCustomerRequestedOffers = function (oEvent) {
             var sFirstMonthBill = oEvent.getSource().getBindingContext("comp-campaign").getProperty("FirstBill"),
+                sMsg = oEvent.getSource().getBindingContext("comp-campaign").getProperty("Message"),
                 sCustomerEligible = oEvent.getSource().getBindingContext("comp-campaign").getProperty("CustEligFlag"),
                 sInitTab = oEvent.getSource().getBindingContext("comp-campaign").getProperty("InitTab"),
                 sPendingMoveOut = oEvent.getSource().getBindingContext("comp-campaign").getProperty("PendMvo"),
@@ -295,7 +296,7 @@ sap.ui.define(
             if (!sFirstMonthBill) {
                 ute.ui.main.Popup.Alert({
                     title: 'Information',
-                    message: i18NModel.getProperty("nrgCmpOvrFirstBillMsg")
+                    message: sMsg
                 });
             } else {
 /*                if (sCustomerEligible === "X") {

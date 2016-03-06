@@ -447,6 +447,7 @@ sap.ui.define(
                         oCampaignModel.setProperty('/CampaignFirstBill', oData.FirstBill);
                         oCampaignModel.setProperty('/CampaignButtonType', oData.InitTab);
                         oCampaignModel.setProperty('/CampaignButtonMoveOut', oData.PendMvo);
+                        oCampaignModel.setProperty('/CampaignButtonMsg', oData.Message);
                     }
                 }.bind(this),
                 error: function (oError) {
@@ -487,6 +488,7 @@ sap.ui.define(
         Controller.prototype._onCampaignBtnClick = function (oEvent) {
             var oCampaignModel = this.getView().getModel('oFooterCampaign'),
                 sFirstMonthBill = oCampaignModel.getProperty("/CampaignFirstBill"),
+                sMsg = oCampaignModel.getProperty("/CampaignButtonMsg"),
                 sPendingMoveOut = oCampaignModel.getProperty("/CampaignButtonMoveOut"),
                 sInitTab = oCampaignModel.getProperty("/CampaignButtonType"),
                 oRouter = this.getOwnerComponent().getRouter(),
@@ -504,7 +506,7 @@ sap.ui.define(
             if (!sFirstMonthBill) {
                 ute.ui.main.Popup.Alert({
                     title: 'Information',
-                    message: 'Ask the customer to call us back after the 1st bill.'
+                    message: sMsg
                 });
                 return;
             }
