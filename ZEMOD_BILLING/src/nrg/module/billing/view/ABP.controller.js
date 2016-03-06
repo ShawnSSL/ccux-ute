@@ -37,11 +37,17 @@ sap.ui.define(
 
             // Set up models
             this.getView().setModel(this._OwnerComponent.getModel('comp-billing-avgplan'), 'oDataAvgSvc');
+            this.getView().setModel(this._OwnerComponent.getModel('comp-dppext'), 'oDataSvc');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEligibility');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oUsageGraph');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oAmountBtn');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oAmountHistory');
+                        //Model for DppComunication (DPPIII)
+            this.getView().setModel(new JSONModel(), 'oDppStepThreeCom');
 
+            //Model for screen control
+            this.getView().setModel(new JSONModel(), 'oABPScrnControl');
+            this._initScrnControl();
             // Retrieve routing parameters
             var oRouteInfo = this._OwnerComponent.getCcuxRouteManager().getCurrentRouteInfo();
 
@@ -51,9 +57,103 @@ sap.ui.define(
 
             this._initialCheck();
         };
+        Controller.prototype._initScrnControl = function () {
+            var oScrnControl = this.getView().getModel('oABPScrnControl');
+            oScrnControl.setProperty('/Table', true);
+            oScrnControl.setProperty('/Graph', true);
+            oScrnControl.setProperty('/Note', true);
+            oScrnControl.setProperty('/Correspondence', false);
+        };
+        Controller.prototype._selectScrn = function (bCorres) {
+            var oScrnControl = this.getView().getModel('oABPScrnControl');
 
+            if (bCorres) {
+                oScrnControl.setProperty('/Table', false);
+                oScrnControl.setProperty('/Graph', false);
+                oScrnControl.setProperty('/Note', false);
+                oScrnControl.setProperty('/Correspondence', true);
+                this._retrDppComunication();
+            }
+        };
         /*------------------------------------------------ Retrieve Methods -------------------------------------------------*/
+        Controller.prototype._onComEmailCheck = function () {
+            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
 
+            oDPPComunication.setProperty('/eMailCheck', true);
+            oDPPComunication.setProperty('/FaxCheck', false);
+            oDPPComunication.setProperty('/AddrCheck', false);
+        };
+
+        Controller.prototype._onComFaxCheck = function () {
+            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
+
+            oDPPComunication.setProperty('/eMailCheck', false);
+            oDPPComunication.setProperty('/FaxCheck', true);
+            oDPPComunication.setProperty('/AddrCheck', false);
+        };
+
+        Controller.prototype._onComAddrCheck = function () {
+            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
+
+            oDPPComunication.setProperty('/eMailCheck', false);
+            oDPPComunication.setProperty('/FaxCheck', false);
+            oDPPComunication.setProperty('/AddrCheck', true);
+        };
+        Controller.prototype._postDPPCommunication = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                oDPPComunication = this.getView().getModel('oDppStepThreeCom');
+
+            sPath = '/DPPCorresps';
+
+            oParameters = {
+                merge: false,
+                success : function (oData) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DEFFERED PAYMENT PLAN',
+                        message: 'Correspondence Successfully Sent.'
+                    });
+                    this._ABPPopupControl.close();
+                }.bind(this),
+                error: function (oError) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DEFFERED PAYMENT PLAN',
+                        message: 'Correspondence Failed'
+                    });
+                }.bind(this)
+            };
+
+            if (oODataSvc) {
+                oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
+            }
+        };
+        Controller.prototype._retrDppComunication = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                sProcess = 'ABP';
+
+            sPath = '/DPPCorresps(CA=\'' + this._caNum + '\',Contract=\'' + this._coNum + '\',BP=\'' + this._bpNum + '\',Process=\'' + sProcess + '\')';
+
+            oParameters = {
+                success : function (oData) {
+                    if (oData) {
+                        this.getView().getModel('oDppStepThreeCom').setData(oData);
+                        this.getView().getModel('oDppStepThreeCom').setProperty('/eMailCheck', true);
+                        this.getView().getModel('oDppStepThreeCom').setProperty('/FaxCheck', false);
+                        this.getView().getModel('oDppStepThreeCom').setProperty('/AddrCheck', false);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                }.bind(this)
+            };
+
+            if (oODataSvc) {
+                oODataSvc.read(sPath, oParameters);
+            }
+        };
         Controller.prototype._retrieveTableInfo = function (sCoNumber, fnCallback) {
             var sPath = '/AvgAddS',
                 aFilters = [],
@@ -377,14 +477,13 @@ sap.ui.define(
                     },
                     success : function (oData, response) {
                         if (oData.Code === "S") {
-                            // close the ABP pop up
-                            this._ABPPopupControl.close();
                             // Display the success message
                             ute.ui.main.Popup.Alert({
                                 title: 'Success',
                                 message: 'ABP activation success and contact log has been created.'
                             });
-                            this._retrieveABPEligibility(this._coNum);
+                            this._selectScrn(true);
+                            //this._retrieveABPEligibility(this._coNum);
                         } else {
                             ute.ui.main.Popup.Alert({
                                 title: 'Request failed',

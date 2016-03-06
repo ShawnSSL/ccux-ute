@@ -15,7 +15,7 @@
 
     <ute:Tag class="nrgBilling-avgBillingPopup-content">
         <!-- Amount Due -->
-        <ute:Tag class="nrgBilling-avgBillingPopup-amountDueSec">
+        <ute:Tag class="nrgBilling-avgBillingPopup-amountDueSec" visible="{oABPScrnControl>/Table}">
             <ute:Tag
                 elem="sapn"
                 text="{comp-i18n-billing>nrgBilling-avgBillingPopup-amountDue-TITLE}"
@@ -130,10 +130,11 @@
         <ute:Tag
             elem="sapn"
             text="{comp-i18n-billing>nrgBilling-avgBillingPopup-NOTE}"
-            class="nrgBilling-avgBillingPopup-amountDue-note"/>
+            class="nrgBilling-avgBillingPopup-amountDue-note"
+            visible="{oABPScrnControl>/Note}"/>
 
         <!-- Graph -->
-        <ute:Tag class="nrgBilling-avgBillingPopup-usageSec">
+        <ute:Tag class="nrgBilling-avgBillingPopup-usageSec" visible="{oABPScrnControl>/Graph}">
             <ute:Tag
                 elem="sapn"
                 text="{comp-i18n-billing>nrgBilling-avgBillingPopup-usage-TITLE}"
@@ -162,6 +163,126 @@
                             <span>USAGE <ute:Tag elem="span" id="nrgBilling-avgBillingPopup-graphControlText-2"/></span>
                         </utmain:Label>
                     </ute:Tag>
+                </ute:Tag>
+            </ute:Tag>
+        </ute:Tag>
+        <ute:Tag class="nrgBilling-ABP-lftArea"  visible="{oABPScrnControl>/Correspondence}">
+            <ute:Tag class="nrgBilling-ABP-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
+            <ute:Tag class="nrgBilling-ABP-lftArea-divider"/>
+            <ute:Tag class="nrgBilling-ABP-lftArea-top">
+                <ute:Tag class="nrgBilling-ABP-lftArea-top-l">
+                    <ute:Tag class="nrgBilling-dltl-step" text="{comp-i18n-billing>nrgBilling-dpp-StepTre}"/>
+                </ute:Tag>
+            </ute:Tag>
+            <ute:Tag class="nrgBilling-ABP-lftArea-ctnt">
+                <ute:Tag class="nrgBilling-ABP-lftArea-ctnt-corr">
+                    <ute:Tag class="nrgBilling-dlcc-chbrow">
+                        <utmain:Checkbox class="nrgBilling-dlcc-chbrow-chb"
+                                         checked="{oDppStepThreeCom>/eMailCheck}" select="._onComEmailCheck"/>
+                        <utmain:Label class="nrgBilling-dlcc-chbrow-lbl" text="{comp-i18n-billing>nrgBilling-dpp-viaEmail}"/>
+                        <ute:Textfield class="nrgBilling-dlcc-mail-val"
+                                       fieldType="Underlined" width="200px" value="{oDppStepThreeCom>/eMail}"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgBilling-dlcc-chbrow">
+                        <utmain:Checkbox class="nrgBilling-dlcc-chbrow-chb"
+                                         checked="{oDppStepThreeCom>/FaxCheck}" select="._onComFaxCheck"/>
+                        <utmain:Label class="nrgBilling-dlcc-chbrow-lbl" text="{comp-i18n-billing>nrgBilling-dpp-viaFax}"/>
+                        <ute:Textfield class="nrgBilling-dlcc-mail-val"
+                                       fieldType="Underlined" width="200px" value="{oDppStepThreeCom>/Fax}"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgBilling-dlcc-chbrow">
+                        <utmain:Label class="nrgBilling-dlcc-chbrow-lbl" text="{comp-i18n-billing>nrgBilling-dpp-incareof}"/>
+                        <ute:Textfield class="nrgBilling-dlcc-mail-val"
+                                       fieldType="Underlined" width="330px" value="{oDppStepThreeCom>/Contract}"/>
+                    </ute:Tag>
+                </ute:Tag>
+                <ute:Tag class="nrgBilling-ABP-lftArea-ctnt-corr">
+                    <ute:Tag class="nrgBilling-dlcc-chbrow">
+                        <utmain:Checkbox class="nrgBilling-dlcc-chbrow-chb"
+                                         checked="{oDppStepThreeCom>/eAddrCheck}" select="._onComAddrCheck"/>
+                        <utmain:Label class="nrgBilling-dlcc-chbrow-lbl" text="{comp-i18n-billing>nrgBilling-dpp-viaMail}"/>
+                        <!--<utmain:Dropdown class="nrgBilling-dlcc-chbrow-sel">
+                            <utmain:DropdownItem>
+                                <ute:Tag elem="span" text="option1" />
+                            </utmain:DropdownItem>
+                            <utmain:DropdownItem>
+                                <ute:Tag elem="span" text="option2" />
+                            </utmain:DropdownItem>
+                        </utmain:Dropdown>-->
+                    </ute:Tag>
+                    <ute:Tag class="nrgBilling-dlcc-mail">
+                        <ute:Tag class="nrgBilling-dlcc-mail-l">
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-incareof}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-val"
+                                               fieldType="Underlined" width="330px" value="{oDppStepThreeCom>/Contract}"/>
+                            </ute:Tag>
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <ute:Tag class="nrgBilling-dlcc-mail-row-column">
+                                    <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-stNum}"/>
+                                    <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
+                                                   fieldType="Underlined" width="90px" value="{oDppStepThreeCom>/Address/HouseNo}"/>
+                                </ute:Tag>
+                                <ute:Tag class="nrgBilling-dlcc-mail-row-column">
+                                    <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-aptNo}"/>
+                                    <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
+                                                   fieldType="Underlined" width="120px" value="{oDppStepThreeCom>/Address/UnitNo}"/>
+                                </ute:Tag>
+                            </ute:Tag>
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <ute:Tag class="nrgBilling-dlcc-mail-row-colCity">
+                                    <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-city}"/>
+                                    <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
+                                                   fieldType="Underlined" width="232px" value="{oDppStepThreeCom>/Address/City}"/>
+                                </ute:Tag>
+                                <ute:Tag class="nrgBilling-dlcc-mail-row-colState">
+                                    <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-state}"/>
+                                    <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
+                                                   fieldType="Underlined" width="77px" value="{oDppStepThreeCom>/Address/State}"/>
+                                </ute:Tag>
+                            </ute:Tag>
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-country}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-val"
+                                               fieldType="Underlined" width="340px" value="{oDppStepThreeCom>/Address/Country}"/>
+                            </ute:Tag>
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-addrTtl}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-val"
+                                               fieldType="Underlined" width="307px" value="{oDppStepThreeCom>/Address/AddrLine}"/>
+                            </ute:Tag>
+                        </ute:Tag>
+                        <ute:Tag class="nrgBilling-dlcc-mail-r">
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-stNAme}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-val"
+                                               fieldType="Underlined" width="177px" value="{oDppStepThreeCom>/Address/Street}"/>
+                            </ute:Tag>
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-poBox}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-val"
+                                               fieldType="Underlined" width="214px" value="{oDppStepThreeCom>/Address/PoBox}"/>
+                            </ute:Tag>
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-zip}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-val"
+                                               fieldType="Underlined" width="243px" value="{oDppStepThreeCom>/Address/ZipCode}"/>
+                            </ute:Tag>
+                        </ute:Tag>
+                    </ute:Tag>
+                    <!--<ute:Tag class="nrgBilling-dlcc-chbrow">
+                        <utmain:Checkbox class="nrgBilling-dlcc-chbrow-chb"/>
+                        <utmain:Label class="nrgBilling-dlcc-chbrow-lbl" text="Save New Address"/>
+                    </ute:Tag>-->
+                </ute:Tag>
+            </ute:Tag>
+            <ute:Tag class="nrgBilling-ABP-lftArea-botm">
+                <ute:Tag class="nrgBilling-ABP-lftArea-botm-btns">
+                    <!--<utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnBack}"/>-->
+                    <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnSend}"
+                                   press="._postDPPCommunication"/>
+                    <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnCncl}"
+                                   press="._onCancelBtnClick"/>
                 </ute:Tag>
             </ute:Tag>
         </ute:Tag>

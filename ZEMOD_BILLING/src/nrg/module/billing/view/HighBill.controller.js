@@ -38,6 +38,7 @@ sap.ui.define(
             this.getView().unbindElement("comp-highbill");
             oDropDownList.unbindAggregation("content");
             oNotifications.unbindAggregation("content");
+            that.getOwnerComponent().getCcuxApp().setOccupied(true);
             sCurrentPath = "/BillWizardS";
             aFilterIds = ["Contract"];
             aFilterValues = [this._coNum];
