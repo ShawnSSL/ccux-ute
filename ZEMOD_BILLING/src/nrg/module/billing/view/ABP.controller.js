@@ -125,6 +125,7 @@ sap.ui.define(
             };
 
             if (oODataSvc) {
+                oDPPComunication.oData.Process = 'ABP';
                 oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
             }
         };
@@ -392,11 +393,10 @@ sap.ui.define(
             } else {
                 ute.ui.main.Popup.Alert({
                     title: 'Contract Not Found',
-                    message: 'Contract number is not found in the routing.'
+                    message: 'Customer is not eligible.'
                 });
-                
-                // Close the ABP popup
                 this._ABPPopupControl.close();
+                // Close the ABP popup
             }
         };
 
