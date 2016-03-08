@@ -1059,7 +1059,7 @@ sap.ui.define(
 
             oParameters = {
                 success : function (oData) {
-                    if (oData) {
+                    if (oData && oData.results && oData.results.length > 0) {
                         // Set select key for all CAs for CA dropdown
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             oData.results[i].iIndex = i.toString();
@@ -1143,7 +1143,7 @@ sap.ui.define(
                         // Load the first CO to display or if CO found in the routing load that CO.
                         var bCoFound = false,
                             sSelectedItem = -1;
-                        if (oData.results) {
+                        if (oData.results && oData.results.length > 0) {
 
                             if (that._coNum) {
                                 oData.results.forEach(function (item, index) {
