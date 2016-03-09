@@ -61,8 +61,7 @@ sap.ui.define(
             oContactModel = new sap.ui.model.json.JSONModel();
             this.getView().setModel(oContactModel, "quickpay-cl");
             this.getView().setModel(oViewModel, "appView");
-            sCurrentPath = "/PayAvailFlagsSet";
-            sCurrentPath = sCurrentPath + "(BP='" + this._sBP + "',CA='" + this._sCA + "')";
+            sCurrentPath = "/PayAvailFlagsSet" + "(BP='" + this._sBP + "',CA='" + this._sCA + "')";
             fnRecievedHandler = function (oEvent) {
                 jQuery.sap.log.info("Date Received Succesfully");
                 that._OwnerComponent.getCcuxApp().setOccupied(false);
@@ -204,43 +203,78 @@ sap.ui.define(
                 oZipCode = this.getView().byId("idnrgQPCC-zipcode"),
                 oCVVCode = this.getView().byId("idnrgQPCC-cvv"),
                 oInvoiceDate,
-                oCallFunctionHandler,
-                oConfirmCallbackHandler;
+                oCallSubmit,
+                oConfirmCallbackHandler,
+                oPayAvailFlags = "/PayAvailFlagsSet" + "(BP='" + parseInt(this._sBP, 10) + "',CA='" +  parseInt(this._sCA, 10) + "')",
+                oContext,
+                sName,
+                oCheckDateFunction,
+                sMessage,
+                oConfirmMsgCallBack;
+            oContext = oModel.getContext(oPayAvailFlags);
+            that.getView().getModel("appView").setProperty("/message", "");
             oMsgArea.removeStyleClass("nrgQPPay-hide");
             oMsgArea.addStyleClass("nrgQPPay-black");
             if (!this._ValidateValue(oCreditCardAmount.getValue(), "Enter Amount to be posted")) {
                 return false;
-                //jQuery.sap.log.info("Date Received Succesfully");
             }
             if (!this._ValidateValue(oCreditCardDropDown.getSelectedKey(), "Select Credit Card")) {
                 return false;
-                //jQuery.sap.log.info("Date Received Succesfully");
             }
             if (!this._ValidateValue(oZipCode.getValue(), "Enter Zip Code")) {
                 return false;
-                //jQuery.sap.log.info("Date Received Succesfully");
             }
             if (!this._ValidateValue(oCVVCode.getValue(), "Enter CVV")) {
                 return false;
-                //jQuery.sap.log.info("Date Received Succesfully");
             }
-            this._OwnerComponent.getCcuxApp().setOccupied(true);
+
             sCurrentPath = "/CreditCardPost";
             oCreditCardDateValue = new Date(oCreditCardDate.getValue());
             oInvoiceDate = oCreditCardModel.getProperty("/InvoiceDate");
-            oConfirmCallbackHandler = function (sAction) {
+            sMessage = oContext.getProperty("CaName") + ", just to confirm, you have requested to make a payment today in the amount of " + oCreditCardAmount.getValue() + ". Is this correct ?";
+            ute.ui.main.Popup.Confirm({
+                title: 'Information',
+                message: sMessage,
+                callback: oConfirmMsgCallBack
+            });
+            oConfirmMsgCallBack = function (sAction) {
                 switch (sAction) {
                 case ute.ui.main.Popup.Action.Yes:
-                    oCallFunctionHandler();
+                    oCheckDateFunction(true);
                     break;
                 case ute.ui.main.Popup.Action.No:
-                    that._OwnerComponent.getCcuxApp().setOccupied(false);
-                    break;
-                case ute.ui.main.Popup.Action.Ok:
+                    oCheckDateFunction(false);
                     break;
                 }
             };
-            oCallFunctionHandler = function () {
+            oCheckDateFunction = function (bForward) {
+                if (!bForward) {
+                    return;
+                }
+                if (oCreditCardDateValue.getTime() > oInvoiceDate.getTime()) {
+                    ute.ui.main.Popup.Confirm({
+                        title: 'Information',
+                        message: 'Your Scheduled payment date is after the due date. You will be subject to applicable late fees and/or disconnection.',
+                        callback: oConfirmCallbackHandler
+                    });
+                } else {
+                    oCallSubmit(true);
+                }
+            };
+            oConfirmCallbackHandler = function (sAction) {
+                switch (sAction) {
+                case ute.ui.main.Popup.Action.Yes:
+                    oCallSubmit(true);
+                    break;
+                case ute.ui.main.Popup.Action.No:
+                    oCallSubmit(false);
+                    break;
+                }
+            };
+            oCallSubmit = function (bForward) {
+                if (!bForward) {
+                    return;
+                }
                 mParameters = {
                     method : "POST",
                     urlParameters : {
@@ -280,17 +314,9 @@ sap.ui.define(
                         that._OwnerComponent.getCcuxApp().setOccupied(false);
                     }.bind(this)
                 };
+                this._OwnerComponent.getCcuxApp().setOccupied(true);
                 oModel.callFunction(sCurrentPath, mParameters);
             };
-            if (oCreditCardDateValue.getTime() > oInvoiceDate.getTime()) {
-                ute.ui.main.Popup.Confirm({
-                    title: 'Information',
-                    message: 'Your Scheduled payment date is after the due date. You will be subject to applicable late fees and/or disconnection.',
-                    callback: oConfirmCallbackHandler
-                });
-            } else {
-                oCallFunctionHandler();
-            }
         };
        /**
 		 * Pending Credit Card Process initialization
