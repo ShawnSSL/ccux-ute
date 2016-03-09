@@ -103,22 +103,65 @@ sap.ui.define(
             var oODataSvc = this.getView().getModel('oDataSvc'),
                 oParameters,
                 sPath,
-                oDPPComunication = this.getView().getModel('oDppStepThreeCom');
+                oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
+                oData = oDPPComunication.oData;
 
+
+            if (oData.eMailCheck) {
+                if (!oData.eMail) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'AVERAGE BILLING',
+                        message: 'Email field is empty'
+                    });
+                    return false;
+                }
+            }
+            if (oData.FaxCheck) {
+                if (!oData.Fax) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'AVERAGE BILLING',
+                        message: 'Email field is empty'
+                    });
+                    return false;
+                }
+            }
+            if (oData.AddrCheck) {
+                if (!oData.Address.HouseNo) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'AVERAGE BILLING',
+                        message: 'Address is not complete'
+                    });
+                    return false;
+                }
+            }
             sPath = '/DPPCorresps';
 
             oParameters = {
                 merge: false,
                 success : function (oData) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
-                        message: 'Correspondence Successfully Sent.'
-                    });
+                    if (oData.Error) {
+                        if (oData.Message) {
+                            ute.ui.main.Popup.Alert({
+                                title: 'AVERAGE BILLING',
+                                message: oData.Message
+                            });
+                        } else {
+                            ute.ui.main.Popup.Alert({
+                                title: 'AVERAGE BILLING',
+                                message: 'Correspondence Failed'
+                            });
+                        }
+                    } else {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Correspondence Successfully Sent.'
+                        });
+                    }
                     this._ABPPopupControl.close();
                 }.bind(this),
                 error: function (oError) {
                     ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
+                        title: 'AVERAGE BILLING',
                         message: 'Correspondence Failed'
                     });
                 }.bind(this)
@@ -141,9 +184,9 @@ sap.ui.define(
                 success : function (oData) {
                     if (oData) {
                         this.getView().getModel('oDppStepThreeCom').setData(oData);
-                        this.getView().getModel('oDppStepThreeCom').setProperty('/eMailCheck', true);
-                        this.getView().getModel('oDppStepThreeCom').setProperty('/FaxCheck', false);
-                        this.getView().getModel('oDppStepThreeCom').setProperty('/AddrCheck', false);
+                        //this.getView().getModel('oDppStepThreeCom').setProperty('/eMailCheck', true);
+                        //this.getView().getModel('oDppStepThreeCom').setProperty('/FaxCheck', false);
+                        //this.getView().getModel('oDppStepThreeCom').setProperty('/AddrCheck', false);
                     }
                 }.bind(this),
                 error: function (oError) {
@@ -170,7 +213,7 @@ sap.ui.define(
             oParameters = {
                 filters: aFilters,
                 success : function (oData) {
-                    if (oData.results) {
+                    if (oData.results && oData.results.length > 0) {
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             if (oData.results[i].Period !== "Total") {
                                 dataEntry = {};
@@ -194,7 +237,14 @@ sap.ui.define(
                         if (fnCallback) {
                             fnCallback();
                         }
+                    } else {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Customer had no Billing History'
+                        });
+                        this._ABPPopupControl.close();
                     }
+
                 }.bind(this),
                 error: function (oError) {
 
@@ -414,8 +464,9 @@ sap.ui.define(
                 i,
                 periodParameterName,
                 basisParameterName,
-                adjustParameterName;
-
+                adjustParameterName,
+                that = this;
+            that._OwnerComponent.getCcuxApp().setOccupied(true);
             oPayload.Contract = this._coNum;
             for (i = 0; i < oHistoryModel.oData.length; i = i + 1) {
                 periodParameterName = 'Prd' + this._pad(i + 1);
@@ -442,6 +493,7 @@ sap.ui.define(
                     method : "POST",
                     urlParameters : oPayload,
                     success : function (oData, response) {
+                        that._OwnerComponent.getCcuxApp().setOccupied(false);
                         if (oData.Code === "S") {
                             oHistoryModel.setProperty('/estAmount', "$" + parseFloat(oData.Message));
                         } else {
@@ -452,6 +504,7 @@ sap.ui.define(
                         }
                     }.bind(this),
                     error: function (oError) {
+                        that._OwnerComponent.getCcuxApp().setOccupied(false);
                         ute.ui.main.Popup.Alert({
                             title: 'Request failed',
                             message: 'The request cannot be sent due to the network or the oData service.'
@@ -465,8 +518,9 @@ sap.ui.define(
         Controller.prototype._onSetBtnClick = function () {
             var oModel = this.getView().getModel('oDataAvgSvc'),
                 oHistoryModel = this.getView().getModel('oAmountHistory'),
-                mParameters;
-
+                mParameters,
+                that = this;
+            this._OwnerComponent.getCcuxApp().setOccupied(true);
             if (oModel) {
                 mParameters = {
                     method : "POST",
@@ -476,6 +530,7 @@ sap.ui.define(
                         "IsRetro": this.isRetro
                     },
                     success : function (oData, response) {
+                        that._OwnerComponent.getCcuxApp().setOccupied(false);
                         if (oData.Code === "S") {
                             // Display the success message
                             ute.ui.main.Popup.Alert({
@@ -492,6 +547,7 @@ sap.ui.define(
                         }
                     }.bind(this),
                     error: function (oError) {
+                        that._OwnerComponent.getCcuxApp().setOccupied(false);
                         ute.ui.main.Popup.Alert({
                             title: 'Request failed',
                             message: 'The request cannot be sent due to the network or the oData service.'
@@ -505,8 +561,9 @@ sap.ui.define(
         Controller.prototype._onDeactBtnClick = function () {
             var oModel = this.getView().getModel('oDataAvgSvc'),
                 oHistoryModel = this.getView().getModel('oAmountHistory'),
-                mParameters;
-
+                mParameters,
+                that = this;
+            that._OwnerComponent.getCcuxApp().setOccupied(true);
             if (oModel) {
                 mParameters = {
                     method : "POST",
@@ -514,6 +571,7 @@ sap.ui.define(
                         "Contract": this._coNum
                     },
                     success : function (oData, response) {
+                        that._OwnerComponent.getCcuxApp().setOccupied(false);
                         if (oData.Code === "S") {
                             // close the ABP pop up
                             this._ABPPopupControl.close();
@@ -531,6 +589,7 @@ sap.ui.define(
                         }
                     }.bind(this),
                     error: function (oError) {
+                        that._OwnerComponent.getCcuxApp().setOccupied(false);
                         ute.ui.main.Popup.Alert({
                             title: 'Request failed',
                             message: 'The request cannot be sent due to the network or the oData service.'

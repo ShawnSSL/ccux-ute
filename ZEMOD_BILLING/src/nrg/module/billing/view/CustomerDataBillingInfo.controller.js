@@ -427,6 +427,7 @@ sap.ui.define(
             QuickControl.openQuickPay(this._sContract, this._sBP, this._sCA);
             QuickControl.attachEvent("PaymentCompleted", function () {
                 that._initRetrBillInvoices();
+                that._initPostInvoice();
             }, this);
         };
 

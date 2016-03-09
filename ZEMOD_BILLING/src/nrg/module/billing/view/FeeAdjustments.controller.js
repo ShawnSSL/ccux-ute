@@ -164,13 +164,22 @@ sap.ui.define(
                     if (oData && oData.Success) {
                         ute.ui.main.Popup.Alert({
                             title: "Fee Adjustments",
-                            message: "The late fee has been successfully removed."
+                            message: oData.Message
                         });
                     } else {
-                        ute.ui.main.Popup.Alert({
-                            title: "Fee Adjustments",
-                            message: "Late Fee has not been removed."
-                        });
+                        var sMessage = "<div style='margin:10px'>" + oData.Message + "</div>",
+                            oText = new sap.ui.core.HTML({content: sMessage}),
+                            oButton = new ute.ui.main.Button({text: 'OK', press: function () {that._AlertDialog.close(); }}),
+                            oTag = new ute.ui.commons.Tag();
+                        oTag.addContent(oText);
+                        oTag.addContent(oButton);
+                        if (that._AlertDialog === undefined) {
+                            that._AlertDialog = new ute.ui.main.Popup.create({
+                                title: "Fee Adjustments",
+                                content: oTag
+                            });
+                        }
+                        that._AlertDialog.open();
                     }
                     that.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
                 }.bind(this),
@@ -458,7 +467,28 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onCancel = function (oEvent) {
+            var oText = new sap.ui.core.HTML({content: "<div style='position:relative;width:64px;height:64px;background-color:black;'></div>"}),
+                oButton = new ute.ui.main.Button({text: 'OK', press: function () {this.Popupclose(); }}),
+                oTag = new ute.ui.commons.Tag();
+            oTag.addContent(oText);
+            oTag.addContent(oButton);
+            if (this._AlertDialog === undefined) {
+                this._AlertDialog = new ute.ui.main.Popup.create({
+                    title: 'Change Campaign - Cancel',
+                    content: oTag
+                });
+            }
+            this._AlertDialog.open();
             this.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
+        };
+         /**
+		 * Clicked on Cancel Button
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.Popupclose = function (oEvent) {
+            this._AlertDialog.close();
         };
         /**
 		 * Clicked on Cancel Button

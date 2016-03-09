@@ -106,9 +106,9 @@
                     <m:ScrollContainer class="nrgBilling-highBill-cusDriven-body-scrollArea" height="150px" horizontal="false" vertical="true" id="idnrgHighBill-CustDriv">
                         <ute:Tag content="{comp-highbill>CustDrv}">
                             <ute:Tag class="nrgBilling-highBill-cusDriven-row">
-                                <ute:Tag class="nrgBilling-highBill-cusDriven-statis">
-                                    <core:Icon src="{= ${comp-highbill>Increase} ? 'sap-icon://up' : 'sap-icon://down' }"
-                                               class="nrgBilling-highBill-cusDriven-statis-icon" />
+                                <ute:Tag class="nrgBilling-highBill-cusDriven-statis" >
+                                    <core:Icon src="{= ${comp-highbill>Increase} ? 'sap-icon://up' : (${comp-highbill>Increase} === undefined ? '' : 'sap-icon://down') }"
+                                        class="nrgBilling-highBill-nonCusImpacts-statis-icon" />
                                     <ute:Tag class="nrgBilling-highBill-cusDriven-statis-number" text="{comp-highbill>Amount}"/>
                                 </ute:Tag>
                                 <ute:Tag class="nrgBilling-highBill-cusDriven-type"
