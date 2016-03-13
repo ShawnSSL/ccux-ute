@@ -287,7 +287,7 @@ sap.ui.define(
                 }
             }
 
-            sPath = '/BuagAddrDetails' + '(' + 'PartnerID=\'' + sBpNum + '\'' + ',ContractAccountID=\'' + sBuagNum + '\'' + ',FixedAddressID=\'' + sFixedAddressID + '\')';
+
 
             oParameters = {
                 urlParameters: {},
@@ -303,8 +303,10 @@ sap.ui.define(
 
             if (oModel) {
                 if (this.getView().getModel('oDtaAddrEdit').getProperty('/bCreateFirst')) {
+                    sPath = '/BuagAddrDetails';
                     oModel.create(sPath, this.getView().getModel('oDataBuagAddrDetails').oData, oParameters);
                 } else {
+                    sPath = '/BuagAddrDetails' + '(' + 'PartnerID=\'' + sBpNum + '\'' + ',ContractAccountID=\'' + sBuagNum + '\'' + ',FixedAddressID=\'' + sFixedAddressID + '\')';
                     oModel.update(sPath, this.getView().getModel('oDataBuagAddrDetails').oData, oParameters);
                 }
             }
