@@ -24,7 +24,7 @@ sap.ui.define(
 		/* lifecycle method- Before Rendering                          */
 		/* =========================================================== */
         Controller.prototype.onBeforeRendering = function () {
-            var oModel = this.getView().getModel('comp-quickpay'),
+/*            var oModel = this.getView().getModel('comp-quickpay'),
                 mParameters,
                 sCurrentPath,
                 oMsgArea = this.getView().byId("idnrgQPPay-msgArea"),
@@ -59,7 +59,7 @@ sap.ui.define(
                 path : sCurrentPath,
                 events: {dataReceived : fnRecievedHandler}
             });
-            oMsgArea.addStyleClass("nrgQPPay-hide");
+            oMsgArea.addStyleClass("nrgQPPay-hide");*/
         };
 /********************************  Credit card Related functionality Start ***********************************/
         /**
@@ -69,7 +69,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onCreditCard = function (oEvent) {
-            var oTBIStopRec = this.getView().byId("idnrgQPPay-TBIStopRec"),
+ /*           var oTBIStopRec = this.getView().byId("idnrgQPPay-TBIStopRec"),
                 fnRecievedHandler,
                 oCreditCardDropDown = this.getView().byId("idnrgQPCC-DDL"),
                 oBindingInfo,
@@ -144,7 +144,7 @@ sap.ui.define(
                 parameters: {countMode : "None"},
                 events: {dataReceived : WRRecievedHandler}
             };
-            oWaiveReasonDropDown.bindAggregation("content", oBindingInfo);
+            oWaiveReasonDropDown.bindAggregation("content", oBindingInfo);*/
         };
         /**
 		 * When Credit Card is Accepted
@@ -153,7 +153,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onAcceptCredit = function (oEvent) {
-            var oModel = this.getView().getModel('comp-quickpay'),
+/*            var oModel = this.getView().getModel('comp-quickpay'),
                 mParameters,
                 sCurrentPath,
                 oMsgArea = this.getView().byId("idnrgQPPay-msgArea"),
@@ -169,7 +169,8 @@ sap.ui.define(
                 oCVVCode = this.getView().byId("idnrgQPCC-cvv"),
                 oInvoiceDate,
                 oCallFunctionHandler,
-                oConfirmCallbackHandler;
+                oConfirmCallbackHandler,
+                dCurrentDate = new Date();
             oMsgArea.removeStyleClass("nrgQPPay-hide");
             oMsgArea.addStyleClass("nrgQPPay-black");
             if (!this._ValidateValue(oCreditCardAmount.getValue(), "Enter Amount to be posted")) {
@@ -191,7 +192,25 @@ sap.ui.define(
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             sCurrentPath = "/CreditCardPost";
             oCreditCardDateValue = new Date(oCreditCardDate.getValue());
+
             oInvoiceDate = oCreditCardModel.getProperty("/InvoiceDate");
+
+            if (oCreditCardDateValue) {
+                oCreditCardDateValue.setHours("00");
+                oCreditCardDateValue.setMinutes("00");
+                oCreditCardDateValue.setSeconds("00");
+            }
+
+            if (oInvoiceDate) {
+                oInvoiceDate.setHours("00");
+                oInvoiceDate.setMinutes("00");
+                oInvoiceDate.setSeconds("00");
+            }
+            if (dCurrentDate) {
+                dCurrentDate.setHours("00");
+                dCurrentDate.setMinutes("00");
+                dCurrentDate.setSeconds("00");
+            }
             oConfirmCallbackHandler = function (sAction) {
                 switch (sAction) {
                 case ute.ui.main.Popup.Action.Yes:
@@ -247,15 +266,17 @@ sap.ui.define(
                 };
                 oModel.callFunction(sCurrentPath, mParameters);
             };
-            if (oCreditCardDateValue.getTime() > oInvoiceDate.getTime()) {
-                ute.ui.main.Popup.Confirm({
-                    title: 'Information',
-                    message: 'Your Scheduled payment date is after the due date. You will be subject to applicable late fees and/or disconnection.',
-                    callback: oConfirmCallbackHandler
-                });
+            if ((oCreditCardDateValue.getTime() > dCurrentDate.getTime())) {
+                if (oCreditCardDateValue.getTime() > oInvoiceDate.getTime()) {
+                    ute.ui.main.Popup.Confirm({
+                        title: 'Information',
+                        message: 'Your Scheduled payment date is after the due date. You will be subject to applicable late fees and/or disconnection.',
+                        callback: oConfirmCallbackHandler
+                    });
+                }
             } else {
                 oCallFunctionHandler();
-            }
+            }*/
         };
        /**
 		 * Pending Credit Card Process initialization

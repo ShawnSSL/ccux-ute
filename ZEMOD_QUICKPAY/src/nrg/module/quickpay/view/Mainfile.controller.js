@@ -210,7 +210,8 @@ sap.ui.define(
                 sName,
                 oCheckDateFunction,
                 sMessage,
-                oConfirmMsgCallBack;
+                oConfirmMsgCallBack,
+                dCurrentDate = new Date();
             oContext = oModel.getContext(oPayAvailFlags);
             that.getView().getModel("appView").setProperty("/message", "");
             oMsgArea.removeStyleClass("nrgQPPay-hide");
@@ -231,46 +232,24 @@ sap.ui.define(
             sCurrentPath = "/CreditCardPost";
             oCreditCardDateValue = new Date(oCreditCardDate.getValue());
             oInvoiceDate = oCreditCardModel.getProperty("/InvoiceDate");
+            if (oCreditCardDateValue) {
+                oCreditCardDateValue.setHours("00");
+                oCreditCardDateValue.setMinutes("00");
+                oCreditCardDateValue.setSeconds("00");
+            }
+
+            if (oInvoiceDate) {
+                oInvoiceDate.setHours("00");
+                oInvoiceDate.setMinutes("00");
+                oInvoiceDate.setSeconds("00");
+            }
+            if (dCurrentDate) {
+                dCurrentDate.setHours("00");
+                dCurrentDate.setMinutes("00");
+                dCurrentDate.setSeconds("00");
+            }
             sMessage = oContext.getProperty("CaName") + ", just to confirm, you have requested to make a payment today in the amount of " + oCreditCardAmount.getValue() + ". Is this correct ?";
-            ute.ui.main.Popup.Confirm({
-                title: 'Information',
-                message: sMessage,
-                callback: oConfirmMsgCallBack
-            });
-            oConfirmMsgCallBack = function (sAction) {
-                switch (sAction) {
-                case ute.ui.main.Popup.Action.Yes:
-                    oCheckDateFunction(true);
-                    break;
-                case ute.ui.main.Popup.Action.No:
-                    oCheckDateFunction(false);
-                    break;
-                }
-            };
-            oCheckDateFunction = function (bForward) {
-                if (!bForward) {
-                    return;
-                }
-                if (oCreditCardDateValue.getTime() > oInvoiceDate.getTime()) {
-                    ute.ui.main.Popup.Confirm({
-                        title: 'Information',
-                        message: 'Your Scheduled payment date is after the due date. You will be subject to applicable late fees and/or disconnection.',
-                        callback: oConfirmCallbackHandler
-                    });
-                } else {
-                    oCallSubmit(true);
-                }
-            };
-            oConfirmCallbackHandler = function (sAction) {
-                switch (sAction) {
-                case ute.ui.main.Popup.Action.Yes:
-                    oCallSubmit(true);
-                    break;
-                case ute.ui.main.Popup.Action.No:
-                    oCallSubmit(false);
-                    break;
-                }
-            };
+
             oCallSubmit = function (bForward) {
                 if (!bForward) {
                     return;
@@ -314,9 +293,50 @@ sap.ui.define(
                         that._OwnerComponent.getCcuxApp().setOccupied(false);
                     }.bind(this)
                 };
-                this._OwnerComponent.getCcuxApp().setOccupied(true);
+                that._OwnerComponent.getCcuxApp().setOccupied(true);
                 oModel.callFunction(sCurrentPath, mParameters);
             };
+            oConfirmCallbackHandler = function (sAction) {
+                switch (sAction) {
+                case ute.ui.main.Popup.Action.Yes:
+                    oCallSubmit(true);
+                    break;
+                case ute.ui.main.Popup.Action.No:
+                    oCallSubmit(false);
+                    break;
+                }
+            };
+            oCheckDateFunction = function (bForward) {
+                if (!bForward) {
+                    return;
+                }
+                if ((oCreditCardDateValue.getTime() > dCurrentDate.getTime())) {
+                    if (oCreditCardDateValue.getTime() > oInvoiceDate.getTime()) {
+                        ute.ui.main.Popup.Confirm({
+                            title: 'Information',
+                            message: 'Your Scheduled payment date is after the due date. You will be subject to applicable late fees and/or disconnection.',
+                            callback: oConfirmCallbackHandler
+                        });
+                    }
+                } else {
+                    oCallSubmit(true);
+                }
+            };
+            oConfirmMsgCallBack = function (sAction) {
+                switch (sAction) {
+                case ute.ui.main.Popup.Action.Yes:
+                    oCheckDateFunction(true);
+                    break;
+                case ute.ui.main.Popup.Action.No:
+                    oCheckDateFunction(false);
+                    break;
+                }
+            };
+            ute.ui.main.Popup.Confirm({
+                title: 'Information',
+                message: sMessage,
+                callback: oConfirmMsgCallBack
+            });
         };
        /**
 		 * Pending Credit Card Process initialization

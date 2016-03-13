@@ -7,7 +7,7 @@
     <u:Tag class="nrgQPCC-root" visible="{appView>/CL}">
         <u:Tag text="{comp-i18n-quickpay>nrgQPPaymentContactLog}" class="nrgQPCC-ttl"/>
         <u:Tag class="nrgQPCC-Contact">
-            <u:TextArea value="{quickpay-cl>/PopMessage}" class="nrgQPCC-textArea" width="49rem"></u:TextArea>
+            <u:TextArea value="{quickpay-cl>/PopMessage}" class="nrgQPCC-textArea" width="48rem"></u:TextArea>
         </u:Tag>
             <u:Tag class="nrgQPPay-top nrgQPPay-ContactLogBtns" >
                 <um:Button press=".onAcceptContactLog"
