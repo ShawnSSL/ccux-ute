@@ -138,8 +138,8 @@ sap.ui.define(
                 oDunningMsgTag = this.getView().byId("idnrgBilDunMsgs"),
                 oDunningMsgTagTemplate = this.getView().byId("idnrgBilDunMsgsTemp"),
                 sPath = "/AlertsSet";
-            oBillingMsgTag.removeAllContent();
-            oDunningMsgTag.removeAllContent();
+            oBillingMsgTag.unbindAggregation("content", false);
+            oDunningMsgTag.unbindAggregation("content", false);
             aFilterIds = ["BP", "CA", "Identifier"];
             aFilterValues = [this._bpNum, this._caNum, "BILLING"];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);

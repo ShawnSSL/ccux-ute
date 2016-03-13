@@ -167,7 +167,7 @@
             </ute:Tag>
         </ute:Tag>
         <ute:Tag class="nrgBilling-ABP-lftArea"  visible="{oABPScrnControl>/Correspondence}">
-            <ute:Tag class="nrgBilling-ABP-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
+            <ute:Tag class="nrgBilling-ABP-title" text="{comp-i18n-billing>nrgBilling-ABP-PageTitle}"/>
             <ute:Tag class="nrgBilling-ABP-lftArea-divider"/>
             <ute:Tag class="nrgBilling-ABP-lftArea-top">
                 <ute:Tag class="nrgBilling-ABP-lftArea-top-l">
