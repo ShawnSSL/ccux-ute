@@ -107,8 +107,8 @@
                         <ute:Tag content="{comp-highbill>CustDrv}">
                             <ute:Tag class="nrgBilling-highBill-cusDriven-row">
                                 <ute:Tag class="nrgBilling-highBill-cusDriven-statis" >
-                                    <core:Icon src="{= ${comp-highbill>Increase} ? 'sap-icon://up' : 'sap-icon://down' }"
-                                        class="nrgBilling-highBill-nonCusImpacts-statis-icon" visible="{= ${comp-highbill>Amount} ? 'true' : 'false' }" />
+                                    <core:Icon src="{= ${comp-highbill>Amount} ? (${comp-highbill>Increase} ? 'sap-icon://up' : 'sap-icon://down') : '' }"
+                                        class="nrgBilling-highBill-nonCusImpacts-statis-icon" />
                                     <ute:Tag class="nrgBilling-highBill-cusDriven-statis-number" text="{comp-highbill>Amount}"/>
                                 </ute:Tag>
                                 <ute:Tag class="nrgBilling-highBill-cusDriven-type"
@@ -132,8 +132,8 @@
                         <ute:Tag content="{comp-highbill>NonCustDrv}">
                             <ute:Tag class="nrgBilling-highBill-nonCusImpacts-row">
                                 <ute:Tag class="nrgBilling-highBill-nonCusImpacts-statis">
-                                    <core:Icon src="{= ${comp-highbill>Increase} ? 'sap-icon://up' : 'sap-icon://down' }"
-                                        class="nrgBilling-highBill-nonCusImpacts-statis-icon" visible="{= ${comp-highbill>Amount} ? 'true' : 'false' }" />
+                                    <core:Icon src="{= ${comp-highbill>Amount} ? (${comp-highbill>Increase} ? 'sap-icon://up' : 'sap-icon://down') : '' }"
+                                        class="nrgBilling-highBill-nonCusImpacts-statis-icon" />
                                     <ute:Tag class="nrgBilling-highBill-nonCusImpacts-statis-number" text="{comp-highbill>Amount}"/>
                                 </ute:Tag>
                                 <ute:Tag class="nrgBilling-highBill-nonCusImpacts-type"

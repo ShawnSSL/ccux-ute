@@ -248,7 +248,7 @@ sap.ui.define(
                 dCurrentDate.setMinutes("00");
                 dCurrentDate.setSeconds("00");
             }
-            sMessage = oContext.getProperty("CaName") + ", just to confirm, you have requested to make a payment today in the amount of " + oCreditCardAmount.getValue() + ". Is this correct ?";
+            sMessage = oContext.getProperty("CaName") + ", just to confirm, you have requested to make a payment today in the amount of  $" + parseFloat(oCreditCardAmount.getValue()).toFixed(2) + ". Is this correct?";
 
             oCallSubmit = function (bForward) {
                 if (!bForward) {

@@ -467,18 +467,6 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onCancel = function (oEvent) {
-            var oText = new sap.ui.core.HTML({content: "<div style='position:relative;width:64px;height:64px;background-color:black;'></div>"}),
-                oButton = new ute.ui.main.Button({text: 'OK', press: function () {this.Popupclose(); }}),
-                oTag = new ute.ui.commons.Tag();
-            oTag.addContent(oText);
-            oTag.addContent(oButton);
-            if (this._AlertDialog === undefined) {
-                this._AlertDialog = new ute.ui.main.Popup.create({
-                    title: 'Change Campaign - Cancel',
-                    content: oTag
-                });
-            }
-            this._AlertDialog.open();
             this.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
         };
          /**
