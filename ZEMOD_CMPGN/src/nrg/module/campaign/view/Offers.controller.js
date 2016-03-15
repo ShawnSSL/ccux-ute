@@ -1,6 +1,6 @@
 /*globals sap, ute*/
 /*jslint nomen:true*/
-
+/*jslint bitwise: true */
 sap.ui.define(
     [
         'nrg/base/view/BaseController',
@@ -134,7 +134,7 @@ sap.ui.define(
                     iBindCount = 0;
                 };
                 factoryFuntion = function () {
-                    return oTileTemplate.clone(Math.floor((Math.random() * 1000) + 1));
+                    return oTileTemplate.clone(Math.abs(Math.random().toString().split('').reduce(function (p, c) {return (p << 5) - p + c; })).toString(36).substr(0, 11));
                 };
                 mParameters = {
                     model : "comp-campaign",
