@@ -114,10 +114,10 @@ sap.ui.define(
             this.ABPPopupCustomControl.prepareABP();
         };
         Controller.prototype._onDppBtnClicked = function (oEvent) {
-            var oBindingContext = oEvent.getSource().getBindingContext("oEligibility"),
+            var oEligModel = this.getView().getModel('oEligibility'),
                 oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
-            if (oBindingContext) {
-                if (oBindingContext.getProperty("/DPPActv")) {
+            if (oEligModel) {
+                if (oEligModel.getProperty("/DPPActv")) {
                     oWebUiManager.notifyWebUi('openIndex', {
                         LINK_ID: "Z_DPP"
                     });

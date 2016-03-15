@@ -16,14 +16,6 @@ sap.ui.define(
 
         var Controller = CoreController.extend('nrg.module.billing.view.ABP');
 
-        Controller.prototype.onInit = function () {
-
-        };
-
-        Controller.prototype.onBeforeRendering = function () {
-
-        };
-
         Controller.prototype.onAfterRendering = function () {
             // Get the OwenerComponent from the mother controller
             this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
@@ -42,6 +34,23 @@ sap.ui.define(
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oUsageGraph');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oAmountBtn');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oAmountHistory');
+            this.getView().setModel(new sap.ui.model.json.JSONModel({
+                current : false,
+                newAdd : false,
+                co : '',
+                HouseNo : '',
+                UnitNo : '',
+                City : '',
+                State: '',
+                Country : '',
+                AddrLine : '',
+                Street : '',
+                PoBox: '',
+                ZipCode : '',
+                NewAddrCheck : false,
+                NewAddressflag : false,
+                editable : false
+            }), 'olocalAddress');
                         //Model for DppComunication (DPPIII)
             this.getView().setModel(new JSONModel(), 'oDppStepThreeCom');
 
@@ -76,28 +85,40 @@ sap.ui.define(
             }
         };
         /*------------------------------------------------ Retrieve Methods -------------------------------------------------*/
-        Controller.prototype._onComEmailCheck = function () {
-            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
-
-            oDPPComunication.setProperty('/eMailCheck', true);
-            oDPPComunication.setProperty('/FaxCheck', false);
-            oDPPComunication.setProperty('/AddrCheck', false);
+        Controller.prototype._onComAddrCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/current', true);
+            this.getView().getModel('olocalAddress').setProperty('/newAdd', false);
         };
+        Controller.prototype._onCurrentAddCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/co', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/co'));
+            this.getView().getModel('olocalAddress').setProperty('/HouseNo', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/HouseNo'));
+            this.getView().getModel('olocalAddress').setProperty('/UnitNo', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/UnitNo'));
+            this.getView().getModel('olocalAddress').setProperty('/City', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/City'));
+            this.getView().getModel('olocalAddress').setProperty('/State', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/State'));
+            this.getView().getModel('olocalAddress').setProperty('/Country', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/Country'));
+            this.getView().getModel('olocalAddress').setProperty('/AddrLine', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/AddrLine'));
+            this.getView().getModel('olocalAddress').setProperty('/Street', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/Street'));
+            this.getView().getModel('olocalAddress').setProperty('/PoBox', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/PoBox'));
+            this.getView().getModel('olocalAddress').setProperty('/ZipCode', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/ZipCode'));
+            this.getView().getModel('olocalAddress').setProperty('/NewAddrCheck', false);
+            this.getView().getModel('olocalAddress').setProperty('/NewAddressflag', false);
+            this.getView().getModel('olocalAddress').setProperty('/editable', false);
 
-        Controller.prototype._onComFaxCheck = function () {
-            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
-
-            oDPPComunication.setProperty('/eMailCheck', false);
-            oDPPComunication.setProperty('/FaxCheck', true);
-            oDPPComunication.setProperty('/AddrCheck', false);
         };
-
-        Controller.prototype._onComAddrCheck = function () {
-            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
-
-            oDPPComunication.setProperty('/eMailCheck', false);
-            oDPPComunication.setProperty('/FaxCheck', false);
-            oDPPComunication.setProperty('/AddrCheck', true);
+        Controller.prototype._onNewAddCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/co', '');
+            this.getView().getModel('olocalAddress').setProperty('/HouseNo', '');
+            this.getView().getModel('olocalAddress').setProperty('/UnitNo', '');
+            this.getView().getModel('olocalAddress').setProperty('/City', '');
+            this.getView().getModel('olocalAddress').setProperty('/State', '');
+            this.getView().getModel('olocalAddress').setProperty('/Country', '');
+            this.getView().getModel('olocalAddress').setProperty('/AddrLine', '');
+            this.getView().getModel('olocalAddress').setProperty('/Street', '');
+            this.getView().getModel('olocalAddress').setProperty('/PoBox', '');
+            this.getView().getModel('olocalAddress').setProperty('/ZipCode', '');
+            this.getView().getModel('olocalAddress').setProperty('/NewAddrCheck', true);
+            this.getView().getModel('olocalAddress').setProperty('/NewAddressflag', true);
+            this.getView().getModel('olocalAddress').setProperty('/editable', true);
         };
         Controller.prototype._postDPPCommunication = function () {
             var oODataSvc = this.getView().getModel('oDataSvc'),
@@ -166,9 +187,21 @@ sap.ui.define(
                     });
                 }.bind(this)
             };
-
             if (oODataSvc) {
                 oDPPComunication.oData.Process = 'ABP';
+                if (this.getView().getModel('olocalAddress').getProperty('/newAdd')) {
+                    oData.Address.co = this.getView().getModel('olocalAddress').getProperty('/co');
+                    oData.Address.HouseNo = this.getView().getModel('olocalAddress').getProperty('/HouseNo');
+                    oData.Address.UnitNo = this.getView().getModel('olocalAddress').getProperty('/UnitNo');
+                    oData.Address.City = this.getView().getModel('olocalAddress').getProperty('/City');
+                    oData.Address.State = this.getView().getModel('olocalAddress').getProperty('/State');
+                    oData.Address.Country = this.getView().getModel('olocalAddress').getProperty('/Country');
+                    oData.Address.AddrLine = this.getView().getModel('olocalAddress').getProperty('/AddrLine');
+                    oData.Address.Street = this.getView().getModel('olocalAddress').getProperty('/Street');
+                    oData.Address.PoBox = this.getView().getModel('olocalAddress').getProperty('/PoBox');
+                    oData.Address.ZipCode = this.getView().getModel('olocalAddress').getProperty('/ZipCode');
+                    oData.NewAddr = this.getView().getModel('olocalAddress').getProperty('/NewAddrCheck');
+                }
                 oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
             }
         };
@@ -184,9 +217,22 @@ sap.ui.define(
                 success : function (oData) {
                     if (oData) {
                         this.getView().getModel('oDppStepThreeCom').setData(oData);
-                        //this.getView().getModel('oDppStepThreeCom').setProperty('/eMailCheck', true);
-                        //this.getView().getModel('oDppStepThreeCom').setProperty('/FaxCheck', false);
-                        //this.getView().getModel('oDppStepThreeCom').setProperty('/AddrCheck', false);
+                        if (oData.AddrCheck) {
+                            this.getView().getModel('olocalAddress').setProperty('/current', true);
+                            this.getView().getModel('olocalAddress').setProperty('/newAdd', false);
+                        }
+                        if (oData.Address) {
+                            this.getView().getModel('olocalAddress').setProperty('/co', oData.Address.co);
+                            this.getView().getModel('olocalAddress').setProperty('/HouseNo', oData.Address.HouseNo);
+                            this.getView().getModel('olocalAddress').setProperty('/UnitNo', oData.Address.UnitNo);
+                            this.getView().getModel('olocalAddress').setProperty('/City', oData.Address.City);
+                            this.getView().getModel('olocalAddress').setProperty('/State', oData.Address.State);
+                            this.getView().getModel('olocalAddress').setProperty('/Country', oData.Address.Country);
+                            this.getView().getModel('olocalAddress').setProperty('/AddrLine', oData.Address.AddrLine);
+                            this.getView().getModel('olocalAddress').setProperty('/Street', oData.Address.Street);
+                            this.getView().getModel('olocalAddress').setProperty('/PoBox', oData.Address.PoBox);
+                            this.getView().getModel('olocalAddress').setProperty('/ZipCode', oData.Address.ZipCode);
+                        }
                     }
                 }.bind(this),
                 error: function (oError) {
