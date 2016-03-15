@@ -857,6 +857,67 @@ sap.ui.define(
             this._oDunningDialog.open();
         };
         /**
+		 * Handler function for clicking on Unbilled Amount
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype._onUnbilled = function (oEvent) {
+            var oUnBilledTable,
+                oUnBilledTemplate,
+                aFilterIds,
+                aFilterValues,
+                aFilters,
+                fnRecievedHandler,
+                sPath = "/UnbilledS",
+                that = this,
+                oBindingInfo,
+                oModel = this.getOwnerComponent().getModel('comp-billing');
+            that.getOwnerComponent().getCcuxApp().setOccupied(true);
+            aFilterIds = ['BP', 'CA', 'Contract'];
+            aFilterValues = [this._bpNum, this._caNum, this._coNum];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            if (!this._oDialogFragment) {
+                this._oDialogFragment = sap.ui.xmlfragment("Unbilled", "nrg.module.billing.view.PaymentsPopup", this);
+            }
+            if (this._oUnbilledDialog === undefined) {
+                this._oUnbilledDialog = new ute.ui.main.Popup.create({
+                    title: 'Unbilled AR Item List',
+                    content: this._oDialogFragment
+                });
+            }
+            oUnBilledTable = sap.ui.core.Fragment.byId("Unbilled", "idnrgUnbiilled-Table");
+            oUnBilledTemplate = sap.ui.core.Fragment.byId("Unbilled", "idnrgUnbiilled-Row");
+            // Function received handler is used to update the view with first History campaign.---start
+            fnRecievedHandler = function () {
+                var oTableBinding = oUnBilledTable.getBinding("rows");
+                that._oUnbilledDialog.open();
+                that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                if (oTableBinding) {
+                    oTableBinding.detachDataReceived(fnRecievedHandler);
+                }
+            };
+            oUnBilledTable.setModel(oModel, 'comp-billing');
+            oBindingInfo = {
+                model : 'comp-billing',
+                path : sPath,
+                filters : aFilters,
+                template : oUnBilledTemplate,
+                events: {dataReceived : fnRecievedHandler}
+            };
+            oUnBilledTable.bindRows(oBindingInfo);
+        };
+
+        /**
+		 * Handler function for clicking on Unbilled ok button
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onUnbilledClose = function (oEvent) {
+            this._oUnbilledDialog.close();
+        };
+        /**
 		 * Formatter function
 		 *
 		 * @function

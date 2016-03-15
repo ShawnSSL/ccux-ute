@@ -421,9 +421,13 @@
             </ute:Tag>
         </ute:Tag>
         <!--Right Notification Area-->
-        <ute:Tag class="nrgBilling-dPmtPln-rgtArea">
-            <ute:Tag class="nrgBilling-dPmtPln-notify" text="{comp-i18n-billing>nrgBilling-dpp-NOTIFICATION}"/>
-            <ute:Tag class="nrgBilling-dPmtPln-rgtArea-divider"/>
+        <ute:Tag class="nrgBilling-ext-rghtDiv">
+            <!-- Title -->
+            <ute:Tag elem="span" class="nrgBilling-ext-notiTitle"
+                text="{comp-i18n-billing>nrgBilling-billChkBook-NOTI_TITLE}" />
+            <ute:Tag id="idnrgBilling-dpp-notifications" class="nrgBilling-ext-notifications">
+
+            </ute:Tag>
         </ute:Tag>
     </ute:Tag>
 </mvc:View>

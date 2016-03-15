@@ -1,26 +1,49 @@
 <core:FragmentDefinition
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ute="ute.ui.commons"
-    xmlns:utmain="ute.ui.main"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:c="sap.ui.commons"
-    xmlns:l="sap.ui.commons.layout"
-    xmlns:core="sap.ui.core"
-    xmlns:m="sap.m">
-    <ute:Tag class="nrgBilling-invoicePopup">
-        <ute:Tag content="{oPmtPayments>/results}">
-            <ute:Tag>
-                <ute:Tag class="nrgBilling-invoicePopup-span" elem="span" text="{oPmtPayments>ItemDesc} "/>
-                <ute:TextView fieldType="Noborder"
-                    editable="false" width="auto"
-                    text="{ parts:['oPmtPayments>PaidDate'],
-                            formatter:'._formatDate'}"
-                    class="nrgBilling-invoicePopup-label"/>
-                <ute:TextView fieldType="Noborder"
-                    editable="false" width="auto"
-                    text="{path:'oPmtPayments>Paidamt', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"
-                    class="nrgBilling-invoicePopup-value floatRight"/>
-            </ute:Tag>
-        </ute:Tag>
-    </ute:Tag>
+          xmlns:c="sap.ui.commons"
+          xmlns:core="sap.ui.core"
+          xmlns:u="ute.ui.commons"
+          xmlns:um="ute.ui.main">
+    <u:Tag>
+        <u:Table width="auto" id="idnrgUnbiilled-Table">
+                <u:columns>
+                    <u:TableColumn>
+                        <c:Label text="DOcument #"/>
+                    </u:TableColumn>
+                    <u:TableColumn>
+                        <c:Label text="DOc. Date"/>
+                    </u:TableColumn>
+                    <u:TableColumn>
+                        <c:Label text="Original Amt"/>
+                    </u:TableColumn>
+                    <u:TableColumn>
+                        <c:Label text="Transaction Type"/>
+                    </u:TableColumn>
+                    <u:TableColumn>
+                        <c:Label text="Payment"/>
+                    </u:TableColumn>
+<!--                    <u:TableColumn>
+                        <c:Label text="Open"/>
+                    </u:TableColumn>-->
+                </u:columns>
+        </u:Table>
+        <um:Button press=".onUnbilledClose"
+                   text="OK"
+                   design="Default">
+        </um:button>
+        <u:Tag visible="false">
+             <u:Table>
+                    <u:rows>
+                    <u:TableRow id="idnrgUnbiilled-Row">
+                        <c:Label text="{comp-billing>DocNum}"/>
+                        <c:Label text="{comp-billing>DocDate}"/>
+                        <c:Label text="{comp-billing>Amount}"/>
+                        <c:Label text="{path: 'comp-billing>DueDate',
+                                       type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                        <c:Label text="{comp-billing>Description}"/>
+                    </u:TableRow>
+                </u:rows>
+                </u:Table>
+        </u:Tag>
+    </u:Tag>
 </core:FragmentDefinition>

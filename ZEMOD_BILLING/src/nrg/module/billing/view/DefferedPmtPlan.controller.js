@@ -5,14 +5,13 @@ sap.ui.define(
         'nrg/base/view/BaseController',
         'jquery.sap.global',
         'nrg/base/type/Price',
-        'sap/ui/core/routing/HashChanger',
-        "sap/ui/model/json/JSONModel",
+        'sap/ui/model/json/JSONModel',
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
-        'nrg/module/quickpay/view/QuickPayPopup'
+        'nrg/module/billing/view/EligPopup'
     ],
 
-    function (CoreController, jQuery, price, HashChanger, JSONModel, Filter, FilterOperator, QuickPayControl) {
+    function (CoreController, jQuery, price, JSONModel, Filter, FilterOperator, EligPopup) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.billing.view.DefferedPmtPlan');
@@ -36,6 +35,8 @@ sap.ui.define(
             //Model for DPP eligibility/reason
             this.getView().setModel(new JSONModel(), 'oDppEligible');
 
+            // Model for eligibility alerts
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEligibility');
             //Model for DPP denied reasons
             this.getView().setModel(new JSONModel(), 'oDppDeniedReason');
 
@@ -113,14 +114,14 @@ sap.ui.define(
             }
         };
         Controller.prototype._onDownPayment = function (oEvent) {
-            var QuickControl = new QuickPayControl(),
+/*            var QuickControl = new QuickPayControl(),
                 that = this;
 
             this.getView().addDependent(QuickControl);
             QuickControl.openQuickPay(this._coNum, this._bpNum, this._caNum);
             QuickControl.attachEvent("PaymentCompleted", function () {
                 that._retrExtensions();
-            }, this);
+            }, this);*/
 
         };
 
@@ -1016,7 +1017,105 @@ sap.ui.define(
                 oODataSvc.read(sPath, oParameters);
             }
         };
+        /*-------------------------------------- Notificatiob Area (Jerry 11/18/2015) ---------------------------------------*/
 
+        Controller.prototype._retrieveNotification = function () {
+            var sPath = '/EligCheckS(\'' + this._coNum + '\')',
+                oModel = this.getView().getModel('oDataEligSvc'),
+                oEligModel = this.getView().getModel('oEligibility'),
+                oParameters,
+                alert,
+                i;
+
+            oParameters = {
+                success : function (oData) {
+                    oEligModel.setData(oData);
+                    var container = this.getView().byId('idnrgBilling-dpp-notifications');
+                    if (container && container.getContent() && container.getContent().length > 0) {
+                        container.removeAllContent();
+                    }
+                // If already has eligibility alerts, then skip
+                    this._eligibilityAlerts = [];
+
+                    // Check ABP
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.ABPElig) ? "Eligible for ABP" : "Not eligible for ABP",
+                        linkPress: this._openEligABPPopup.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
+
+                    // Check EXTN
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.EXTNElig) ? "Eligible for EXTN" : "Not eligible for EXTN",
+                        linkPress: this._openEligEXTNPopup.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
+
+                    // Check RBB
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.RBBElig) ? "Eligible for Retro-AB" : "Not eligible for Retro-AB",
+                        linkPress: this._openEligRBBPopup.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
+
+                    // Check DPP
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: (oData.DPPElig) ? "Eligible for DPP" : "Not eligible for DPP"
+                    });
+
+                    this._eligibilityAlerts.push(alert);
+
+                    // Insert all alerts to DOM
+                    for (i = 0; i < this._eligibilityAlerts.length; i = i + 1) {
+                        this._eligibilityAlerts[i].placeAt(container);
+                    }
+                }.bind(this),
+                error: function (oError) {
+
+                }.bind(this)
+            };
+
+            if (oModel && this._coNum) {
+                oModel.read(sPath, oParameters);
+            }
+        };
+        Controller.prototype._openEligABPPopup = function () {
+            if (!this.EligABPPopupCustomControl) {
+                this.EligABPPopupCustomControl = new EligPopup({ eligType: "ABP" });
+                this.EligABPPopupCustomControl.attachEvent("EligCompleted", function () {}, this);
+                this.getView().addDependent(this.EligABPPopupCustomControl);
+                this.EligABPPopupCustomControl._oEligPopup.setTitle('ELIGIBILITY CRITERIA - AVERAGE BILLING PLAN');
+            }
+            this.EligABPPopupCustomControl.prepare();
+        };
+
+        Controller.prototype._openEligEXTNPopup = function () {
+            if (!this.EligEXTNPopupCustomControl) {
+                this.EligEXTNPopupCustomControl = new EligPopup({ eligType: "EXTN" });
+                this.EligEXTNPopupCustomControl.attachEvent("EligCompleted", function () {}, this);
+                this.getView().addDependent(this.EligEXTNPopupCustomControl);
+                this.EligEXTNPopupCustomControl._oEligPopup.setTitle('ELIGIBILITY CRITERIA - EXTENSION');
+            }
+            this.EligEXTNPopupCustomControl.prepare();
+        };
+
+        Controller.prototype._openEligRBBPopup = function () {
+            if (!this.EligRBBPopupCustomControl) {
+                this.EligRBBPopupCustomControl = new EligPopup({ eligType: "RBB" });
+                this.EligRBBPopupCustomControl.attachEvent("EligCompleted", function () {}, this);
+                this.getView().addDependent(this.EligRBBPopupCustomControl);
+                this.EligRBBPopupCustomControl._oEligPopup.setTitle('ELIGIBILITY CRITERIA - RETRO BILLING PLAN');
+            }
+            this.EligRBBPopupCustomControl.prepare();
+        };
 
 
         return Controller;

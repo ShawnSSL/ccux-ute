@@ -131,31 +131,6 @@
                                         class="nrgBilling-cusDataBillingInfo-contentValue"
                                         text="{path: 'oBillingInvoices>/InvAmount', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                     <ute:Tag class="FooterNotificationCenter">
-<!--                                      <utapp:FooterNotificationItem visible="{oEligibility>/DPPActv}"
-                                            link="false"
-                                            design="Error"
-                                            text="DPP"
-                                            linkPress=".onDPPActive"/>
-                                        <utapp:FooterNotificationItem visible="{oEligibility>/ABPActv}"
-                                            link="true"
-                                            design="Error"
-                                            text="ABP"
-                                            linkPress=".onABPActive"/>
-                                        <utapp:FooterNotificationItem visible="{oEligibility>/RBBActv}"
-                                            link="true"
-                                            design="Error"
-                                            text="Retro ABP"
-                                            linkPress=".onRBBActive"/>
-                                        <utapp:FooterNotificationItem visible="{oEligibility>/EXTNActv}"
-                                            link="true"
-                                            design="Error"
-                                            text="EXTN"
-                                            linkPress=".onExtActive"/>
-                                        <utapp:FooterNotificationItem visible="{oEligibility>/BBPActv}"
-                                            link="false"
-                                            design="Error"
-                                            text="BBP"/>
--->
                                         <utapp:FooterNotificationItem visible="{parts:['oEligibility>/DPPActv'], formatter:'._formatVisElig'}"
                                             link="true"
                                             design="Error"
@@ -194,14 +169,6 @@
                                 <ute:Tag class="nrgBilling-cusDataBil-m-row-contentSectionNew nrgBilling-cusDataBil-m-row-contentSection">
                                         <ute:Tag id="idnrgBillPostInvoice">
                                         </ute:Tag>
-<!--                                    <utmain:Label
-                                        text="Payments"
-                                        class="nrgBilling-cusDataBillingInfo-contentTitle" />
-                                    <utmain:Button
-                                        design="None" visible="true"
-                                        press="._onPaymentsClicked"
-                                        class="nrgBilling-cusDataBillingInfo-contentValue"
-                                        text="{path: 'oPmtPayments>/results/0/Paidamt', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>-->
                                 </ute:Tag>
                                 <ute:Tag visible="false">
                                     <ute:Tag id="idnrgBillPostInvoiceTemp">
@@ -231,7 +198,8 @@
                                     <ute:Tag elem="div"
                                          class="nrgBilling-cusDataBillingInfo-contentTitle"
                                          text="Unbilled" />
-                                    <ute:Tag elem="span"
+                                    <utmain:Button design="None" visible="true"
+                                        press="._onUnbilled"
                                         class="nrgBilling-cusDataBil-m-text-title-sub"
                                         text="{path: 'oBillingInvoices>/UnBilled', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                 </ute:Tag>
@@ -291,9 +259,7 @@
                                 </l:MatrixLayout>
                                 <ute:HorizontalDivider
                                     class="nrgBilling-cusDataBil-horDvi"/>
-
                                 <ute:Tag class="nrgBilling-cusDataBil-r-div-dunningmsgs" id="idnrgBilDunMsgs">
-
                                 </ute:Tag>
                                 <ute:Tag visible="false">
                                     <utmain:Button design="None"
