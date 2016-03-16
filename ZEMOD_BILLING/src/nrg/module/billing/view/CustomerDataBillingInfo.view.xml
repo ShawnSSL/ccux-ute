@@ -200,7 +200,7 @@
                                          text="Unbilled" />
                                     <utmain:Button design="None" visible="true"
                                         press="._onUnbilled"
-                                        class="nrgBilling-cusDataBil-m-text-title-sub"
+                                        class="nrgBilling-cusDataBil-m-text-title-sub nrgBilling-cusDataBil-m-text-title-unbilled"
                                         text="{path: 'oBillingInvoices>/UnBilled', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                 </ute:Tag>
                             </ute:Tag>

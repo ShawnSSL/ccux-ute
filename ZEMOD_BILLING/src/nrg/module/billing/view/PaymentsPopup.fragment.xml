@@ -8,10 +8,10 @@
         <u:Table width="auto" id="idnrgUnbiilled-Table">
                 <u:columns>
                     <u:TableColumn>
-                        <c:Label text="DOcument #"/>
+                        <c:Label text="Document #"/>
                     </u:TableColumn>
                     <u:TableColumn>
-                        <c:Label text="DOc. Date"/>
+                        <c:Label text="Doc. Date"/>
                     </u:TableColumn>
                     <u:TableColumn>
                         <c:Label text="Original Amt"/>
@@ -22,25 +22,28 @@
                     <u:TableColumn>
                         <c:Label text="Payment"/>
                     </u:TableColumn>
-<!--                    <u:TableColumn>
+                    <u:TableColumn>
                         <c:Label text="Open"/>
-                    </u:TableColumn>-->
+                    </u:TableColumn>
                 </u:columns>
         </u:Table>
-        <um:Button press=".onUnbilledClose"
+        <u:Tag class="nrgBillingPP-button">
+            <um:Button press=".onUnbilledClose"
                    text="OK"
                    design="Default">
-        </um:button>
+            </um:button>
+        </u:Tag>
         <u:Tag visible="false">
              <u:Table>
                     <u:rows>
                     <u:TableRow id="idnrgUnbiilled-Row">
                         <c:Label text="{comp-billing>DocNum}"/>
-                        <c:Label text="{comp-billing>DocDate}"/>
-                        <c:Label text="{comp-billing>Amount}"/>
-                        <c:Label text="{path: 'comp-billing>DueDate',
+                        <c:Label text="{path: 'comp-billing>DocDate',
                                        type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
-                        <c:Label text="{comp-billing>Description}"/>
+                        <c:Label text="{comp-billing>Amount}"/>
+                        <c:Label text="{comp-billing>TransType}"/>
+                        <c:Label text="{comp-billing>Payment}"/>
+                        <c:Label text="{comp-billing>Open}"/>
                     </u:TableRow>
                 </u:rows>
                 </u:Table>

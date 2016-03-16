@@ -889,9 +889,13 @@ sap.ui.define(
             oUnBilledTable = sap.ui.core.Fragment.byId("Unbilled", "idnrgUnbiilled-Table");
             oUnBilledTemplate = sap.ui.core.Fragment.byId("Unbilled", "idnrgUnbiilled-Row");
             // Function received handler is used to update the view with first History campaign.---start
-            fnRecievedHandler = function () {
+            fnRecievedHandler = function (oEvent) {
                 var oTableBinding = oUnBilledTable.getBinding("rows");
-                that._oUnbilledDialog.open();
+                if ((oUnBilledTable) && (oUnBilledTable.getRows()) && (oUnBilledTable.getRows().length > 0)) {
+                    that._oUnbilledDialog.open();
+                } else {
+                    sap.ui.commons.MessageBox.alert("No Records found");
+                }
                 that.getOwnerComponent().getCcuxApp().setOccupied(false);
                 if (oTableBinding) {
                     oTableBinding.detachDataReceived(fnRecievedHandler);

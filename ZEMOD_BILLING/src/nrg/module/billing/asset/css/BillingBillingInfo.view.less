@@ -232,20 +232,20 @@
                 position: absolute;
                 bottom: 0;
             }
-
             & .nrgBilling-cusDataBil-m-row-titleSection {
                 display: flex;
                 align-items: center;
-
                 & .nrgBilling-cusDataBil-m-text-title {
                     font: @nrgFontWeight-bold @nrgFontSize-base @nrgFontFamily;
                     color: @nrgColor-grey-dark;
                     width: 18rem;
                 }
-
                 & .nrgBilling-cusDataBil-m-text-title-sub {
                     padding: 3px 5px;
                     font: @nrgFontWeight-semiBold @nrgFontSize-base @nrgFontFamily;
+                }
+                & .nrgBilling-cusDataBil-m-text-title-unbilled {
+                    color: @nrgColor-blue-link;
                 }
                 & .nrgBilling-cusDataBillingInfo-contentTitle {
                     width: 18rem;
@@ -258,9 +258,9 @@
 
             }
             & .nrgBilling-cusDataBil-m-row-contentSectionNew {
-                height: 200px;
+                height: 175px;
                 overflow: auto;
-                max-height: 200px;
+                max-height: 175px;
             }
             & .nrgBilling-cusDataBil-m-row-contentSection {
                 padding: 10px 0;
@@ -522,4 +522,7 @@
         font-weight: @nrgFontWeight-bold;
         color: @nrgColor-grey-dark;
     }
+}
+.nrgBillingPP-button {
+    text-align: center;
 }
