@@ -997,10 +997,14 @@ sap.ui.define(
                         // Check the completion of current CA number retrieval
                         checkCurCaRetrComplete = setInterval(function () {
                             if (bCurrentCaNumRetrieveComplete) {
-                                // 3. Load the current selected CA info
-                                this._setCurrentCa(sCurrentCaNumber);
-                                // 4. Retrieve all CO belong to the selected CA
-                                this._retrAllCo(sCurrentCaNumber, function () {bCoRetrieveComplate = true; });
+                                if (sCurrentCaNumber) {// No CA number found so just stop here and clocking too.
+                                    // 3. Load the current selected CA info
+                                    this._setCurrentCa(sCurrentCaNumber);
+                                    // 4. Retrieve all CO belong to the selected CA
+                                    this._retrAllCo(sCurrentCaNumber, function () {bCoRetrieveComplate = true; });
+                                } else {
+                                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                                }
                                 clearInterval(checkCurCaRetrComplete);
                             }
                         }.bind(this), 100);
@@ -1071,9 +1075,9 @@ sap.ui.define(
                         // Load all the CAs for CA dropdown
                         this.getView().getModel('oAllBuags').setData(oData.results);
                         this.getView().getModel('oAllBuags').setProperty('/selectedKey', iSearchedCaIndex);
-                        // Check and execute the callback function
-                        if (fnCallback) { fnCallback(); }
                     }
+                    // Check and execute the callback function
+                    if (fnCallback) { fnCallback(); }
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
@@ -1088,7 +1092,7 @@ sap.ui.define(
         Controller.prototype._getCurrentCaNum = function (fnCallback) {
             var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
                 sCaNum = oRouteInfo.parameters.caNum,
-                sCurrentCaNumber,
+                sCurrentCaNumber = "",
                 oAllCaModel = this.getView().getModel('oAllBuags');
 
             if (sCaNum) {
@@ -1096,7 +1100,9 @@ sap.ui.define(
                 sCurrentCaNumber = sCaNum;
             } else {
                 // Else, we will return the first CA from the list
-                sCurrentCaNumber = oAllCaModel.oData[0].ContractAccountID;
+                if ((oAllCaModel.oData) && (Array.isArray(oAllCaModel.oData)) && (oAllCaModel.oData.length > 0)) {
+                    sCurrentCaNumber = oAllCaModel.oData[0].ContractAccountID;
+                }
             }
 
             if (fnCallback) { fnCallback(); }

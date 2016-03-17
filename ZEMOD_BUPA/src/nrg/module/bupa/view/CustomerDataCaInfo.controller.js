@@ -331,7 +331,7 @@ sap.ui.define(
                         this._updateMailingAddr();
                     } else {
                         oMailEdit.setProperty('/SuggAddrInfo', oData.results[0].TriCheck);
-                        //this._showSuggestedAddr();
+                        this._showSuggestedAddr();
                         //this._oMailEditPopup.open();
                     }
                 }.bind(this),
@@ -386,7 +386,6 @@ sap.ui.define(
                     }
                 }
             }
-
             return aFilters;
         };
 
