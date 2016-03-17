@@ -134,17 +134,24 @@ sap.ui.define(
                 }
             }
             if (oData.FaxCheck) {
-                if (!(oData.Fax && oData.FaxTo)) {
+                if (!(oData.Fax)) {
                     ute.ui.main.Popup.Alert({
                         title: 'AVERAGE BILLING',
-                        message: 'Fax field is empty'
+                        message: 'Please enter Fax Number'
+                    });
+                    return true;
+                }
+                if (!(oData.FaxTo)) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'AVERAGE BILLING',
+                        message: 'Please enter Fax To'
                     });
                     return true;
                 }
             }
             if (oData.AddrCheck) {
                 if (olocalAddress.getProperty('/newAdd')) {
-                    if (!((olocalAddress.getProperty('/HouseNo')) && (olocalAddress.getProperty('/Street'))) || (olocalAddress.getProperty('/PoBox'))) {
+                    if (!(((olocalAddress.getProperty('/HouseNo')) && (olocalAddress.getProperty('/Street'))) || (olocalAddress.getProperty('/PoBox')))) {
                         ute.ui.main.Popup.Alert({
                             title: 'AVERAGE BILLING',
                             message: 'Please enter street no & street name or PO Box'
@@ -165,13 +172,6 @@ sap.ui.define(
                         });
                         return true;
                     }
-                    if (!(olocalAddress.getProperty('/Country'))) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'AVERAGE BILLING',
-                            message: 'Please enter country'
-                        });
-                        return true;
-                    }
                     if (!(olocalAddress.getProperty('/ZipCode'))) {
                         ute.ui.main.Popup.Alert({
                             title: 'AVERAGE BILLING',
@@ -179,6 +179,14 @@ sap.ui.define(
                         });
                         return true;
                     }
+                    if (!(olocalAddress.getProperty('/Country'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter country'
+                        });
+                        return true;
+                    }
+
                     //this._TrilliumAddressCheck();
                     //return true;
                 }
