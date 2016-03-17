@@ -121,40 +121,79 @@ sap.ui.define(
             this.getView().getModel('olocalAddress').setProperty('/editable', true);
         };
         Controller.prototype._postDPPCommunication = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
-                oData = oDPPComunication.oData;
-
-
+            var oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
+                oData = oDPPComunication.oData,
+                olocalAddress = this.getView().getModel('olocalAddress');
             if (oData.eMailCheck) {
                 if (!oData.eMail) {
                     ute.ui.main.Popup.Alert({
                         title: 'AVERAGE BILLING',
                         message: 'Email field is empty'
                     });
-                    return false;
+                    return true;
                 }
             }
             if (oData.FaxCheck) {
-                if (!oData.Fax) {
+                if (!(oData.Fax && oData.FaxTo)) {
                     ute.ui.main.Popup.Alert({
                         title: 'AVERAGE BILLING',
-                        message: 'Email field is empty'
+                        message: 'Fax field is empty'
                     });
-                    return false;
+                    return true;
                 }
             }
             if (oData.AddrCheck) {
-                if (!oData.Address.HouseNo) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'AVERAGE BILLING',
-                        message: 'Address is not complete'
-                    });
-                    return false;
+                if (olocalAddress.getProperty('/newAdd')) {
+                    if (!((olocalAddress.getProperty('/HouseNo')) && (olocalAddress.getProperty('/Street'))) || (olocalAddress.getProperty('/PoBox'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter street no & street name or PO Box'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/City'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter city'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/State'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter state'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/Country'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter country'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/ZipCode'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter zip Code'
+                        });
+                        return true;
+                    }
+                    //this._TrilliumAddressCheck();
+                    //return true;
                 }
             }
+            this._sendDppComunication();
+            return true;
+
+        };
+        Controller.prototype._sendDppComunication = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
+                oData = oDPPComunication.oData,
+                olocalAddress = this.getView().getModel('olocalAddress');
             sPath = '/DPPCorresps';
 
             oParameters = {
@@ -189,18 +228,18 @@ sap.ui.define(
             };
             if (oODataSvc) {
                 oDPPComunication.oData.Process = 'ABP';
-                if (this.getView().getModel('olocalAddress').getProperty('/newAdd')) {
-                    oData.Address.co = this.getView().getModel('olocalAddress').getProperty('/co');
-                    oData.Address.HouseNo = this.getView().getModel('olocalAddress').getProperty('/HouseNo');
-                    oData.Address.UnitNo = this.getView().getModel('olocalAddress').getProperty('/UnitNo');
-                    oData.Address.City = this.getView().getModel('olocalAddress').getProperty('/City');
-                    oData.Address.State = this.getView().getModel('olocalAddress').getProperty('/State');
-                    oData.Address.Country = this.getView().getModel('olocalAddress').getProperty('/Country');
-                    oData.Address.AddrLine = this.getView().getModel('olocalAddress').getProperty('/AddrLine');
-                    oData.Address.Street = this.getView().getModel('olocalAddress').getProperty('/Street');
-                    oData.Address.PoBox = this.getView().getModel('olocalAddress').getProperty('/PoBox');
-                    oData.Address.ZipCode = this.getView().getModel('olocalAddress').getProperty('/ZipCode');
-                    oData.NewAddr = this.getView().getModel('olocalAddress').getProperty('/NewAddrCheck');
+                if (olocalAddress.getProperty('/newAdd')) {
+                    oData.Address.co = olocalAddress.getProperty('/co');
+                    oData.Address.HouseNo = olocalAddress.getProperty('/HouseNo');
+                    oData.Address.UnitNo = olocalAddress.getProperty('/UnitNo');
+                    oData.Address.City = olocalAddress.getProperty('/City');
+                    oData.Address.State = olocalAddress.getProperty('/State');
+                    oData.Address.Country = olocalAddress.getProperty('/Country');
+                    oData.Address.AddrLine = olocalAddress.getProperty('/AddrLine');
+                    oData.Address.Street = olocalAddress.getProperty('/Street');
+                    oData.Address.PoBox = olocalAddress.getProperty('/PoBox');
+                    oData.Address.ZipCode = olocalAddress.getProperty('/ZipCode');
+                    oData.NewAddr = olocalAddress.getProperty('/NewAddrCheck');
                 }
                 oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
             }
@@ -209,7 +248,8 @@ sap.ui.define(
             var oODataSvc = this.getView().getModel('oDataSvc'),
                 oParameters,
                 sPath,
-                sProcess = 'ABP';
+                sProcess = 'ABP',
+                olocalAddress = this.getView().getModel('olocalAddress');
 
             sPath = '/DPPCorresps(CA=\'' + this._caNum + '\',Contract=\'' + this._coNum + '\',BP=\'' + this._bpNum + '\',Process=\'' + sProcess + '\')';
 
@@ -218,20 +258,20 @@ sap.ui.define(
                     if (oData) {
                         this.getView().getModel('oDppStepThreeCom').setData(oData);
                         if (oData.AddrCheck) {
-                            this.getView().getModel('olocalAddress').setProperty('/current', true);
-                            this.getView().getModel('olocalAddress').setProperty('/newAdd', false);
+                            olocalAddress.setProperty('/current', true);
+                            olocalAddress.setProperty('/newAdd', false);
                         }
                         if (oData.Address) {
-                            this.getView().getModel('olocalAddress').setProperty('/co', oData.Address.co);
-                            this.getView().getModel('olocalAddress').setProperty('/HouseNo', oData.Address.HouseNo);
-                            this.getView().getModel('olocalAddress').setProperty('/UnitNo', oData.Address.UnitNo);
-                            this.getView().getModel('olocalAddress').setProperty('/City', oData.Address.City);
-                            this.getView().getModel('olocalAddress').setProperty('/State', oData.Address.State);
-                            this.getView().getModel('olocalAddress').setProperty('/Country', oData.Address.Country);
-                            this.getView().getModel('olocalAddress').setProperty('/AddrLine', oData.Address.AddrLine);
-                            this.getView().getModel('olocalAddress').setProperty('/Street', oData.Address.Street);
-                            this.getView().getModel('olocalAddress').setProperty('/PoBox', oData.Address.PoBox);
-                            this.getView().getModel('olocalAddress').setProperty('/ZipCode', oData.Address.ZipCode);
+                            olocalAddress.setProperty('/co', oData.Address.co);
+                            olocalAddress.setProperty('/HouseNo', oData.Address.HouseNo);
+                            olocalAddress.setProperty('/UnitNo', oData.Address.UnitNo);
+                            olocalAddress.setProperty('/City', oData.Address.City);
+                            olocalAddress.setProperty('/State', oData.Address.State);
+                            olocalAddress.setProperty('/Country', oData.Address.Country);
+                            olocalAddress.setProperty('/AddrLine', oData.Address.AddrLine);
+                            olocalAddress.setProperty('/Street', oData.Address.Street);
+                            olocalAddress.setProperty('/PoBox', oData.Address.PoBox);
+                            olocalAddress.setProperty('/ZipCode', oData.Address.ZipCode);
                         }
                     }
                 }.bind(this),

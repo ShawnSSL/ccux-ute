@@ -188,10 +188,10 @@
                         <ute:Textfield class="nrgBilling-dlcc-mail-val"
                                        fieldType="Underlined" width="200px" value="{oDppStepThreeCom>/Fax}"/>
                     </ute:Tag>
-                    <ute:Tag class="nrgBilling-dlcc-chbrow" visible="false">
-                        <utmain:Label class="nrgBilling-dlcc-chbrow-lbl" text="{comp-i18n-billing>nrgBilling-dpp-incareof}"/>
+                    <ute:Tag class="nrgBilling-dlcc-chbrow nrgBilling-dlcc-options">
+                        <utmain:Label class="nrgBilling-dlcc-chbrow-lbl" text="{comp-i18n-billing>nrgBilling-dpp-to}"/>
                         <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                       fieldType="Underlined" width="330px" value="{oDppStepThreeCom>/Contract}"/>
+                                       fieldType="Underlined" width="15rem" value="{oDppStepThreeCom>/FaxTo}"/>
                     </ute:Tag>
                 </ute:Tag>
                 <ute:Tag class="nrgBilling-ABP-lftArea-ctnt-corr">
@@ -214,55 +214,61 @@
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-incareof}"/>
                                 <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                               fieldType="Underlined" width="330px" value="{olocalAddress>/co}" editable="{olocalAddress>/editable}"/>
-                            </ute:Tag>
-                            <ute:Tag class="nrgBilling-dlcc-mail-row">
-                                <ute:Tag class="nrgBilling-dlcc-mail-row-column">
-                                    <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-stNum}"/>
-                                    <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
-                                                   fieldType="Underlined" width="90px" value="{olocalAddress>/HouseNo}" editable="{olocalAddress>/editable}"/>
-                                </ute:Tag>
-                                <ute:Tag class="nrgBilling-dlcc-mail-row-column">
-                                    <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-aptNo}"/>
-                                    <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
-                                                   fieldType="Underlined" width="120px" value="{olocalAddress>/UnitNo}" editable="{olocalAddress>/editable}"/>
-                                </ute:Tag>
-                            </ute:Tag>
-                            <ute:Tag class="nrgBilling-dlcc-mail-row">
-                                <ute:Tag class="nrgBilling-dlcc-mail-row-colCity">
-                                    <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-city}"/>
-                                    <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
-                                                   fieldType="Underlined" width="232px" value="{olocalAddress>/City}" editable="{olocalAddress>/editable}"/>
-                                </ute:Tag>
-                                <ute:Tag class="nrgBilling-dlcc-mail-row-colState">
-                                    <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-state}"/>
-                                    <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
-                                                   fieldType="Underlined" width="77px" value="{olocalAddress>/State}" editable="{olocalAddress>/editable}"/>
-                                </ute:Tag>
-                            </ute:Tag>
-                            <ute:Tag class="nrgBilling-dlcc-mail-row">
-                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-country}"/>
-                                <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                               fieldType="Underlined" width="340px" value="{olocalAddress>/Country}" editable="{olocalAddress>/editable}"/>
+                                               fieldType="Underlined" width="12rem" value="{olocalAddress>/co}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                         </ute:Tag>
-                        <ute:Tag class="nrgBilling-dlcc-mail-r">
+
+                        <ute:Tag class="nrgBilling-dlcc-mail-l">
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-stNum}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/HouseNo}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-stNAme}"/>
                                 <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                               fieldType="Underlined" width="177px" value="{olocalAddress>/Street}" editable="{olocalAddress>/editable}" />
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/Street}" editable="{olocalAddress>/editable}" />
+                            </ute:Tag>
+                        </ute:Tag>
+                        <ute:Tag class="nrgBilling-dlcc-mail-l">
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-aptNo}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
+                                               fieldType="Underlined"
+                                               width="15rem"
+                                               value="{olocalAddress>/UnitNo}"
+                                               editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
-                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-poBox}"  />
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-poBox}" />
                                 <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                               fieldType="Underlined" width="214px" value="{olocalAddress>/PoBox}" editable="{olocalAddress>/editable}"/>
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/PoBox}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                        </ute:Tag>
+                        <ute:Tag class="nrgBilling-dlcc-mail-l">
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-city}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/City}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-state}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
+                                               fieldType="Underlined" width="5rem" value="{olocalAddress>/State}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-zip}" />
                                 <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                               fieldType="Underlined" width="243px" value="{olocalAddress>/ZipCode}" editable="{olocalAddress>/editable}"/>
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/ZipCode}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                         </ute:Tag>
+                       <ute:Tag class="nrgBilling-dlcc-mail-l">
+                            <ute:Tag class="nrgBilling-dlcc-mail-row">
+                                <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-country}"/>
+                                <ute:Textfield class="nrgBilling-dlcc-mail-val"
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/Country}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                       </ute:Tag>
                     </ute:Tag>
                     <ute:Tag class="nrgBilling-dlcc-chbrow nrgBilling-dlcc-options" visible="{olocalAddress>/NewAddressflag}">
                         <utmain:Checkbox class="nrgBilling-dlcc-chbrow-chb"  checked="{olocalAddress>/NewAddrCheck}" />
@@ -279,6 +285,7 @@
                                    press="._onCancelBtnClick"/>
                 </ute:Tag>
             </ute:Tag>
+
         </ute:Tag>
     </ute:Tag>
 
