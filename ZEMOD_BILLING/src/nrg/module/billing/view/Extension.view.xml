@@ -75,7 +75,7 @@
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="{oExtEligible>/ExtOverride}">
                 <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Amount"/>
                 <ute:Textfield class="nrgBilling-payment-lbl"
-                                       fieldType="Regular" width="8rem" value="{oExtExtensions>/results/0/iDwnPay}" id="nrgBilling-ext-dwnPayGrantvalue-id"/>
+                                       fieldType="Regular" width="8rem" value="" id="nrgBilling-ext-dwnPayGrantvalue-id"/>
                 <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Due Date"/>
                 <ute:DatePicker width="8rem" class="nrgBilling-payment-lbl" id="nrgBilling-ext-dwnPayDueCreateDate-id"/>
                 <utmain:Button class="nrgBilling-payment-lbl" text="Make a Payment"
@@ -169,7 +169,7 @@
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="{oExtEligible>/ExtOverride}">
                 <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Amount"/>
                 <ute:Textfield class="nrgBilling-payment-lbl"
-                                       fieldType="Regular" width="8rem" value="{oExtExtensions>/results/0/iDwnPay}" id="nrgBilling-ext-dwnPaychangevalue-id"/>
+                                       fieldType="Regular" width="8rem" value="" id="nrgBilling-ext-dwnPaychangevalue-id"/>
                 <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Due Date"/>
                 <ute:DatePicker width="8rem" class="nrgBilling-payment-lbl" id="nrgBilling-ext-dwnPayDueDate-id"/>
                 <utmain:Button class="nrgBilling-payment-lbl" text="Make a Payment"

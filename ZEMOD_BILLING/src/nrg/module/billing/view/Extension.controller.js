@@ -272,7 +272,8 @@ sap.ui.define(
             var oODataSvc = this.getView().getModel('oDataSvc'),
                 oParameters,
                 sPath,
-                i;
+                i,
+                oEligible = this.getView().getModel('oExtEligible');
 
             sPath = '/ExtReasons';
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
@@ -280,7 +281,11 @@ sap.ui.define(
                 success : function (oData) {
                     if (oData) {
                         this.getView().getModel('oExtExtReasons').setData(oData);
-                        this.getView().getModel('oExtExtReasons').setProperty('/selectedKey', '2800');
+                        if (oEligible.getProperty('/ExtActive')) {
+                            this.getView().getModel('oExtExtReasons').setProperty('/selectedKey', '2510');
+                        } else {
+                            this.getView().getModel('oExtExtReasons').setProperty('/selectedKey', '2800');
+                        }
                     }
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this),
@@ -305,21 +310,28 @@ sap.ui.define(
                 aFilterValues,
                 aFilterIds,
                 that = this,
-                oLocalModel = this.getView().getModel('oLocalModel');
+                oLocalModel = this.getView().getModel('oLocalModel'),
+                sDwnPayValue;
 
             aFilterIds = ["Contract"];
             aFilterValues = [this._coNum];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             sPath = '/Extensions';//(ContractAccountNumber=\'' + this._caNum + '\',ExtActive=false)/ExtensionSet';
-
+            if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
+                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id');
+            } else {
+                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPaychangevalue-id');
+            }
             oParameters = {
                 filters: aFilters,
                 success : function (oData) {
                     var iCount = 0;
                     if (oData && oData.results) {
                         this.getView().getModel('oExtExtensions').setData(oData);
-                        this.getView().getModel('oExtExtensions').setProperty('/results/0/iDwnPay', 0);
+                        if (sDwnPayValue) {
+                            sDwnPayValue.setValue("0");
+                        }
                         for (iCount = 0; iCount < oData.results.length; iCount = iCount + 1) {
                             if ((oData.results[iCount]) && (oData.results[iCount].OpenItems) && (oData.results[iCount].OpenItems.DefferalDate)) {
                                 extDate = this._formatInvoiceDate(oData.results[iCount].OpenItems.DefferalDate.getDate(), oData.results[iCount].OpenItems.DefferalDate.getMonth() + 1, oData.results[iCount].OpenItems.DefferalDate.getFullYear());
@@ -360,15 +372,24 @@ sap.ui.define(
                 that = this,
                 sCurrentOpenItemDate = oExt.getProperty('/results/0/OpenItems/DefferalDate'),
                 sNewDateSelected,
-                bValidate = this._handleExtDateChange();
+                bValidate = this._handleExtDateChange(),
+                sDwnPayDate,
+                sDwnPayValue,
+                currentDate,
+                total_days;
             if (!bValidate) {
                 return;
             }
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').getValue();
+                sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueCreateDate-id').getValue();
+                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').getValue();
 
             } else {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtChangeDate-id').getValue();
+                sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue();
+                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPaychangevalue-id').getValue();
             }
             if (!sCurrentOpenItemDate) {
                 sCurrentOpenItemDate = oExt.getProperty('/results/1/OpenItems/DefferalDate');
@@ -389,27 +410,54 @@ sap.ui.define(
                 }
                 if (oEligble.getProperty('/ExtActive')) {
                     if (sCurrentOpenItemDate.getTime() === sNewDateSelected.getTime()) {
+                        this.getOwnerComponent().getCcuxApp().setOccupied(false);
                         ute.ui.main.Popup.Alert({
-                            title: 'Information',
+                            title: 'Extension',
                             message: 'Please change a date or select Cancel to end the transaction.'
                         });
                         return;
                     }
                 }
                 if (sCurrentOpenItemDate.getTime() > sNewDateSelected.getTime()) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
-                        title: 'Information',
+                        title: 'Extension',
                         message: 'Deferral date is before due date.'
                     });
                     return;
                 }
 
             }
+            if (parseInt(sDwnPayValue, 10) > 0) {
+                if (!sDwnPayDate) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'Extension',
+                        message: 'Down Payment Date needs to be filled'
+                    });
+                    return;
+                }
+            }
+            if (sDwnPayDate) {
+                sDwnPayDate = new Date(sDwnPayDate);
+                currentDate = new Date();
+                sDwnPayDate.setHours(currentDate.getHours());
+                total_days = (sDwnPayDate - currentDate) / (1000 * 60 * 60 * 24);
+                if (Math.ceil(total_days) > 14) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'Extension',
+                        message: 'Due date should be less than 2 weeks in future.'
+                    });
+                    return;
+                }
+            }
             if (oEligble.getProperty('/ExtPending')) {
-                if (oExt.getProperty('/results/0/iDwnPay') === 0) {
+                if (sDwnPayValue === 0) {
                     _popupCallback = function (sAction) {
                         switch (sAction) {
                         case ute.ui.main.Popup.Action.Yes:
+                            that.getOwnerComponent().getCcuxApp().setOccupied(true);
                             that._postExtRequest();
                             break;
                         case ute.ui.main.Popup.Action.No:
@@ -419,23 +467,27 @@ sap.ui.define(
                             break;
                         }
                     };
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Confirm({
-                        title: 'PENDING EXTENSION',
+                        title: 'Extension',
                         message: 'Customer already has a pending extension. Would you like to continue?',
                         callback: _popupCallback
                     });
+                    return;
 
                 }
-                if (oExt.getProperty('/results/0/iDwnPay') > 0) {
+                if (sDwnPayValue > 0) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
-                        title: 'Information',
+                        title: 'Extension',
                         message: 'Customer already has a pending extension'
                     });
+                    return;
                 }
-            } else {
-
-                that._postExtRequest();
             }
+
+            that._postExtRequest();
+
 
         };
         Controller.prototype._postExtRequest = function () {
@@ -444,7 +496,7 @@ sap.ui.define(
                 oExt = this.getView().getModel('oExtExtensions'),
                 oEligble = this.getView().getModel('oExtEligible'),
                 oReason = this.getView().getModel('oExtExtReasons'),
-                sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue(),
+                sDwnPayDate,
                 sDwnPayValue,
                 sPath,
                 oParameters,
@@ -457,9 +509,13 @@ sap.ui.define(
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').getValue();
                 sContactLogArea = oLocalModel.getProperty("/GrantCL");
+                sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueCreateDate-id').getValue();
+                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').getValue();
             } else {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtChangeDate-id').getValue();
                 sContactLogArea = oLocalModel.getProperty("/ChangeCL");
+                sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue();
+                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPaychangevalue-id').getValue();
             }
 
             oDataObject.Contract = this._coNum;
@@ -472,15 +528,15 @@ sap.ui.define(
             } else {
                 oDataObject.OverRide  = 'N';
             }
-            oDataObject.DwnPay  = oExt.getProperty('/results/0/iDwnPay');
+            oDataObject.DwnPay  = sDwnPayValue;
             if (oDataObject.DwnPay || oDataObject.DwnPay === 0) {
                 oDataObject.DwnPay = oDataObject.DwnPay.toString();
             }
             if (sDwnPayDate) {
                 oDataObject.DwnPayDate = new Date(sDwnPayDate);
-            } else {
+            }/* else {
                 oDataObject.DwnPayDate = new Date();
-            }
+            }*/
 
             if (oReason.getProperty("/selectedKey")) {
                 oDataObject.ExtReason = oReason.getProperty("/selectedKey");
@@ -503,8 +559,10 @@ sap.ui.define(
                             that._onCheckbook();
                         }
                     }
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this),
                 error: function (oError) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Extension',
                         message: 'Extension request failed'
