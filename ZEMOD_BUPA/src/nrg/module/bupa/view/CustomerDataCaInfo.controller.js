@@ -209,7 +209,6 @@ sap.ui.define(
                     }
                 }
             }
-
             this._updateMailingAddr();
         };
 
@@ -292,7 +291,12 @@ sap.ui.define(
             oParameters = {
                 urlParameters: {},
                 success : function (oData) {
-                    sap.ui.commons.MessageBox.alert("Update Success");
+                    if (oData && oData.Message) {
+                        sap.ui.commons.MessageBox.alert(oData.Message);
+                    } else {
+                        sap.ui.commons.MessageBox.alert("success");
+                    }
+
                     //this._retrBuag(this.getView().getModel('oDtaVrfyBuags').getProperty('/PartnerID'), this.getView().getModel('oAllBuags').getProperty('/selectedKey'));
                     this._oMailEditPopup.close();
                 }.bind(this),
