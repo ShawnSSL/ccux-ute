@@ -12,9 +12,9 @@
         <ute:Tag class="nrgApp-m2mPopup-paragraph"
             text="{comp-i18n-app>nrgApp-m2mPopup-TEXT1}"/>
         <ute:Tag class="nrgApp-m2mPopup-paragraph"
-            text="{comp-i18n-app>nrgApp-m2mPopup-TEXT2}"/>
+            text="{comp-i18n-app>nrgApp-m2mPopup-TEXT2a} {oMmDpp>/Months} {comp-i18n-app>nrgApp-m2mPopup-TEXT2b}"/>
         <ute:Tag class="nrgApp-m2mPopup-paragraph"
-            text="{comp-i18n-app>nrgApp-m2mPopup-TEXT3}"/>
+            text="{comp-i18n-app>nrgApp-m2mPopup-TEXT3} {path: 'oMmDpp>/Amount', type: 'nrg.base.type.Price'}"/>
 
         <!-- Footer -->
         <ute:Tag class="nrgApp-m2mPopup-footer">
@@ -44,5 +44,4 @@
             </utmain:Button>
         </ute:Tag>
     </ute:Tag>
-
 </core:FragmentDefinition>

@@ -33,6 +33,7 @@ sap.ui.define(
             this.getView().setModel(this.getView().getModel('rhs-app'), 'oRHSODataSvc');
             this.getView().setModel(this.getView().getModel('comp-app'), 'oCompODataSvc');
             this.getView().setModel(this.getView().getModel('elig-app'), 'oDataEligSvc');
+            this.getView().setModel(this.getView().getModel('dpp-app'), 'oDataDppSvc');
 
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oFooterNotification');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oFooterRHS');
@@ -41,6 +42,7 @@ sap.ui.define(
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oFooterBpInfo');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oBpInfo');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEligibility');
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oMmDpp');
 
             // Get the routing info
             var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
@@ -115,6 +117,37 @@ sap.ui.define(
                     }
                 }.bind(this)
             };
+
+            if (oModel) {
+                oModel.read(sPath, oParameters);
+            }
+        };
+
+        Controller.prototype._retrieveMmDppInfo = function () {
+            var oRouting = this.getView().getModel('oFooterRouting'),
+                sPath = '/DppMmInvS(\'' + oRouting.oData.CaNumber + '\')',
+                oModel = this.getView().getModel('oDataDppSvc'),
+                oMmDpp = this.getView().getModel('oMmDpp'),
+                oParameters = {
+                    success : function (oData) {
+                        if (oData.Message.length > 0) {
+                            ute.ui.main.Popup.Alert({ title: 'Error',
+                                                      message: oData.Message });
+                            if (this.m2mPopup) {
+                                this.m2mPopup.close();
+                            }
+                        } else {
+                            oMmDpp.setData(oData);
+                        }
+                    }.bind(this),
+                    error : function (oError) {
+                        ute.ui.main.Popup.Alert({ title: 'Error',
+                                                  message: 'Unable to retrieve info for DPP' });
+                        if (this.m2mPopup) {
+                            this.m2mPopup.close();
+                        }
+                    }.bind(this)
+                };
 
             if (oModel) {
                 oModel.read(sPath, oParameters);
@@ -625,6 +658,8 @@ sap.ui.define(
                 this.m2mPopup.addStyleClass('nrgApp-m2mPopup');
                 this.getView().addDependent(this.m2mPopup);
             }
+
+            this._retrieveMmDppInfo();
             // Open the popup
             this.m2mPopup.open();
         };
@@ -674,6 +709,26 @@ sap.ui.define(
                     ute.ui.main.Popup.Alert({ title: 'Retrieve Error', message: 'We cannot retrieve the eligibility data of DPP. Please check the Contract number or network and try again later.'});
                 }
             }.bind(this), 100);
+        };
+
+        Controller.prototype._onM2mDeclineClick = function (oEvent) {
+            var oRouting = this.getView().getModel('oFooterRouting'),
+                oModel = this.getView().getModel('oDataDppSvc'),
+                mParameters = {
+                    method : "POST",
+                    urlParameters : {"CA" : oRouting.oData.CaNumber},
+                    success : function (oData, oResponse) {
+                        ute.ui.main.Popup.Alert({ title: 'Success',
+                                                  message: 'Contact log saved' });
+                    }.bind(this),
+                    error: function (oError) {
+                        ute.ui.main.Popup.Alert({ title: 'Error',
+                                                  message: 'Unable to save contact log' });
+                    }.bind(this)
+                };
+
+            oModel.callFunction("/DppDecline", mParameters);
+            this.m2mPopup.close();
         };
 
         Controller.prototype._onM2mCloseClick = function (oEvent) {

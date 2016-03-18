@@ -26,6 +26,9 @@
                             },
                             "elig-app": {
                                 "url": "sap/opu/odata/sap/ZE_CCUX_ELIG_SRV/"
+                            },
+                            "dpp-app": {
+                                "url": "sap/opu/odata/sap/ZE_CCUX_DPP_EXT_SRV/"
                             }
                         },
                         "mock": {
@@ -47,6 +50,10 @@
                             },
                             "elig-app":{
                                 "mockDataBaseUrl": "data/devElig/",
+                                "generateMissingMockData": true
+                            },
+                            "dpp-app":{
+                                "mockDataBaseUrl": "data/devDPP/",
                                 "generateMissingMockData": true
                             }
                         }

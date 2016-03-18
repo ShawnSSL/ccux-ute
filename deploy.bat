@@ -1,5 +1,7 @@
 @SETLOCAL
-@SET ECLIPSE_WORKSPACE_PATH=%1
+@IF NOT [%1] == [] (
+	@SET ECLIPSE_WORKSPACE_PATH=%1
+)
 
 @IF EXIST %ECLIPSE_WORKSPACE_PATH%\ZEBASE (
     @CALL grunt --deploy=base --baseFolder=ZEBASE --baseName=nrg.base --eclipseProjectPath=%ECLIPSE_WORKSPACE_PATH%\ZEBASE
