@@ -666,7 +666,11 @@ sap.ui.define(
                     success : function (oData, response) {
                         that._OwnerComponent.getCcuxApp().setOccupied(false);
                         if (oData.Code === "S") {
-                            oHistoryModel.setProperty('/estAmount', "$" + parseFloat(oData.Message));
+                            for (i = 0; i < oHistoryModel.oData.length; i = i + 1) {
+                                oHistoryModel.setProperty("/" + i + "/AmtUsdAbp", oHistoryModel.getProperty("/" + i + "/AdjAmount"));
+                            }
+                            oHistoryModel.setProperty('/estAmount', "$" + parseFloat(oData.Message).toFixed(2));
+                            oHistoryModel.setProperty('/totalAmount', "$" + parseFloat(oData.Info).toFixed(2));
                         } else {
                             ute.ui.main.Popup.Alert({
                                 title: 'Request failed',

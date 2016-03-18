@@ -201,9 +201,9 @@ sap.ui.define(
         };
         Controller.prototype._onMain = function (oEvent) {
             if (this._coNum) {
-                this.navTo('dashboard.VerificationWithCaCo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                this.navTo('billing.BillingInfo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
             } else {
-                this.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
+                this.navTo('billing.BillingInfoNoCo', {bpNum: this._bpNum, caNum: this._caNum});
             }
         };
         Controller.prototype._onCheckbook = function (oEvent) {
@@ -474,7 +474,6 @@ sap.ui.define(
                         callback: _popupCallback
                     });
                     return;
-
                 }
                 if (sDwnPayValue > 0) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
