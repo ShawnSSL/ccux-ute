@@ -184,7 +184,7 @@ sap.ui.define(
                         }
                         this.getView().getModel('oESIDDropdown').setData(oData);
                         this.getView().byId('idESIDDropdown').setSelectedKey(defaultContractItem);
-                        this._retrEnrollHolds(oData.results[0].ESID, oData.results[0].Contract);
+                        this._retrEnrollHolds(oData.results[defaultContractItem].ESID, oData.results[defaultContractItem].Contract);
                     }
                 }.bind(this),
                 error: function (oError) {
