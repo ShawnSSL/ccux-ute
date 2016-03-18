@@ -195,6 +195,83 @@ sap.ui.define(
             return true;
 
         };
+        Controller.prototype._TrilliumAddressCheck = function () {
+            var olocalAddress = this.getView().getModel('olocalAddress'),
+                oModel = this.getOwnerComponent().getModel('comp-bupa'),
+                sPath,
+                oParameters,
+                aFilters = this._createAddrValidateFilters(),
+                oMailEdit = this.getView().getModel('oDtaAddrEdit');
+            olocalAddress.setProperty('/updateSent', true);
+            olocalAddress.setProperty('/showVldBtns', true);
+            olocalAddress.setProperty('/updateNotSent', false);
+            sPath = '/BuagAddrDetails';
+
+            oParameters = {
+                filters: aFilters,
+                success: function (oData) {
+                    if (oData.results[0].AddrChkValid === 'X') {
+                        //Validate success, update the address directly
+                        this._oMailEditPopup.close();
+                        this._updateMailingAddr();
+                    } else {
+                        oMailEdit.setProperty('/SuggAddrInfo', oData.results[0].TriCheck);
+                        this._showSuggestedAddr();
+                        //this._oMailEditPopup.open();
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    sap.ui.commons.MessageBox.alert('Validatation Call Failed');
+                }.bind(this)
+            };
+
+
+            //oMailEdit.setProperty('/SuggAddrInfo', oMailEdit.getProperty('/AddrInfo'));
+            if (oModel) {
+                oModel.read(sPath, oParameters);
+            }
+        };
+        Controller.prototype._createAddrValidateFilters = function () {
+            var aFilters = [],
+                oFilterTemplate,
+                sBpNum = this.getView().getModel('oDataBuagAddrDetails').getProperty('/PartnerID'),
+                oMailEdit = this.getView().getModel('oDtaAddrEdit'),
+                oMailEditAddrInfo = oMailEdit.getProperty('/AddrInfo'),
+                key,
+                bFixAddr = oMailEdit.getProperty('/bFixAddr'),
+                tempPath;
+
+            if (bFixAddr) {
+                oFilterTemplate = new Filter({ path: 'FixUpd', operator: FilterOperator.EQ, value1: 'X'});
+                aFilters.push(oFilterTemplate);
+            } else {
+                oFilterTemplate = new Filter({ path: 'TempUpd', operator: FilterOperator.EQ, value1: 'X'});
+                aFilters.push(oFilterTemplate);
+            }
+
+            oFilterTemplate = new Filter({ path: 'PartnerID', operator: FilterOperator.EQ, value1: sBpNum});
+            aFilters.push(oFilterTemplate);
+
+            oFilterTemplate = new Filter({ path: 'ChkAddr', operator: FilterOperator.EQ, value1: 'X'});
+            aFilters.push(oFilterTemplate);
+
+            for (key in oMailEditAddrInfo) {
+                if (oMailEditAddrInfo.hasOwnProperty(key)) {
+                    if (!(key === '__metadata' || key === 'StandardFlag' || key === 'ShortForm' || key === 'ValidFrom' || key === 'ValidTo' || key === 'Supplement')) {
+                        if (bFixAddr) {
+                            tempPath = 'FixAddrInfo/' + key;
+                            oFilterTemplate = new Filter({ path: tempPath, operator: FilterOperator.EQ, value1: oMailEditAddrInfo[key]});
+                            aFilters.push(oFilterTemplate);
+                        } else {
+                            tempPath = 'TempAddrInfo/' + key;
+                            oFilterTemplate = new Filter({ path: tempPath, operator: FilterOperator.EQ, value1: oMailEditAddrInfo[key]});
+                            aFilters.push(oFilterTemplate);
+                        }
+                    }
+                }
+            }
+            return aFilters;
+        };
         Controller.prototype._sendDppComunication = function () {
             var oODataSvc = this.getView().getModel('oDataSvc'),
                 oParameters,
@@ -734,7 +811,11 @@ sap.ui.define(
         Controller.prototype.onPopupClose = function (oEvent) {
             this.getView().getParent().close();
         };
-
+        Controller.prototype._onPoBoxEdit = function (oEvent) {
+            var olocalAddress = this.getView().getModel('olocalAddress');
+            olocalAddress.setProperty('/HouseNo', '');
+            olocalAddress.setProperty('/Street', '');
+        };
         return Controller;
     }
 );
