@@ -405,10 +405,11 @@ sap.ui.define(
                 urlParameters: {},
                 success : function (oData) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    ute.ui.main.Popup.Alert({
-                        title: 'Mailing address update ',
-                        message: 'Update Success'
-                    });
+                    if (oData && oData.Message) {
+                        sap.ui.commons.MessageBox.alert(oData.Message);
+                    } else {
+                        sap.ui.commons.MessageBox.alert("success");
+                    }
                     this._retrAllCa(this.getView().getModel('oDtaVrfyBuags').getProperty('/PartnerID'));
                     this._oMailEditPopup.close();
                 }.bind(this),
@@ -533,10 +534,17 @@ sap.ui.define(
         Controller.prototype._onEditMailAddrClick = function (oEvent) {
 
             var oEditMail = this.getView().getModel('oDtaAddrEdit'),
-                oCompareEvnet = {mParameters: {checked: null}};
+                oCompareEvnet = {mParameters: {checked: null}},
+                oBuagAddressDetails = this.getView().getModel('oDtaVrfyMailingTempAddr');
 
                 //console.log(oEditMail);
-
+            if (!(((oBuagAddressDetails.getProperty('/FixAddrInfo/HouseNo')) && (oBuagAddressDetails.getProperty('/FixAddrInfo/Street'))) || (oBuagAddressDetails.getProperty('/FixAddrInfo/PoBox')))) {
+                ute.ui.main.Popup.Alert({
+                    title: 'AVERAGE BILLING',
+                    message: 'Please enter street no & street name or PO Box'
+                });
+                return true;
+            }
 
             oEditMail.setProperty('/AddrInfo', this.getView().getModel('oDtaVrfyMailingTempAddr').getProperty('/FixAddrInfo'));
 

@@ -200,16 +200,20 @@ sap.ui.define(
         };
 
         Controller.prototype.onContactLog = function (oControlEvent) {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
+                oRouting = this.getView().getModel('oFooterRouting');
             oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "Z_CLFULLVW"
+                LINK_ID: "Z_CLFULLVW",
+                REF_ID: oRouting.getProperty('/CoNumber')
             });
         };
 
         Controller.prototype.onCreateLog = function (oControlEvent) {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
+                oRouting = this.getView().getModel('oFooterRouting');
             oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "Z_CLOG_INQ"
+                LINK_ID: "Z_CLOG_INQ",
+                REF_ID: oRouting.getProperty('/CoNumber')
             });
         };
 

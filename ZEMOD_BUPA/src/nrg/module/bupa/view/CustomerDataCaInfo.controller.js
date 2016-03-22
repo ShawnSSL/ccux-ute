@@ -438,9 +438,17 @@ sap.ui.define(
 
         Controller.prototype._onEditMailAddrClick = function (oEvent) {
             var oEditMail = this.getView().getModel('oDtaAddrEdit'),
-                oCompareEvnet = {mParameters: {checked: null}};
+                oCompareEvnet = {mParameters: {checked: null}},
+                oBuagAddressDetails = this.getView().getModel('oDataBuagAddrDetails');
 
-            oEditMail.setProperty('/AddrInfo', this.getView().getModel('oDataBuagAddrDetails').getProperty('/FixAddrInfo'));
+            if (!(((oBuagAddressDetails.getProperty('/FixAddrInfo/HouseNo')) && (oBuagAddressDetails.getProperty('/FixAddrInfo/Street'))) || (oBuagAddressDetails.getProperty('/FixAddrInfo/PoBox')))) {
+                ute.ui.main.Popup.Alert({
+                    title: 'AVERAGE BILLING',
+                    message: 'Please enter street no & street name or PO Box'
+                });
+                return true;
+            }
+            oEditMail.setProperty('/AddrInfo', oBuagAddressDetails.getProperty('/FixAddrInfo'));
             this.getView().getModel('oDataBuagAddrDetails').setProperty('/FixUpd', 'X');
 
             if (!this._oMailEditPopup) {
