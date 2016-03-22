@@ -25,6 +25,7 @@
                         <utmain:Dropdown class="nrgBilling-dltl-reason-select"
                                          content="{oExtExtReasons>/results}"
                                          selectedKey="0000"
+                                         id="idnrgBillingGrantReason"
                                          select="._onExtReasonSelect">
                             <utmain:DropdownItem key="{oExtExtReasons>ReasonCode}">
                                 <ute:Tag elem="span" text="{oExtExtReasons>Reason}" />
@@ -119,6 +120,7 @@
                         <utmain:Dropdown class="nrgBilling-dltl-reason-select"
                                          content="{oExtExtReasons>/results}"
                                          selectedKey="0000"
+                                         id="idnrgBillingChangeReason"
                                          select="._onExtReasonSelect">
                             <utmain:DropdownItem key="{oExtExtReasons>ReasonCode}">
                                 <ute:Tag elem="span" text="{oExtExtReasons>Reason}" />

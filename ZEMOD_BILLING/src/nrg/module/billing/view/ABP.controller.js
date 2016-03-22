@@ -636,7 +636,8 @@ sap.ui.define(
                 periodParameterName,
                 basisParameterName,
                 adjustParameterName,
-                that = this;
+                that = this,
+                sTempStatus = "";
             that._OwnerComponent.getCcuxApp().setOccupied(true);
             oPayload.Contract = this._coNum;
             for (i = 0; i < oHistoryModel.oData.length; i = i + 1) {
@@ -647,6 +648,12 @@ sap.ui.define(
                 oPayload[periodParameterName] = oHistoryModel.oData[i].FullPeriod;
                 oPayload[basisParameterName] = oHistoryModel.oData[i].Basis;
                 oPayload[adjustParameterName] = (parseFloat(oHistoryModel.oData[i].AdjAmount) || 0).toString();
+                if (i === 0) {
+                    sTempStatus = oHistoryModel.oData[i].Status;
+                } else {
+                    sTempStatus = sTempStatus + "~" + oHistoryModel.oData[i].Status;
+                }
+
             }
             if (oHistoryModel.oData.length < 12) {
                 for (i = oHistoryModel.oData.length; i < 12; i = i + 1) {
@@ -657,17 +664,24 @@ sap.ui.define(
                     oPayload[periodParameterName] = '0.0';
                     oPayload[basisParameterName] = '0.0';
                     oPayload[adjustParameterName] = '0.0';
+                    sTempStatus = sTempStatus + "~" + "NA";
                 }
             }
+            oPayload.Status = sTempStatus;
             if (oModel) {
                 mParameters = {
                     method : "POST",
                     urlParameters : oPayload,
                     success : function (oData, response) {
+                        var iCount,
+                            sTempValue = "0";
                         that._OwnerComponent.getCcuxApp().setOccupied(false);
                         if (oData.Code === "S") {
-                            for (i = 0; i < oHistoryModel.oData.length; i = i + 1) {
-                                oHistoryModel.setProperty("/" + i + "/AmtUsdAbp", oHistoryModel.getProperty("/" + i + "/AdjAmount"));
+                            for (iCount = 0; iCount < oHistoryModel.oData.length; iCount = iCount + 1) {
+                                sTempValue = oHistoryModel.getProperty("/" + iCount + "/AdjAmount");
+                                if ((!isNaN(parseFloat(sTempValue)) && isFinite(sTempValue)) && (parseInt(sTempValue, 10) > 0)) {
+                                    oHistoryModel.setProperty("/" + iCount + "/AmtUsdAbp", oHistoryModel.getProperty("/" + iCount + "/AdjAmount"));
+                                }
                             }
                             oHistoryModel.setProperty('/estAmount', "$" + parseFloat(oData.Message).toFixed(2));
                             oHistoryModel.setProperty('/totalAmount', "$" + parseFloat(oData.Info).toFixed(2));

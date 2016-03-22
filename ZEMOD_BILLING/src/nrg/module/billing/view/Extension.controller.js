@@ -16,10 +16,6 @@ sap.ui.define(
 
         var Controller = CoreController.extend('nrg.module.billing.view.Extension');
 
-        Controller.prototype.onInit = function () {
-        };
-
-
         Controller.prototype.onBeforeRendering = function () {
             var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData;
 
@@ -59,6 +55,10 @@ sap.ui.define(
         Controller.prototype.resetInfo = function () {
             var oContactLogArea = this.getView().byId('idnrgBilling-extDenCL');
             oContactLogArea.setValue("");
+            this.getView().byId('nrgBilling-ext-dwnPayDueCreateDate-id').setValue("");
+            this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').setValue("");
+            this.getView().byId('idnrgBillingGrantReason').removeAllContent();
+            this.getView().byId('idnrgBillingChangeReason').removeAllContent();
         };
         Controller.prototype.onAfterRendering = function () {
             this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').attachBrowserEvent('select', this._handleExtDateChange, this);
@@ -402,11 +402,19 @@ sap.ui.define(
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').getValue();
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueCreateDate-id').getValue();
                 sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').getValue();
+                if (!sDwnPayValue) {
+                    this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').setValue("0");
+                    sDwnPayValue = "0";
+                }
 
             } else {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtChangeDate-id').getValue();
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue();
                 sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPaychangevalue-id').getValue();
+                if (!sDwnPayValue) {
+                    this.getView().byId('nrgBilling-ext-dwnPaychangevalue-id').setValue("0");
+                    sDwnPayValue = "0";
+                }
             }
             sTempDate = sDwnPayDate;
             if (!sCurrentOpenItemDate) {
@@ -446,7 +454,7 @@ sap.ui.define(
                 }
 
             }
-            if (parseInt(sDwnPayValue, 10) > 0) {
+            if ((!isNaN(parseFloat(sDwnPayValue)) && isFinite(sDwnPayValue)) && (parseInt(sDwnPayValue, 10) > 0)) {
                 if (!sDwnPayDate) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
@@ -471,7 +479,7 @@ sap.ui.define(
                 }
             }
             if (oEligble.getProperty('/ExtPending')) {
-                if (parseInt(sDwnPayValue, 10) === 0) {
+                if ((!isNaN(parseFloat(sDwnPayValue)) && isFinite(sDwnPayValue)) && (parseInt(sDwnPayValue, 10) === 0)) {
                     _popupCallback = function (sAction) {
                         switch (sAction) {
                         case ute.ui.main.Popup.Action.Yes:
@@ -493,10 +501,14 @@ sap.ui.define(
                     });
                     return;
                 }
-                ute.ui.main.Popup.Alert({
-                    title: 'Extension',
-                    message: 'Customer already has a pending extension'
-                });
+                if ((!isNaN(parseFloat(sDwnPayValue)) && isFinite(sDwnPayValue)) && (parseInt(sDwnPayValue, 10) > 0)) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'Extension',
+                        message: 'Customer already has a pending extension'
+                    });
+                    return;
+                }
             }
             that._postExtRequest();
 
@@ -559,10 +571,17 @@ sap.ui.define(
             oParameters = {
                 merge: false,
                 success : function (oData) {
+                    var sTempMsg = "";
                     if (oData) {
+                        if (oData.DwnPymntMsg) {
+                            sTempMsg = oData.DwnPymntMsg;
+                        }
+                        if (oData.Message) {
+                            sTempMsg = sTempMsg + ';  ' + oData.Message;
+                        }
                         ute.ui.main.Popup.Alert({
                             title: 'Extension',
-                            message: oData.Message
+                            message: sTempMsg
                         });
                         if (!oData.Error) {
                             that._onCheckbook();
