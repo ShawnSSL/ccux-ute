@@ -45,7 +45,10 @@ sap.ui.define(
                 extDate : "",
                 GrantCL : "",
                 DeniedCL : "",
-                ChangeCL : ""
+                ChangeCL : "",
+                reason : "0000",
+                pendingFlag1 : true,
+                pendingFlag2 : false
             }), 'oLocalModel');
 
             this._initScrnControl();
@@ -116,13 +119,16 @@ sap.ui.define(
                 sPath,
                 aFilters,
                 aFilterValues,
-                aFilterIds;
+                aFilterIds,
+                oLocalModel = this.getView().getModel('oLocalModel');
 
             sPath = "/ExtElgbles('" + this._coNum + "')";
             oParameters = {
                 success : function (oData) {
                     if (oData) {
                         oData.NewExtActive = oData.ExtActive;
+                        oLocalModel.setProperty("/pendingFlag1", !oData.ExtPending);
+                        oLocalModel.setProperty("/pendingFlag2", oData.ExtPending);
                         this.getView().getModel('oExtEligible').setData(oData);
                         if (this.getView().getModel('oExtEligible').getProperty('/ExtActive')) {
                             this._selectScrn('EXTDisplay');
@@ -197,7 +203,8 @@ sap.ui.define(
             }
         };
         Controller.prototype._onExtReasonSelect = function (oEvent) {
-            this._extReason = oEvent.mParameters.Reason;
+            var oLocalModel = this.getView().getModel("oLocalModel");
+            oLocalModel.setProperty("/reason", oEvent.mParameters.selectedKey);
         };
         Controller.prototype._onMain = function (oEvent) {
             if (this._coNum) {
@@ -281,11 +288,6 @@ sap.ui.define(
                 success : function (oData) {
                     if (oData) {
                         this.getView().getModel('oExtExtReasons').setData(oData);
-                        if (oEligible.getProperty('/ExtActive')) {
-                            this.getView().getModel('oExtExtReasons').setProperty('/selectedKey', '2510');
-                        } else {
-                            this.getView().getModel('oExtExtReasons').setProperty('/selectedKey', '2800');
-                        }
                     }
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this),
@@ -376,11 +378,26 @@ sap.ui.define(
                 sDwnPayDate,
                 sDwnPayValue,
                 currentDate,
-                total_days;
+                total_days,
+                oLocalModel = this.getView().getModel("oLocalModel"),
+                oScrnControl = this.getView().getModel('oDppScrnControl'),
+                sTempDate;
+
+
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             if (!bValidate) {
+                this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 return;
             }
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+
+            if (oLocalModel.getProperty("/reason") === "0000") {
+                this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                ute.ui.main.Popup.Alert({
+                    title: 'Extension',
+                    message: 'Please select a reason.'
+                });
+                return;
+            }
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').getValue();
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueCreateDate-id').getValue();
@@ -391,6 +408,7 @@ sap.ui.define(
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue();
                 sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPaychangevalue-id').getValue();
             }
+            sTempDate = sDwnPayDate;
             if (!sCurrentOpenItemDate) {
                 sCurrentOpenItemDate = oExt.getProperty('/results/1/OpenItems/DefferalDate');
             }
@@ -453,7 +471,7 @@ sap.ui.define(
                 }
             }
             if (oEligble.getProperty('/ExtPending')) {
-                if (sDwnPayValue === 0) {
+                if (parseInt(sDwnPayValue, 10) === 0) {
                     _popupCallback = function (sAction) {
                         switch (sAction) {
                         case ute.ui.main.Popup.Action.Yes:
@@ -475,16 +493,11 @@ sap.ui.define(
                     });
                     return;
                 }
-                if (sDwnPayValue > 0) {
-                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    ute.ui.main.Popup.Alert({
-                        title: 'Extension',
-                        message: 'Customer already has a pending extension'
-                    });
-                    return;
-                }
+                ute.ui.main.Popup.Alert({
+                    title: 'Extension',
+                    message: 'Customer already has a pending extension'
+                });
             }
-
             that._postExtRequest();
 
 
@@ -537,9 +550,6 @@ sap.ui.define(
                 oDataObject.DwnPayDate = new Date();
             }*/
 
-            if (oReason.getProperty("/selectedKey")) {
-                oDataObject.ExtReason = oReason.getProperty("/selectedKey");
-            }
             if (this._extReason) {
                 oDataObject.ExtReason = this._extReason;
             }
