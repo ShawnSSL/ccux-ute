@@ -1,5 +1,6 @@
 /*globals sap, ute*/
 /*jslint nomen:true*/
+/*jslint bitwise: true */
 sap.ui.define(
     [
         'nrg/base/view/BaseController',
@@ -277,35 +278,39 @@ sap.ui.define(
 
 
         Controller.prototype._retrExtReasons = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
+            var mParameters,
                 sPath,
-                i,
-                oEligible = this.getView().getModel('oExtEligible');
+                oReason,
+                fnRecievedHandler,
+                that = this,
+                oRsnsTemp = this.getView().byId('idnrgBillingReasonTemp'),
+                factoryFuntion;
 
-            sPath = '/ExtReasons';
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            oParameters = {
-                success : function (oData) {
-                    if (oData) {
-                        this.getView().getModel('oExtExtReasons').setData(oData);
-                        if (this.getView().getModel('oExtEligible').getProperty('/ExtActive')) {
-                            this.getView().byId('idnrgBillingChangeReason').setSelectedKey("0000");
-                        } else {
-                            this.getView().byId('idnrgBillingGrantReason').setSelectedKey("0000");
-                        }
-                    }
-                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                }.bind(this),
-                error: function (oError) {
-                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    //Need to put error message
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.read(sPath, oParameters);
+            if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
+                oReason = this.getView().byId('idnrgBillingGrantReason');
+            } else {
+                oReason = this.getView().byId('idnrgBillingChangeReason');
             }
+            oReason.removeAllContent();
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            sPath = '/ExtReasons';
+            factoryFuntion = function () {
+                return oRsnsTemp.clone(Math.abs(Math.random().toString().split('').reduce(function (p, c) {return (p << 5) - p + c; })).toString(36).substr(0, 11));
+            };
+            fnRecievedHandler = function (oEvent) {
+                var aContent = oReason.getContent();
+                if ((aContent !== undefined) && (aContent.length > 0)) {
+                    oReason.setSelectedKey("0000");
+                }
+                that.getOwnerComponent().getCcuxApp().setOccupied(false);
+            };
+            mParameters = {
+                model : "comp-dppext",
+                path : sPath,
+                factory : factoryFuntion,
+                events: {dataReceived : fnRecievedHandler}
+            };
+            oReason.bindAggregation("content", mParameters);
         };
 
         Controller.prototype._retrExtensions = function () {
@@ -466,7 +471,7 @@ sap.ui.define(
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Extension',
-                        message: 'Down Payment Date needs to be filled'
+                        message: 'Please enter due date for the down payment.'
                     });
                     return;
                 }

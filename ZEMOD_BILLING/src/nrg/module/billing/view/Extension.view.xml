@@ -10,6 +10,7 @@
     xmlns:m="sap.m"
     controllerName="nrg.module.billing.view.Extension">
     <ute:Tag class="nrgAppMain-generalContent nrgBilling-dPmtPln">
+
         <!--------------------------------------------------------------------EXT Granted--------------------------------------------------------------------------------------->
         <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{oDppScrnControl>/EXTGrant}">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-ExtTitle}"/>
@@ -23,10 +24,9 @@
                     <ute:Tag class="nrgBilling-dltl-reason">
                         <ute:Tag class="nrgBilling-dltl-reason-lbl" text="{comp-i18n-billing>nrgBilling-dpp-ReasonGrant}"/>
                         <utmain:Dropdown class="nrgBilling-dltl-reason-select"
-                                         content="{oExtExtReasons>/results}"
                                          id="idnrgBillingGrantReason">
-                            <utmain:DropdownItem key="{oExtExtReasons>ReasonCode}">
-                                <ute:Tag elem="span" text="{oExtExtReasons>Reason}" />
+                            <utmain:DropdownItem key="{comp-dppext>ReasonCode}">
+                                <ute:Tag elem="span" text="{comp-dppext>Reason}" />
                             </utmain:DropdownItem>
                         </utmain:Dropdown>
                     </ute:Tag>
@@ -116,10 +116,9 @@
                     <ute:Tag class="nrgBilling-dltl-reason">
                         <ute:Tag class="nrgBilling-dltl-reason-lbl" text="{comp-i18n-billing>nrgBilling-dpp-ReasonGrant}"/>
                         <utmain:Dropdown class="nrgBilling-dltl-reason-select"
-                                         content="{oExtExtReasons>/results}"
                                          id="idnrgBillingChangeReason">
-                            <utmain:DropdownItem key="{oExtExtReasons>ReasonCode}">
-                                <ute:Tag elem="span" text="{oExtExtReasons>Reason}" />
+                            <utmain:DropdownItem key="{comp-dppext>ReasonCode}">
+                                <ute:Tag elem="span" text="{comp-dppext>Reason}" />
                             </utmain:DropdownItem>
                         </utmain:Dropdown>
                     </ute:Tag>
@@ -351,5 +350,12 @@
 
             </ute:Tag>
         </ute:Tag>
+       <ute:Tag visible="false">
+            <utmain:Dropdown class="nrgBilling-dltl-reason-select">
+                <utmain:DropdownItem key="{comp-dppext>ReasonCode}" id="idnrgBillingReasonTemp">
+                    <ute:Tag elem="span" text="{comp-dppext>Reason}" />
+                </utmain:DropdownItem>
+            </utmain:Dropdown>
+       </ute:Tag>
     </ute:Tag>
 </mvc:View>
