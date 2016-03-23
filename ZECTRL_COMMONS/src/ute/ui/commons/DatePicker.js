@@ -341,6 +341,15 @@ sap.ui.define(
                             this._oCalendar.focusDate(this._oDate);
                         }
 				    }
+                } else {
+                    oInput.val(sNewValue);
+
+                    this.setProperty('value', sNewValue, true); // suppress rerendering
+                    this.setProperty('defaultDate', sNewValue, true); // suppress rerendering
+
+                    this.fireChange({
+                        newValue: sNewValue
+                    }); // oldValue is not that easy in ComboBox and anyway not in API... thus skip it
                 }
             }
         };
