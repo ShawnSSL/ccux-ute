@@ -33,6 +33,20 @@ sap.ui.define(
         });
 
         EnabledPropagator.call(CustomControl.prototype);
+        /**
+         * Function is called when button is clicked.
+         *
+         * @param {jQuery.Event} oEvent
+         * @private
+         */
+        CustomControl.prototype.onclick = function (oEvent) {
+            if (this.getEnabled()) {
+                this.firePress({/* no parameters */});
+            }
+
+            oEvent.preventDefault();
+            oEvent.stopPropagation();
+        };
 
         CustomControl.prototype.setEnabled = function (oValue) {
             if (oValue) {
