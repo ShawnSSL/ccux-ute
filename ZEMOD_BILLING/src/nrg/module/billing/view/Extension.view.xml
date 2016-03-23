@@ -24,9 +24,7 @@
                         <ute:Tag class="nrgBilling-dltl-reason-lbl" text="{comp-i18n-billing>nrgBilling-dpp-ReasonGrant}"/>
                         <utmain:Dropdown class="nrgBilling-dltl-reason-select"
                                          content="{oExtExtReasons>/results}"
-                                         selectedKey="0000"
-                                         id="idnrgBillingGrantReason"
-                                         select="._onExtReasonSelect">
+                                         id="idnrgBillingGrantReason">
                             <utmain:DropdownItem key="{oExtExtReasons>ReasonCode}">
                                 <ute:Tag elem="span" text="{oExtExtReasons>Reason}" />
                             </utmain:DropdownItem>
@@ -119,9 +117,7 @@
                         <ute:Tag class="nrgBilling-dltl-reason-lbl" text="{comp-i18n-billing>nrgBilling-dpp-ReasonGrant}"/>
                         <utmain:Dropdown class="nrgBilling-dltl-reason-select"
                                          content="{oExtExtReasons>/results}"
-                                         selectedKey="0000"
-                                         id="idnrgBillingChangeReason"
-                                         select="._onExtReasonSelect">
+                                         id="idnrgBillingChangeReason">
                             <utmain:DropdownItem key="{oExtExtReasons>ReasonCode}">
                                 <ute:Tag elem="span" text="{oExtExtReasons>Reason}" />
                             </utmain:DropdownItem>

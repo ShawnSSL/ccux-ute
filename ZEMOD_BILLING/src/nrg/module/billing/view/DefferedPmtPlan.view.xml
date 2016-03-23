@@ -10,7 +10,7 @@
     xmlns:m="sap.m"
     controllerName="nrg.module.billing.view.DefferedPmtPlan">
     <ute:Tag class="nrgAppMain-generalContent nrgBilling-dPmtPln">
-        <!--STEP 1-->
+        <!----------------------------------------------------------------------------------STEP 1------------------------------------------------------------------->
         <ute:Tag class="nrgBilling-dPmtPln-lftArea" visible="{oDppScrnControl>/StepOne}">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
             <ute:Tag class="nrgBilling-dPmtPln-link">
@@ -105,7 +105,7 @@
                 <utmain:Button class="nrgBilling-dPmtPln-lftArea-botm-btn" text="{comp-i18n-billing>nrgBilling-dpp-OK}" press="._onDppSetUpOk"/>
             </ute:Tag>
         </ute:Tag>
-        <!--Step 2-->
+        <!-------------------------------------------------------------------------Step 2------------------------------------------------------------------------------>
         <ute:Tag class="nrgBilling-dPmtPln-lftArea" visible="{oDppScrnControl>/StepTwo}">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
             <ute:Tag class="nrgBilling-dPmtPln-link">
@@ -168,15 +168,6 @@
                         <ute:Tag class="nrgBilling-dlct-date-lbl" text="{comp-i18n-billing>nrgBilling-dpp-FirstInstlDate} "/>
                         <ute:DatePicker id="nrgBilling-dpp-DppDueDate-id"/>
                 </ute:Tag>
-            </ute:Tag>
-            <ute:Tag class="nrgBilling-dPmtPln-lftArea-payment" visible="false">
-                <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Amount"/>
-                <ute:Textfield class="nrgBilling-payment-lbl"
-                                       fieldType="Regular" width="8rem" value="0" id="nrgBilling-dpp-dwnPayvalue-id"/>
-                <utmain:Label class="nrgBilling-payment-lbl" text="Down Payment Due Date" />
-                <ute:DatePicker width="8rem" class="nrgBilling-payment-lbl" id="nrgBilling-dpp-dwnPayDueDate-id" />
-                <utmain:Button class="nrgBilling-payment-lbl" text="Make a Payment"
-                               press="._onDownPayment"/>
             </ute:Tag>
             <utmain:Infoline expanded="true" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline">
                 <utmain:headerContent>
@@ -242,7 +233,7 @@
                 </ute:Tag>
             </ute:Tag>
         </ute:Tag>
-        <!--Step 3-->
+        <!-----------------------------------------------------------------------Step 3------------------------------------------------------------------------>
         <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{oDppScrnControl>/StepThree}">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
             <ute:Tag class="nrgBilling-dPmtPln-link">
@@ -366,7 +357,7 @@
                 </ute:Tag>
             </ute:Tag>
         </ute:Tag>
-        <!--DPP Denied-->
+        <!-----------------------------------------------------------------------------DPP Denied-------------------------------------------------------------------------->
         <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{oDppScrnControl>/DPPDenied}">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
             <ute:Tag class="nrgBilling-dPmtPln-link">

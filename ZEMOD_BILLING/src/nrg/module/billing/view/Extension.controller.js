@@ -59,6 +59,7 @@ sap.ui.define(
             this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').setValue("");
             this.getView().byId('idnrgBillingGrantReason').removeAllContent();
             this.getView().byId('idnrgBillingChangeReason').removeAllContent();
+            this._ExtensionSelected = "0000";
         };
         Controller.prototype.onAfterRendering = function () {
             this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').attachBrowserEvent('select', this._handleExtDateChange, this);
@@ -134,7 +135,11 @@ sap.ui.define(
                             this._selectScrn('EXTDisplay');
                         } else {
                             if (this.getView().getModel('oExtEligible').getProperty('/EligibleYes')) {
-                                this._selectScrn('EXTGrant');
+                                if (this.getView().getModel('oExtEligible').getProperty('/ExtPending')) {
+                                    this._selectScrn('EXTDisplay');
+                                } else {
+                                    this._selectScrn('EXTGrant');
+                                }
                             } else {
                                 this._selectScrn('EXTDenied');
                             }
@@ -201,10 +206,6 @@ sap.ui.define(
             } else {
                 this._selectScrn('EXTDenied');
             }
-        };
-        Controller.prototype._onExtReasonSelect = function (oEvent) {
-            var oLocalModel = this.getView().getModel("oLocalModel");
-            oLocalModel.setProperty("/reason", oEvent.mParameters.selectedKey);
         };
         Controller.prototype._onMain = function (oEvent) {
             if (this._coNum) {
@@ -288,6 +289,11 @@ sap.ui.define(
                 success : function (oData) {
                     if (oData) {
                         this.getView().getModel('oExtExtReasons').setData(oData);
+                        if (this.getView().getModel('oExtEligible').getProperty('/ExtActive')) {
+                            this.getView().byId('idnrgBillingChangeReason').setSelectedKey("0000");
+                        } else {
+                            this.getView().byId('idnrgBillingGrantReason').setSelectedKey("0000");
+                        }
                     }
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this),
@@ -381,21 +387,13 @@ sap.ui.define(
                 total_days,
                 oLocalModel = this.getView().getModel("oLocalModel"),
                 oScrnControl = this.getView().getModel('oDppScrnControl'),
-                sTempDate;
+                sTempDate,
+                oReason;
 
 
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             if (!bValidate) {
                 this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                return;
-            }
-
-            if (oLocalModel.getProperty("/reason") === "0000") {
-                this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                ute.ui.main.Popup.Alert({
-                    title: 'Extension',
-                    message: 'Please select a reason.'
-                });
                 return;
             }
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
@@ -406,7 +404,7 @@ sap.ui.define(
                     this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').setValue("0");
                     sDwnPayValue = "0";
                 }
-
+                oReason = this.getView().byId('idnrgBillingGrantReason');
             } else {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtChangeDate-id').getValue();
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue();
@@ -415,6 +413,15 @@ sap.ui.define(
                     this.getView().byId('nrgBilling-ext-dwnPaychangevalue-id').setValue("0");
                     sDwnPayValue = "0";
                 }
+                oReason = this.getView().byId('idnrgBillingChangeReason');
+            }
+            if (oReason.getSelectedKey() === "0000") {
+                this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                ute.ui.main.Popup.Alert({
+                    title: 'Extension',
+                    message: 'Please select a reason.'
+                });
+                return;
             }
             sTempDate = sDwnPayDate;
             if (!sCurrentOpenItemDate) {
@@ -519,7 +526,7 @@ sap.ui.define(
                 oPost = this.getView().getModel('oExtPostRequest'),
                 oExt = this.getView().getModel('oExtExtensions'),
                 oEligble = this.getView().getModel('oExtEligible'),
-                oReason = this.getView().getModel('oExtExtReasons'),
+                oReason,
                 sDwnPayDate,
                 sDwnPayValue,
                 sPath,
@@ -535,11 +542,13 @@ sap.ui.define(
                 sContactLogArea = oLocalModel.getProperty("/GrantCL");
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueCreateDate-id').getValue();
                 sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').getValue();
+                oReason = this.getView().byId('idnrgBillingGrantReason');
             } else {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtChangeDate-id').getValue();
                 sContactLogArea = oLocalModel.getProperty("/ChangeCL");
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue();
                 sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPaychangevalue-id').getValue();
+                oReason = this.getView().byId('idnrgBillingChangeReason');
             }
 
             oDataObject.Contract = this._coNum;
@@ -558,12 +567,9 @@ sap.ui.define(
             }
             if (sDwnPayDate) {
                 oDataObject.DwnPayDate = new Date(sDwnPayDate);
-            }/* else {
-                oDataObject.DwnPayDate = new Date();
-            }*/
-
-            if (this._extReason) {
-                oDataObject.ExtReason = this._extReason;
+            }
+            if (oReason.getSelectedKey()) {
+                oDataObject.ExtReason = oReason.getSelectedKey();
             }
             oDataObject.ExtActive = false;
             sPath = '/ExtConfs';

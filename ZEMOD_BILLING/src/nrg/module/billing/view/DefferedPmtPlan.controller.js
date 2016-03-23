@@ -57,6 +57,7 @@ sap.ui.define(
 
             this._initScrnControl();
             this._isDppElgble();
+            this._retrieveNotification();
         };
 
         Controller.prototype.onAfterRendering = function () {
@@ -85,13 +86,7 @@ sap.ui.define(
                 aFilterValues,
                 aFilterIds;
 
-           // aFilterIds = ["Contract"];
-            //aFilterValues = [this._coNum];
-            //aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = "/DPPElgbles('" + this._coNum + "')";
-
-            //sPath = '/DPPElgbles(ContractAccountNumber=\'' + this._caNum + '\',DPPReason=\'\')';
-
             oParameters = {
                //filters : aFilters,
                 success : function (oData) {
@@ -112,17 +107,6 @@ sap.ui.define(
             if (oODataSvc && this._coNum) {
                 oODataSvc.read(sPath, oParameters);
             }
-        };
-        Controller.prototype._onDownPayment = function (oEvent) {
-/*            var QuickControl = new QuickPayControl(),
-                that = this;
-
-            this.getView().addDependent(QuickControl);
-            QuickControl.openQuickPay(this._coNum, this._bpNum, this._caNum);
-            QuickControl.attachEvent("PaymentCompleted", function () {
-                that._retrExtensions();
-            }, this);*/
-
         };
 
         Controller.prototype._selectScrn = function (sSelectedScrn) {
@@ -494,8 +478,7 @@ sap.ui.define(
                 sTempCOpupk,
                 sTempCOpupz,
                 oContactLogArea = this.getView().byId('idnrgBilling-DPPAccCL'),
-                sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueDate-id').getValue(),
-                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayvalue-id').getValue();
+                sDwnPayDate = this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue();
 
 
             oConfPost.setProperty('/CA', this._caNum);
@@ -511,9 +494,9 @@ sap.ui.define(
 
             oConfPost.setProperty('/InitialDate', oConf.oData.results[0].InitialDate);
 
-            oConfPost.setProperty('/DwnPay', sDwnPayValue || 0);
+            oConfPost.setProperty('/DwnPay', "'" + parseFloat(oConf.getProperty('/results/0/ConfirmdItems/Amount')) + "'");
 
-            oConfPost.setProperty('/DwnPayDate', sDwnPayDate || new Date());
+            oConfPost.setProperty('/DwnPayDate', new Date(sDwnPayDate) || new Date());
 
             oConfPost.setProperty('/ReasonCode', this.getView().getModel('oDppReasons').getProperty('/selectedKey'));
             oConfPost.setProperty('/Message', (oContactLogArea.getValue() || ""));
@@ -834,8 +817,8 @@ sap.ui.define(
 
             sPath = '/DPPDisclos';
 
-            aFilterIds = ["Contract", "CA"];
-            aFilterValues = [this._coNum, this._caNum];
+            aFilterIds = ["CA"];
+            aFilterValues = [this._caNum];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oParameters = {
                 filters: aFilters,
