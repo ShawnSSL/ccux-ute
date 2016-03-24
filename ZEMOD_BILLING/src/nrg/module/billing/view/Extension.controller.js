@@ -53,6 +53,13 @@ sap.ui.define(
             this._retrieveNotification();
 
         };
+        /* =========================================================== */
+		/* lifecycle method- After Rendering                          */
+		/* =========================================================== */
+        Controller.prototype.onAfterRendering = function () {
+            // Update Footer
+            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+        };
         Controller.prototype.resetInfo = function () {
             var oContactLogArea = this.getView().byId('idnrgBilling-extDenCL');
             oContactLogArea.setValue("");
@@ -451,7 +458,7 @@ sap.ui.define(
                         this.getOwnerComponent().getCcuxApp().setOccupied(false);
                         ute.ui.main.Popup.Alert({
                             title: 'Extension',
-                            message: 'Please change a date or select Cancel to end the transaction.'
+                            message: 'Selected extended date is the same as current extended date. Please select another date.'
                         });
                         return;
                     }
