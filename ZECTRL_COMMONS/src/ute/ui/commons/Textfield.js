@@ -13,7 +13,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
                 //Value the textfield bind with
                 value : {type : "string", group : "Data", defaultValue : '', bindable : "bindable"},
 
-                //Not implemented, if enabled = flase will grey out
+                //Not implemented, if enabled = false will grey out
                 enabled : {type : "boolean", group : "Behavior", defaultValue : true},
 
                 //If false the textfield is not editable
@@ -26,6 +26,9 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
 
                 //name attribute in HTML
                 name : {type : "string", group : "Misc", defaultValue : null},
+
+                //title attribute in HTML
+                tooltip : {type : "string", group : "Misc", defaultValue : null, bindable : "bindable"},
 
                 //Placeholder value of a string before the input
                 placeholder : {type : "string", group : "Appearance", defaultValue : null},
@@ -146,7 +149,24 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
             return true;
 
         };
+        /* Overwrite of generated function - no new JS-doc.
+         * Property setter for the Tooltip
+         *
+         * @param oTooltip:
+         * @return {sap.ui.commons.TextField} <code>this</code> to allow method chaining
+         * @public
+         */
+        Textfield.prototype.setTooltip = function (oTooltip) {
+            var oInputDomRef = this.getInputDomRef(),
+                sTooltip;
 
+            if (oInputDomRef) {
+                sTooltip = ValueStateSupport.enrichTooltip(this, this.getTooltip());
+                jQuery(oInputDomRef).attr("title", sTooltip || "");
+            }
+
+            return this;
+        };
         /**
          * Handler for live change
          * reads the current content and fires the liveChange event

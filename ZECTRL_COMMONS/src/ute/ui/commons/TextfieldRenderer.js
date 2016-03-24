@@ -15,7 +15,7 @@ sap.ui.define(
 
 	    TextfieldRenderer.render = function (oRm, oTextfield) {
             //var bRenderOuter = oTextField._getRenderOuter();
-
+            var tooltip = ValueStateSupport.enrichTooltip(oTextfield, oTextfield.getTooltip());
 
             oRm.write('<span');
             oRm.writeControlData(oTextfield);
@@ -50,11 +50,17 @@ sap.ui.define(
                 //oRm.writeControlData(oTextfield);
                 oRm.writeAttribute('id', oTextfield.getId() + '-input');
                 //oRm.writeAttribute('id', oTextfield.getId());
-                oRm.writeAttribute('name', oTextfield.getName());
+                if (oTextfield.getName()) {
+                    oRm.writeAttribute('name', oTextfield.getName());
+                }
+
                 if (!oTextfield.getEditable()) {
                     oRm.writeAttribute('readonly', '');
                     oRm.writeAttribute('disabled', '');
                 }
+                if (tooltip) {
+				    oRm.writeAttributeEscaped('title', tooltip);
+			    }
 /*                if (oTextfield.getValue()) {
                     oRm.writeAttribute('value', oTextfield.getValue());
                 } else {
@@ -101,7 +107,9 @@ sap.ui.define(
                 }
                 //oRm.writeControlData(oTextfield);
                 oRm.writeAttribute('id', oTextfield.getId() + '-input');
-                oRm.writeAttribute('name', oTextfield.getName());
+                if (oTextfield.getName()) {
+                    oRm.writeAttribute('name', oTextfield.getName());
+                }
 /*                if (oTextfield.getValue()) {
                     oRm.writeAttribute('value', oTextfield.getValue());
                 } else {
@@ -111,6 +119,9 @@ sap.ui.define(
                     oRm.writeAttribute('readonly', '');
                     oRm.writeAttribute('disabled', '');
                 }
+                if (tooltip) {
+				    oRm.writeAttributeEscaped('title', tooltip);
+			    }
                 if (oTextfield.getMaxLength()) {
 			        oRm.writeAttribute("maxLength", oTextfield.getMaxLength());
 		        }
@@ -152,7 +163,9 @@ sap.ui.define(
                 }
                 // Attributes
                 oRm.writeAttribute('id', oTextfield.getId() + '-input');
-                oRm.writeAttribute('name', oTextfield.getName());
+                if (oTextfield.getName()) {
+                    oRm.writeAttribute('name', oTextfield.getName());
+                }
                 oRm.writeAttribute('required', 'required');
                 if (oTextfield.getValue()) {
                     oRm.writeAttribute('value', oTextfield.getValue());
@@ -161,6 +174,9 @@ sap.ui.define(
                     oRm.writeAttribute('readonly', '');
                     oRm.writeAttribute('disabled', '');
                 }
+                if (tooltip) {
+				    oRm.writeAttributeEscaped('title', tooltip);
+			    }
                 if (oTextfield.getMaxLength()) {
                     oRm.writeAttribute("maxLength", oTextfield.getMaxLength());
                 }
@@ -209,7 +225,9 @@ sap.ui.define(
                 //oRm.writeControlData(oTextfield);
                 oRm.writeAttribute('id', oTextfield.getId() + '-input');
                 //oRm.writeAttribute('id', oTextfield.getId());
-                oRm.writeAttribute('name', oTextfield.getName());
+                if (oTextfield.getName()) {
+                    oRm.writeAttribute('name', oTextfield.getName());
+                }
                 if (oTextfield.getValue()) {
                     oRm.writeAttribute('value', oTextfield.getValue());
                 } else {
@@ -219,6 +237,9 @@ sap.ui.define(
                     oRm.writeAttribute('readonly', '');
                     oRm.writeAttribute('disabled', '');
                 }
+                if (tooltip) {
+				    oRm.writeAttributeEscaped('title', tooltip);
+			    }
                 if (oTextfield.getMaxLength()) {
 			        oRm.writeAttribute("maxLength", oTextfield.getMaxLength());
 		        }
