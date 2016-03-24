@@ -23,42 +23,12 @@ sap.ui.define(
 
         Controller.prototype.onBeforeRendering = function () {
             this.getView().setModel(this.getOwnerComponent().getModel('comp-eligibility'), 'oDataEligSvc');
-            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEligibility');
-
             // Retrieve routing parameters
             var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData;
             this._bpNum = oRouteInfo.bpNum;
             this._caNum = oRouteInfo.caNum;
             this._coNum = oRouteInfo.coNum;
-            this._retrieveEligibility();
-        };
 
-        Controller.prototype.onAfterRendering = function () {
-        };
-
-        Controller.prototype._retrieveEligibility = function (fnCallback) {
-            var sPath = '/EligCheckS(\'' + this._coNum + '\')',
-                oModel = this.getView().getModel('oDataEligSvc'),
-                oEligModel = this.getView().getModel('oEligibility'),
-                oParameters,
-                alert,
-                i;
-
-            oParameters = {
-                success : function (oData) {
-                    oEligModel.setData(oData);
-                    if (fnCallback) {
-                        fnCallback();
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    
-                }.bind(this)
-            };
-
-            if (oModel && this._coNum) {
-                oModel.read(sPath, oParameters);
-            }
         };
 
         Controller.prototype._onDunningBtnClicked = function () {
@@ -114,18 +84,30 @@ sap.ui.define(
             this.ABPPopupCustomControl.prepareABP();
         };
         Controller.prototype._onDppBtnClicked = function (oEvent) {
-            var oEligModel = this.getView().getModel('oEligibility'),
-                oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
-            if (oEligModel) {
-                if (oEligModel.getProperty("/DPPActv")) {
-                    oWebUiManager.notifyWebUi('openIndex', {
-                        LINK_ID: "Z_DPP"
-                    });
-                } else {
-                    this.navTo('billing.DefferedPmtPlan', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
-                }
-            }
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
+                sPath = '/EligCheckS(\'' + this._coNum + '\')',
+                oModel = this.getView().getModel('oDataEligSvc'),
+                oParameters,
+                that = this;
 
+            oParameters = {
+                success : function (oData) {
+                    if (oData && oData.DPPActv) {
+                        oWebUiManager.notifyWebUi('openIndex', {
+                            LINK_ID: "Z_DPP"
+                        });
+                    } else {
+                        that.navTo('billing.DefferedPmtPlan', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                    }
+                }.bind(this),
+                error: function (oError) {
+
+                }.bind(this)
+            };
+
+            if (oModel && this._coNum) {
+                oModel.read(sPath, oParameters);
+            }
         };
 
         Controller.prototype._onExtnBtnClicked = function (oEvent) {

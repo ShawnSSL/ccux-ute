@@ -8,10 +8,11 @@ sap.ui.define(
         'sap/ui/model/FilterOperator',
         'jquery.sap.global',
         "sap/ui/model/json/JSONModel",
+        'nrg/base/type/Price',
         'nrg/module/billing/view/control/AverageBillDetailsChart'
     ],
 
-    function (CoreController, Filter, FilterOperator, jQuery, JSONModel, AverageBillDetailsChart) {
+    function (CoreController, Filter, FilterOperator, jQuery, JSONModel, Price, AverageBillDetailsChart) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.billing.view.ABP');
@@ -392,7 +393,7 @@ sap.ui.define(
                                 dataEntry = oData.results[i];
                                 dataEntry.Period = dataEntry.Period.substr(0, 2) + '/' + dataEntry.Period.substr(6, 4);
                                 dataEntry.FullPeriod = fullPeriod;
-                                dataEntry.ActualBill = "$" + parseFloat(dataEntry.ActualBill);
+                                dataEntry.ActualBill = parseFloat(dataEntry.ActualBill);
                                 dataEntry.Usage = parseFloat(dataEntry.Usage);
                                 dataEntry.AdjAmount = parseFloat(dataEntry.Adjsmnt);
                                 dataEntry.AmtUsdAbp = parseFloat(dataEntry.AmtUsdAbp);

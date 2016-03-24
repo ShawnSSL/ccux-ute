@@ -40,17 +40,21 @@
                     </ute:Tag>
                     <m:ScrollContainer class="nrgBilling-avgBillingPopup-amountDue-history-scrollArea" height="200px" horizontal="false" vertical="true">
                         <ute:Tag content="{oAmountHistory>/}">
-                            <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-row" visible="{= ${oAmountHistory>AmtUsdAbp} !== 0.00}">
+                            <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-row" visible="true">
                                 <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-month"
                                     text="{oAmountHistory>Period}"/>
                                 <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-usage"
                                     text="{oAmountHistory>Usage}"/>
                                 <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-usageCharge"
-                                    text="{oAmountHistory>ActualBill}"/>
+                                    text="{path: 'oAmountHistory>ActualBill',
+                                                            type: 'nrg.base.type.Price',
+                                                            formatOptions: { currencySymbol: '$', currencyAlignment: 'LHS', minFractionDigits: '1', maxFractionDigits: '2' }}"/>
                                 <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-est"
                                     text="{oAmountHistory>Est}"/>
                                 <ute:Textfield class="nrgBilling-avgBillingPopup-amountDue-history-adj"
-                                    value="{oAmountHistory>AdjAmount}"
+                                    value="{oAmountHistory>ActualBill}"
+                                    editable="{=${oAmountHistory>ActualBill} ? true : false}"
+                                    tooltip="{=${oAmountHistory>ActualBill} ? '$0 month' : '$Adjustments'}"
                                     width="60px"/>
                                 <ute:Tag class="nrgBilling-avgBillingPopup-amountDue-history-amtUsed"
                                     text="{oAmountHistory>AmtUsdAbp}"/>

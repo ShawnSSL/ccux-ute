@@ -26,7 +26,7 @@ sap.ui.define(
             this._caNum = oRouteInfo.caNum;
             this._coNum = oRouteInfo.coNum;
             this._isExt = oRouteInfo.isExt;
-
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this.getView().setModel(this.getOwnerComponent().getModel('comp-dppext'), 'oDataSvc');
 
             //Model for screen control
@@ -61,6 +61,8 @@ sap.ui.define(
         };
 
         Controller.prototype.onAfterRendering = function () {
+            // Update Footer
+            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
             this.getView().byId('nrgBilling-dpp-DppStartDate-id').attachBrowserEvent('select', this._handleDppStartDateChange, this);
             this.getView().byId('nrgBilling-dpp-DppDueDate-id').attachBrowserEvent('select', this._handleDppFirstDueDateChange, this);
         };
@@ -92,6 +94,7 @@ sap.ui.define(
                 success : function (oData) {
                     if (oData) {
                         this.getView().getModel('oDppEligible').setData(oData);
+
                         if (oData.EligibleYes) {
                             this._selectScrn('StepOne');
                         } else {
@@ -101,6 +104,7 @@ sap.ui.define(
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
 
@@ -136,75 +140,6 @@ sap.ui.define(
         /****************************************************************************************************************/
         //Formatter
         /****************************************************************************************************************/
-        Controller.prototype._postiveXFormatter = function (cIndicator) {
-            if (cIndicator === 'X' || cIndicator === 'x') {
-                return true;
-            } else {
-                return false;
-            }
-        };
-
-        Controller.prototype._negativeXFormatter = function (cIndicator) {
-            if (cIndicator === 'X' || cIndicator === 'x') {
-                return false;
-            } else {
-                return true;
-            }
-        };
-
-
-        Controller.prototype._reverseBooleanFormatter = function (bIndicator) {
-            return !bIndicator;
-        };
-
-        Controller.prototype._formatShowDownPayment = function (ExtOverride, bExtActive, EligibleYes) {
-            if (EligibleYes) {
-                if (bExtActive) {
-                    return false;
-                } else {
-                    if (ExtOverride) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            } else {
-                if (ExtOverride) {
-                    if (!bExtActive) { return true; } else { return false; }
-                } else {
-                    return false;
-                }
-            }
-
-        };
-        Controller.prototype._formatShowConfirm = function (ExtOverride, bExtActive, EligibleYes) {
-            if (EligibleYes) {
-                if (!bExtActive) { return true; } else { return false; }
-            }
-            if (ExtOverride) {
-                if (!bExtActive) { return true; } else { return false; }
-            } else {
-                return false;
-            }
-        };
-        Controller.prototype._formatShowChangeExt = function (ExtOverride, bExtActive, EligibleYes) {
-            if (EligibleYes) {
-                if (bExtActive) { return true; } else { return false; }
-            }
-            if (ExtOverride) {
-                if (bExtActive) { return true; } else { return false; }
-            } else {
-                return false;
-            }
-        };
-
-        Controller.prototype._formatShowChangDwnPmt = function (sDwnPay, bExtActive) {
-            if (sDwnPay === 'X' || sDwnPay === 'x') {
-                if (!bExtActive) { return true; } else { return false; }
-            } else {
-                return false;
-            }
-        };
 
         Controller.prototype._isOdd = function (iIndex) {
             if (iIndex % 2 === 0) {
@@ -220,25 +155,6 @@ sap.ui.define(
             } else {
                 return false;
             }
-        };
-
-        Controller.prototype._formatDate = function (oDate) {
-            var sFormattedDate;
-
-            if (!oDate) {
-                return null;
-            } else {
-                sFormattedDate = (oDate.getMonth() + 1).toString() + '/' + oDate.getDate().toString() + '/' + oDate.getFullYear().toString().substring(2, 4);
-                return sFormattedDate;
-            }
-        };
-
-        Controller.prototype._formatInvoiceDate = function (day, month, year) {
-            // Pad the date and month
-            if (day < 10) {day = '0' + day; }
-            if (month < 10) {month = '0' + month; }
-            // Format the startDate
-            return month + '/' + day + '/' + year;
         };
 
         Controller.prototype._createSearchFilterObject = function (aFilterIds, aFilterValues, sFilterOperator) {
@@ -258,29 +174,6 @@ sap.ui.define(
         /****************************************************************************************************************/
         //Handler
         /****************************************************************************************************************/
-        Controller.prototype._onComEmailCheck = function () {
-            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
-
-            oDPPComunication.setProperty('/eMailCheck', true);
-            oDPPComunication.setProperty('/FaxCheck', false);
-            oDPPComunication.setProperty('/AddrCheck', false);
-        };
-
-        Controller.prototype._onComFaxCheck = function () {
-            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
-
-            oDPPComunication.setProperty('/eMailCheck', false);
-            oDPPComunication.setProperty('/FaxCheck', true);
-            oDPPComunication.setProperty('/AddrCheck', false);
-        };
-
-        Controller.prototype._onComAddrCheck = function () {
-            var oDPPComunication = this.getView().getModel('oDppStepThreeCom');
-
-            oDPPComunication.setProperty('/eMailCheck', false);
-            oDPPComunication.setProperty('/FaxCheck', false);
-            oDPPComunication.setProperty('/AddrCheck', true);
-        };
 
         Controller.prototype._onDppDeniedOkClick = function () {    //Navigate to DPP setup if 'OK' is clicked
             var oModel = this.getOwnerComponent().getModel("comp-dppext"),
@@ -309,20 +202,6 @@ sap.ui.define(
         Controller.prototype._onDppOverrideClick = function () {
             this._selectScrn('StepOne');
         };
-
-        Controller.prototype._onExtOverrideClick = function () {
-            this._selectScrn('EXTGrant');
-            this._bOverRide = true;
-        };
-
-        Controller.prototype._onDppExtChangeClick = function () {
-            //Show Ext Edit Screen
-            var oExtElgble = this.getView().getModel('oExtEligible');
-
-            oExtElgble.setProperty('/ExtActive', false);
-        };
-
-
 
         Controller.prototype._onDPPThirdStepSend = function () {
             this._postDPPCommunication();
@@ -454,9 +333,262 @@ sap.ui.define(
         };
 
         Controller.prototype._onDppConfConfirmClick = function (oEvent) {
-            var oConf = this.getView().getModel('oDppConfs'),
+            var sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'>" + this.sDisCloseMessage + "</div>",
+                oText = new sap.ui.core.HTML({content: sMessage}),
+                that = this,
+                oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {that._AlertDialog.close(); that._postDPPConfRequest(); }}),
+                oCancelButton = new ute.ui.main.Button({text: 'CANCEL', press: function () {that._AlertDialog.close(); }}),
+                oTag = new ute.ui.commons.Tag();
+            oOkButton.addStyleClass("nrgBillingDiscButton");
+            oCancelButton.addStyleClass("nrgBillingDiscButton");
+            oTag.addContent(oText);
+            oTag.addContent(oOkButton);
+            oTag.addContent(oCancelButton);
+            if (that._AlertDialog === undefined) {
+                that._AlertDialog = new ute.ui.main.Popup.create({
+                    title: "DISCLOSURE",
+                    content: oTag
+                });
+            }
+            that._AlertDialog.open();
+
+        };
+
+        Controller.prototype._onMain = function (oEvent) {
+            if (this._coNum) {
+                this.navTo('dashboard.VerificationWithCaCo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+            } else {
+                this.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
+            }
+        };
+        Controller.prototype._onCheckbook = function (oEvent) {
+            if (this._coNum) {
+                this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+            } else {
+                this.navTo('billing.CheckBookNoCo', {bpNum: this._bpNum, caNum: this._caNum});
+            }
+        };
+        Controller.prototype._onDppConfCancelClick = function (oEvent) {
+            if (this._coNum) {
+                this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+            } else {
+                this.navTo('billing.CheckBookNoCo', {bpNum: this._bpNum, caNum: this._caNum});
+            }
+        };
+
+        Controller.prototype._onOneItemCheck = function (oEvent) {
+            if (!oEvent.mParameters.checked) {
+                this.getView().getModel('oDppSetUps').setProperty('/results/bSelectedAll', false);
+            }
+        };
+
+        Controller.prototype._onDppSetUpOk = function () {
+            var oSetUps = this.getView().getModel('oDppSetUps'),
+                i,
+                oSetUpsPost = this.getView().getModel('oDppStepOnePost'),
+                aSelectedInd = [],
+                oDppReason = this.getView().getModel('oDppReasons');
+
+            if (oDppReason.getProperty('/selectedReason')) {
+               // oSetUpsPost.setProperty('/InstlmntNo', oSetUps.getProperty('/results/0/InstlmntNo'));
+                for (i = 0; i < oSetUps.getData().results.length; i = i + 1) {
+                    if (oSetUps.getProperty('/results/' + i + '/OpenItems/bSelected')) {
+                        aSelectedInd.push({IND: oSetUps.getProperty('/results/' + i + '/OpenItems/ItemNumber')});
+                    }
+                }
+                if ((aSelectedInd) && (aSelectedInd.length > 0)) {
+                    oSetUpsPost.setProperty('/SelectedIndices', aSelectedInd);
+                    this.getView().getModel('oDppStepOneSelectedData').setProperty('/SELECTEDDATA', oSetUpsPost.getProperty('/SelectedIndices'));
+                    this._selectScrn('StepTwo');//Initiating step 2
+                } else {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DPP REASON',
+                        message: 'Please select at least one open item'
+                    });
+                }
+
+            } else {
+                ute.ui.main.Popup.Alert({
+                    title: 'DPP Open Items',
+                    message: 'Please Select DPP Setup Reason'
+                });
+            }
+        };
+
+        Controller.prototype._handleExtDateChange = function (oEvent) {
+            var extDate = new Date(this.getView().byId('nrgBilling-dpp-ExtNewDate-id').getValue()),
+                oExtensions = this.getView().getModel('oExtExtensions'),
+                i;
+
+            for (i = 0; i < oExtensions.oData.results.length; i = i + 1) {
+                oExtensions.setProperty('/results/' + i + '/OpenItems/DefferalDate', extDate);
+            }
+            //this.getView().byId('nrgBilling-dpp-ExtNewDate-id')
+        };
+
+        Controller.prototype._handleDppStartDateChange = function (oEvent) {
+            var oDppStartDate = new Date(this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue());
+
+            this.getView().getModel('oDppSetUps').setProperty('/results/0/StartDate', oDppStartDate);
+        };
+
+        Controller.prototype._handleDppFirstDueDateChange = function (oEvent) {
+            var oDppFirstInslDate = new Date(this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue());
+
+            this.getView().getModel('oDppConfs').setProperty('/results/0/ConfirmdItems/DueDate', oDppFirstInslDate);
+        };
+
+        /****************************************************************************************************************/
+        //OData Call
+        /****************************************************************************************************************/
+        Controller.prototype._postDPPCommunication = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
+                oRouter = this.getOwnerComponent().getRouter();
+
+            sPath = '/DPPCorresps';
+
+            oParameters = {
+                merge: false,
+                success : function (oData) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DEFFERED PAYMENT PLAN',
+                        message: 'Correspondence Successfully Sent.'
+                    });
+                    if (this._coNum) {
+                        oRouter.navTo('dashboard.VerificationWithCaCo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
+                    } else {
+                        oRouter.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DEFFERED PAYMENT PLAN',
+                        message: 'Correspondence Failed'
+                    });
+                }.bind(this)
+            };
+
+            if (oODataSvc) {
+                oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
+            }
+        };
+
+        Controller.prototype._retrDppComunication = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath;
+
+            sPath = '/DPPCorresps(CA=\'' + this._caNum + '\',BP=\'' + this._bpNum + '\')';
+
+            oParameters = {
+                success : function (oData) {
+                    if (oData) {
+                        this.getView().getModel('oDppStepThreeCom').setData(oData);
+                        this.getView().getModel('oDppStepThreeCom').setProperty('/eMailCheck', true);
+                        this.getView().getModel('oDppStepThreeCom').setProperty('/FaxCheck', false);
+                        this.getView().getModel('oDppStepThreeCom').setProperty('/AddrCheck', false);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                }.bind(this)
+            };
+
+            if (oODataSvc) {
+                oODataSvc.read(sPath, oParameters);
+            }
+        };
+
+        Controller.prototype._retrDPPConf = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                aFilters,
+                aFilterValues,
+                aFilterIds,
+                i,
+                sDueDate,
+                oSelectedStartDate;
+
+            oSelectedStartDate = new Date(this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue());
+            aFilterIds = ["BP", "CA", "Contract", "SelectedData", "InstlmntNo", "ZeroDwnPay", "InitialDate"];
+            aFilterValues = [this._bpNum, this._caNum, this._coNum, this.getView().getModel('oDppStepOneSelectedData').getJSON(), this.getView().getModel('oDppStepOnePost').getProperty('/InstlmntNo'), this.getView().getModel('oDppStepOnePost').getProperty('/ZeroDwnPay'), oSelectedStartDate];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+
+            sPath = '/DPPConfs';
+
+            oParameters = {
+                filters: aFilters,
+                success : function (oData) {
+                    if (oData) {
+                        this.getView().getModel('oDppConfs').setData(oData);
+                        for (i = 0; i < oData.results.length; i = i + 1) {
+                            this.getView().getModel('oDppConfs').setProperty('/results/' + i + '/Checked', false);
+                            this.getView().getModel('oDppConfs').setProperty('/results/' + i + '/ConfirmdItems/Amount', parseFloat(this.getView().getModel('oDppConfs').getProperty('/results/' + i + '/ConfirmdItems/Amount')));
+                        }
+                        this.getView().getModel('oDppConfs').setProperty('/results/AllChecked', false);
+                        this.getView().getModel('oDppConfs').setProperty('/results/0/SelTot', 0);
+
+                        sDueDate = this._formatInvoiceDate(this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getDate(), this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getMonth() + 1, this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getFullYear());
+                        this.getView().byId('nrgBilling-dpp-DppDueDate-id').setDefaultDate(sDueDate);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                }.bind(this)
+            };
+
+            if (oODataSvc) {
+                oODataSvc.read(sPath, oParameters);
+            }
+        };
+        Controller.prototype._formatInvoiceDate = function (day, month, year) {
+            // Pad the date and month
+            if (day < 10) {day = '0' + day; }
+            if (month < 10) {month = '0' + month; }
+            // Format the startDate
+            return month + '/' + day + '/' + year;
+        };
+        Controller.prototype._retrDisclosureMessage = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath;
+
+            sPath = '/DPPDisclos';
+
+            oParameters = {
+                success : function (oData) {
+                    if (oData) {
+                        this.sDisCloseMessage = oData.results[0].Text;
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                }.bind(this)
+            };
+
+            if (oODataSvc) {
+                oODataSvc.read(sPath, oParameters);
+            }
+
+
+        };
+
+        Controller.prototype._postDPPConfRequest = function (oDataObject) {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                sPath,
+                oParameters,
                 i,
                 oConfPost = this.getView().getModel('oDppStepTwoPost'),
+                sMessage,
+                oText,
+                oButton,
+                oTag,
+                that = this,
+                oConf = this.getView().getModel('oDppConfs'),
                 aConfirmData = [],
                 sCItemNum = '',
                 sCAmt = '',
@@ -585,7 +717,6 @@ sap.ui.define(
                     sCOpupz = sCOpupz + sTempCOpupz + ',';
                 }
 
-                /*aConfirmData.push({IND: oConf.getData().results[i].ConfirmdItems.ItemNumber, AMT: sTempAmt, DUEDATE: sTempDueDate, CLRDT: sTempClearDate, CLRED: oConf.getData().results[i].ConfirmdItems.Cleared, CLRAMT: sTempClrAmt, OPBEL: oConf.getData().results[i].ConfirmdItems.Opbel, OPUPW: oConf.getData().results[i].ConfirmdItems.Opupw, OPUPK: oConf.getData().results[i].ConfirmdItems.Opupk, OPUPZ: oConf.getData().results[i].ConfirmdItems.Opupz});*/
             }
 
             oConfPost.setProperty('/CItemNum', sCItemNum);
@@ -598,261 +729,8 @@ sap.ui.define(
             oConfPost.setProperty('/COpupw', sCOpupw);
             oConfPost.setProperty('/COpupk', sCOpupk);
             oConfPost.setProperty('/COpupz', sCOpupz);
-            //oConfPost.setProperty('/DwnPay', );
-            //oConfPost.setProperty('/DwnPayDate', );
-
-
-
-            //this.getView().getModel('oDppStepTwoConfirmdData').setProperty('/CONFIRMDATA', aConfirmData);
-            //oConfPost.setProperty('/ConfirmData', this.getView().getModel('oDppStepTwoConfirmdData').getJSON().replace(/"/g, '\''));
-
-            this._postDPPConfRequest(oConfPost.oData);
-        };
-
-        Controller.prototype._onMain = function (oEvent) {
-            if (this._coNum) {
-                this.navTo('dashboard.VerificationWithCaCo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
-            } else {
-                this.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
-            }
-        };
-        Controller.prototype._onCheckbook = function (oEvent) {
-            if (this._coNum) {
-                this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
-            } else {
-                this.navTo('billing.CheckBookNoCo', {bpNum: this._bpNum, caNum: this._caNum});
-            }
-        };
-        Controller.prototype._onDppConfCancelClick = function (oEvent) {
-            if (this._coNum) {
-                this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
-            } else {
-                this.navTo('billing.CheckBookNoCo', {bpNum: this._bpNum, caNum: this._caNum});
-            }
-        };
-
-        Controller.prototype._onOneItemCheck = function (oEvent) {
-            if (!oEvent.mParameters.checked) {
-                this.getView().getModel('oDppSetUps').setProperty('/results/bSelectedAll', false);
-            }
-        };
-
-        Controller.prototype._onDppSetUpOk = function () {
-            var oSetUps = this.getView().getModel('oDppSetUps'),
-                i,
-                oSetUpsPost = this.getView().getModel('oDppStepOnePost'),
-                aSelectedInd = [],
-                oDppReason = this.getView().getModel('oDppReasons');
-
-            if (oDppReason.getProperty('/selectedReason')) {
-                oSetUpsPost.setProperty('/InstlmntNo', oSetUps.getProperty('/results/0/InstlmntNo'));
-                for (i = 0; i < oSetUps.getData().results.length; i = i + 1) {
-                    if (oSetUps.getProperty('/results/' + i + '/OpenItems/bSelected')) {
-                        aSelectedInd.push({IND: oSetUps.getProperty('/results/' + i + '/OpenItems/ItemNumber')});
-                    }
-                }
-                if ((aSelectedInd) && (aSelectedInd.length > 0)) {
-                    oSetUpsPost.setProperty('/SelectedIndices', aSelectedInd);
-                    this.getView().getModel('oDppStepOneSelectedData').setProperty('/SELECTEDDATA', oSetUpsPost.getProperty('/SelectedIndices'));
-                    this._selectScrn('StepTwo');//Initiating step 2
-                } else {
-                    ute.ui.main.Popup.Alert({
-                        title: 'DPP REASON',
-                        message: 'Please select at least one open item'
-                    });
-                }
-
-            } else {
-                ute.ui.main.Popup.Alert({
-                    title: 'DPP Open Items',
-                    message: 'Please Select DPP Setup Reason'
-                });
-            }
-        };
-
-        Controller.prototype._handleExtDateChange = function (oEvent) {
-            var extDate = new Date(this.getView().byId('nrgBilling-dpp-ExtNewDate-id').getValue()),
-                oExtensions = this.getView().getModel('oExtExtensions'),
-                i;
-
-            for (i = 0; i < oExtensions.oData.results.length; i = i + 1) {
-                oExtensions.setProperty('/results/' + i + '/OpenItems/DefferalDate', extDate);
-            }
-            //this.getView().byId('nrgBilling-dpp-ExtNewDate-id')
-        };
-
-        Controller.prototype._handleDppStartDateChange = function (oEvent) {
-            var oDppStartDate = new Date(this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue());
-
-            this.getView().getModel('oDppSetUps').setProperty('/results/0/StartDate', oDppStartDate);
-        };
-
-        Controller.prototype._handleDppFirstDueDateChange = function (oEvent) {
-            var oDppFirstInslDate = new Date(this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue());
-
-            this.getView().getModel('oDppConfs').setProperty('/results/0/ConfirmdItems/DueDate', oDppFirstInslDate);
-        };
-
-        /****************************************************************************************************************/
-        //OData Call
-        /****************************************************************************************************************/
-        Controller.prototype._postDPPCommunication = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
-                oRouter = this.getOwnerComponent().getRouter();
-
-            sPath = '/DPPCorresps';
-
-            oParameters = {
-                merge: false,
-                success : function (oData) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
-                        message: 'Correspondence Successfully Sent.'
-                    });
-                    if (this._coNum) {
-                        oRouter.navTo('dashboard.VerificationWithCaCo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
-                    } else {
-                        oRouter.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
-                        message: 'Correspondence Failed'
-                    });
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
-            }
-        };
-
-        Controller.prototype._retrDppComunication = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath;
-
-            sPath = '/DPPCorresps(CA=\'' + this._caNum + '\',BP=\'' + this._bpNum + '\')';
-
-            oParameters = {
-                success : function (oData) {
-                    if (oData) {
-                        this.getView().getModel('oDppStepThreeCom').setData(oData);
-                        this.getView().getModel('oDppStepThreeCom').setProperty('/eMailCheck', true);
-                        this.getView().getModel('oDppStepThreeCom').setProperty('/FaxCheck', false);
-                        this.getView().getModel('oDppStepThreeCom').setProperty('/AddrCheck', false);
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    //Need to put error message
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.read(sPath, oParameters);
-            }
-        };
-
-        Controller.prototype._retrDPPConf = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                aFilters,
-                aFilterValues,
-                aFilterIds,
-                i,
-                sDueDate,
-                oSelectedStartDate;
-
-            //oSelectedStartDate = this.getView().byId('nrgBilling-dpp-DppStartDate-id')._oDate;
-            if (oSelectedStartDate) {
-                oSelectedStartDate = this.getView().getModel('oDppSetUps').getProperty('/results/0/StartDate');
-            } else {
-                oSelectedStartDate = new Date();
-            }
-
-            aFilterIds = ["BP", "CA", "Contract", "SelectedData", "InstlmntNo", "ZeroDwnPay", "InitialDate"];
-            aFilterValues = [this._bpNum, this._caNum, this._coNum, this.getView().getModel('oDppStepOneSelectedData').getJSON(), this.getView().getModel('oDppStepOnePost').getProperty('/InstlmntNo'), this.getView().getModel('oDppStepOnePost').getProperty('/ZeroDwnPay'), oSelectedStartDate];
-            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
 
             sPath = '/DPPConfs';
-
-            oParameters = {
-                filters: aFilters,
-                success : function (oData) {
-                    if (oData) {
-                        this.getView().getModel('oDppConfs').setData(oData);
-                        for (i = 0; i < oData.results.length; i = i + 1) {
-                            this.getView().getModel('oDppConfs').setProperty('/results/' + i + '/Checked', false);
-                            this.getView().getModel('oDppConfs').setProperty('/results/' + i + '/ConfirmdItems/Amount', parseFloat(this.getView().getModel('oDppConfs').getProperty('/results/' + i + '/ConfirmdItems/Amount')));
-                        }
-                        this.getView().getModel('oDppConfs').setProperty('/results/AllChecked', false);
-                        this.getView().getModel('oDppConfs').setProperty('/results/0/SelTot', 0);
-
-                        sDueDate = this._formatInvoiceDate(this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getDate(), this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getMonth() + 1, this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getFullYear());
-                        this.getView().byId('nrgBilling-dpp-DppDueDate-id').setDefaultDate(sDueDate);
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    //Need to put error message
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.read(sPath, oParameters);
-            }
-        };
-
-        Controller.prototype._retrDisclosureMessage = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                aFilterIds,
-                aFilterValues,
-                aFilters;
-
-            sPath = '/DPPDisclos';
-
-            aFilterIds = ["CA"];
-            aFilterValues = [this._caNum];
-            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-            oParameters = {
-                filters: aFilters,
-                success : function (oData) {
-                    if (oData) {
-                        this.sDisCloseMessage = oData.results[0].Message;
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    //Need to put error message
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.read(sPath, oParameters);
-            }
-
-
-        };
-
-        Controller.prototype._postDPPConfRequest = function (oDataObject) {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                //oConf = this.getView().getModel('oDppConfs'),
-                sPath,
-                oParameters,
-                i,
-                oConfPost = this.getView().getModel('oDppStepTwoPost');
-
-            sPath = '/DPPConfs';
-
-            /*delete oConf.oData.results.AllChecked;
-            for (i = 0; i < oConf.oData.results.length; i = i + 1) {
-                delete oConf.oData.results[i].Checked;
-            }*/
 
             oParameters = {
                 merge: false,
@@ -871,21 +749,10 @@ sap.ui.define(
                     //this._selectScrn('StepThree');
                 }.bind(this)
             };
-
-            ute.ui.main.Popup.Confirm({
-                title: 'DISCLOSURE',
-                message: this.sDisCloseMessage,
-                callback: function (sAction) {
-                    if (sAction === 'Yes') {
-                        if (oODataSvc) {
-                            oODataSvc.create(sPath, oDataObject, oParameters);
-                        }
-                    }
-                }
-            });
+            if (oODataSvc) {
+                oODataSvc.create(sPath, oConfPost.oData, oParameters);
+            }
         };
-
-
 
         Controller.prototype._retrDppDeniedReason = function () {
             var oODataSvc = this.getView().getModel('oDataSvc'),
@@ -906,6 +773,7 @@ sap.ui.define(
             oParameters = {
                 filters : aFilters,
                 success : function (oData) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     if (oData) {
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             oData.results[i].DPPDenyed.iIndex = i + 1;
@@ -914,6 +782,7 @@ sap.ui.define(
                     }
                 }.bind(this),
                 error: function (oError) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     //Need to put error message
                 }.bind(this)
             };
@@ -978,6 +847,7 @@ sap.ui.define(
             oParameters = {
                 filters : aFilters,
                 success : function (oData) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     if (oData) {
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             //oData.results[i].iIndex = i + 1;
@@ -986,13 +856,14 @@ sap.ui.define(
                         this.getView().getModel('oDppSetUps').setData(oData);
                         this.getView().getModel('oDppSetUps').setProperty('/results/bSelectedAll', false);
                         this.getView().getModel('oDppStepOnePost').setProperty('/InstlmntNo', this.getView().getModel('oDppSetUps').getProperty('/results/0/InstlmntNo'));
-                        this.getView().getModel('oDppStepOnePost').setProperty('/ZeroDwnPay', '');
+                        this.getView().getModel('oDppStepOnePost').setProperty('/ZeroDwnPay', false);
                         sStartDate = this._formatInvoiceDate(this.getView().getModel('oDppSetUps').getProperty('/results/0/StartDate').getDate(), this.getView().getModel('oDppSetUps').getProperty('/results/0/StartDate').getMonth() + 1, this.getView().getModel('oDppSetUps').getProperty('/results/0/StartDate').getFullYear());
                         this.getView().byId('nrgBilling-dpp-DppStartDate-id').setDefaultDate(sStartDate);
                     }
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
 

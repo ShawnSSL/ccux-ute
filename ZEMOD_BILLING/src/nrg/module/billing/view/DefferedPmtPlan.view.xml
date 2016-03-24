@@ -20,7 +20,7 @@
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-top">
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-top-l">
                     <ute:Tag class="nrgBilling-dltl-step" text="{comp-i18n-billing>nrgBilling-dpp-StepOne}"/>
-                    <ute:Tag class="nrgBilling-dltl-reason" visible="{parts:['oDppEligible>/DPPReasonYes'], formatter:'._reverseBooleanFormatter'}">
+                    <ute:Tag class="nrgBilling-dltl-reason" visible="{= ${oDppEligible>/DPPReasonYes} ? false : true }">
                         <ute:Tag class="nrgBilling-dltl-reason-lbl" text="{comp-i18n-billing>nrgBilling-dpp-ReasonDpp}"/>
                         <utmain:Dropdown class="nrgBilling-dltl-reason-select"
                                          selectedKey="{oDppReasons>/selectedKey}"
@@ -31,19 +31,7 @@
                             </utmain:DropdownItem>
                         </utmain:Dropdown>
                     </ute:Tag>
-                    <ute:Tag class="nrgBilling-dltl-reason" visible="{oDppEligible>/DPPReasonYes}">
-                        <ute:Tag class="nrgBilling-dltl-reason-lbl" text="{comp-i18n-billing>nrgBilling-dpp-ReasonDpp}"/>
-                        <ute:Tag class="nrgBilling-dltl-reason-lbl" text="{comp-i18n-billing>nrgBilling-dpp-ReasonDpp}"/>
-                    </ute:Tag>
                 </ute:Tag>
-                <!--<ute:Tag class="nrgBilling-dPmtPln-lftArea-top-m">
-                    <ute:Tag class="nrgBilling-dltm-price" text="$75.44"/>
-                    <ute:Tag class="nrgBilling-dltm-dplbl" text="{comp-i18n-billing>nrgBilling-dpp-DownPmtAmt}"/>
-                </ute:Tag>
-                <ute:Tag class="nrgBilling-dPmtPln-lftArea-top-r">
-                    <utmain:Button class="nrgBilling-dltr-btn" text="{comp-i18n-billing>nrgBilling-dpp-PmtOptions}"/>
-                    <ute:Tag class="nrgBilling-dltr-dueDate" text="{comp-i18n-billing>nrgBilling-dpp-DueDate} 10/30/2014"/>
-                </ute:Tag>-->
             </ute:Tag>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt">
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-hdr">
@@ -62,7 +50,7 @@
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
                                      text="{path: 'oDppSetUps>OpenItems/Amount', type: 'nrg.base.type.Price',
                                             formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4" text="{parts:['oDppSetUps>OpenItems/DueDate'], formatter:'._formatDate'}"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4" text="{path: 'oDppSetUps>OpenItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                         </ute:Tag>
                         <ute:Tag class="nrgBilling-dlct-evn"
                                  visible="{parts:['oDppSetUps>OpenItems/ItemNumber'], formatter:'._isEven'}">
@@ -71,35 +59,33 @@
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
                                      text="{path: 'oDppSetUps>OpenItems/Amount', type: 'nrg.base.type.Price',
                                             formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4" text="{parts:['oDppSetUps>OpenItems/DueDate'], formatter:'._formatDate'}"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4" text="{path: 'oDppSetUps>OpenItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                         </ute:Tag>
                     </ute:Tag>
                 </ute:Tag>
             </ute:Tag>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm">
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-dte">
-                    <ute:Tag class="nrgBilling-dlbd-left">
+<!--                    <ute:Tag class="nrgBilling-dlbd-left">
                         <utmain:RadioButton class="nrgBilling-dlbd-left-elem nrgBilling-dlbd-left-radio" checked="true"/>
                         <ute:Tag class="nrgBilling-dlbd-left-elem" text="{comp-i18n-billing>nrgBilling-dpp-Mondth}"/>
-                    </ute:Tag>
+                    </ute:Tag>-->
                     <ute:Tag class="nrgBilling-dlbd-rght">
                         <ute:Tag class="nrgBilling-dlbd-left-elem" text="{comp-i18n-billing>nrgBilling-dpp-StartDate} "/>
-                        <!--<ute:Tag class="nrgBilling-dlbd-left-elem-date" text="{parts:['oDppSetUps>/results/0/StartDate'], formatter:'._formatDate'}"/>-->
-                        <ute:DatePicker id="nrgBilling-dpp-DppStartDate-id"/>
+                        <ute:DatePicker id="nrgBilling-dpp-DppStartDate-id" value=""/>
 
                     </ute:Tag>
                     <ute:Tag class="nrgBilling-dlbd-install">
                         <ute:Tag elem="span" text="{comp-i18n-billing>nrgBilling-dpp-NmbrOfInstall}"/>
                         <ute:Textfield class="nrgBilling-dlbd-install-Num" fieldType="Underlined" width="22px"
-                                       editable="{parts:['oDppSetUps>/results/0/InstlmntNoAuth'], formatter:'._postiveXFormatter'}"
+                                       editable="{oDppSetUps>/results/0/InstlmntNoAuth}"
                                        value="{oDppStepOnePost>/InstlmntNo}"/>
                     </ute:Tag>
                 </ute:Tag>
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-zeroDown">
                     <utmain:Checkbox class="nrgBilling-dlbz-chk"
-                                     enabled="{parts:['oDppSetUps>/results/0/ZeroDwPayAuth'],
-                                               formatter:'._postiveXFormatter'}"
-                                     checked="{parts:['oDppStepOnePost>/ZeroDwnPay'], formatter:'._postiveXFormatter'}"/>
+                                     enabled="{oDppSetUps>/results/0/InstlmntNoAuth}"
+                                     checked="{oDppStepOnePost>/ZeroDwnPay}"/>
                     <ute:Tag class="nrgBilling-dlbz-chkLabel" text="{comp-i18n-billing>nrgBilling-dpp-PlanZroDownPmt}"/>
                 </ute:Tag>
                 <utmain:Button class="nrgBilling-dPmtPln-lftArea-botm-btn" text="{comp-i18n-billing>nrgBilling-dpp-OK}" press="._onDppSetUpOk"/>
@@ -138,8 +124,8 @@
                                 <ute:Textfield fieldType="Noborder" width="100px" value="{oDppConfs>ConfirmdItems/Amount}"
                                                change="._onStepTwoInstlChange"/>
                             </ute:Tag>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3" text="{parts:['oDppConfs>ConfirmdItems/DueDate'], formatter:'._formatDate'}"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i4" text="{parts:['oDppConfs>ConfirmdItems/ClearDate'], formatter:'._formatDate'}"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3" text="{path: 'oDppConfs>ConfirmdItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i4" text="{path: 'oDppConfs>ConfirmdItems/ClearDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i5" text="{oDppConfs>ConfirmdItems/Cleared}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i6"
                                      text="{path: 'oDppConfs>ConfirmdItems/ClearedAmt', type: 'nrg.base.type.Price',
@@ -155,8 +141,8 @@
                                 <ute:Textfield fieldType="Noborder" width="100px" value="{oDppConfs>ConfirmdItems/Amount}"
                                                change="._onStepTwoInstlChange"/>
                             </ute:Tag>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3" text="{parts:['oDppConfs>ConfirmdItems/DueDate'], formatter:'._formatDate'}"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i4" text="{parts:['oDppConfs>ConfirmdItems/ClearDate'], formatter:'._formatDate'}"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3" text="{path: 'oDppConfs>ConfirmdItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i4" text="{path: 'oDppConfs>ConfirmdItems/ClearDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i5" text="{oDppConfs>ConfirmdItems/Cleared}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i6"
                                      text="{path: 'oDppConfs>ConfirmdItems/ClearedAmt', type: 'nrg.base.type.Price',
@@ -164,7 +150,7 @@
                         </ute:Tag>
                     </ute:Tag>
                 </ute:Tag>
-                <ute:Tag class="nrgBilling-dlct-date" visible="{parts:['oDppStepOnePost>/ZeroDwnPay'], formatter:'._negativeXFormatter'}">
+                <ute:Tag class="nrgBilling-dlct-date" visible="{= ${oDppStepOnePost>/ZeroDwnPay} ? false : true }">
                         <ute:Tag class="nrgBilling-dlct-date-lbl" text="{comp-i18n-billing>nrgBilling-dpp-FirstInstlDate} "/>
                         <ute:DatePicker id="nrgBilling-dpp-DppDueDate-id"/>
                 </ute:Tag>
@@ -181,10 +167,10 @@
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox">
                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox-icon"><ute:Tag text="{comp-i18n-billing>nrgBilling-dpp-info-i}"/></ute:Tag>
                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox-txt">
-                        <ute:Tag visible="{parts:['oDppStepOnePost>/ZeroDwnPay'], formatter:'._negativeXFormatter'}"
+                        <ute:Tag visible="{= ${oDppStepOnePost>/ZeroDwnPay} ? false : true }"
                                  elem="span" text="{comp-i18n-billing>nrgBilling-dpp-info-first-zroDwn} "/>
                         <ute:Tag elem="span" text="{comp-i18n-billing>nrgBilling-dpp-info-first} "/>
-                        <ute:Tag elem="span" text="{parts:['oDppConfs>/results/0/ConfirmdItems/DueDate'], formatter:'._formatDate'}"/>
+                        <ute:Tag elem="span" text="{path: 'oDppConfs>/results/0/ConfirmdItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                         <ute:Tag elem="span" text="{comp-i18n-billing>nrgBilling-dpp-info-second} "/>
                         <ute:Tag elem="span" text="{oDppStepOnePost>/InstlmntNo} "/>
                         <ute:Tag elem="span" text=" {comp-i18n-billing>nrgBilling-dpp-info-third}"/>
@@ -249,14 +235,14 @@
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-corr">
                     <ute:Tag class="nrgBilling-dlcc-chbrow">
                         <utmain:Checkbox class="nrgBilling-dlcc-chbrow-chb"
-                                         checked="{oDppStepThreeCom>/eMailCheck}" select="._onComEmailCheck"/>
+                                         checked="{oDppStepThreeCom>/eMailCheck}"/>
                         <utmain:Label class="nrgBilling-dlcc-chbrow-lbl" text="{comp-i18n-billing>nrgBilling-dpp-viaEmail}"/>
                         <ute:Textfield class="nrgBilling-dlcc-mail-val"
                                        fieldType="Underlined" width="200px" value="{oDppStepThreeCom>/eMail}"/>
                     </ute:Tag>
                     <ute:Tag class="nrgBilling-dlcc-chbrow">
                         <utmain:Checkbox class="nrgBilling-dlcc-chbrow-chb"
-                                         checked="{oDppStepThreeCom>/FaxCheck}" select="._onComFaxCheck"/>
+                                         checked="{oDppStepThreeCom>/FaxCheck}" />
                         <utmain:Label class="nrgBilling-dlcc-chbrow-lbl" text="{comp-i18n-billing>nrgBilling-dpp-viaFax}"/>
                         <ute:Textfield class="nrgBilling-dlcc-mail-val"
                                        fieldType="Underlined" width="200px" value="{oDppStepThreeCom>/Fax}"/>
@@ -270,7 +256,7 @@
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-corr">
                     <ute:Tag class="nrgBilling-dlcc-chbrow">
                         <utmain:Checkbox class="nrgBilling-dlcc-chbrow-chb"
-                                         checked="{oDppStepThreeCom>/eAddrCheck}" select="._onComAddrCheck"/>
+                                         checked="{oDppStepThreeCom>/eAddrCheck}" />
                         <utmain:Label class="nrgBilling-dlcc-chbrow-lbl" text="{comp-i18n-billing>nrgBilling-dpp-viaMail}"/>
                         <!--<utmain:Dropdown class="nrgBilling-dlcc-chbrow-sel">
                             <utmain:DropdownItem>
@@ -382,14 +368,14 @@
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j2"
                                      text="{path: 'oDppDeniedReason>DPPDenyed/Amount', type: 'nrg.base.type.Price',
                                             formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j3" text="{parts:['oDppDeniedReason>DPPDenyed/DueDate'], formatter:'._formatDate'}"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j3" text="{path: 'oDppDeniedReason>DPPDenyed/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                         </ute:Tag>
                         <ute:Tag class="nrgBilling-dlct-evn" visible="{parts:['oDppDeniedReason>DPPDenyed/iIndex'], formatter:'._isEven'}">
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j1" text="{oDppDeniedReason>DPPDenyed/Description}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j2"
                                      text="{path: 'oDppDeniedReason>DPPDenyed/Amount', type: 'nrg.base.type.Price',
                                             formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j3" text="{parts:['oDppDeniedReason>DPPDenyed/DueDate'], formatter:'._formatDate'}"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j3" text="{path: 'oDppDeniedReason>DPPDenyed/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                         </ute:Tag>
                     </ute:Tag>
                 </ute:Tag>
