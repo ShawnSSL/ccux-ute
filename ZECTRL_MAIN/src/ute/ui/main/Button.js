@@ -17,7 +17,12 @@ sap.ui.define(
                 properties: {
                     design: { type: 'ute.ui.main.ButtonDesign', defaultValue: ute.ui.main.ButtonDesign.Default },
                     text: { type: 'string', defaultValue: null },
-                    enabled: { type: 'boolean', defaultValue: true }
+                    /*Button disabled should be grayed out*/
+                    enabled: {
+                        type: 'boolean',
+                        group: 'Behavior',
+                        defaultValue : true
+                    }
                 },
 
                 aggregations: {
