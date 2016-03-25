@@ -51,10 +51,29 @@ sap.ui.define(
             this.getView().setModel(new JSONModel(), 'oDppConfsChecked');
             this.getView().setModel(new JSONModel(), 'oDppStepTwoPost');
             this.getView().setModel(new JSONModel(), 'oDppStepTwoConfirmdData');
-
+            this.getView().setModel(new JSONModel({
+                GrantCL : "",
+                DeniedCL : ""
+            }), 'oLocalModel');
+            this.getView().setModel(new sap.ui.model.json.JSONModel({
+                current : false,
+                newAdd : false,
+                co : '',
+                HouseNo : '',
+                UnitNo : '',
+                City : '',
+                State: '',
+                Country : '',
+                AddrLine : '',
+                Street : '',
+                PoBox: '',
+                ZipCode : '',
+                NewAddrCheck : false,
+                NewAddressflag : false,
+                editable : false
+            }), 'olocalAddress');
             //Model for DppComunication (DPPIII)
             this.getView().setModel(new JSONModel(), 'oDppStepThreeCom');
-
             this._initScrnControl();
             this._isDppElgble();
             this._retrieveNotification();
@@ -95,7 +114,7 @@ sap.ui.define(
                     if (oData) {
                         this.getView().getModel('oDppEligible').setData(oData);
 
-                        if (oData.EligibleYes) {
+                        if (oData.Eligible) {
                             this._selectScrn('StepOne');
                         } else {
                             this._selectScrn('DPPDenied');
@@ -178,12 +197,13 @@ sap.ui.define(
         Controller.prototype._onDppDeniedOkClick = function () {    //Navigate to DPP setup if 'OK' is clicked
             var oModel = this.getOwnerComponent().getModel("comp-dppext"),
                 that = this,
-                oContactLogArea = this.getView().byId('idnrgBilling-DPPDenCL');
+                oContactLogArea = this.getView().byId('idnrgBilling-DPPDenCL'),
+                oLocalModel = this.getView().getModel('oLocalModel');
             oModel.create("/DPPDenieds", {
                 "Contract": this._coNum,
                 "CA": this._caNum,
                 "BP" : this._bpNum,
-                "Message" : (oContactLogArea.getValue() || "")
+                "Message" : (oLocalModel.getProperty("/DeniedCL") || "")
             }, {
                 success : function (oData, oResponse) {
                     if (oData) {
@@ -387,8 +407,25 @@ sap.ui.define(
                 i,
                 oSetUpsPost = this.getView().getModel('oDppStepOnePost'),
                 aSelectedInd = [],
-                oDppReason = this.getView().getModel('oDppReasons');
+                oDppReason = this.getView().getModel('oDppReasons'),
+                sInstallments = oSetUpsPost.getProperty('/InstlmntNo'),
+                oStartDate = this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue();
 
+
+            if (!((!isNaN(parseFloat(sInstallments)) && isFinite(sInstallments)) && (parseInt(sInstallments, 10) > 0))) {
+                ute.ui.main.Popup.Alert({
+                    title: 'DPP',
+                    message: 'Please enter number of Installments'
+                });
+                return;
+            }
+            if (!oStartDate) {
+                ute.ui.main.Popup.Alert({
+                    title: 'DPP',
+                    message: 'Please enter Start Date.'
+                });
+                return;
+            }
             if (oDppReason.getProperty('/selectedReason')) {
                // oSetUpsPost.setProperty('/InstlmntNo', oSetUps.getProperty('/results/0/InstlmntNo'));
                 for (i = 0; i < oSetUps.getData().results.length; i = i + 1) {
@@ -441,67 +478,6 @@ sap.ui.define(
         /****************************************************************************************************************/
         //OData Call
         /****************************************************************************************************************/
-        Controller.prototype._postDPPCommunication = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
-                oRouter = this.getOwnerComponent().getRouter();
-
-            sPath = '/DPPCorresps';
-
-            oParameters = {
-                merge: false,
-                success : function (oData) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
-                        message: 'Correspondence Successfully Sent.'
-                    });
-                    if (this._coNum) {
-                        oRouter.navTo('dashboard.VerificationWithCaCo', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
-                    } else {
-                        oRouter.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
-                        message: 'Correspondence Failed'
-                    });
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
-            }
-        };
-
-        Controller.prototype._retrDppComunication = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath;
-
-            sPath = '/DPPCorresps(CA=\'' + this._caNum + '\',BP=\'' + this._bpNum + '\')';
-
-            oParameters = {
-                success : function (oData) {
-                    if (oData) {
-                        this.getView().getModel('oDppStepThreeCom').setData(oData);
-                        this.getView().getModel('oDppStepThreeCom').setProperty('/eMailCheck', true);
-                        this.getView().getModel('oDppStepThreeCom').setProperty('/FaxCheck', false);
-                        this.getView().getModel('oDppStepThreeCom').setProperty('/AddrCheck', false);
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    //Need to put error message
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.read(sPath, oParameters);
-            }
-        };
-
         Controller.prototype._retrDPPConf = function () {
             var oODataSvc = this.getView().getModel('oDataSvc'),
                 oParameters,
@@ -610,9 +586,10 @@ sap.ui.define(
                 sTempCOpupk,
                 sTempCOpupz,
                 oContactLogArea = this.getView().byId('idnrgBilling-DPPAccCL'),
-                sDwnPayDate = this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue();
+                sDwnPayDate = this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue(),
+                oLocalModel = this.getView().getModel('oLocalModel');
 
-
+            sPath = '/DPPConfs';
             oConfPost.setProperty('/CA', this._caNum);
 
             oConfPost.setProperty('/BP', this._bpNum);
@@ -631,7 +608,7 @@ sap.ui.define(
             oConfPost.setProperty('/DwnPayDate', new Date(sDwnPayDate) || new Date());
 
             oConfPost.setProperty('/ReasonCode', this.getView().getModel('oDppReasons').getProperty('/selectedKey'));
-            oConfPost.setProperty('/Message', (oContactLogArea.getValue() || ""));
+            oConfPost.setProperty('/Message', (oLocalModel.getProperty("/GrantCL") || ""));
 
             //oConfPost.setProperty('/Reason', this.getView().getModel('oDppReasons').setProperty('/selectedReason'));
 
@@ -730,26 +707,28 @@ sap.ui.define(
             oConfPost.setProperty('/COpupk', sCOpupk);
             oConfPost.setProperty('/COpupz', sCOpupz);
 
-            sPath = '/DPPConfs';
+
 
             oParameters = {
                 merge: false,
                 success : function (oData) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'DEFFERED PAYMENT PLAN',
-                        message: 'DEFFERED PAYMENT PLAN request Success'
+                        message: oData.Message
                     });
-                    this._selectScrn('StepThree');
+                    that._selectScrn('StepThree');
                 }.bind(this),
                 error: function (oError) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'DEFFERED PAYMENT PLAN',
-                        message: 'DEFFERED PAYMENT PLAN request failed'
+                        message: 'DEFFERED PAYMENT PLAN REQUEST FAILED'
                     });
-                    //this._selectScrn('StepThree');
                 }.bind(this)
             };
             if (oODataSvc) {
+                this.getOwnerComponent().getCcuxApp().setOccupied(true);
                 oODataSvc.create(sPath, oConfPost.oData, oParameters);
             }
         };
@@ -875,11 +854,12 @@ sap.ui.define(
 
         Controller.prototype._retrieveNotification = function () {
             var sPath = '/EligCheckS(\'' + this._coNum + '\')',
-                oModel = this.getView().getModel('oDataEligSvc'),
+                oModel = this.getOwnerComponent().getModel('comp-eligibility'),
                 oEligModel = this.getView().getModel('oEligibility'),
                 oParameters,
                 alert,
-                i;
+                i,
+                i18NModel = this.getOwnerComponent().getModel("comp-i18n-billing");
 
             oParameters = {
                 success : function (oData) {
@@ -895,7 +875,7 @@ sap.ui.define(
                     alert = new ute.ui.app.FooterNotificationItem({
                         link: true,
                         design: 'Information',
-                        text: (oData.ABPElig) ? "Eligible for ABP" : "Not eligible for ABP",
+                        text: (oData.ABPElig) ? i18NModel.getProperty("nrgNotfABPT") : i18NModel.getProperty("nrgNotfABPF"),
                         linkPress: this._openEligABPPopup.bind(this)
                     });
                     this._eligibilityAlerts.push(alert);
@@ -904,7 +884,7 @@ sap.ui.define(
                     alert = new ute.ui.app.FooterNotificationItem({
                         link: true,
                         design: 'Information',
-                        text: (oData.EXTNElig) ? "Eligible for EXTN" : "Not eligible for EXTN",
+                        text: (oData.EXTNElig) ? i18NModel.getProperty("nrgNotfEXTT") : i18NModel.getProperty("nrgNotfEXTF"),
                         linkPress: this._openEligEXTNPopup.bind(this)
                     });
                     this._eligibilityAlerts.push(alert);
@@ -913,19 +893,63 @@ sap.ui.define(
                     alert = new ute.ui.app.FooterNotificationItem({
                         link: true,
                         design: 'Information',
-                        text: (oData.RBBElig) ? "Eligible for Retro-AB" : "Not eligible for Retro-AB",
+                        text: (oData.RBBElig) ? i18NModel.getProperty("nrgNotfRBPT") : i18NModel.getProperty("nrgNotfRBPF"),
                         linkPress: this._openEligRBBPopup.bind(this)
                     });
                     this._eligibilityAlerts.push(alert);
 
                     // Check DPP
                     alert = new ute.ui.app.FooterNotificationItem({
-                        link: true,
+                        link: false,
                         design: 'Information',
-                        text: (oData.DPPElig) ? "Eligible for DPP" : "Not eligible for DPP"
+                        text: (oData.DPPElig) ? i18NModel.getProperty("nrgNotfDPPT") : i18NModel.getProperty("nrgNotfDPPF")
                     });
-
                     this._eligibilityAlerts.push(alert);
+                    if (oData.EXTNPend) {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfPE")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.CollAccActv) {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfCB")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.CSAActv) {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfCSA")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.RBankDActv) {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfRBD")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.RCCardActv) {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfRCC")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
 
                     // Insert all alerts to DOM
                     for (i = 0; i < this._eligibilityAlerts.length; i = i + 1) {
@@ -970,7 +994,290 @@ sap.ui.define(
             }
             this.EligRBBPopupCustomControl.prepare();
         };
+        Controller.prototype._onComAddrCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/current', true);
+            this.getView().getModel('olocalAddress').setProperty('/newAdd', false);
+        };
+        Controller.prototype._onCurrentAddCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/co', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/co'));
+            this.getView().getModel('olocalAddress').setProperty('/HouseNo', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/HouseNo'));
+            this.getView().getModel('olocalAddress').setProperty('/UnitNo', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/UnitNo'));
+            this.getView().getModel('olocalAddress').setProperty('/City', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/City'));
+            this.getView().getModel('olocalAddress').setProperty('/State', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/State'));
+            this.getView().getModel('olocalAddress').setProperty('/Country', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/Country'));
+            this.getView().getModel('olocalAddress').setProperty('/AddrLine', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/AddrLine'));
+            this.getView().getModel('olocalAddress').setProperty('/Street', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/Street'));
+            this.getView().getModel('olocalAddress').setProperty('/PoBox', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/PoBox'));
+            this.getView().getModel('olocalAddress').setProperty('/ZipCode', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/ZipCode'));
+            this.getView().getModel('olocalAddress').setProperty('/NewAddrCheck', false);
+            this.getView().getModel('olocalAddress').setProperty('/NewAddressflag', false);
+            this.getView().getModel('olocalAddress').setProperty('/editable', false);
 
+        };
+        Controller.prototype._onNewAddCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/co', '');
+            this.getView().getModel('olocalAddress').setProperty('/HouseNo', '');
+            this.getView().getModel('olocalAddress').setProperty('/UnitNo', '');
+            this.getView().getModel('olocalAddress').setProperty('/City', '');
+            this.getView().getModel('olocalAddress').setProperty('/State', '');
+            this.getView().getModel('olocalAddress').setProperty('/Country', '');
+            this.getView().getModel('olocalAddress').setProperty('/AddrLine', '');
+            this.getView().getModel('olocalAddress').setProperty('/Street', '');
+            this.getView().getModel('olocalAddress').setProperty('/PoBox', '');
+            this.getView().getModel('olocalAddress').setProperty('/ZipCode', '');
+            this.getView().getModel('olocalAddress').setProperty('/NewAddrCheck', true);
+            this.getView().getModel('olocalAddress').setProperty('/NewAddressflag', true);
+            this.getView().getModel('olocalAddress').setProperty('/editable', true);
+        };
+        Controller.prototype._postDPPCommunication = function () {
+            var oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
+                oData = oDPPComunication.oData,
+                olocalAddress = this.getView().getModel('olocalAddress');
+            if (oData.eMailCheck) {
+                if (!oData.eMail) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DEFFERED PAYMENT PLAN',
+                        message: 'Email field is empty'
+                    });
+                    return true;
+                }
+            }
+            if (oData.FaxCheck) {
+                if (!(oData.Fax)) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DEFFERED PAYMENT PLAN',
+                        message: 'Please enter Fax Number'
+                    });
+                    return true;
+                }
+                if (!(oData.FaxTo)) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DEFFERED PAYMENT PLAN',
+                        message: 'Please enter Fax To'
+                    });
+                    return true;
+                }
+            }
+            if (oData.AddrCheck) {
+                if (olocalAddress.getProperty('/newAdd')) {
+                    if (!(((olocalAddress.getProperty('/HouseNo')) && (olocalAddress.getProperty('/Street'))) || (olocalAddress.getProperty('/PoBox')))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'DEFFERED PAYMENT PLAN',
+                            message: 'Please enter street no & street name or PO Box'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/City'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'DEFFERED PAYMENT PLAN',
+                            message: 'Please enter city'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/State'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'DEFFERED PAYMENT PLAN',
+                            message: 'Please enter state'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/ZipCode'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'DEFFERED PAYMENT PLAN',
+                            message: 'Please enter zip Code'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/Country'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'DEFFERED PAYMENT PLAN',
+                            message: 'Please enter country'
+                        });
+                        return true;
+                    }
+
+                    //this._TrilliumAddressCheck();
+                    //return true;
+                }
+            }
+            this._sendDppComunication();
+            return true;
+
+        };
+        Controller.prototype._TrilliumAddressCheck = function () {
+            var olocalAddress = this.getView().getModel('olocalAddress'),
+                oModel = this.getOwnerComponent().getModel('comp-bupa'),
+                sPath,
+                oParameters,
+                aFilters = this._createAddrValidateFilters(),
+                oMailEdit = this.getView().getModel('oDtaAddrEdit');
+            olocalAddress.setProperty('/updateSent', true);
+            olocalAddress.setProperty('/showVldBtns', true);
+            olocalAddress.setProperty('/updateNotSent', false);
+            sPath = '/BuagAddrDetails';
+
+            oParameters = {
+                filters: aFilters,
+                success: function (oData) {
+                    if (oData.results[0].AddrChkValid === 'X') {
+                        //Validate success, update the address directly
+                        this._oMailEditPopup.close();
+                        this._updateMailingAddr();
+                    } else {
+                        oMailEdit.setProperty('/SuggAddrInfo', oData.results[0].TriCheck);
+                        this._showSuggestedAddr();
+                        //this._oMailEditPopup.open();
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    sap.ui.commons.MessageBox.alert('Validatation Call Failed');
+                }.bind(this)
+            };
+
+
+            //oMailEdit.setProperty('/SuggAddrInfo', oMailEdit.getProperty('/AddrInfo'));
+            if (oModel) {
+                oModel.read(sPath, oParameters);
+            }
+        };
+        Controller.prototype._createAddrValidateFilters = function () {
+            var aFilters = [],
+                oFilterTemplate,
+                sBpNum = this.getView().getModel('oDataBuagAddrDetails').getProperty('/PartnerID'),
+                oMailEdit = this.getView().getModel('oDtaAddrEdit'),
+                oMailEditAddrInfo = oMailEdit.getProperty('/AddrInfo'),
+                key,
+                bFixAddr = oMailEdit.getProperty('/bFixAddr'),
+                tempPath;
+
+            if (bFixAddr) {
+                oFilterTemplate = new Filter({ path: 'FixUpd', operator: FilterOperator.EQ, value1: 'X'});
+                aFilters.push(oFilterTemplate);
+            } else {
+                oFilterTemplate = new Filter({ path: 'TempUpd', operator: FilterOperator.EQ, value1: 'X'});
+                aFilters.push(oFilterTemplate);
+            }
+
+            oFilterTemplate = new Filter({ path: 'PartnerID', operator: FilterOperator.EQ, value1: sBpNum});
+            aFilters.push(oFilterTemplate);
+
+            oFilterTemplate = new Filter({ path: 'ChkAddr', operator: FilterOperator.EQ, value1: 'X'});
+            aFilters.push(oFilterTemplate);
+
+            for (key in oMailEditAddrInfo) {
+                if (oMailEditAddrInfo.hasOwnProperty(key)) {
+                    if (!(key === '__metadata' || key === 'StandardFlag' || key === 'ShortForm' || key === 'ValidFrom' || key === 'ValidTo' || key === 'Supplement')) {
+                        if (bFixAddr) {
+                            tempPath = 'FixAddrInfo/' + key;
+                            oFilterTemplate = new Filter({ path: tempPath, operator: FilterOperator.EQ, value1: oMailEditAddrInfo[key]});
+                            aFilters.push(oFilterTemplate);
+                        } else {
+                            tempPath = 'TempAddrInfo/' + key;
+                            oFilterTemplate = new Filter({ path: tempPath, operator: FilterOperator.EQ, value1: oMailEditAddrInfo[key]});
+                            aFilters.push(oFilterTemplate);
+                        }
+                    }
+                }
+            }
+            return aFilters;
+        };
+        Controller.prototype._sendDppComunication = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
+                oData = oDPPComunication.oData,
+                olocalAddress = this.getView().getModel('olocalAddress');
+            sPath = '/DPPCorresps';
+
+            oParameters = {
+                merge: false,
+                success : function (oData) {
+                    if (oData.Error) {
+                        if (oData.Message) {
+                            ute.ui.main.Popup.Alert({
+                                title: 'DEFFERED PAYMENT PLAN',
+                                message: oData.Message
+                            });
+                        } else {
+                            ute.ui.main.Popup.Alert({
+                                title: 'DEFFERED PAYMENT PLAN',
+                                message: 'Correspondence Failed'
+                            });
+                        }
+                    } else {
+                        ute.ui.main.Popup.Alert({
+                            title: 'DEFFERED PAYMENT PLAN',
+                            message: 'Correspondence Successfully Sent.'
+                        });
+                    }
+                    this._onCheckbook();
+                }.bind(this),
+                error: function (oError) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DEFFERED PAYMENT PLAN',
+                        message: 'Correspondence Failed'
+                    });
+                }.bind(this)
+            };
+            if (oODataSvc) {
+                oDPPComunication.oData.Process = 'DPP';
+                if (olocalAddress.getProperty('/newAdd')) {
+                    oData.Address.co = olocalAddress.getProperty('/co');
+                    oData.Address.HouseNo = olocalAddress.getProperty('/HouseNo');
+                    oData.Address.UnitNo = olocalAddress.getProperty('/UnitNo');
+                    oData.Address.City = olocalAddress.getProperty('/City');
+                    oData.Address.State = olocalAddress.getProperty('/State');
+                    oData.Address.Country = olocalAddress.getProperty('/Country');
+                    oData.Address.AddrLine = olocalAddress.getProperty('/AddrLine');
+                    oData.Address.Street = olocalAddress.getProperty('/Street');
+                    oData.Address.PoBox = olocalAddress.getProperty('/PoBox');
+                    oData.Address.ZipCode = olocalAddress.getProperty('/ZipCode');
+                    oData.NewAddr = olocalAddress.getProperty('/NewAddrCheck');
+                }
+                oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
+            }
+        };
+        Controller.prototype._retrDppComunication = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                sProcess = 'DPP',
+                olocalAddress = this.getView().getModel('olocalAddress');
+
+            sPath = '/DPPCorresps(CA=\'' + this._caNum + '\',Contract=\'' + this._coNum + '\',BP=\'' + this._bpNum + '\',Process=\'' + sProcess + '\')';
+
+            oParameters = {
+                success : function (oData) {
+                    if (oData) {
+                        this.getView().getModel('oDppStepThreeCom').setData(oData);
+                        if (oData.AddrCheck) {
+                            olocalAddress.setProperty('/current', true);
+                            olocalAddress.setProperty('/newAdd', false);
+                        }
+                        if (oData.Address) {
+                            olocalAddress.setProperty('/co', oData.Address.co);
+                            olocalAddress.setProperty('/HouseNo', oData.Address.HouseNo);
+                            olocalAddress.setProperty('/UnitNo', oData.Address.UnitNo);
+                            olocalAddress.setProperty('/City', oData.Address.City);
+                            olocalAddress.setProperty('/State', oData.Address.State);
+                            olocalAddress.setProperty('/Country', oData.Address.Country);
+                            olocalAddress.setProperty('/AddrLine', oData.Address.AddrLine);
+                            olocalAddress.setProperty('/Street', oData.Address.Street);
+                            olocalAddress.setProperty('/PoBox', oData.Address.PoBox);
+                            olocalAddress.setProperty('/ZipCode', oData.Address.ZipCode);
+                        }
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                }.bind(this)
+            };
+
+            if (oODataSvc) {
+                oODataSvc.read(sPath, oParameters);
+            }
+        };
 
         return Controller;
     }

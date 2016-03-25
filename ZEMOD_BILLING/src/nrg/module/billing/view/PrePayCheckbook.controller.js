@@ -239,7 +239,8 @@ sap.ui.define(
                 oEligModel = this.getView().getModel('oEligibility'),
                 oParameters,
                 alert,
-                i;
+                i,
+                i18NModel = this.getOwnerComponent().getModel("comp-i18n-billing");
 
             oParameters = {
                 success : function (oData) {
@@ -251,11 +252,12 @@ sap.ui.define(
                 // If already has eligibility alerts, then skip
                     this._eligibilityAlerts = [];
 
+
                     // Check ABP
                     alert = new ute.ui.app.FooterNotificationItem({
                         link: true,
                         design: 'Information',
-                        text: (oData.ABPElig) ? "Eligible for ABP" : "Not eligible for ABP",
+                        text: (oData.ABPElig) ? i18NModel.getProperty("nrgNotfABPT") : i18NModel.getProperty("nrgNotfABPF"),
                         linkPress: this._openEligABPPopup.bind(this)
                     });
                     this._eligibilityAlerts.push(alert);
@@ -264,7 +266,7 @@ sap.ui.define(
                     alert = new ute.ui.app.FooterNotificationItem({
                         link: true,
                         design: 'Information',
-                        text: (oData.EXTNElig) ? "Eligible for EXTN" : "Not eligible for EXTN",
+                        text: (oData.EXTNElig) ? i18NModel.getProperty("nrgNotfEXTT") : i18NModel.getProperty("nrgNotfEXTF"),
                         linkPress: this._openEligEXTNPopup.bind(this)
                     });
                     this._eligibilityAlerts.push(alert);
@@ -273,19 +275,63 @@ sap.ui.define(
                     alert = new ute.ui.app.FooterNotificationItem({
                         link: true,
                         design: 'Information',
-                        text: (oData.RBBElig) ? "Eligible for Retro-AB" : "Not eligible for Retro-AB",
+                        text: (oData.RBBElig) ? i18NModel.getProperty("nrgNotfRBPT") : i18NModel.getProperty("nrgNotfRBPF"),
                         linkPress: this._openEligRBBPopup.bind(this)
                     });
                     this._eligibilityAlerts.push(alert);
 
                     // Check DPP
                     alert = new ute.ui.app.FooterNotificationItem({
-                        link: true,
+                        link: false,
                         design: 'Information',
-                        text: (oData.DPPElig) ? "Eligible for DPP" : "Not eligible for DPP"
+                        text: (oData.DPPElig) ? i18NModel.getProperty("nrgNotfDPPT") : i18NModel.getProperty("nrgNotfDPPF")
                     });
-
                     this._eligibilityAlerts.push(alert);
+                    if (oData.EXTNPend) {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfPE")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.CollAccActv) {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfCB")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.CSAActv) {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfCSA")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.RBankDActv) {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfRBD")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.RCCardActv) {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfRCC")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
 
                     // Insert all alerts to DOM
                     for (i = 0; i < this._eligibilityAlerts.length; i = i + 1) {

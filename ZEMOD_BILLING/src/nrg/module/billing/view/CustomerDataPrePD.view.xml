@@ -16,6 +16,9 @@
                 <utmain:Button class="nrgBilling-cusDataBil-btn" design="Default"
                    text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-CommPref}"
                    press="._onCommPreferences"/>
+                <utmain:Button class="nrgBilling-cusDataBil-btn" design="Default"
+                   text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-Alerts}"
+                   press="._onAlertInformation"/>
         </ute:Tag>
 
 

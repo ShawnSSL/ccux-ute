@@ -162,9 +162,7 @@ sap.ui.define(
             var oModel = this.getOwnerComponent().getModel('comp-commprefs'),
                 sPath,
                 oBindingInfo,
-                oHistoryView,
                 oCommPrefTag,
-                oScrollTemplate,
                 aFilters,
                 aFilterIds,
                 aFilterValues,
@@ -191,7 +189,7 @@ sap.ui.define(
                 filters : aFilters,
                 success : function (oData) {
                     oCommPrefTag.getModel('view-custpref').setData(oData);
-                    this._oCommDialog.open();
+                    that._oCommDialog.open();
                     jQuery.sap.log.info("Odata Read Successfully:::");
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this),
@@ -203,6 +201,64 @@ sap.ui.define(
             if (oModel) {
                 oModel.read(sPath, oBindingInfo);
             }
+        };
+       /**
+		 * Show a popup when Communication preferences button clicked.
+		 *
+		 * @function
+		 *
+         *
+		 * @private
+		 */
+        CustomController.prototype._onAlertInformation = function () {
+            var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
+                sPath,
+                oBindingInfo,
+                oAlertsTable,
+                aFilters,
+                aFilterIds,
+                aFilterValues,
+                oAlertsTemplate,
+                fnRecievedHandler,
+                that = this;
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            aFilterIds = ["CA"];
+            aFilterValues = [this._caNum];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            if (!this._oAlertsFragment) {
+                this._oAlertsFragment = sap.ui.xmlfragment("PPAlerts", "nrg.module.billing.view.PrePayAlerts", this);
+            }
+            if (this._oAlertsDialog === undefined) {
+                this._oAlertsDialog = new ute.ui.main.Popup.create({
+                    title: 'Alert Information',
+                    content: this._oAlertsFragment
+                });
+            }
+            sPath = "/PpAlertS";
+            oAlertsTable = sap.ui.core.Fragment.byId("PPAlerts", "idnrgBilling-Alerts");
+            oAlertsTemplate = sap.ui.core.Fragment.byId("PPAlerts", "idnrgBilling-AlertsTemp");
+            oAlertsTable.setModel(oModel, 'comp-feeAdjs');
+            // Function received handler is used to update the view with first History campaign.---start
+            fnRecievedHandler = function (oEvent) {
+                var oTableBinding = oAlertsTable.getBinding("rows");
+                that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                if ((oTableBinding) && (oTableBinding.getLength() > 0)) {
+                    that._oAlertsDialog.open();
+                } else {
+                    sap.ui.commons.MessageBox.alert("No Data Available");
+                }
+                if (oTableBinding) {
+                    oTableBinding.detachDataReceived(fnRecievedHandler);
+                }
+            };
+            oBindingInfo = {
+                model : "comp-feeAdjs",
+                path : sPath,
+                filters : aFilters,
+                template : oAlertsTemplate,
+                events: {dataReceived : fnRecievedHandler}
+            };
+            oAlertsTable.bindRows(oBindingInfo);
         };
        /**
 		 * When any checkbox is changes track that changes

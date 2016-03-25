@@ -76,7 +76,7 @@ sap.ui.define(
                 filters : aFilters
             };
             oNotifications.bindAggregation("content", mParameters);
-            sCurrentPath = "/EligCheckS('" + this._coNum + "')";
+/*            sCurrentPath = "/EligCheckS('" + this._coNum + "')";
             mParameters = {
                 success : function (oData) {
                     oEligibilityJsonModel.setData(oData);
@@ -86,7 +86,7 @@ sap.ui.define(
             };
             if (oEligibilityModel && this._coNum) {
                 oEligibilityModel.read(sCurrentPath, mParameters);
-            }
+            }*/
         };
         /* =========================================================== */
 		/* lifecycle method- After Rendering                          */
