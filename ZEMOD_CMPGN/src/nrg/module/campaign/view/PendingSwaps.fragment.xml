@@ -70,7 +70,7 @@
             </u:Tag>
           </u:Tag>
         <!-- Place holder for templates to reuse for Bind Aggregation method. Below will be always Display:none -->
-        <u:Tag class="nrgCamTls-hide">
+        <u:Tag visible="false">
              <u:Table width="60%"
                 id="idnrgCamTls-pendTable1"
                 class="nrgCamOvr-left nrgCamOvr-top" >

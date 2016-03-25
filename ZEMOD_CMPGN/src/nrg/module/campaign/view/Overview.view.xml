@@ -139,7 +139,7 @@
                 </u:rows>
             </u:Table>
           <!-- Place holder for templates to reuse for Bind Aggregation method. Below will be always Display:none -->
-            <u:Tag class="nrgCamOvr-hide">
+            <u:Tag visible="false">
                 <um:TabBarItem design="Default" key="tb001" select=".toggleCampaign" enabled="{= ${comp-campaign>OfferCode} !== '' }" id="idnrgCamOvr-TabItem" >
                     <u:Tag text="{parts:[{path:'comp-campaign>Type'}],
                                                     formatter:'.formatType'}" />
