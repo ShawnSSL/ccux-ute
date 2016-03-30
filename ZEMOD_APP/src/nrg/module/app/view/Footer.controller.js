@@ -22,9 +22,6 @@ sap.ui.define(
 
         /*---------------------------------------------- Controller Life Cycle ----------------------------------------------*/
 
-        Controller.prototype.onInit = function () {
-
-        };
 
         Controller.prototype.onBeforeRendering = function () {
             // Initialize models
@@ -821,7 +818,7 @@ sap.ui.define(
         /*--------------------- Invalid Mailing Address ----------------------*/
 
         Controller.prototype._onMailLinkPress = function (oControlEvent) {
-            if (!this.invalidMailingAddrPopup) {
+/*            if (!this.invalidMailingAddrPopup) {
                 this.invalidMailingAddrPopup = ute.ui.main.Popup.create({
                     content: sap.ui.xmlfragment(this.getView().sId, "nrg.module.app.view.AlertInvMailAddrPopup", this),
                     title: 'Invalid Mailing Address'
@@ -830,7 +827,14 @@ sap.ui.define(
                 this.getView().addDependent(this.invalidMailingAddrPopup);
             }
             // Open the popup
-            this.invalidMailingAddrPopup.open();
+            this.invalidMailingAddrPopup.open();*/
+            var oRouting = this.getView().getModel('oFooterRouting');
+            if (oRouting.getProperty('/CoNumber')) {
+                this.navTo("bupa.caInfo", {bpNum: oRouting.getProperty('/BpNumber'), caNum: oRouting.getProperty('/CaNumber'), coNum: oRouting.getProperty('/CoNumber')});
+            } else {
+                this.navTo("bupa.caInfoNoCo", {bpNum: oRouting.getProperty('/BpNumber'), caNum: oRouting.getProperty('/CaNumber')});
+            }
+
         };
 
         Controller.prototype._onInvMailAddrCloseClick = function (oEvent) {
