@@ -4,8 +4,8 @@
           xmlns:core="sap.ui.core"
           xmlns:u="ute.ui.commons"
           xmlns:um="ute.ui.main">
-    <u:Tag>
-        <u:Table width="auto" id="idnrgUnbiilled-Table">
+    <u:Tag class="nrgBillingUnbilled">
+        <u:Table width="50rem" id="idnrgUnbiilled-Table">
                 <u:columns>
                     <u:TableColumn>
                         <c:Label text="Document #"/>

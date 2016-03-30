@@ -293,31 +293,55 @@ sap.ui.define(
                 iSelNum = 0, // to count the selected row count
                 iNonSelNum = 0, // to count the Non-selected row count
                 fTotalAmount = oDppConfs.getProperty("/results/0/TotOutStd"),
-                fDividedAmount;
+                fDividedAmount,
+                fSelSum = 0,
+                fTempAmount,
+                bDifference = false,
+                iAssignCount = 1,
+                fDifferenceAmount = 0;
 
             if (fTotalAmount) {
                 fTotalAmount = parseFloat(fTotalAmount); // This is the total amount from backend.
             }
-            // First calculate the sum which is not checked in the open items.
+            // First calculate the sum which is not checked and checked separately
             for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
                 if (!oDppConfs.getProperty('/results/' + i + '/Checked')) {
                     fNonSelSum = parseFloat(fNonSelSum) + parseFloat(oDppConfs.getProperty('/results/' + i + '/ConfirmdItems/Amount'));
                     iNonSelNum = iNonSelNum + 1;
                 } else {
+                    fSelSum = parseFloat(fNonSelSum) + parseFloat(oDppConfs.getProperty('/results/' + i + '/ConfirmdItems/Amount'));
                     iSelNum = iSelNum + 1;
                 }
             }
 
+            // find out the value to distribute amount selected items.
             if (iSelNum) {
                 fDividedAmount = (fTotalAmount - fNonSelSum) / iSelNum;
                 if (fDividedAmount) {
                     fDividedAmount = fDividedAmount.toFixed(2);
                 }
             }
+            // check whether distribution is totaled to right total
 
+            fTempAmount = (parseFloat(fNonSelSum) + (parseFloat(fDividedAmount) * iSelNum)).toFixed(2);
+
+            if (parseFloat(fTempAmount) !== parseFloat(fTotalAmount)) {
+                bDifference = true;
+                fDifferenceAmount = (parseFloat(fTotalAmount) - parseFloat(fTempAmount)).toFixed(2);
+            }
             for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
                 if (oDppConfs.getProperty('/results/' + i + '/Checked')) {
-                    oDppConfs.setProperty('/results/' + i + '/ConfirmdItems/Amount', fDividedAmount);
+                    if (!bDifference) {
+                        oDppConfs.setProperty('/results/' + i + '/ConfirmdItems/Amount', fDividedAmount);
+                    } else {
+                        if (iAssignCount === iSelNum) {
+                            oDppConfs.setProperty('/results/' + i + '/ConfirmdItems/Amount', (parseFloat(fDividedAmount) + parseFloat(fDifferenceAmount)).toFixed(2));
+                        } else {
+                            oDppConfs.setProperty('/results/' + i + '/ConfirmdItems/Amount', fDividedAmount);
+                        }
+                        iAssignCount = iAssignCount + 1;
+                    }
+
                 }
             }
             // Remove all checks after distributing the values
@@ -358,7 +382,17 @@ sap.ui.define(
                 that = this,
                 oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {that._AlertDialog.close(); that._postDPPConfRequest(); }}),
                 oCancelButton = new ute.ui.main.Button({text: 'CANCEL', press: function () {that._AlertDialog.close(); }}),
-                oTag = new ute.ui.commons.Tag();
+                oTag = new ute.ui.commons.Tag(),
+                oDueDate;
+
+            oDueDate = this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue();
+            if (!oDueDate) {
+                ute.ui.main.Popup.Alert({
+                    title: 'DPP',
+                    message: 'Please enter Down Payment Due Date.'
+                });
+                return;
+            }
             oOkButton.addStyleClass("nrgBillingDiscButton");
             oCancelButton.addStyleClass("nrgBillingDiscButton");
             oTag.addContent(oText);
