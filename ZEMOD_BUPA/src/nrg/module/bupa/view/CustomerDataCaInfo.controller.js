@@ -49,15 +49,6 @@ sap.ui.define(
             //    this._beforeOpenEditAddrDialogue = false;
             //}
         };
-
-        Controller.prototype.onAfterRendering = function () {
-
-        };
-
-        Controller.prototype.onExit = function () {
-
-        };
-
         Controller.prototype._initCaInfoConfigModel = function () {
             var configModel = this.getView().getModel('oCaInfoConfig');
             configModel.setProperty('/mailAddrUpdateVisible', true);

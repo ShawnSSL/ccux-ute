@@ -502,7 +502,7 @@
                             <l:cells>
                                 <!--Area Left-->
                                 <l:MatrixLayoutCell class="nrgBupa-cusDataCaInfo-l">
-                                    <l:MatrixLayout widths="50%,50%" columns="2">
+<!--                                    <l:MatrixLayout widths="50%,50%" columns="2">
                                         <l:MatrixLayoutRow>
                                             <l:MatrixLayoutCell>
                                                 <ute:Tag elem="div"
@@ -510,13 +510,13 @@
                                                          text="{comp-i18n-bupa>nrgBupa-cusDataCaInfo-START_DATE}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <!--editable="{oCaInfoConfig>/tempAddrEditable}"-->
+                                                editable="{oCaInfoConfig>/tempAddrEditable}"
                                                 <ute:Textfield fieldType="Noborder" editable="false"
                                                                class="nrgBupa-cusDataCaInfo-cnt"
                                                                value="{path: 'oDataBuagAddrDetails>/TempAddrInfo/ValidFrom', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
-                                    </l:MatrixLayout>
+                                    </l:MatrixLayout>-->
                                 </l:MatrixLayoutCell>
 
                                 <!--Area middle-->
