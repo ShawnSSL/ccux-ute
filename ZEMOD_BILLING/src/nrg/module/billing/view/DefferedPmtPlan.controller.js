@@ -8,10 +8,11 @@ sap.ui.define(
         'sap/ui/model/json/JSONModel',
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
-        'nrg/module/billing/view/EligPopup'
+        'nrg/module/billing/view/EligPopup',
+        'nrg/module/quickpay/view/QuickPayPopup'
     ],
 
-    function (CoreController, jQuery, price, JSONModel, Filter, FilterOperator, EligPopup) {
+    function (CoreController, jQuery, price, JSONModel, Filter, FilterOperator, EligPopup, QuickPayControl) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.billing.view.DefferedPmtPlan');
@@ -268,27 +269,31 @@ sap.ui.define(
                     oDppConfs.setProperty('/results/' + i + '/Checked', false);
                 }
             }
-            this._onDppConfItemCheck(oEvent);
+            this._onStepTwoInstlChange(oEvent);
         };
 
         Controller.prototype._onStepTwoInstlChange = function (oEvent) {
             var oDppConfs = this.getView().getModel('oDppConfs'),
-                iTempTol = 0,
-                iDifTol = 0,
-                i;
-
-            for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
-                iTempTol = iTempTol + parseFloat(oDppConfs.getProperty('/results/' + i + '/ConfirmdItems/Amount'));
+                iCount,
+                fTotalAmount = oDppConfs.getProperty("/results/0/TotOutStd"),
+                fCalculateSum = 0,
+                sTemp;
+            for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
+                sTemp = oDppConfs.getProperty('/results/' + iCount + '/ConfirmdItems/Amount');
+                if (!(((!isNaN(parseFloat(sTemp)) && isFinite(sTemp))) && parseFloat(sTemp))) {
+                    oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', "0.00");
+                }
             }
-
-            iDifTol = parseFloat(oDppConfs.getProperty('/results/0/TotOutStd')) - iTempTol;
-            oDppConfs.setProperty('/results/0/DiffTot', iDifTol.toString());
-            oDppConfs.setProperty('/results/0/DppTot', iTempTol.toString());
+            // First calculate the sum which is not checked and checked separately
+            for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
+                fCalculateSum = (parseFloat(fCalculateSum) || 0) + parseFloat(oDppConfs.getProperty('/results/' + iCount + '/ConfirmdItems/Amount'));
+            }
+            oDppConfs.setProperty('/results/0/SelTot', fCalculateSum.toString());
+            oDppConfs.setProperty('/results/0/DiffTot', ((parseFloat(fCalculateSum) - parseFloat(fTotalAmount)).toFixed(2)).toString());
         };
-
         Controller.prototype._onDistributeDiffClick = function (oEvent) {
             var oDppConfs = this.getView().getModel('oDppConfs'),
-                i,
+                iCount,
                 fNonSelSum = 0, // to calculate the non-selected rows total.
                 iSelNum = 0, // to count the selected row count
                 iNonSelNum = 0, // to count the Non-selected row count
@@ -298,18 +303,46 @@ sap.ui.define(
                 fTempAmount,
                 bDifference = false,
                 iAssignCount = 1,
-                fDifferenceAmount = 0;
+                fDifferenceAmount = 0,
+                sTemp;
 
             if (fTotalAmount) {
                 fTotalAmount = parseFloat(fTotalAmount); // This is the total amount from backend.
             }
             // First calculate the sum which is not checked and checked separately
-            for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
-                if (!oDppConfs.getProperty('/results/' + i + '/Checked')) {
-                    fNonSelSum = parseFloat(fNonSelSum) + parseFloat(oDppConfs.getProperty('/results/' + i + '/ConfirmdItems/Amount'));
+            for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
+                sTemp = oDppConfs.getProperty('/results/' + iCount + '/ConfirmdItems/Amount');
+                if (!(((!isNaN(parseFloat(sTemp)) && isFinite(sTemp))) && parseFloat(sTemp))) {
+                    // Remove all checks after distributing the values
+                    for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
+                        oDppConfs.setProperty('/results/' + iCount + '/Checked', false);
+                    }
+                    oDppConfs.setProperty('/AllChecked', false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'DPP',
+                        message: 'Installment amount must be number and greater than 0.'
+                    });
+                    return;
+                } else if ((parseFloat(sTemp) < 0.00)) {
+                    // Remove all checks after distributing the values
+                    for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
+                        oDppConfs.setProperty('/results/' + iCount + '/Checked', false);
+                    }
+                    oDppConfs.setProperty('/AllChecked', false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'DPP',
+                        message: 'Installment amount must be number and greater than 0.'
+                    });
+                    return;
+                }
+            }
+            // First calculate the sum which is not checked and checked separately
+            for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
+                if (!oDppConfs.getProperty('/results/' + iCount + '/Checked')) {
+                    fNonSelSum = parseFloat(fNonSelSum) + parseFloat(oDppConfs.getProperty('/results/' + iCount + '/ConfirmdItems/Amount'));
                     iNonSelNum = iNonSelNum + 1;
                 } else {
-                    fSelSum = parseFloat(fNonSelSum) + parseFloat(oDppConfs.getProperty('/results/' + i + '/ConfirmdItems/Amount'));
+                    fSelSum = parseFloat(fNonSelSum) + parseFloat(oDppConfs.getProperty('/results/' + iCount + '/ConfirmdItems/Amount'));
                     iSelNum = iSelNum + 1;
                 }
             }
@@ -329,46 +362,29 @@ sap.ui.define(
                 bDifference = true;
                 fDifferenceAmount = (parseFloat(fTotalAmount) - parseFloat(fTempAmount)).toFixed(2);
             }
-            for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
-                if (oDppConfs.getProperty('/results/' + i + '/Checked')) {
+            for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
+                if (oDppConfs.getProperty('/results/' + iCount + '/Checked')) {
                     if (!bDifference) {
-                        oDppConfs.setProperty('/results/' + i + '/ConfirmdItems/Amount', fDividedAmount);
+                        oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', fDividedAmount);
                     } else {
                         if (iAssignCount === iSelNum) {
-                            oDppConfs.setProperty('/results/' + i + '/ConfirmdItems/Amount', (parseFloat(fDividedAmount) + parseFloat(fDifferenceAmount)).toFixed(2));
+                            oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', (parseFloat(fDividedAmount) + parseFloat(fDifferenceAmount)).toFixed(2));
                         } else {
-                            oDppConfs.setProperty('/results/' + i + '/ConfirmdItems/Amount', fDividedAmount);
+                            oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', fDividedAmount);
                         }
                         iAssignCount = iAssignCount + 1;
                     }
 
                 }
             }
+            oDppConfs.setProperty('/results/0/SelTot', fTotalAmount.toString());
+            oDppConfs.setProperty('/results/0/DiffTot', "0.00");
             // Remove all checks after distributing the values
-            for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
-                oDppConfs.setProperty('/results/' + i + '/Checked', false);
+            for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
+                oDppConfs.setProperty('/results/' + iCount + '/Checked', false);
             }
             oDppConfs.setProperty('/AllChecked', false);
         };
-
-        Controller.prototype._onDppConfItemCheck = function (oEvent) {
-            var oDppConfs = this.getView().getModel('oDppConfs'),
-                i,
-                iSelTol = 0,
-                iDiffTot = 0;
-
-            for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
-                if (oDppConfs.getProperty('/results/' + i + '/Checked')) {
-                    iSelTol = parseFloat(iSelTol) + parseFloat(oDppConfs.getProperty('/results/' + i + '/ConfirmdItems/Amount'));
-                }
-            }
-
-            //iDiffTot =  parseFloat(oDppConfs.getProperty('/results/0/DppTot')) - iSelTol;
-
-            oDppConfs.setProperty('/results/0/SelTot', iSelTol.toString());
-            //oDppConfs.setProperty('/results/0/DiffTot', iDiffTot.toString());
-        };
-
         Controller.prototype._formatPadZero = function (sNum, iSize) {
             while (sNum.length < iSize) {
                 sNum = '0' + sNum;
@@ -383,8 +399,19 @@ sap.ui.define(
                 oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {that._AlertDialog.close(); that._postDPPConfRequest(); }}),
                 oCancelButton = new ute.ui.main.Button({text: 'CANCEL', press: function () {that._AlertDialog.close(); }}),
                 oTag = new ute.ui.commons.Tag(),
-                oDueDate;
+                oDueDate,
+                oDppConfs = this.getView().getModel('oDppConfs'),
+                fDifference = oDppConfs.getProperty('/results/0/DiffTot'),
+                iCount = 0,
+                sTemp;
 
+            if (!((!isNaN(parseFloat(fDifference)) && isFinite(fDifference)) && (parseFloat(fDifference) === 0.00))) {
+                ute.ui.main.Popup.Alert({
+                    title: 'DPP',
+                    message: 'Difference is not 0.'
+                });
+                return;
+            }
             oDueDate = this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue();
             if (!oDueDate) {
                 ute.ui.main.Popup.Alert({
@@ -392,6 +419,23 @@ sap.ui.define(
                     message: 'Please enter Down Payment Due Date.'
                 });
                 return;
+            }
+            // First calculate the sum which is not checked and checked separately
+            for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
+                sTemp = oDppConfs.getProperty('/results/' + iCount + '/ConfirmdItems/Amount');
+                if (!(((!isNaN(parseFloat(sTemp)) && isFinite(sTemp))) && parseFloat(sTemp))) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DPP',
+                        message: 'Installment amount must be greater 0.'
+                    });
+                    return;
+                } else if ((parseFloat(sTemp) < 0.00)) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DPP',
+                        message: 'Installment amount must be number and greater than 0.'
+                    });
+                    return;
+                }
             }
             oOkButton.addStyleClass("nrgBillingDiscButton");
             oCancelButton.addStyleClass("nrgBillingDiscButton");
@@ -541,7 +585,7 @@ sap.ui.define(
                         }
                         this.getView().getModel('oDppConfs').setProperty('/results/AllChecked', false);
                         this.getView().getModel('oDppConfs').setProperty('/results/0/SelTot', 0);
-
+                        this._onStepTwoInstlChange();
                         sDueDate = this._formatInvoiceDate(this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getDate(), this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getMonth() + 1, this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getFullYear());
                         this.getView().byId('nrgBilling-dpp-DppDueDate-id').setDefaultDate(sDueDate);
                     }
@@ -1221,9 +1265,18 @@ sap.ui.define(
                 sPath,
                 oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
                 oData = oDPPComunication.oData,
-                olocalAddress = this.getView().getModel('olocalAddress');
+                olocalAddress = this.getView().getModel('olocalAddress'),
+                that = this,
+                callQuickPay;
             sPath = '/DPPCorresps';
-
+            callQuickPay = function () {
+                var QuickControl = new QuickPayControl();
+                that.getView().addDependent(QuickControl);
+                QuickControl.openQuickPay(that._coNum, that._bpNum, that._caNum);
+                QuickControl.attachEvent("PaymentCompleted", function () {
+                    that._onCheckbook();
+                }, this);
+            };
             oParameters = {
                 merge: false,
                 success : function (oData) {
@@ -1231,12 +1284,14 @@ sap.ui.define(
                         if (oData.Message) {
                             ute.ui.main.Popup.Alert({
                                 title: 'DEFFERED PAYMENT PLAN',
-                                message: oData.Message
+                                message: oData.Message,
+                                callback: callQuickPay
                             });
                         } else {
                             ute.ui.main.Popup.Alert({
                                 title: 'DEFFERED PAYMENT PLAN',
-                                message: 'Correspondence Failed'
+                                message: 'Correspondence Failed',
+                                callback: callQuickPay
                             });
                         }
                     } else {
@@ -1245,7 +1300,6 @@ sap.ui.define(
                             message: 'Correspondence Successfully Sent.'
                         });
                     }
-                    this._onCheckbook();
                 }.bind(this),
                 error: function (oError) {
                     ute.ui.main.Popup.Alert({

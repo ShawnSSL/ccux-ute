@@ -21,12 +21,14 @@
             <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
                 buttonType="SpecialNav" width="220px" enabled="true"
                 press="._onAvgBillBtnClicked"
+                visible="{= ${comp-feeAdjs>Prepay} ? false : true }"
                 text="{comp-i18n-billing>nrgBilling-chkbkTools-AvgBill-Btn}">
             </ute:Button>
              <!-- Balance Bill Re-Average Detail -->
             <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
                 buttonType="SpecialNav" width="220px" enabled="true"
                 press="._onRetroAverageBillingClick"
+                visible="{= ${comp-feeAdjs>Prepay} ? false : true }"
                 text="{comp-i18n-billing>nrgBilling-chkbkTools-RETRO_AVG}">
             </ute:Button>
             <!-- Deffered Payment -->
@@ -39,6 +41,7 @@
             <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
                 buttonType="SpecialNav" width="220px" enabled="true"
                 press="._onExtnBtnClicked"
+                visible="{= ${comp-feeAdjs>Prepay} ? false : true }"
                 text="{comp-i18n-billing>nrgBilling-chkbkTools-Extn-Btn}">
             </ute:Button>
             <!-- Dunning History Transaction Launch -->

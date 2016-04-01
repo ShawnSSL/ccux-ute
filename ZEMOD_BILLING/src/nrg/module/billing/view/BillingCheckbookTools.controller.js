@@ -24,10 +24,27 @@ sap.ui.define(
         Controller.prototype.onBeforeRendering = function () {
             this.getView().setModel(this.getOwnerComponent().getModel('comp-eligibility'), 'oDataEligSvc');
             // Retrieve routing parameters
-            var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData;
+            var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData,
+                oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
+                oBindingInfo,
+                sPath = "/PrepayFlagS('" + this._caNum + "')",
+                that = this;
             this._bpNum = oRouteInfo.bpNum;
             this._caNum = oRouteInfo.caNum;
             this._coNum = oRouteInfo.coNum;
+            oBindingInfo = {
+                success : function (oData) {
+                    that.getView().bindElement({
+                        model : 'comp-feeAdjs',
+                        path : sPath
+                    });
+                }.bind(this),
+                error: function (oError) {
+                }.bind(this)
+            };
+            if (oModel && this._caNum) {
+                oModel.read(sPath, oBindingInfo);
+            }
 
         };
 
@@ -88,14 +105,23 @@ sap.ui.define(
                 sPath = '/EligCheckS(\'' + this._coNum + '\')',
                 oModel = this.getView().getModel('oDataEligSvc'),
                 oParameters,
-                that = this;
+                that = this,
+                oPrePayModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
+                bPrePayFlag = oPrePayModel.getProperty("/PrepayFlagS('" + this._caNum + "')/Prepay") || false;
 
             oParameters = {
                 success : function (oData) {
                     if (oData && oData.DPPActv) {
-                        oWebUiManager.notifyWebUi('openIndex', {
-                            LINK_ID: "Z_DPP"
-                        });
+                        if (bPrePayFlag) {
+                            oWebUiManager.notifyWebUi('openIndex', {
+                                LINK_ID: "Z_DPP_CR"
+                            });
+                        } else {
+                            oWebUiManager.notifyWebUi('openIndex', {
+                                LINK_ID: "Z_DPP"
+                            });
+                        }
+
                     } else {
                         that.navTo('billing.DefferedPmtPlan', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
                     }

@@ -117,12 +117,12 @@
                         <ute:Tag class="nrgBilling-dlct-odd"
                                  visible="{parts:['oDppConfs>ConfirmdItems/ItemNumber'], formatter:'._isOdd'}">
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h1">
-                                <utmain:Checkbox checked="{oDppConfs>Checked}" select="._onDppConfItemCheck"/>
+                                <utmain:Checkbox checked="{oDppConfs>Checked}" />
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i2">
                                 <ute:Tag elem="span" text="$"/>
                                 <ute:Textfield fieldType="Noborder" width="100px" value="{oDppConfs>ConfirmdItems/Amount}"
-                                               change="._onStepTwoInstlChange"/>
+                                               change="._onStepTwoInstlChange" enterKeyPress="_onStepTwoInstlChange" liveChange="_onStepTwoInstlChange"/>
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3" text="{path: 'oDppConfs>ConfirmdItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i4" text="{path: 'oDppConfs>ConfirmdItems/ClearDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
@@ -134,12 +134,12 @@
                         <ute:Tag class="nrgBilling-dlct-evn"
                                  visible="{parts:['oDppConfs>ConfirmdItems/ItemNumber'], formatter:'._isEven'}">
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h1">
-                                <utmain:Checkbox checked="{oDppConfs>Checked}" select="._onDppConfItemCheck"/>
+                                <utmain:Checkbox checked="{oDppConfs>Checked}" />
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i2">
                                 <ute:Tag elem="span" text="$"/>
                                 <ute:Textfield fieldType="Noborder" width="100px" value="{oDppConfs>ConfirmdItems/Amount}"
-                                               change="._onStepTwoInstlChange"/>
+                                                change="._onStepTwoInstlChange" enterKeyPress="_onStepTwoInstlChange" liveChange="_onStepTwoInstlChange"/>
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3" text="{path: 'oDppConfs>ConfirmdItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i4" text="{path: 'oDppConfs>ConfirmdItems/ClearDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>

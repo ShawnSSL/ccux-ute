@@ -150,7 +150,12 @@
                                         <utapp:FooterNotificationItem visible="{parts:['oEligibility>/EXTNActv'], formatter:'._formatVisElig'}"
                                             link="true"
                                             design="Error"
-                                            text="EXTN"
+                                            text="EXT"
+                                            linkPress=".onExtActive"/>
+                                        <utapp:FooterNotificationItem visible="{parts:['oEligibility>/EXTNPend'], formatter:'._formatVisElig'}"
+                                            link="true"
+                                            design="Error"
+                                            text="EXTP"
                                             linkPress=".onExtActive"/>
                                         <utapp:FooterNotificationItem visible="{parts:['oEligibility>/BBPActv'], formatter:'._formatVisElig'}"
                                             link="false"
