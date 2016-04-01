@@ -130,6 +130,10 @@
                     "pattern": "billing/defferedpaymentplan/bp/{bpNum}/ca/{caNum}/co/{coNum}",
                     "target":["billing.DefferedPmtPlan", "dashboard.CustomerDataSummary", "billing.DppTools", "app.Footer"]
                 },
+                "billing.DefferedPmtMonths": {
+                    "pattern": "billing/defferedpaymentplan/bp/{bpNum}/ca/{caNum}/co/{coNum}/months/{mNum}",
+                    "target":["billing.DefferedPmtPlan", "dashboard.CustomerDataSummary", "billing.DppTools", "app.Footer"]
+                },
                 "billing.DefferedPmtExt": {
                     "pattern": "billing/defferedpaymentext/bp/{bpNum}/ca/{caNum}/co/{coNum}",
                     "target":["billing.Extension", "dashboard.CustomerDataSummary", "billing.DppTools", "app.Footer"]

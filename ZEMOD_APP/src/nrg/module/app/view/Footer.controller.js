@@ -25,12 +25,12 @@ sap.ui.define(
 
         Controller.prototype.onBeforeRendering = function () {
             // Initialize models
-            this.getView().setModel(this.getView().getModel('main-app'), 'oMainODataSvc');
-            this.getView().setModel(this.getView().getModel('noti-app'), 'oNotiODataSvc');
-            this.getView().setModel(this.getView().getModel('rhs-app'), 'oRHSODataSvc');
-            this.getView().setModel(this.getView().getModel('comp-app'), 'oCompODataSvc');
-            this.getView().setModel(this.getView().getModel('elig-app'), 'oDataEligSvc');
-            this.getView().setModel(this.getView().getModel('dpp-app'), 'oDataDppSvc');
+            this.getView().setModel(this.getOwnerComponent().getModel('main-app'), 'oMainODataSvc');
+            this.getView().setModel(this.getOwnerComponent().getModel('noti-app'), 'oNotiODataSvc');
+            this.getView().setModel(this.getOwnerComponent().getModel('rhs-app'), 'oRHSODataSvc');
+            this.getView().setModel(this.getOwnerComponent().getModel('comp-app'), 'oCompODataSvc');
+            this.getView().setModel(this.getOwnerComponent().getModel('elig-app'), 'oDataEligSvc');
+            this.getView().setModel(this.getOwnerComponent().getModel('dpp-app'), 'oDataDppSvc');
 
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oFooterNotification');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oFooterRHS');
@@ -690,7 +690,7 @@ sap.ui.define(
                     // Check active or not
                     if (!oEligibilityModel.oData.DPPActv) {
                         // Go to DPP page
-                        oRouter.navTo('billing.DefferedPmtPlan', {bpNum: oRouting.oData.BpNumber, caNum: oRouting.oData.CaNumber, coNum: oRouting.oData.CoNumber});
+                        oRouter.navTo('billing.DefferedPmtMonths', {bpNum: oRouting.oData.BpNumber, caNum: oRouting.oData.CaNumber, coNum: oRouting.oData.CoNumber, mNum: "5"});
                     } else {
                         // Go to transaction launcher
                         oWebUiManager.notifyWebUi('openIndex', {

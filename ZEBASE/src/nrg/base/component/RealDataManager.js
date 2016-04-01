@@ -21,7 +21,8 @@ sap.ui.define(
 
             metadata: {
                 publicMethods: [
-                    'addODataModels'
+                    'addODataModels',
+                    'refreshODataModels'
                 ]
             }
         });
@@ -59,6 +60,34 @@ sap.ui.define(
                     });
 
                     this._oComponent.setModel(oModel, sDataReal);
+                }
+            }
+        };
+        Manager.prototype.refreshODataModels = function () {
+            var oConfig,
+                oModule,
+                sModule,
+                oData,
+                oDataReal,
+                sDataReal,
+                oModel;
+
+            oConfig = this._oComponent.getMetadata().getConfig() || {};
+            oModule = oConfig.module || {};
+
+            for (sModule in oModule) {
+                if (oModule.hasOwnProperty(sModule)) {
+                    oData = oModule[sModule].odata || {};
+                    oDataReal = oData.real || {};
+
+                    if (oModule[sModule].odata) {
+                        for (sDataReal in oDataReal) {
+                            if (oDataReal.hasOwnProperty(sDataReal)) {
+                                oModel = this._oComponent.getModel(sDataReal);
+                                oModel.refresh(true, true);//If set to true then the model data will be removed/cleared.
+                            }
+                        }
+                    }
                 }
             }
         };

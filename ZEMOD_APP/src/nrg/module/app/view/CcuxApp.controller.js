@@ -415,10 +415,16 @@ sap.ui.define(
         CustomController.prototype._onClearAccPressCallback = function (oEvent) {
             var oContext,
                 oRouter,
-                oRouteManager;
+                oRouteManager,
+                oRealDataManager;
 
             this._oApp.setOccupied(false);
             oContext = this.getOwnerComponent().getCcuxContextManager().resetContext();
+            // Refresh all odata models to make sure it gets fresh data for next accounts
+            oRealDataManager = this.getOwnerComponent().getRealDataManager();
+            if (oRealDataManager) {
+                oRealDataManager.refreshODataModels();
+            }
             oRouteManager = this.getOwnerComponent().getCcuxRouteManager().resetRouteHistory();
             oRouter = this.getOwnerComponent().getRouter();
 

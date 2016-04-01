@@ -44,7 +44,9 @@ sap.ui.define(
         CustomComponent.prototype.getCcuxRouteManager = function () {
             return this._oRouteManager;
         };
-
+        CustomComponent.prototype.getRealDataManager = function () {
+            return this._oRealDataManager;
+        };
         CustomComponent.prototype.getCcuxApp = function () {
             var oRootViewController = this.getAggregation('rootControl').getController();
 
