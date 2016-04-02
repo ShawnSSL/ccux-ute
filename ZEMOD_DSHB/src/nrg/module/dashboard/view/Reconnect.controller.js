@@ -6,14 +6,13 @@ sap.ui.define(
     [
         'nrg/base/view/BaseController',
         'sap/ui/model/Filter',
-        'sap/ui/model/FilterOperator',
-        'nrg/module/dashboard/view/ReconnectPopup'
+        'sap/ui/model/FilterOperator'
     ],
 
-    function (CoreController, Filter, FilterOperator, ReconnectPopup) {
+    function (CoreController, Filter, FilterOperator) {
         'use strict';
 
-        var Controller = CoreController.extend('nrg.module.dashboard.view.Tools');
+        var Controller = CoreController.extend('nrg.module.dashboard.view.Reconnect');
 
         /**********************************************************************************************************************/
         //On Start
@@ -22,18 +21,21 @@ sap.ui.define(
         };
 
         Controller.prototype.onBeforeRendering = function () {
-            var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
+            this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
+            // Get the ABP popup control
+            this._ReconnectControl = this.getView().getParent();
+            var oRouteInfo = this._OwnerComponent.getCcuxRouteManager().getCurrentRouteInfo();
 
             this._bpNum = oRouteInfo.parameters.bpNum;
             this._caNum = oRouteInfo.parameters.caNum;
             this._coNum = oRouteInfo.parameters.coNum;
 
-            this.getView().setModel(this.getOwnerComponent().getModel('comp-dashboard-svcodr'), 'oODataSvc');
+            this.getView().setModel(this._OwnerComponent.getModel('comp-dashboard-svcodr'), 'oODataSvc');
 
             //Model to keep Reconnect info and status
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oReconnectInfo');
 
-
+            this._checkReconnectElgi();
         };
 
         /**********************************************************************************************************************/
@@ -61,24 +63,17 @@ sap.ui.define(
         //Handlers
         /**********************************************************************************************************************/
         Controller.prototype._onReconnectionClick = function () {
-/*            if (!this._oReconnectPopup) {
+            if (!this._oReconnectPopup) {
                 this._oReconnectPopup = ute.ui.main.Popup.create({
 				    content: sap.ui.xmlfragment(this.getView().sId, "nrg.module.dashboard.view.Reconnect", this),
-					title: 'RECONNETION'
+					title: 'RECONNECTION'
 				});
                 this._oReconnectPopup.addStyleClass('nrgDashboard-reconnectionPopup');
 				this.getView().addDependent(this._oReconnectPopup);
             }
 
 
-            this._checkReconnectElgi();*/
-            if (!this.ReconnectPopupControl) {
-                this.ReconnectPopupControl = new ReconnectPopup({ isRetro: true });
-
-                this.ReconnectPopupControl.attachEvent("ReConnectCompleted", function () {}, this);
-                this.getView().addDependent(this.ReconnectPopupControl);
-            }
-            this.ReconnectPopupControl.open();
+            this._checkReconnectElgi();
         };
 
         Controller.prototype._onStandardRecoSelected = function () {
@@ -119,7 +114,7 @@ sap.ui.define(
         };
 
         Controller.prototype._onReconnectCancelClicked = function () {
-            this._oReconnectPopup.close();
+            this._ReconnectControl.close();
         };
 
         /**********************************************************************************************************************/
@@ -185,10 +180,7 @@ sap.ui.define(
             oParameters = {
                 success : function (oData) {
                     if (oData.RElig) {
-                        if (this._oReconnectPopup) {
-                            this._oReconnectPopup.open();
-                            this._retrReconnectInfo();
-                        }
+                        this._retrReconnectInfo();
                     } else {
                         ute.ui.main.Popup.Alert({
                             title: 'Reconnection',
