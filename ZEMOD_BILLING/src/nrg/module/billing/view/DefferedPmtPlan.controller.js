@@ -78,6 +78,7 @@ sap.ui.define(
             this._initScrnControl();
             this._isDppElgble();
             this._retrieveNotification();
+            this._checkPrePay();
         };
 
         Controller.prototype.onAfterRendering = function () {
@@ -87,7 +88,21 @@ sap.ui.define(
             this.getView().byId('nrgBilling-dpp-DppDueDate-id').attachBrowserEvent('select', this._handleDppFirstDueDateChange, this);
         };
 
-
+        Controller.prototype._checkPrePay = function () {
+            var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
+                oBindingInfo,
+                sPath = "/PrepayFlagS('" + this._caNum + "')",
+                that = this;
+            oBindingInfo = {
+                success : function (oData) {
+                }.bind(this),
+                error: function (oError) {
+                }.bind(this)
+            };
+            if (oModel && this._caNum) {
+                oModel.read(sPath, oBindingInfo);
+            }
+        };
 
         /****************************************************************************************************************/
         //Init Functions
@@ -221,7 +236,16 @@ sap.ui.define(
         };
 
         Controller.prototype._onDppOverrideClick = function () {
-            this._selectScrn('StepOne');
+            var oPrePayModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
+                bPrePayFlag = oPrePayModel.getProperty("/PrepayFlagS('" + this._caNum + "')/Prepay") || false,
+                oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            if (bPrePayFlag) {
+                oWebUiManager.notifyWebUi('openIndex', {
+                    LINK_ID: "Z_DPP_CR"
+                });
+            } else {
+                this._selectScrn('StepOne');
+            }
         };
 
         Controller.prototype._onDPPThirdStepSend = function () {

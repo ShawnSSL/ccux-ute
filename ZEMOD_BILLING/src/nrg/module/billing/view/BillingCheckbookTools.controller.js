@@ -32,20 +32,10 @@ sap.ui.define(
             this._bpNum = oRouteInfo.bpNum;
             this._caNum = oRouteInfo.caNum;
             this._coNum = oRouteInfo.coNum;
-            oBindingInfo = {
-                success : function (oData) {
-                    that.getView().bindElement({
-                        model : 'comp-feeAdjs',
-                        path : sPath
-                    });
-                }.bind(this),
-                error: function (oError) {
-                }.bind(this)
-            };
-            if (oModel && this._caNum) {
-                oModel.read(sPath, oBindingInfo);
-            }
-
+            that.getView().bindElement({
+                model : 'comp-feeAdjs',
+                path : sPath
+            });
         };
 
         Controller.prototype._onDunningBtnClicked = function () {
