@@ -35,7 +35,7 @@ sap.ui.define(
 		/* =========================================================== */
         Controller.prototype.onBeforeRendering = function () {
             if ((this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo().parameters) &&  (this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo().parameters.typeV !== "N")) {
-                var oModel,
+                var oModel = this.getOwnerComponent().getModel('comp-campaign'),
                     sCurrentPath,
                     sEligibilityPath,
                     mParameters,
@@ -64,6 +64,7 @@ sap.ui.define(
                         Contract : ""
                     }),
                     bInvoiceFirstCard = true;
+                oModel.refresh(true, true);//If set to true then the model data will be removed/cleared.
                 this._sContract = oRouteInfo.parameters.coNum;
                 this._sBP = oRouteInfo.parameters.bpNum;
                 this._sCA = oRouteInfo.parameters.caNum;
@@ -88,7 +89,6 @@ sap.ui.define(
                 aFilterValues = [this._sContract];
                 aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
                 sCurrentPath = i18NModel.getProperty("nrgCpgChangeOffSet");
-                oModel = this.getOwnerComponent().getModel('comp-campaign');
                 oSelectedButton.addStyleClass("nrgCamOff-btn-selected");
                 // Handler function for tile container
                 fnRecievedHandler = function (oEvent) {
