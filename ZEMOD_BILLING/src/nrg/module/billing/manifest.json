@@ -96,11 +96,11 @@
                 },
                 "billing.PrePayCheckBook": {
                     "pattern": "billing/prepaycheckbook/bp/{bpNum}/ca/{caNum}/co/{coNum}",
-                    "target":["billing.PrePayCheckbook", "dashboard.CustomerDataSummary", "billing.CheckbookTools", "app.Footer"]
+                    "target":["billing.PrePayCheckbook", "dashboard.CustomerDataSummary", "billing.PPCheckbookTools", "app.Footer"]
                 },
                 "billing.PrePayCheckBookNoCo": {
                     "pattern": "billing/prepaycheckbook/bp/{bpNum}/ca/{caNum}",
-                    "target":["billing.PrePayCheckbook", "dashboard.CustomerDataSummary", "billing.CheckbookTools", "app.Footer"]
+                    "target":["billing.PrePayCheckbook", "dashboard.CustomerDataSummary", "billing.PPCheckbookTools", "app.Footer"]
                 },
                 "billing.BillingInfo": {
                     "pattern": "billing/billinginfo/bp/{bpNum}/ca/{caNum}/co/{coNum}",
@@ -167,6 +167,10 @@
                 },
                 "billing.CheckbookTools": {
                     "viewName": "nrg.module.billing.view.BillingCheckbookTools",
+                    "controlId": "idAppTools"
+                },
+                "billing.PPCheckbookTools": {
+                    "viewName": "nrg.module.billing.view.PPCheckbookTools",
                     "controlId": "idAppTools"
                 },
                 "billing.CustomerJourney": {

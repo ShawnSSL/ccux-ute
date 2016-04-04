@@ -215,7 +215,7 @@
                         <l:MatrixLayoutCell class="nrgBilling-cusDataBil-r">
                             <ute:Tag class="nrgBilling-cusDataBil-r-div">
                                 <ute:Tag elem="div" class="nrgBilling-cusDataBil-r-text-disconnect" text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-r-div-DISCON}" />
-
+                                <utmain:Button press="._onReconnectionClick"  text="{comp-i18n-billing>nrgBilling-chkbkTools-Reconnect}"/>
                                 <l:MatrixLayout widths="60%,40%" columns="2">
                                     <l:MatrixLayoutRow>
                                         <l:MatrixLayoutCell>

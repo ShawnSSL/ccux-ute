@@ -9,33 +9,22 @@ sap.ui.define(
         'sap/ui/model/json/JSONModel',
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
-        'nrg/module/billing/view/ABPPopup'
+        'nrg/module/billing/view/ABPPopup',
+        'nrg/module/dashboard/view/ReconnectPopup'
     ],
 
-    function (CoreController, Fragment, JSONModel, Filter, FilterOperator, ABPPopup) {
+    function (CoreController, Fragment, JSONModel, Filter, FilterOperator, ABPPopup, ReconnectPopup) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.billing.view.BillingCheckbookTools');
 
-        Controller.prototype.onInit = function () {
-
-        };
-
         Controller.prototype.onBeforeRendering = function () {
             this.getView().setModel(this.getOwnerComponent().getModel('comp-eligibility'), 'oDataEligSvc');
             // Retrieve routing parameters
-            var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData,
-                oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
-                oBindingInfo,
-                sPath = "/PrepayFlagS('" + this._caNum + "')",
-                that = this;
+            var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData;
             this._bpNum = oRouteInfo.bpNum;
             this._caNum = oRouteInfo.caNum;
             this._coNum = oRouteInfo.coNum;
-            that.getView().bindElement({
-                model : 'comp-feeAdjs',
-                path : sPath
-            });
         };
 
         Controller.prototype._onDunningBtnClicked = function () {
@@ -43,7 +32,15 @@ sap.ui.define(
 
             oWebUiManager.notifyWebUi('openIndex', {LINK_ID: 'Z_DUNH'});
         };
+        Controller.prototype._onReconnectionClick = function () {
+            if (!this.ReconnectPopupControl) {
+                this.ReconnectPopupControl = new ReconnectPopup({ isRetro: true });
 
+                this.ReconnectPopupControl.attachEvent("ReConnectCompleted", function () {}, this);
+                this.getView().addDependent(this.ReconnectPopupControl);
+            }
+            this.ReconnectPopupControl.open();
+        };
         /**
 		 * Handler for Fee Adjustments Button.
 		 *
@@ -95,23 +92,14 @@ sap.ui.define(
                 sPath = '/EligCheckS(\'' + this._coNum + '\')',
                 oModel = this.getView().getModel('oDataEligSvc'),
                 oParameters,
-                that = this,
-                oPrePayModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
-                bPrePayFlag = oPrePayModel.getProperty("/PrepayFlagS('" + this._caNum + "')/Prepay") || false;
+                that = this;
 
             oParameters = {
                 success : function (oData) {
                     if (oData && oData.DPPActv) {
-                        if (bPrePayFlag) {
-                            oWebUiManager.notifyWebUi('openIndex', {
-                                LINK_ID: "Z_DPP_CR"
-                            });
-                        } else {
-                            oWebUiManager.notifyWebUi('openIndex', {
-                                LINK_ID: "Z_DPP"
-                            });
-                        }
-
+                        oWebUiManager.notifyWebUi('openIndex', {
+                            LINK_ID: "Z_DPP"
+                        });
                     } else {
                         that.navTo('billing.DefferedPmtPlan', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
                     }

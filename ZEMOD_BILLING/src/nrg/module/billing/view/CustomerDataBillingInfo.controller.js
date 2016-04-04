@@ -13,17 +13,15 @@ sap.ui.define(
         'nrg/base/type/Price',
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
-        'nrg/module/billing/view/ABPPopup'
+        'nrg/module/billing/view/ABPPopup',
+        'nrg/module/dashboard/view/ReconnectPopup'
     ],
 
-    function (jQuery, Controller, JSONModel, QuickPayControl, Type_Price, Filter, FilterOperator, ABPPopup) {
+    function (jQuery, Controller, JSONModel, QuickPayControl, Type_Price, Filter, FilterOperator, ABPPopup, ReconnectPopup) {
         'use strict';
 
         var CustomController = Controller.extend('nrg.module.billing.view.CustomerDataBillingInfo');
 
-        CustomController.prototype.onInit = function () {
-
-        };
 
         CustomController.prototype.onBeforeRendering = function () {
 
@@ -101,6 +99,15 @@ sap.ui.define(
                     e.preventDefault();
                 }
             });
+        };
+        Controller.prototype._onReconnectionClick = function () {
+            if (!this.ReconnectPopupControl) {
+                this.ReconnectPopupControl = new ReconnectPopup({ isRetro: true });
+
+                this.ReconnectPopupControl.attachEvent("ReConnectCompleted", function () {}, this);
+                this.getView().addDependent(this.ReconnectPopupControl);
+            }
+            this.ReconnectPopupControl.open();
         };
         CustomController.prototype.onAfterRendering = function () {
             this.getOwnerComponent().getCcuxApp().setLayout('FullWidthTool');

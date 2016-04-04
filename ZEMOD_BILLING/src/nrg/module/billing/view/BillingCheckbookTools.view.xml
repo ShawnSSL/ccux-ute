@@ -21,14 +21,12 @@
             <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
                 buttonType="SpecialNav" width="220px" enabled="true"
                 press="._onAvgBillBtnClicked"
-                visible="{= ${comp-feeAdjs>Prepay} ? false : true }"
                 text="{comp-i18n-billing>nrgBilling-chkbkTools-AvgBill-Btn}">
             </ute:Button>
              <!-- Balance Bill Re-Average Detail -->
             <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
                 buttonType="SpecialNav" width="220px" enabled="true"
                 press="._onRetroAverageBillingClick"
-                visible="{= ${comp-feeAdjs>Prepay} ? false : true }"
                 text="{comp-i18n-billing>nrgBilling-chkbkTools-RETRO_AVG}">
             </ute:Button>
             <!-- Deffered Payment -->
@@ -41,7 +39,6 @@
             <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
                 buttonType="SpecialNav" width="220px" enabled="true"
                 press="._onExtnBtnClicked"
-                visible="{= ${comp-feeAdjs>Prepay} ? false : true }"
                 text="{comp-i18n-billing>nrgBilling-chkbkTools-Extn-Btn}">
             </ute:Button>
             <!-- Dunning History Transaction Launch -->
@@ -49,6 +46,12 @@
                 buttonType="SpecialNav" width="220px" enabled="true"
                 press="._onDunningBtnClicked"
                 text="{comp-i18n-billing>nrgBilling-chkbkTools-Dunning-Btn}">
+            </ute:Button>
+            <!-- Reconnect Popup link -->
+            <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
+                buttonType="SpecialNav" width="220px" enabled="true"
+                press="._onReconnectionClick"
+                text="{comp-i18n-billing>nrgBilling-chkbkTools-Reconnect}">
             </ute:Button>
         </ute:Tag>
     </ute:Tag>

@@ -89,6 +89,7 @@
                     <ute:Tag class="nrgBilling-dlbz-chkLabel" text="{comp-i18n-billing>nrgBilling-dpp-PlanZroDownPmt}"/>
                 </ute:Tag>
                 <utmain:Button class="nrgBilling-dPmtPln-lftArea-botm-btn" text="{comp-i18n-billing>nrgBilling-dpp-OK}" press="._onDppSetUpOk"/>
+                <utmain:Button class="nrgBilling-dPmtPln-lftArea-botm-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnCncl}" press="._onDppConfCancelClick"/>
             </ute:Tag>
         </ute:Tag>
         <!-------------------------------------------------------------------------Step 2------------------------------------------------------------------------------>
@@ -164,7 +165,7 @@
                  </utmain:content>
             </utmain:Infoline>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm">
-                <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox">
+                <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox" visible="{= ${oDppStepOnePost>/ZeroDwnPay} ? false : true }">
                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox-icon"><ute:Tag text="{comp-i18n-billing>nrgBilling-dpp-info-i}"/></ute:Tag>
                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox-txt">
                         <ute:Tag visible="{= ${oDppStepOnePost>/ZeroDwnPay} ? false : true }"
