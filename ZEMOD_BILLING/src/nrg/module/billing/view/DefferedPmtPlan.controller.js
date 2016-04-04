@@ -17,10 +17,6 @@ sap.ui.define(
 
         var Controller = CoreController.extend('nrg.module.billing.view.DefferedPmtPlan');
 
-        Controller.prototype.onInit = function () {
-        };
-
-
         Controller.prototype.onBeforeRendering = function () {
             var oRouteInfo = this.getOwnerComponent().getCcuxContextManager().getContext().oData;
             this._bpNum = oRouteInfo.bpNum;
@@ -54,7 +50,8 @@ sap.ui.define(
             this.getView().setModel(new JSONModel(), 'oDppStepTwoConfirmdData');
             this.getView().setModel(new JSONModel({
                 GrantCL : "",
-                DeniedCL : ""
+                DeniedCL : "",
+                prepay : false
             }), 'oLocalModel');
             this.getView().setModel(new sap.ui.model.json.JSONModel({
                 current : false,
@@ -92,9 +89,13 @@ sap.ui.define(
             var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
                 oBindingInfo,
                 sPath = "/PrepayFlagS('" + this._caNum + "')",
-                that = this;
+                that = this,
+                oLocalModel = this.getView().getModel('oLocalModel');
             oBindingInfo = {
                 success : function (oData) {
+                    if (oData && oData.Prepay) {
+                        oLocalModel.setProperty("/prepay", true);
+                    }
                 }.bind(this),
                 error: function (oError) {
                 }.bind(this)
@@ -236,8 +237,8 @@ sap.ui.define(
         };
 
         Controller.prototype._onDppOverrideClick = function () {
-            var oPrePayModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
-                bPrePayFlag = oPrePayModel.getProperty("/PrepayFlagS('" + this._caNum + "')/Prepay") || false,
+            var oLocalModel = this.getView().getModel('oLocalModel'),
+                bPrePayFlag = oLocalModel.getProperty("/prepay"),
                 oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
             if (bPrePayFlag) {
                 oWebUiManager.notifyWebUi('openIndex', {
@@ -389,12 +390,12 @@ sap.ui.define(
             for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
                 if (oDppConfs.getProperty('/results/' + iCount + '/Checked')) {
                     if (!bDifference) {
-                        oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', fDividedAmount);
+                        oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', fDividedAmount.toFixed(2));
                     } else {
                         if (iAssignCount === iSelNum) {
                             oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', (parseFloat(fDividedAmount) + parseFloat(fDifferenceAmount)).toFixed(2));
                         } else {
-                            oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', fDividedAmount);
+                            oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', fDividedAmount.toFixed(2));
                         }
                         iAssignCount = iAssignCount + 1;
                     }
@@ -420,14 +421,17 @@ sap.ui.define(
             var sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'>" + this.sDisCloseMessage + "</div>",
                 oText = new sap.ui.core.HTML({content: sMessage}),
                 that = this,
-                oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {that._AlertDialog.close(); that._postDPPConfRequest(); }}),
-                oCancelButton = new ute.ui.main.Button({text: 'CANCEL', press: function () {that._AlertDialog.close(); }}),
+                AlertDialog,
+                oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {AlertDialog.close(); that._postDPPConfRequest(); }}),
+                oCancelButton = new ute.ui.main.Button({text: 'CANCEL', press: function () {AlertDialog.close(); }}),
                 oTag = new ute.ui.commons.Tag(),
                 oDueDate,
                 oDppConfs = this.getView().getModel('oDppConfs'),
+                oSetUpsPost = this.getView().getModel('oDppStepOnePost'),
                 fDifference = oDppConfs.getProperty('/results/0/DiffTot'),
                 iCount = 0,
-                sTemp;
+                sTemp,
+                bzeroDownPay = false;
 
             if (!((!isNaN(parseFloat(fDifference)) && isFinite(fDifference)) && (parseFloat(fDifference) === 0.00))) {
                 ute.ui.main.Popup.Alert({
@@ -436,8 +440,9 @@ sap.ui.define(
                 });
                 return;
             }
+            bzeroDownPay = oSetUpsPost.getProperty("/ZeroDwnPay") || false;
             oDueDate = this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue();
-            if (!oDueDate) {
+            if (!oDueDate && !bzeroDownPay) {
                 ute.ui.main.Popup.Alert({
                     title: 'DPP',
                     message: 'Please enter Down Payment Due Date.'
@@ -466,13 +471,11 @@ sap.ui.define(
             oTag.addContent(oText);
             oTag.addContent(oOkButton);
             oTag.addContent(oCancelButton);
-            if (that._AlertDialog === undefined) {
-                that._AlertDialog = new ute.ui.main.Popup.create({
-                    title: "DISCLOSURE",
-                    content: oTag
-                });
-            }
-            that._AlertDialog.open();
+            AlertDialog = new ute.ui.main.Popup.create({
+                title: "DISCLOSURE",
+                content: oTag
+            });
+            AlertDialog.open();
 
         };
 
@@ -808,17 +811,23 @@ sap.ui.define(
             oConfPost.setProperty('/COpupw', sCOpupw);
             oConfPost.setProperty('/COpupk', sCOpupk);
             oConfPost.setProperty('/COpupz', sCOpupz);
-
-
-
             oParameters = {
                 merge: false,
                 success : function (oData) {
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
-                        message: oData.Message
+                    var sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'>" + oData.Message + "</div>",
+                        oText = new sap.ui.core.HTML({content: sMessage}),
+                        oAlert_Dialog,
+                        oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {oAlert_Dialog.close(); }}),
+                        oTag = new ute.ui.commons.Tag();
+                    oOkButton.addStyleClass("nrgBillingDiscButton");
+                    oTag.addContent(oText);
+                    oTag.addContent(oOkButton);
+                    oAlert_Dialog = new ute.ui.main.Popup.create({
+                        title: "DISCLOSURE",
+                        content: oTag
                     });
+                    oAlert_Dialog.open();
                     that._selectScrn('StepThree');
                 }.bind(this),
                 error: function (oError) {
@@ -1321,7 +1330,8 @@ sap.ui.define(
                     } else {
                         ute.ui.main.Popup.Alert({
                             title: 'DEFFERED PAYMENT PLAN',
-                            message: 'Correspondence Successfully Sent.'
+                            message: 'Correspondence Successfully Sent.',
+                            callback: callQuickPay
                         });
                     }
                 }.bind(this),

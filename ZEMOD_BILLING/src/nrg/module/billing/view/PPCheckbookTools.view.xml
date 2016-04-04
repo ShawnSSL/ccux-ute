@@ -1,0 +1,35 @@
+<mvc:View
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ute="ute.ui.commons"
+    xmlns:mvc="sap.ui.core.mvc"
+    controllerName="nrg.module.billing.view.PPCheckbookTools"
+    height="100%"
+    width="100%"
+    displayBlock="true">
+
+    <ute:Tag class="nrgAppMain-generalContent nrgBilling-blChkBkTools">
+        <ute:Tag class="nrgBilling-blChkBkTools-Title"
+                 text="{comp-i18n-billing>nrgBilling-chkbkTools-Title}" />
+        <ute:Tag class="nrgBilling-blChkBkTools-ctnt">
+            <!-- Free Adjustments -->
+            <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
+                buttonType="SpecialNav" width="220px" enabled="true"
+                text="{comp-i18n-billing>nrgBilling-chkbkTools-FreeAdj-Btn}"
+                press="._onFeeAdjBtnClicked">
+            </ute:Button>
+            <!-- Deffered Payment -->
+            <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
+                buttonType="SpecialNav" width="220px" enabled="true"
+                press="._onDppBtnClicked"
+                text="{comp-i18n-billing>nrgBilling-chkbkTools-Dpp-Btn}">
+            </ute:Button>
+            <!-- Dunning History Transaction Launch -->
+            <ute:Button class="nrgBilling-blChkBkTools-ctnt-btn"
+                buttonType="SpecialNav" width="220px" enabled="true"
+                press="._onDunningBtnClicked"
+                text="{comp-i18n-billing>nrgBilling-chkbkTools-Dunning-Btn}">
+            </ute:Button>
+        </ute:Tag>
+    </ute:Tag>
+
+</mvc:View>
