@@ -17,8 +17,6 @@ sap.ui.define(
         /**********************************************************************************************************************/
         //On Start
         /**********************************************************************************************************************/
-        Controller.prototype.onInit = function () {
-        };
 
         Controller.prototype.onBeforeRendering = function () {
             this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
@@ -34,7 +32,7 @@ sap.ui.define(
 
             //Model to keep Reconnect info and status
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oReconnectInfo');
-
+            this._OwnerComponent.getCcuxApp().setOccupied(true);
             this._checkReconnectElgi();
         };
 
@@ -80,7 +78,7 @@ sap.ui.define(
             var oReconnectInfo = this.getView().getModel('oReconnectInfo');
 
             if (oReconnectInfo.oData.results.length > 0) {
-                oReconnectInfo.setProperty('/results/0/RecoType', 'S');
+                oReconnectInfo.setProperty('/RecoType', 'S');
             }
         };
 
@@ -88,7 +86,7 @@ sap.ui.define(
             var oReconnectInfo = this.getView().getModel('oReconnectInfo');
 
             if (oReconnectInfo.oData.results.length > 0) {
-                oReconnectInfo.setProperty('/results/0/RecoType', 'E');
+                oReconnectInfo.setProperty('/RecoType', 'E');
             }
         };
 
@@ -96,7 +94,7 @@ sap.ui.define(
             var oReconnectInfo = this.getView().getModel('oReconnectInfo');
 
             if (oReconnectInfo.oData.results.length > 0) {
-                oReconnectInfo.setProperty('/results/0/AccMeter', 'X');
+                oReconnectInfo.setProperty('/AccMeter', 'X');
             }
         };
 
@@ -104,7 +102,7 @@ sap.ui.define(
             var oReconnectInfo = this.getView().getModel('oReconnectInfo');
 
             if (oReconnectInfo.oData.results.length > 0) {
-                oReconnectInfo.setProperty('/results/0/AccMeter', '');
+                oReconnectInfo.setProperty('/AccMeter', '');
             }
         };
 
@@ -123,17 +121,17 @@ sap.ui.define(
         Controller.prototype._confirmReconnectInput = function () {
             var oReconnectInfo = this.getView().getModel('oReconnectInfo');
 
-            if (!oReconnectInfo.getProperty('/results/0/ReqName')) {
+            if (!oReconnectInfo.getProperty('/ReqName')) {
                 ute.ui.main.Popup.Alert({
                     title: 'Reconnection -- Confirm',
                     message: 'Please input requestor\'s name.'
                 });
-            } else if (!oReconnectInfo.getProperty('/results/0/ReqNumber')) {
+            } else if (!oReconnectInfo.getProperty('/ReqNumber')) {
                 ute.ui.main.Popup.Alert({
                     title: 'Reconnection -- Confirm',
                     message: 'Please input requestor\'s number.'
                 });
-            } else if (!oReconnectInfo.getProperty('/results/0/AccMeter') && !oReconnectInfo.getProperty('/results/0/AccComment')) {
+            } else if (!oReconnectInfo.getProperty('/AccMeter') && !oReconnectInfo.getProperty('/AccComment')) {
                 ute.ui.main.Popup.Alert({
                     title: 'Reconnection -- Confirm',
                     message: 'Please input meter access comment.'
@@ -156,12 +154,13 @@ sap.ui.define(
         };
 
         Controller.prototype._confirmPowerOnExpect = function () {
+            var that = this;
             ute.ui.main.Popup.Confirm({
                 title: 'Reconnection -- Confirm',
                 message: 'Please confirm that you have communicated the Power-on expectations to the customer.',
                 callback: function (sAction) {
                     if (sAction === 'Yes') {
-                        this._updateRecconectInfo();
+                        that._updateRecconectInfo();
                     }
                 }
             });
@@ -173,7 +172,8 @@ sap.ui.define(
         Controller.prototype._checkReconnectElgi = function () {
             var sPath,
                 oParameters,
-                oModel = this.getView().getModel('oODataSvc');
+                oModel = this.getView().getModel('oODataSvc'),
+                that = this;
 
             sPath = '/RecoEligS(\'' + this._caNum + '\')';
 
@@ -182,14 +182,17 @@ sap.ui.define(
                     if (oData.RElig) {
                         this._retrReconnectInfo();
                     } else {
+                        that._OwnerComponent.getCcuxApp().setOccupied(false);
                         ute.ui.main.Popup.Alert({
                             title: 'Reconnection',
                             message: oData.Message
                         });
+                        that._ReconnectControl.close();
                         return false;
                     }
                 }.bind(this),
                 error: function (oError) {
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Reconnection',
                         message: 'Connection error, reconnection eligible call failed.'
@@ -207,7 +210,8 @@ sap.ui.define(
             var sPath,
                 aFilters = [],
                 oParameters,
-                oModel = this.getView().getModel('oODataSvc');
+                oModel = this.getView().getModel('oODataSvc'),
+                that = this;
 
 
             aFilters.push(new Filter({ path: 'PartnerID', operator: FilterOperator.EQ, value1: this._bpNum}));
@@ -218,11 +222,14 @@ sap.ui.define(
             oParameters = {
                 filters: aFilters,
                 success : function (oData) {
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
                     if (oData) {
+
                         this.getView().getModel('oReconnectInfo').setData(oData);
                     }
                 }.bind(this),
                 error: function (oError) {
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
                 }.bind(this)
             };
 
@@ -236,13 +243,15 @@ sap.ui.define(
                 oParameters,
                 oModel = this.getView().getModel('oODataSvc'),
                 oReconnectInfo = this.getView().getModel('oReconnectInfo'),
-                sMessage;
+                sMessage,
+                that = this;
 
             sPath = '/Reconnects';
 
             oParameters = {
                 merge: false,
                 success : function (oData) {
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
                     if (oData) {
                         sMessage = 'Reconnect Notification ' + oData.RecoNumber + ' created for contract ' + oData.VERTRAG;
                         ute.ui.main.Popup.Alert({
@@ -250,22 +259,23 @@ sap.ui.define(
                             message: sMessage
                         });
                     }
+                    that._ReconnectControl.close();
                 }.bind(this),
                 error: function (oError) {
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Reconnection',
                         message: 'Recoonection Service Order Request Failed'
                     });
+                    that._ReconnectControl.close();
                 }.bind(this)
             };
 
             if (oModel) {
-                oModel.create(sPath, oReconnectInfo.getProperty('/results/0/'), oParameters);
+                that._OwnerComponent.getCcuxApp().setOccupied(true);
+                oModel.create(sPath, oReconnectInfo.getData(), oParameters);
             }
         };
-
-
-
         return Controller;
     }
 );

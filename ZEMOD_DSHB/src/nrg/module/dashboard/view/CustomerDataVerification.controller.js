@@ -1338,8 +1338,11 @@ sap.ui.define(
         /**********************************************/
 
         Controller.prototype._onCaSelect = function (oEvent) {
-            var sSelectedKey = oEvent.getParameters().selectedKey,
-                iSelectedIndex = parseInt(sSelectedKey, 10),
+            var sSelectedKey = oEvent.getParameters().selectedKey;
+            this._onCaSelected(sSelectedKey);
+        };
+        Controller.prototype._onCaSelected = function (sSelectedKey) {
+            var iSelectedIndex = parseInt(sSelectedKey, 10),
                 coRetrieveComplete = false,
                 checkComplete;
 
@@ -1373,7 +1376,6 @@ sap.ui.define(
                 }
             }.bind(this), 100);
         };
-
         Controller.prototype._onCaChange = function (iNewBuagIndex) {
             var eventBus = sap.ui.getCore().getEventBus(),
                 oPayload = {iIndex: iNewBuagIndex};
@@ -1630,7 +1632,115 @@ sap.ui.define(
             return sTemp;
 
         };
+        Controller.prototype._onSelectAllContracts = function () {
+            var oModel = this.getOwnerComponent().getModel('comp-dashboard'),
+                sPath,
+                mParameters,
+                oDashboardCoTable,
+                aFilters,
+                aFilterIds,
+                aFilterValues,
+                oDashboardCoTempl,
+                fnRecievedHandler,
+                that = this;
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            aFilterIds = ["BP"];
+            aFilterValues = ['2473499'];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            if (!this._oDialogFragment) {
+                this._oDialogFragment = sap.ui.xmlfragment("Contracts", "nrg.module.dashboard.view.ContractsPopup", this);
+            }
+            if (this._oContractsDialog === undefined) {
+                this._oContractsDialog = new ute.ui.main.Popup.create({
+                    title: 'Contracts',
+                    content: this._oDialogFragment
+                });
+            }
+            sPath = "/CaCoS";
+            oDashboardCoTable = sap.ui.core.Fragment.byId("Contracts", "idnrgdashCoTable");
+            oDashboardCoTempl = sap.ui.core.Fragment.byId("Contracts", "idnrgdashCoTemp");
+            // Function received handler is used to update the view with first History campaign.---start
+            fnRecievedHandler = function () {
+                var oTableBinding = oDashboardCoTable.getBinding("rows");
+                that._oContractsDialog.open();
+                that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                if (oTableBinding) {
+                    oTableBinding.detachDataReceived(fnRecievedHandler);
+                }
+            };
+            oDashboardCoTable.setModel(oModel, 'comp-dashboard');
+            mParameters = {
+                model : 'comp-dashboard',
+                path : sPath,
+                filters : aFilters,
+                template : oDashboardCoTempl,
+                events: {dataReceived : fnRecievedHandler}
+            };
+            //this.getView().addDependent(this._oContractsDialog);
+            //to get access to the global model
+            oDashboardCoTable.bindRows(mParameters);
+        };
+       /**
+		 * Assign the filter objects based on the input selection
+		 *
+		 * @function
+		 * @param {Array} aFilterIds to be used as sPath for Filters
+         * @param {Array} aFilterValues for each sPath
+		 * @private
+		 */
+        Controller.prototype._createSearchFilterObject = function (aFilterIds, aFilterValues) {
+            var aFilters = [],
+                iCount;
 
+            for (iCount = 0; iCount < aFilterIds.length; iCount = iCount + 1) {
+                aFilters.push(new Filter(aFilterIds[iCount], FilterOperator.EQ, aFilterValues[iCount], ""));
+            }
+            return aFilters;
+        };
+        /**
+		 * Handle when user clicked on Cancelling of Select contacts
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.SelectCO = function (oEvent) {
+            var oModel = this.getOwnerComponent().getModel('comp-dashboard'),
+                oContext,
+                sCA,
+                sCO;
+            if (this._aCOSelPaths) {
+                oContext = oModel.getContext(this._aCOSelPaths);
+                sCA = oContext.getProperty("CA");
+                sCO = oContext.getProperty("Contract");
+                this._oContractsDialog.close();
+            } else {
+                ute.ui.main.Popup.Alert({
+                    title: 'Information',
+                    message: 'Please select atleast one Contract'
+                });
+                return;
+            }
+
+        };
+        /**
+		 * Handle when user clicked on Cancelling of Select contacts
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onSelect = function (oEvent) {
+            this._aCOSelPaths = oEvent.getSource().getParent().getBindingContext("comp-dashboard").getPath();
+        };
+
+        /**
+		 * Handle when user clicked on Cancelling of Select contacts
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onCancelCO = function (oEvent) {
+            this._oContractsDialog.close();
+        };
         return Controller;
     }
 );

@@ -1,0 +1,89 @@
+<core:FragmentDefinition
+    xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:c="sap.ui.commons"
+          xmlns:core="sap.ui.core"
+          xmlns:u="ute.ui.commons"
+          xmlns:um="ute.ui.main">
+<u:Tag class="nrgdashCo-root">
+    <u:Table width="auto"
+             id="idnrgdashCoTable"
+             class="nrgCamOvr-left nrgdashCo-top nrgdashCo-pendTable">
+                    <u:columns>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="Select"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="Contract Account"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="Contract"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="Status"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="Move In Date"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="Move Out Date"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="House"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="Street"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="Apt"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="City"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="State"/>
+                        </u:TableColumn>
+                        <u:TableColumn class="nrgdashCo-th">
+                            <c:Label text="Zip"/>
+                        </u:TableColumn>
+                    </u:columns>
+            </u:Table>
+          <u:Tag>
+            <u:Tag class="nrgdashCo-top">
+                <u:Button
+                    text="Ok"
+                    enabled="true"
+                    press=".SelectCO">
+                </u:Button>
+                <u:Button
+                    text="Cancel"
+                    enabled="true"
+                    press=".onCancelCO">
+                </u:Button>
+            </u:Tag>
+          </u:Tag>
+        <!-- Place holder for templates to reuse for Bind Aggregation method. Below will be always Display:none -->
+        <u:Tag visible="false">
+             <u:Table>
+                    <u:rows>
+                    <u:TableRow id="idnrgdashCoTemp">
+                        <um:RadioButton group="nrgCO" select=".onSelect"/>
+                        <c:Label text="{comp-dashboard>CA}"/>
+                        <c:Label text="{comp-dashboard>Contract}"/>
+                        <c:Label text="{comp-dashboard>Status}"/>
+                        <c:Label text="{path: 'comp-dashboard>MviDate',
+                                       type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                        <c:Label text="{path: 'comp-dashboard>MvoDate',
+                                       type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                        <c:Label text="{comp-dashboard>House}"/>
+                        <c:Label text="{comp-dashboard>Street}"/>
+                        <c:Label text="{comp-dashboard>Apt}"/>
+                        <c:Label text="{comp-dashboard>City}"/>
+                        <c:Label text="{comp-dashboard>State}"/>
+                        <c:Label text="{comp-dashboard>ZIP}"/>
+                    </u:TableRow>
+                </u:rows>
+                </u:Table>
+        </u:Tag>
+        <!-- Place holder for templates to reuse for Bind Aggregation method. Below will be always Display:none -->
+</u:Tag>
+</core:FragmentDefinition>

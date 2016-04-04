@@ -12,7 +12,7 @@ sap.ui.define(
 
         /*------------------------------------- Control for Reconnect Popup --------------------------------------*/
 
-        var ABPPopup = Control.extend('nrg.module.dashboard.view.ReconnectPopup', {
+        var ReconnectPopup = Control.extend('nrg.module.dashboard.view.ReconnectPopup', {
             metadata: {
                 properties: {
                     title: { type: 'string', defaultValue: null },
@@ -23,7 +23,7 @@ sap.ui.define(
 
         /*-------------------------------------------- Basic Popup Configuration --------------------------------------------*/
 
-        ABPPopup.prototype.init = function () {
+        ReconnectPopup.prototype.init = function () {
             this._oReconnect = ute.ui.main.Popup.create('nrgReconnectPopup', {
                 title: "RECONNETION",
                 close: this._onPopupClosed
@@ -35,7 +35,7 @@ sap.ui.define(
 
         /*----------------------------------------------------- Methods -----------------------------------------------------*/
 
-        ABPPopup.prototype.open = function () {
+        ReconnectPopup.prototype.open = function () {
             if (!this._oReconnect.getContent().length) {
                 var oReconnectView = sap.ui.view({
                     type: sap.ui.core.mvc.ViewType.XML,
@@ -48,11 +48,11 @@ sap.ui.define(
             return this;
         };
 
-        ABPPopup.prototype._onPopupClosed = function (oEvent) {
+        ReconnectPopup.prototype._onPopupClosed = function (oEvent) {
             this.getParent().fireEvent("ReConnectCompleted");
         };
 
-        return ABPPopup;
+        return ReconnectPopup;
     },
 
     true

@@ -610,6 +610,12 @@
 
             <!--Area Right (Only 2 buttons )-->
             <ute:Tag class="nrgDashboard-cusDataVerify-right">
+               <ute:Tag class="nrgDashboard-cusDataVerify-right-wrap">
+                    <utmain:Button class="nrgDashboard-cusDataVerify-btn"
+                        press="._onSelectAllContracts"
+                        design="None"
+                        text="{comp-i18n-dashboard>nrgDashboardCusDatVrf_BtnSelect}"/>
+               </ute:Tag>
                 <ute:Tag class="nrgDashboard-cusDataVerify-right-wrap">
                     <utmain:Button id="id_confmBtn" visible="true"
                         class="nrgDashboard-cusDataVerify-right-btn"
