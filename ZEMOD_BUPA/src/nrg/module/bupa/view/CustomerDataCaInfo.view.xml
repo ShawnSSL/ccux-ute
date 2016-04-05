@@ -51,7 +51,7 @@
 
                 <ute:Tag elem="div"
                          class="nrgBupa-cusDataCaInfo-checkBox-div">
-                    <utmain:Checkbox enabled="true" checked="{oCaInfoConfig>/bAllBuagSelected}"
+                    <utmain:Checkbox enabled="{oCaInfoConfig>/bAllBuagenabled}" checked="{oCaInfoConfig>/bAllBuagSelected}"
                                      select="._onAllBuagsSelected"
                                      class="nrgBupa-cusDataCaInfo-chb" />
                     <utmain:Label
@@ -501,8 +501,8 @@
                         <l:MatrixLayoutRow>
                             <l:cells>
                                 <!--Area Left-->
-                                <l:MatrixLayoutCell class="nrgBupa-cusDataCaInfo-l">
-<!--                                    <l:MatrixLayout widths="50%,50%" columns="2">
+ <!--                               <l:MatrixLayoutCell class="nrgBupa-cusDataCaInfo-l">
+                                    <l:MatrixLayout widths="50%,50%" columns="2">
                                         <l:MatrixLayoutRow>
                                             <l:MatrixLayoutCell>
                                                 <ute:Tag elem="div"
@@ -516,8 +516,8 @@
                                                                value="{path: 'oDataBuagAddrDetails>/TempAddrInfo/ValidFrom', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
-                                    </l:MatrixLayout>-->
-                                </l:MatrixLayoutCell>
+                                    </l:MatrixLayout>
+                                </l:MatrixLayoutCell>-->
 
                                 <!--Area middle-->
                                 <l:MatrixLayoutCell class="nrgBupa-cusDataCaInfo-l">

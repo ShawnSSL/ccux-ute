@@ -49,6 +49,13 @@ sap.ui.define(
             //    this._beforeOpenEditAddrDialogue = false;
             //}
         };
+        /* =========================================================== */
+		/* lifecycle method- After Rendering                          */
+		/* =========================================================== */
+        Controller.prototype.onAfterRendering = function () {
+            // Update Footer
+            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+        };
         Controller.prototype._initCaInfoConfigModel = function () {
             var configModel = this.getView().getModel('oCaInfoConfig');
             configModel.setProperty('/mailAddrUpdateVisible', true);
@@ -61,6 +68,7 @@ sap.ui.define(
             configModel.setProperty('/tempAddrEditable', false);
 
             configModel.setProperty('/bAllBuagSelected', false);
+            configModel.setProperty('/bAllBuagenabled', false);
         };
 
         Controller.prototype._initDataModel = function () {
@@ -126,6 +134,8 @@ sap.ui.define(
                             }
                             if (oData.results[0].TempAddrYes === 'X') {
                                 configModel.setProperty('/tempAddrAddnewVisible', true);
+                                configModel.setProperty('/mailAddrUpdateVisible', false);
+                                configModel.setProperty('/mailAddrAddnewVisible', false);
                             }
                             this.getView().getModel('oDataBuagAddrDetails').setData(oData.results[0]);
                             this.oDataBuagAddrDetailsBak = jQuery.extend(true, {}, oData.results[0]);
@@ -290,6 +300,8 @@ sap.ui.define(
 
                     //this._retrBuag(this.getView().getModel('oDtaVrfyBuags').getProperty('/PartnerID'), this.getView().getModel('oAllBuags').getProperty('/selectedKey'));
                     this._oMailEditPopup.close();
+                    this._retrAllBuags(this._bpNum);
+                    this._retrBuagAddrDetail(this._caNum);
                 }.bind(this),
                 error: function (oError) {
                     sap.ui.commons.MessageBox.alert("Update Failed");
@@ -563,6 +575,7 @@ sap.ui.define(
             configModel.setProperty('/mailAddrSaveVisible', true);
             configModel.setProperty('/mailAddrEditable', true);
             configModel.setProperty('/mailAddrAddnewVisible', false);
+            configModel.setProperty('/bAllBuagenabled', true);
         };
 
         Controller.prototype.onMailAddrAddnew = function () {
@@ -574,6 +587,7 @@ sap.ui.define(
             configModel.setProperty('/mailAddrUpdateVisible', false);
             configModel.setProperty('/mailAddrSaveVisible', true);
             configModel.setProperty('/mailAddrEditable', true);
+            configModel.setProperty('/bAllBuagenabled', true);
 
             addrModel.setProperty('/FixAddrInfo/PoBox', '');
             addrModel.setProperty('/FixAddrInfo/Street', '');
@@ -596,6 +610,7 @@ sap.ui.define(
             configModel.setProperty('/mailAddrSaveVisible', false);
             configModel.setProperty('/mailAddrEditable', false);
             configModel.setProperty('/mailAddrAddnewVisible', true);
+            configModel.setProperty('/bAllBuagenabled', false);
 
             addrModel.setData(jQuery.extend(true, {}, this.oDataBuagAddrDetailsBak));
         };

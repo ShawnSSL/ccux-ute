@@ -459,7 +459,9 @@
                                 <utmain:Label  labelFor="mail_FixedAddr"
                                     text="{comp-i18n-dashboard>nrgDashboardCusDatVrf_FAddr}"
                                     class="nrgDashboard-cusDataVerify-middle-mailAddrLabel"/>
-                                <ute:Tag id="mail_FixedAddr" class="nrgDashboard-cusDataVerify-middle-address">
+
+                                <ute:Tag id="mail_FixedAddr" class="nrgDashboard-cusDataVerify-middle-address"
+                                   visible="{= ${oDtaVrfyMailingTempAddr>/TempAddrInfo/ShortForm} ? false : true }">
                                     <utmain:Button  design="None"
                                         class="nrgDashboard-cusDataVerify-middle-addrBtn"
                                         text="{oDtaVrfyMailingTempAddr>/FixAddrInfo/ShortForm}"
@@ -478,6 +480,8 @@
                                         class="nrgDashboard-cusDataVerify-middle-addrBtn"
                                         text="{oDtaVrfyMailingTempAddr>/TempAddrInfo/ShortForm}"
                                         press="._onEditTempAddrClick"/>
+                                <ute:Tag class="nrgDashboard-cusDataVerify-middle-addrBtn-vt" text="Valid to {path: 'oDtaVrfyMailingTempAddr>/TempAddrInfo/ValidTo', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"
+                                         visible="{= ${oDtaVrfyMailingTempAddr>/TempAddrInfo/ShortForm} ? true : false }"/>
                                 </ute:Tag>
                             </ute:Tag>
                         </ute:Tag>
