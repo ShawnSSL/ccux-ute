@@ -122,7 +122,8 @@
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i2">
                                 <ute:Tag elem="span" text="$"/>
-                                <ute:Textfield fieldType="Noborder" width="100px" value="{oDppConfs>ConfirmdItems/Amount}"
+                                <ute:Textfield fieldType="Noborder" width="100px" value="{path: 'oDppConfs>ConfirmdItems/Amount', type: 'sap.ui.model.type.Float',
+                                               formatOptions: { minFractionDigits: '2', maxFractionDigits: '2' }}"
                                                change="._onStepTwoInstlChange" enterKeyPress="_onStepTwoInstlChange" liveChange="_onStepTwoInstlChange"/>
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3" text="{path: 'oDppConfs>ConfirmdItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
@@ -165,17 +166,15 @@
                  </utmain:content>
             </utmain:Infoline>
             <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm">
-                <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox" visible="{= ${oDppStepOnePost>/ZeroDwnPay} ? false : true }">
+                <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox">
                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox-icon"><ute:Tag text="{comp-i18n-billing>nrgBilling-dpp-info-i}"/></ute:Tag>
                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoBox-txt">
-                        <ute:Tag visible="{= ${oDppStepOnePost>/ZeroDwnPay} ? false : true }"
-                                 elem="span" text="{comp-i18n-billing>nrgBilling-dpp-info-first-zroDwn} "/>
+                        <ute:Tag visible="{= ${oDppStepOnePost>/ZeroDwnPay} ? false : true }" elem="span" text="{comp-i18n-billing>nrgBilling-dpp-info-first-zroDwn} "/>
                         <ute:Tag elem="span" text="{comp-i18n-billing>nrgBilling-dpp-info-first} "/>
                         <ute:Tag elem="span" text="{path: 'oDppConfs>/results/0/ConfirmdItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                         <ute:Tag elem="span" text="{comp-i18n-billing>nrgBilling-dpp-info-second} "/>
-                        <ute:Tag elem="span" text="{oDppStepOnePost>/InstlmntNo} "/>
+                        <ute:Tag elem="span" text="{parts:[{path: 'oDppStepOnePost>/InstlmntNo'}, {path: 'oDppStepOnePost>/ZeroDwnPay'}], formatter:'._formatInstalments'}"/>
                         <ute:Tag elem="span" text=" {comp-i18n-billing>nrgBilling-dpp-info-third}"/>
-
                     </ute:Tag>
                 </ute:Tag>
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-infoSum">

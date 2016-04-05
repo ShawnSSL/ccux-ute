@@ -374,9 +374,9 @@ sap.ui.define(
 
             // find out the value to distribute amount selected items.
             if (iSelNum) {
-                fDividedAmount = (fTotalAmount - fNonSelSum) / iSelNum;
+                fDividedAmount = (parseFloat(fTotalAmount) - parseFloat(fNonSelSum)) / iSelNum;
                 if (fDividedAmount) {
-                    fDividedAmount = fDividedAmount.toFixed(2);
+                    fDividedAmount = parseFloat(fDividedAmount).toFixed(2);
                 }
             }
             // check whether distribution is totaled to right total
@@ -390,16 +390,15 @@ sap.ui.define(
             for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
                 if (oDppConfs.getProperty('/results/' + iCount + '/Checked')) {
                     if (!bDifference) {
-                        oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', fDividedAmount.toFixed(2));
+                        oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', parseFloat(fDividedAmount).toFixed(2));
                     } else {
                         if (iAssignCount === iSelNum) {
                             oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', (parseFloat(fDividedAmount) + parseFloat(fDifferenceAmount)).toFixed(2));
                         } else {
-                            oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', fDividedAmount.toFixed(2));
+                            oDppConfs.setProperty('/results/' + iCount + '/ConfirmdItems/Amount', parseFloat(fDividedAmount).toFixed(2));
                         }
                         iAssignCount = iAssignCount + 1;
                     }
-
                 }
             }
             oDppConfs.setProperty('/results/0/SelTot', fTotalAmount.toString());
@@ -613,8 +612,11 @@ sap.ui.define(
                         this.getView().getModel('oDppConfs').setProperty('/results/AllChecked', false);
                         this.getView().getModel('oDppConfs').setProperty('/results/0/SelTot', 0);
                         this._onStepTwoInstlChange();
-                        sDueDate = this._formatInvoiceDate(this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getDate(), this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getMonth() + 1, this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getFullYear());
-                        this.getView().byId('nrgBilling-dpp-DppDueDate-id').setDefaultDate(sDueDate);
+                        if (this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate')) {
+                            sDueDate = this._formatInvoiceDate(this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getDate(),      this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getMonth() + 1,    this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getFullYear());
+                            this.getView().byId('nrgBilling-dpp-DppDueDate-id').setDefaultDate(sDueDate);
+                        }
+
                     }
                 }.bind(this),
                 error: function (oError) {
@@ -824,7 +826,7 @@ sap.ui.define(
                     oTag.addContent(oText);
                     oTag.addContent(oOkButton);
                     oAlert_Dialog = new ute.ui.main.Popup.create({
-                        title: "DISCLOSURE",
+                        title: "DEFFERED PAYMENT PLAN",
                         content: oTag
                     });
                     oAlert_Dialog.open();
@@ -1398,6 +1400,26 @@ sap.ui.define(
 
             if (oODataSvc) {
                 oODataSvc.read(sPath, oParameters);
+            }
+        };
+        /**
+		 * formats installment number for zero downpayment case
+		 *
+		 * @function
+		 * @param {String} instalmentNum
+         * @param {boolean} bzerodown zero down payment true or false
+		 * @return {string} updated instalmentNum
+		 */
+        Controller.prototype._formatInstalments = function (instalmentNum, bzerodown) {
+
+            if (instalmentNum && bzerodown) {
+                if (bzerodown) {
+                    return parseInt(instalmentNum, 10) - 1;
+                } else {
+                    return instalmentNum;
+                }
+            } else {
+                return "";
             }
         };
 
