@@ -614,7 +614,7 @@
 
             <!--Area Right (Only 2 buttons )-->
             <ute:Tag class="nrgDashboard-cusDataVerify-right">
-               <ute:Tag class="nrgDashboard-cusDataVerify-right-wrap">
+               <ute:Tag class="nrgDashboard-cusDataVerify-right-selectall">
                     <utmain:Button class="nrgDashboard-cusDataVerify-btn"
                         press="._onSelectAllContracts"
                         design="None"

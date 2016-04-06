@@ -1445,7 +1445,11 @@
 
         & .nrgDashboard-cusDataVerify-right {
             width: 86px;
-            align-self: flex-end;
+
+            & .nrgDashboard-cusDataVerify-right-selectall {
+                margin-bottom: 11rem;
+	            margin-top: 3rem;
+            }
             & .nrgDashboard-cusDataVerify-btn {
                 margin-bottom: 20px;
                 font: @nrgFontWeight-semiBold @nrgFontSize-base @nrgFontFamily;
@@ -1479,7 +1483,13 @@
         }
     }
 }
-
+.nrgdashCo-root {
+    max-height: 75rem;
+    overflow-y: auto;
+    & .nrgdashco-root-btn {
+        margin: 5px;
+    }
+}
 
 
 

@@ -1341,7 +1341,7 @@ sap.ui.define(
             var sSelectedKey = oEvent.getParameters().selectedKey;
             this._onCaSelected(sSelectedKey);
         };
-        Controller.prototype._onCaSelected = function (sSelectedKey) {
+        Controller.prototype._onCaSelected = function (sSelectedKey, fCallBackSelectCO) {
             var iSelectedIndex = parseInt(sSelectedKey, 10),
                 coRetrieveComplete = false,
                 checkComplete;
@@ -1369,6 +1369,9 @@ sap.ui.define(
             checkComplete = setInterval(function () {
                 if (coRetrieveComplete) {
                     // Confirm with WebUI and CCUX
+                    if (fCallBackSelectCO) {
+                        fCallBackSelectCO();
+                    }
                     this._routeInfoConfirm();
                     // Update the linkability of METER lable
                     this._updateUsageLink();
@@ -1411,8 +1414,11 @@ sap.ui.define(
         /**********************************************/
 
         Controller.prototype._onCoSelect = function (oEvent) {
-            var sSelectedKey = oEvent.getParameters().selectedKey,
-                iSelectedIndex = parseInt(sSelectedKey, 10);
+            var sSelectedKey = oEvent.getParameters().selectedKey;
+            this._onCoSelected(sSelectedKey);
+        };
+        Controller.prototype._onCoSelected = function (sSelectedKey) {
+            var iSelectedIndex = parseInt(sSelectedKey, 10);
 
             // Load the selected CO info
             this.getView().getModel('oDtaVrfyContract').setData(this.getView().getModel('oAllContractsofBuag').oData[iSelectedIndex]);
@@ -1641,44 +1647,114 @@ sap.ui.define(
                 aFilterIds,
                 aFilterValues,
                 oDashboardCoTempl,
-                fnRecievedHandler,
-                that = this;
+                that = this,
+                oContractsModel,
+                oSearchText;
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             aFilterIds = ["BP"];
-            aFilterValues = ['2473499'];
+            oContractsModel = new sap.ui.model.json.JSONModel();
+            aFilterValues = [this._bpNum];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             if (!this._oDialogFragment) {
                 this._oDialogFragment = sap.ui.xmlfragment("Contracts", "nrg.module.dashboard.view.ContractsPopup", this);
             }
             if (this._oContractsDialog === undefined) {
                 this._oContractsDialog = new ute.ui.main.Popup.create({
-                    title: 'Contracts',
+                    title: 'SERVICE ADDRESS SELECTION',
                     content: this._oDialogFragment
                 });
             }
             sPath = "/CaCoS";
             oDashboardCoTable = sap.ui.core.Fragment.byId("Contracts", "idnrgdashCoTable");
-            oDashboardCoTempl = sap.ui.core.Fragment.byId("Contracts", "idnrgdashCoTemp");
-            // Function received handler is used to update the view with first History campaign.---start
-            fnRecievedHandler = function () {
-                var oTableBinding = oDashboardCoTable.getBinding("rows");
-                that._oContractsDialog.open();
-                that.getOwnerComponent().getCcuxApp().setOccupied(false);
-                if (oTableBinding) {
-                    oTableBinding.detachDataReceived(fnRecievedHandler);
-                }
-            };
-            oDashboardCoTable.setModel(oModel, 'comp-dashboard');
+            oDashboardCoTable.setModel(oContractsModel, 'view-dashboard');
+            oSearchText = sap.ui.core.Fragment.byId("Contracts", "idnrgdashboard-search");
+            oSearchText.setValue("");
             mParameters = {
-                model : 'comp-dashboard',
-                path : sPath,
                 filters : aFilters,
-                template : oDashboardCoTempl,
-                events: {dataReceived : fnRecievedHandler}
+                success : function (oData) {
+                    oContractsModel.setData(oData);
+                    that._oContractsDialog.open();
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                }.bind(this),
+                error: function (oError) {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                }.bind(this)
             };
-            //this.getView().addDependent(this._oContractsDialog);
-            //to get access to the global model
-            oDashboardCoTable.bindRows(mParameters);
+            if (oModel) {
+                oModel.read(sPath, mParameters);
+            }
+        };
+        /**
+		 * central handler for search
+		 *
+		 * @function
+		 * @param {oEvent} sap.ui.event
+         *
+		 *
+		 */
+        Controller.prototype._onCentralSearch = function (oSearchText) {
+            var oCAFilter,
+                oContractFilter,
+                oHouseFilter,
+                oStreetFilter,
+                oAptFilter,
+                oCityFilter,
+                oStateFilter,
+                oZIPFilter,
+                aFilterValues,
+                aFilters,
+                oCJTable,
+                oLocalModel;
+
+            oCJTable = sap.ui.core.Fragment.byId("Contracts", "idnrgdashCoTable");
+            oCAFilter = new sap.ui.model.Filter("CA", sap.ui.model.FilterOperator.Contains, oSearchText);
+            oContractFilter = new sap.ui.model.Filter("Contract", sap.ui.model.FilterOperator.Contains, oSearchText);
+            oHouseFilter = new sap.ui.model.Filter("House", sap.ui.model.FilterOperator.Contains, oSearchText);
+            oStreetFilter = new sap.ui.model.Filter("Street", sap.ui.model.FilterOperator.Contains, oSearchText);
+            oAptFilter = new sap.ui.model.Filter("Apt", sap.ui.model.FilterOperator.Contains, oSearchText);
+            oCityFilter = new sap.ui.model.Filter("City", sap.ui.model.FilterOperator.Contains, oSearchText);
+            oStateFilter = new sap.ui.model.Filter("State", sap.ui.model.FilterOperator.Contains, oSearchText);
+            oZIPFilter = new sap.ui.model.Filter("ZIP", sap.ui.model.FilterOperator.Contains, oSearchText);
+            aFilters = new sap.ui.model.Filter({filters: [oCAFilter, oContractFilter, oHouseFilter, oStreetFilter, oAptFilter, oCityFilter, oStateFilter, oZIPFilter], and: false });
+            oCJTable.getBinding("rows").filter(aFilters);
+        };
+        /**
+		 * Handler for onSearch
+		 *
+		 * @function
+		 * @param {oEvent} sap.ui.event
+         *
+		 *
+		 */
+        Controller.prototype.onLiveSearch = function (oEvent) {
+            this._onCentralSearch(oEvent.mParameters.liveValue);
+        };
+        /**
+		 * Handler for onSearch
+		 *
+		 * @function
+		 * @param {oEvent} sap.ui.event
+         *
+		 *
+		 */
+        Controller.prototype.onSearch = function (oEvent) {
+            var oSearchText;
+            oSearchText = sap.ui.core.Fragment.byId("Contracts", "idnrgdashboard-search");
+            this._onCentralSearch(oSearchText);
+        };
+        /**
+		 * Handler for onSearch
+		 *
+		 * @function
+		 * @param {oEvent} sap.ui.event
+         *
+		 *
+		 */
+        Controller.prototype.onClearSearch = function (oEvent) {
+            var oSearchText;
+            oSearchText = sap.ui.core.Fragment.byId("Contracts", "idnrgdashboard-search");
+            oSearchText.setValue("");
+            this._onCentralSearch(oSearchText.getValue());
         };
        /**
 		 * Assign the filter objects based on the input selection
@@ -1698,20 +1774,52 @@ sap.ui.define(
             return aFilters;
         };
         /**
-		 * Handle when user clicked on Cancelling of Select contacts
+		 * Handle when user clicked on selection of contract
 		 *
 		 * @function
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.SelectCO = function (oEvent) {
-            var oModel = this.getOwnerComponent().getModel('comp-dashboard'),
+            var oDashboardCoTable = sap.ui.core.Fragment.byId("Contracts", "idnrgdashCoTable"),
+                oModel = oDashboardCoTable.getModel('view-dashboard'),
                 oContext,
-                sCA,
-                sCO;
+                sCaNum,
+                sCONum,
+                aCAList = this.getView().getModel('oAllBuags').oData,
+                iCount,
+                fCOSelectCallBack,
+                that = this,
+                sCurrentCA = this.getView().getModel('oDtaVrfyBuags').getProperty('/ContractAccountID'),
+                sCurrentCo = this.getView().getModel('oDtaVrfyContract').getProperty('/ContractID'),
+                oAllContractModel = this.getView().getModel('oAllContractsofBuag');
+
             if (this._aCOSelPaths) {
                 oContext = oModel.getContext(this._aCOSelPaths);
-                sCA = oContext.getProperty("CA");
-                sCO = oContext.getProperty("Contract");
+                sCaNum = oContext.getProperty("/CA");
+                sCONum = oContext.getProperty("/Contract");
+                fCOSelectCallBack = function () {
+                    var aCOList = that.getView().getModel('oAllContractsofBuag').oData;
+                    for (iCount = 0; iCount < aCOList.length; iCount = iCount + 1) {
+                        if (parseInt(aCOList[iCount].ContractID, 10) ===  parseInt(sCONum, 10)) {
+                            oAllContractModel.setProperty('/selectedKey', iCount);
+                            that._onCoSelected(iCount);
+                        }
+                    }
+                };
+                if (parseInt(sCurrentCA, 10) ===  parseInt(sCaNum, 10)) {// if CA is already selected then no need to select again. Go ahead and set CO
+                    if ((parseInt(sCurrentCo, 10) ===  parseInt(sCONum, 10))) {// if CO is already selected then ignore
+                        return;
+                    } else {
+                        fCOSelectCallBack();
+                    }
+                } else {
+                    for (iCount = 0; iCount < aCAList.length; iCount = iCount + 1) {
+                        if (parseInt(aCAList[iCount].ContractAccountID, 10) ===  parseInt(sCaNum, 10)) {
+                            this.getView().getModel('oAllBuags').setProperty('/selectedKey', iCount);
+                            this._onCaSelected(iCount, fCOSelectCallBack);
+                        }
+                    }
+                }
                 this._oContractsDialog.close();
             } else {
                 ute.ui.main.Popup.Alert({
@@ -1723,13 +1831,14 @@ sap.ui.define(
 
         };
         /**
-		 * Handle when user clicked on Cancelling of Select contacts
+		 * Handle when user selected a contract
 		 *
 		 * @function
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onSelect = function (oEvent) {
-            this._aCOSelPaths = oEvent.getSource().getParent().getBindingContext("comp-dashboard").getPath();
+            this._aCOSelPaths = oEvent.getSource().getParent().getBindingContext("view-dashboard").getPath();
+            this.SelectCO();
         };
 
         /**

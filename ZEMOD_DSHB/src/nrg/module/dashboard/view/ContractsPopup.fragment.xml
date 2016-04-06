@@ -5,9 +5,30 @@
           xmlns:u="ute.ui.commons"
           xmlns:um="ute.ui.main">
 <u:Tag class="nrgdashCo-root">
+   <u:Tag>
+        <u:Textfield fieldType="Regular"
+                     width="25rem"
+                     editable="true"
+                     enterKeyPress=".onSearch"
+                     id="idnrgdashboard-search"
+                     liveChange=".onLiveSearch"/>
+
+        <um:Button text="Search"
+                   design="Default"
+                   class="nrgdashco-root-btn"
+                   press=".onSearch"
+                   />
+        <um:Button text="Clear"
+                   design="Default"
+                   class="nrgdashco-root-btn"
+                   press=".onClearSearch"
+                   />
+
+   </u:Tag>
     <u:Table width="auto"
              id="idnrgdashCoTable"
-             class="nrgCamOvr-left nrgdashCo-top nrgdashCo-pendTable">
+             class="nrgCamOvr-left nrgdashCo-top nrgdashCo-pendTable"
+            rows="{view-dashboard>/results}">
                     <u:columns>
                         <u:TableColumn class="nrgdashCo-th">
                             <c:Label text="Select"/>
@@ -46,14 +67,32 @@
                             <c:Label text="Zip"/>
                         </u:TableColumn>
                     </u:columns>
+                    <u:rows>
+                        <u:TableRow>
+                            <um:RadioButton group="nrgCO" select=".onSelect"/>
+                            <c:Label text="{view-dashboard>CA}"/>
+                            <c:Label text="{view-dashboard>Contract}"/>
+                            <c:Label text="{view-dashboard>Status}"/>
+                            <c:Label text="{path: 'view-dashboard>MviDate',
+                                           type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                            <c:Label text="{path: 'view-dashboard>MvoDate',
+                                           type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                            <c:Label text="{view-dashboard>House}"/>
+                            <c:Label text="{view-dashboard>Street}"/>
+                            <c:Label text="{view-dashboard>Apt}"/>
+                            <c:Label text="{view-dashboard>City}"/>
+                            <c:Label text="{view-dashboard>State}"/>
+                            <c:Label text="{view-dashboard>ZIP}"/>
+                        </u:TableRow>
+                </u:rows>
             </u:Table>
           <u:Tag>
             <u:Tag class="nrgdashCo-top">
-                <u:Button
+<!--                <u:Button
                     text="Ok"
                     enabled="true"
                     press=".SelectCO">
-                </u:Button>
+                </u:Button>-->
                 <u:Button
                     text="Cancel"
                     enabled="true"
@@ -61,29 +100,5 @@
                 </u:Button>
             </u:Tag>
           </u:Tag>
-        <!-- Place holder for templates to reuse for Bind Aggregation method. Below will be always Display:none -->
-        <u:Tag visible="false">
-             <u:Table>
-                    <u:rows>
-                    <u:TableRow id="idnrgdashCoTemp">
-                        <um:RadioButton group="nrgCO" select=".onSelect"/>
-                        <c:Label text="{comp-dashboard>CA}"/>
-                        <c:Label text="{comp-dashboard>Contract}"/>
-                        <c:Label text="{comp-dashboard>Status}"/>
-                        <c:Label text="{path: 'comp-dashboard>MviDate',
-                                       type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
-                        <c:Label text="{path: 'comp-dashboard>MvoDate',
-                                       type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
-                        <c:Label text="{comp-dashboard>House}"/>
-                        <c:Label text="{comp-dashboard>Street}"/>
-                        <c:Label text="{comp-dashboard>Apt}"/>
-                        <c:Label text="{comp-dashboard>City}"/>
-                        <c:Label text="{comp-dashboard>State}"/>
-                        <c:Label text="{comp-dashboard>ZIP}"/>
-                    </u:TableRow>
-                </u:rows>
-                </u:Table>
-        </u:Tag>
-        <!-- Place holder for templates to reuse for Bind Aggregation method. Below will be always Display:none -->
 </u:Tag>
 </core:FragmentDefinition>
