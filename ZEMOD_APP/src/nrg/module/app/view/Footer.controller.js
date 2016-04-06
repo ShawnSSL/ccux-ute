@@ -475,9 +475,9 @@ sap.ui.define(
                     var oCampaignModel = this.getView().getModel('oFooterCampaign');
                     if (oData.Contract) {
                         if (oData.InitTab) {
-                            oCampaignModel.setProperty('/CampaignButtonText', 'Eligible offers Available');
+                            oCampaignModel.setProperty('/CampaignButtonText', 'Eligible Offers Available');
                         } else {
-                            oCampaignModel.setProperty('/CampaignButtonText', 'No Eligible offers Available');
+                            oCampaignModel.setProperty('/CampaignButtonText', 'No Eligible Offers Available');
                         }
                         oCampaignModel.setProperty('/CampaignFirstBill', oData.FirstBill);
                         oCampaignModel.setProperty('/CampaignButtonType', oData.InitTab);

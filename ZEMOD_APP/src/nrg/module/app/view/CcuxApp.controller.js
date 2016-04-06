@@ -416,7 +416,8 @@ sap.ui.define(
             var oContext,
                 oRouter,
                 oRouteManager,
-                oRealDataManager;
+                oRealDataManager,
+                oGlobalDataManager;
 
             this._oApp.setOccupied(false);
             oContext = this.getOwnerComponent().getCcuxContextManager().resetContext();
@@ -424,6 +425,11 @@ sap.ui.define(
             oRealDataManager = this.getOwnerComponent().getRealDataManager();
             if (oRealDataManager) {
                 oRealDataManager.refreshODataModels();
+            }
+            // Refresh all Global Data
+            oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
+            if (oGlobalDataManager) {
+                oGlobalDataManager.refresh();
             }
             oRouteManager = this.getOwnerComponent().getCcuxRouteManager().resetRouteHistory();
             oRouter = this.getOwnerComponent().getRouter();

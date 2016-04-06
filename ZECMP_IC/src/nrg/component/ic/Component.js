@@ -15,12 +15,13 @@ sap.ui.define(
         'nrg/base/component/RouteManager',
         'nrg/base/component/ContextManager',
         'nrg/base/component/NotificationManager',
+        'nrg/base/component/GlobalDataManager',
 
         'nrg/base/component/Router'
     ],
 
     function (jQuery, Component, Popup, ResourceBundleManager, StylesheetManager, IconManager,
-        MockDataManager, RealDataManager, WebUiManager, RouteManager, ContextManager, NotificationManager) {
+        MockDataManager, RealDataManager, WebUiManager, RouteManager, ContextManager, NotificationManager, GlobalDataManager) {
         'use strict';
 
         var CustomComponent = Component.extend('nrg.component.ic.Component', {
@@ -47,6 +48,9 @@ sap.ui.define(
         CustomComponent.prototype.getRealDataManager = function () {
             return this._oRealDataManager;
         };
+        CustomComponent.prototype.getGlobalDataManager = function () {
+            return this._oGlobalDataManager;
+        };
         CustomComponent.prototype.getCcuxApp = function () {
             var oRootViewController = this.getAggregation('rootControl').getController();
 
@@ -67,6 +71,7 @@ sap.ui.define(
             this._oResourceBundleManager = new ResourceBundleManager(this);
             this._oIconManager = new IconManager(this);
             this._oRealDataManager = new RealDataManager(this);
+            this._oGlobalDataManager = new GlobalDataManager(this);
             this._oMockDataManager = new MockDataManager(this);
             this._oRouteManager = new RouteManager(this);
             this._oNotificationManager = new NotificationManager(this);
