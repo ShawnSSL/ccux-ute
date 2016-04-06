@@ -429,7 +429,7 @@ sap.ui.define(
             // Refresh all Global Data
             oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
             if (oGlobalDataManager) {
-                oGlobalDataManager.refresh();
+                oGlobalDataManager.refreshGDC();
             }
             oRouteManager = this.getOwnerComponent().getCcuxRouteManager().resetRouteHistory();
             oRouter = this.getOwnerComponent().getRouter();
