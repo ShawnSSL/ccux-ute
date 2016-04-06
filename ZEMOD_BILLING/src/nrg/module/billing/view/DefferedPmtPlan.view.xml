@@ -140,7 +140,8 @@
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i2">
                                 <ute:Tag elem="span" text="$"/>
-                                <ute:Textfield fieldType="Noborder" width="100px" value="{oDppConfs>ConfirmdItems/Amount}"
+                                <ute:Textfield fieldType="Noborder" width="100px" value="{path: 'oDppConfs>ConfirmdItems/Amount', type: 'sap.ui.model.type.Float',
+                                               formatOptions: { minFractionDigits: '2', maxFractionDigits: '2' }}"
                                                 change="._onStepTwoInstlChange" enterKeyPress="_onStepTwoInstlChange" liveChange="_onStepTwoInstlChange"/>
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3" text="{path: 'oDppConfs>ConfirmdItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>

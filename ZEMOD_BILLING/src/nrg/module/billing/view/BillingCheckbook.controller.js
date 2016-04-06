@@ -59,6 +59,7 @@ sap.ui.define(
             //var o18n = this.getOwnerComponent().getModel('comp-i18n-billing');
 
             this.getView().setModel(this.getOwnerComponent().getModel('comp-billing'), 'oDataSvc');
+            this.getView().getModel('oDataSvc').setSizeLimit(200);
             this.getView().setModel(this.getOwnerComponent().getModel('comp-eligibility'), 'oDataEligSvc');
 
             //Model to keep checkbook header

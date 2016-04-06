@@ -1412,7 +1412,7 @@ sap.ui.define(
 		 */
         Controller.prototype._formatInstalments = function (instalmentNum, bzerodown) {
 
-            if (instalmentNum && bzerodown) {
+            if (instalmentNum) {
                 if (bzerodown) {
                     return parseInt(instalmentNum, 10) - 1;
                 } else {
