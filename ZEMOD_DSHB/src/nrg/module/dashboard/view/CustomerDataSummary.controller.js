@@ -152,9 +152,10 @@ sap.ui.define(
 
         Controller.prototype._initRetrAssignedAccount = function (CaNum) {
             var sPath;
-
-            sPath = '/Buags' + '(\'' + CaNum + '\')/BpAssigns';
-            this._retrAssignedAccount(sPath);
+            if (CaNum) {
+                sPath = '/Buags' + '(\'' + CaNum + '\')/BpAssigns';
+                this._retrAssignedAccount(sPath);
+            }
         };
 
         Controller.prototype._retrAssignedAccount = function (sPath) {
@@ -228,9 +229,11 @@ sap.ui.define(
             if (this.getView().getModel('oSmryAllBuags').getProperty('/results').length >= iIndex) {
                 this.getView().getModel('oSmryBuagInf').setData(this.getView().getModel('oSmryAllBuags').getProperty('/results')[iIndex]);
                 this.getView().getModel('oSmryAllBuags').setProperty('/selectedIndex', iIndex);
-                this._initRetrAssignedAccount(this.getView().getModel('oSmryBuagInf').getProperty('/ContractAccountID'));
-                this._caNum = this.getView().getModel('oSmryBuagInf').getProperty('/ContractAccountID');
-                this._checkThirdPartyAuth(this._caNum);
+                if (this.getView().getModel('oSmryBuagInf').getProperty('/ContractAccountID')) {
+                    this._initRetrAssignedAccount(this.getView().getModel('oSmryBuagInf').getProperty('/ContractAccountID'));
+                    this._caNum = this.getView().getModel('oSmryBuagInf').getProperty('/ContractAccountID');
+                    this._checkThirdPartyAuth(this._caNum);
+                }
             }
         };
 

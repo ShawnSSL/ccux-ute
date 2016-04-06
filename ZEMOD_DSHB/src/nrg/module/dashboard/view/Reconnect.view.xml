@@ -16,12 +16,14 @@
                 <!--Account Info-->
                 <ute:Tag class="nrgDashboard-reconnectionPopup-cli-title" text="{comp-i18n-dashboard>nrgDashboard-reconnect-accInfo}"/>
                 <ute:Tag>
-                    <ute:Tag class="nrgDashboard-reconnectionPopup-cli-label" text="{comp-i18n-dashboard>nrgDashboard-reconnect-pName}"/>
-                    <ute:Tag class="nrgDashboard-reconnectionPopup-cli-value" text="{oReconnectInfo>/PartnerID} {oReconnectInfo>/PName}"/>
+                    <ute:Tag class="nrgDashboard-reconnectionPopup-cli-label1" text="{comp-i18n-dashboard>nrgDashboard-reconnect-pName}"/>
+                    <ute:Tag class="nrgDashboard-reconnectionPopup-cli-value1" text="{oReconnectInfo>/PartnerID}"/>
+                    <ute:Tag class="nrgDashboard-reconnectionPopup-cli-value2" text="{oReconnectInfo>/PName}"/>
                 </ute:Tag>
                 <ute:Tag>
-                    <ute:Tag class="nrgDashboard-reconnectionPopup-cli-label" text="{comp-i18n-dashboard>nrgDashboard-reconnect-aName}"/>
-                    <ute:Tag class="nrgDashboard-reconnectionPopup-cli-value" text="{oReconnectInfo>/BuagID} {oReconnectInfo>/BuagText}"/>
+                    <ute:Tag class="nrgDashboard-reconnectionPopup-cli-label1" text="{comp-i18n-dashboard>nrgDashboard-reconnect-aName}"/>
+                    <ute:Tag class="nrgDashboard-reconnectionPopup-cli-value1" text="{oReconnectInfo>/BuagID}"/>
+                    <ute:Tag class="nrgDashboard-reconnectionPopup-cli-value2" text="{oReconnectInfo>/BuagText}"/>
                 </ute:Tag>
                 <ute:Tag>
                     <ute:Tag class="nrgDashboard-reconnectionPopup-cli-lidatxt" text="{oReconnectInfo>/LidaText}"/>

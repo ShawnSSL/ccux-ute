@@ -25,7 +25,7 @@ sap.ui.define(
 
         ReconnectPopup.prototype.init = function () {
             this._oReconnect = ute.ui.main.Popup.create('nrgReconnectPopup', {
-                title: "RECONNETION",
+                title: "RECONNECTION",
                 close: this._onPopupClosed
             });
             this._oReconnect.addStyleClass('nrgDashboard-reconnectionPopup');
