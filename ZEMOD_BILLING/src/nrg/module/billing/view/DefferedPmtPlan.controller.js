@@ -272,7 +272,10 @@ sap.ui.define(
 
             if (oEvent.mParameters.checked) {
                 for (i = 0; i < oSetUps.getData().results.length; i = i + 1) {
-                    oSetUps.setProperty('/results/' + i + '/OpenItems/bSelected', true);
+                    if (!oSetUps.getProperty('/results/' + i + '/OpenItems/DisplayOnlyRow')) {
+                        oSetUps.setProperty('/results/' + i + '/OpenItems/bSelected', true);
+                    }
+
                 }
             } else {
                 for (i = 0; i < oSetUps.getData().results.length; i = i + 1) {
@@ -287,6 +290,7 @@ sap.ui.define(
 
             if (oEvent.mParameters.checked) {
                 for (i = 0; i < oDppConfs.getData().results.length; i = i + 1) {
+
                     oDppConfs.setProperty('/results/' + i + '/Checked', true);
                 }
             } else {
