@@ -32,7 +32,6 @@ sap.ui.define(
 
             //Model to keep Reconnect info and status
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oReconnectInfo');
-            this._OwnerComponent.getCcuxApp().setOccupied(true);
             this._checkReconnectElgi();
         };
 
@@ -182,7 +181,6 @@ sap.ui.define(
                     if (oData.RElig) {
                         this._retrReconnectInfo();
                     } else {
-                        that._OwnerComponent.getCcuxApp().setOccupied(false);
                         ute.ui.main.Popup.Alert({
                             title: 'Reconnection',
                             message: oData.Message
@@ -192,7 +190,6 @@ sap.ui.define(
                     }
                 }.bind(this),
                 error: function (oError) {
-                    that._OwnerComponent.getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Reconnection',
                         message: 'Connection error, reconnection eligible call failed.'
@@ -224,16 +221,37 @@ sap.ui.define(
                 success : function (oData) {
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
                     if (oData) {
-
                         this.getView().getModel('oReconnectInfo').setData(oData);
                     }
                 }.bind(this),
                 error: function (oError) {
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
+                    if (oError && oError.responseText) {
+                        var oErrorObject = JSON.parse(oError.responseText);
+                        if (oErrorObject && oErrorObject.error && oErrorObject.error.message && oErrorObject.error.message.value) {
+                            ute.ui.main.Popup.Alert({
+                                title: 'Reconnection',
+                                message: oErrorObject.error.message.value
+                            });
+                        } else {
+                            ute.ui.main.Popup.Alert({
+                                title: 'Reconnection',
+                                message: "Error in Backend"
+                            });
+                        }
+                    } else {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Reconnection',
+                            message: "Error in Backend"
+                        });
+                    }
+                    that._ReconnectControl.close();
+
                 }.bind(this)
             };
 
             if (oModel) {
+                this._OwnerComponent.getCcuxApp().setOccupied(true);
                 oModel.read(sPath, oParameters);
             }
         };

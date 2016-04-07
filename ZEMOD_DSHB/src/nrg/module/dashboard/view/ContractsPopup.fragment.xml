@@ -13,16 +13,12 @@
                      id="idnrgdashboard-search"
                      liveChange=".onLiveSearch"/>
 
-        <um:Button text="Search"
-                   design="Default"
+        <u:Button text="Search"
                    class="nrgdashco-root-btn"
-                   press=".onSearch"
-                   />
-        <um:Button text="Clear"
-                   design="Default"
+                   press=".onSearch" />
+        <u:Button text="Clear"
                    class="nrgdashco-root-btn"
-                   press=".onClearSearch"
-                   />
+                   press=".onClearSearch"   />
 
    </u:Tag>
     <u:Table width="auto"

@@ -1740,7 +1740,7 @@ sap.ui.define(
         Controller.prototype.onSearch = function (oEvent) {
             var oSearchText;
             oSearchText = sap.ui.core.Fragment.byId("Contracts", "idnrgdashboard-search");
-            this._onCentralSearch(oSearchText);
+            this._onCentralSearch(oSearchText.getValue());
         };
         /**
 		 * Handler for onSearch
@@ -1795,8 +1795,8 @@ sap.ui.define(
 
             if (this._aCOSelPaths) {
                 oContext = oModel.getContext(this._aCOSelPaths);
-                sCaNum = oContext.getProperty("/CA");
-                sCONum = oContext.getProperty("/Contract");
+                sCaNum = oContext.getProperty("CA");
+                sCONum = oContext.getProperty("Contract");
                 fCOSelectCallBack = function () {
                     var aCOList = that.getView().getModel('oAllContractsofBuag').oData;
                     for (iCount = 0; iCount < aCOList.length; iCount = iCount + 1) {
@@ -1808,6 +1808,7 @@ sap.ui.define(
                 };
                 if (parseInt(sCurrentCA, 10) ===  parseInt(sCaNum, 10)) {// if CA is already selected then no need to select again. Go ahead and set CO
                     if ((parseInt(sCurrentCo, 10) ===  parseInt(sCONum, 10))) {// if CO is already selected then ignore
+                        this._oContractsDialog.close();
                         return;
                     } else {
                         fCOSelectCallBack();
