@@ -43,6 +43,11 @@ sap.ui.define(
             if (!oButton.getEnabled()) {
                 rm.write('disabled');
             }
+            if (!oButton.getEnabled()) {
+                rm.write(" tabIndex=\"-1\"");
+            } else {
+                rm.write(" tabIndex=\"0\"");
+            }
             rm.write('>');
 
             rm.write(oButton.getText());
