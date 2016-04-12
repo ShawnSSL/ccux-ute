@@ -400,6 +400,86 @@
                 </ute:Tag>
             </ute:Tag>
         </ute:Tag>
+        <!-----------------------------------------------------------------------------DPP Display-------------------------------------------------------------------------->
+        <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{oDppScrnControl>/Display}">
+            <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
+            <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt">
+                <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-hdr">
+                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3" text="{comp-i18n-billing>nrgBilling-dpp-Amt}"/>
+                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4" text="{comp-i18n-billing>nrgBilling-dpp-DueDte}"/>
+                </ute:Tag>
+                <ute:Tag content="{oDppDisplay>/results}" class="nrgBilling-dPmtPln-lftArea-ctnt-tbl">
+                    <ute:Tag>
+                        <ute:Tag class="nrgBilling-dlct-odd"
+                                 visible="{parts:['oDppDisplay>Items/ItemNumber', 'oDppDisplay>Items/Cleared'], formatter:'._isOddDispConf'}">
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
+                                     text="{path: 'oDppDisplay>Items/Amount', type: 'nrg.base.type.Price',
+                                            formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4"
+                                     text="{path: 'oDppSetUps>OpenItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
+                        </ute:Tag>
+                        <ute:Tag class="nrgBilling-dlct-evn"
+                                 visible="{parts:['oDppDisplay>Items/ItemNumber', 'oDppDisplay>Items/Cleared'], formatter:'._isEvenDispConf'}">
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
+                                     text="{path: 'oDppDisplay>Items/Amount', type: 'nrg.base.type.Price',
+                                            formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4"
+                                     text="{path: 'oDppDisplay>Items/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
+                        </ute:Tag>
+                    </ute:Tag>
+                </ute:Tag>
+            </ute:Tag>
+            <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt">
+                <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-hdr">
+                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3" text="{comp-i18n-billing>nrgBilling-dpp-Amt}"/>
+                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4" text="{comp-i18n-billing>nrgBilling-dpp-ClearDate}"/>
+                </ute:Tag>
+                <ute:Tag content="{oDppDisplay>/results}" class="nrgBilling-dPmtPln-lftArea-ctnt-tbl">
+                    <ute:Tag>
+                        <ute:Tag class="nrgBilling-dlct-odd"
+                                 visible="{parts:['oDppDisplay>Items/ItemNumber', 'oDppDisplay>Items/Cleared'], formatter:'._isOddDispPaid'}">
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
+                                     text="{path: 'oDppDisplay>Items/Amount', type: 'nrg.base.type.Price',
+                                            formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4"
+                                     text="{path: 'oDppSetUps>OpenItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
+                        </ute:Tag>
+                        <ute:Tag class="nrgBilling-dlct-evn"
+                                 visible="{parts:['oDppDisplay>Items/ItemNumber', 'oDppDisplay>Items/Cleared'], formatter:'._isEvenDispPaid'}">
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
+                                     text="{path: 'oDppDisplay>Items/Amount', type: 'nrg.base.type.Price',
+                                            formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4"
+                                     text="{path: 'oDppDisplay>Items/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
+                        </ute:Tag>
+                    </ute:Tag>
+                </ute:Tag>
+            </ute:Tag>
+            <ute:Tag class="nrgBilling-dlbi-m">
+                <ute:Tag class="nrgBilling-dlbi-l">
+                    <ute:Tag class="nrgBilling-dPmtPln-dlbi-row">
+                        <ute:Tag class="nrgBilling-dlbi-lbl" text="{comp-i18n-billing>nrgBilling-dpp-DppTtl}"/>
+                        <ute:Tag class="nrgBilling-dlbi-val"
+                                 text="{path: 'oDppDisplay>/results/0/Total', type: 'nrg.base.type.Price',
+                                        formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgBilling-dPmtPln-dlbi-row">
+                        <ute:Tag class="nrgBilling-dlbi-lbl" text="{comp-i18n-billing>nrgBilling-dpp-PaidTtl}"/>
+                        <ute:Tag class="nrgBilling-dlbi-val"
+                                 text="{path: 'oDppDisplay>/results/0/Paid', type: 'nrg.base.type.Price',
+                                        formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgBilling-dPmtPln-dlbi-row">
+                        <ute:Tag class="nrgBilling-dlbi-lbl" text="{comp-i18n-billing>nrgBilling-dpp-TtlOutstanding}"/>
+                        <ute:Tag class="nrgBilling-dlbi-val"
+                                 text="{path: 'oDppDisplay>/results/0/Diff', type: 'nrg.base.type.Price',
+                                        formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
+                    </ute:Tag>
+                </ute:Tag>
+            </ute:Tag>
+            <ute:Tag class="nrgBilling-dlbi-val"
+                     text="{path: 'oDppDisplay>Message'}"/>
+        </ute:Tag>
         <!--Right Notification Area-->
         <ute:Tag class="nrgBilling-ext-rghtDiv">
             <!-- Title -->

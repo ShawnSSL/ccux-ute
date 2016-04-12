@@ -72,8 +72,10 @@ sap.ui.define(
             }), 'olocalAddress');
             //Model for DppComunication (DPPIII)
             this.getView().setModel(new JSONModel(), 'oDppStepThreeCom');
-            this._initScrnControl();
-            this._isDppElgble();
+            //Model for display
+            this.getView().setModel(new JSONModel(), 'oDppDisplay');
+
+            this._setInitScreen();
             this._retrieveNotification();
             this._checkPrePay();
         };
@@ -115,48 +117,13 @@ sap.ui.define(
             oScrnControl.setProperty('/StepTwo', false);
             oScrnControl.setProperty('/StepThree', false);
             oScrnControl.setProperty('/DPPDenied', false);
-        };
-        Controller.prototype._isDppElgble = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                aFilters,
-                aFilterValues,
-                aFilterIds;
+            oScrnControl.setProperty('/Display', false);
 
-            sPath = "/DPPElgbles('" + this._coNum + "')";
-            oParameters = {
-               //filters : aFilters,
-                success : function (oData) {
-                    if (oData) {
-                        this.getView().getModel('oDppEligible').setData(oData);
-
-                        if (oData.Eligible) {
-                            this._selectScrn('StepOne');
-                        } else {
-                            this._selectScrn('DPPDenied');
-                        }
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    //Need to put error message
-                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                }.bind(this)
-            };
-
-            if (oODataSvc && this._coNum) {
-                oODataSvc.read(sPath, oParameters);
-            }
+            return oScrnControl;
         };
 
         Controller.prototype._selectScrn = function (sSelectedScrn) {
-            var oScrnControl = this.getView().getModel('oDppScrnControl');
-
-            oScrnControl.setProperty('/StepOne', false);
-            oScrnControl.setProperty('/StepTwo', false);
-            oScrnControl.setProperty('/StepThree', false);
-            oScrnControl.setProperty('/DPPDenied', false);
-            oScrnControl.setProperty('/' + sSelectedScrn, true);
+            this._initScrnControl().setProperty('/' + sSelectedScrn, true);
 
             if (sSelectedScrn === 'StepOne') {
                 this._retrDppSetUp();
@@ -168,15 +135,44 @@ sap.ui.define(
                 this._retrDppComunication();
             } else if (sSelectedScrn === 'DPPDenied') {
                 this._retrDppDeniedReason();
+            } else if (sSelectedScrn === 'Display') {
+                this._retrExistingDpp();
             } else {
                 return;
+            }
+        };
+
+        Controller.prototype._setInitScreen = function () {
+            var oDataSvc = this.getView().getModel('oDataSvc'),
+                sPath = "/DPPElgbles('" + this._coNum + "')",
+                that = this,
+                oParameters = {
+                    success : function (oData) {
+                        if (oData) {
+                            that.getView().getModel('oDppEligible').setData(oData);
+                            if (oData.Active) {
+                                that._selectScrn('Display');
+                            } else if (oData.Eligible) {
+                                that._selectScrn('StepOne');
+                            } else {
+                                that._selectScrn('DPPDenied');
+                            }
+                        }
+                    }.bind(this),
+                    error: function (oError) {
+                        //Need to put error message
+                        this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    }.bind(this)
+                };
+
+            if (oDataSvc && this._coNum) {
+                oDataSvc.read(sPath, oParameters);
             }
         };
 
         /****************************************************************************************************************/
         //Formatter
         /****************************************************************************************************************/
-
         Controller.prototype._isOdd = function (iIndex) {
             if (iIndex % 2 === 0) {
                 return false;
@@ -188,6 +184,54 @@ sap.ui.define(
         Controller.prototype._isEven = function (iIndex) {
             if (iIndex % 2 === 0) {
                 return true;
+            } else {
+                return false;
+            }
+        };
+
+        Controller.prototype._isOddDispConf = function (iIndex, sCleared) {
+            if (sCleared === "Yes") {
+                return false;
+            }
+
+            if (iIndex % 2 === 0) {
+                return false;
+            } else {
+                return true;
+            }
+        };
+
+        Controller.prototype._isEvenDispConf = function (iIndex, sCleared) {
+            if (sCleared === "Yes") {
+                return false;
+            }
+
+            if (iIndex % 2 === 0) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        Controller.prototype._isOddDispPaid = function (iIndex, sCleared) {
+            if (sCleared === "Yes") {
+                if (iIndex % 2 === 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        };
+
+        Controller.prototype._isEvenDispPaid = function (iIndex, sCleared) {
+            if (sCleared === "Yes") {
+                if (iIndex % 2 === 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -210,7 +254,6 @@ sap.ui.define(
         /****************************************************************************************************************/
         //Handler
         /****************************************************************************************************************/
-
         Controller.prototype._onDppDeniedOkClick = function () {    //Navigate to DPP setup if 'OK' is clicked
             var oModel = this.getOwnerComponent().getModel("comp-dppext"),
                 that = this,
@@ -225,7 +268,7 @@ sap.ui.define(
                 success : function (oData, oResponse) {
                     if (oData) {
                         ute.ui.main.Popup.Alert({
-                            title: 'Extension',
+                            title: 'DEFERRED PAYMENT PLAN',
                             message: oData.Message
                         });
                         that.navTo('billing.CheckBook', {bpNum: that._bpNum, caNum: that._caNum, coNum: that._coNum});
@@ -320,6 +363,7 @@ sap.ui.define(
             oDppConfs.setProperty('/results/0/SelTot', fCalculateSum.toString());
             oDppConfs.setProperty('/results/0/DiffTot', ((parseFloat(fCalculateSum) - parseFloat(fTotalAmount)).toFixed(2)).toString());
         };
+
         Controller.prototype._onDistributeDiffClick = function (oEvent) {
             var oDppConfs = this.getView().getModel('oDppConfs'),
                 iCount,
@@ -413,6 +457,7 @@ sap.ui.define(
             }
             oDppConfs.setProperty('/AllChecked', false);
         };
+
         Controller.prototype._formatPadZero = function (sNum, iSize) {
             while (sNum.length < iSize) {
                 sNum = '0' + sNum;
@@ -479,7 +524,6 @@ sap.ui.define(
                 content: oTag
             });
             AlertDialog.open();
-
         };
 
         Controller.prototype._onMain = function (oEvent) {
@@ -489,6 +533,7 @@ sap.ui.define(
                 this.navTo('dashboard.VerificationWithCa', {bpNum: this._bpNum, caNum: this._caNum});
             }
         };
+
         Controller.prototype._onCheckbook = function (oEvent) {
             if (this._coNum) {
                 this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
@@ -496,6 +541,7 @@ sap.ui.define(
                 this.navTo('billing.CheckBookNoCo', {bpNum: this._bpNum, caNum: this._caNum});
             }
         };
+
         Controller.prototype._onDppConfCancelClick = function (oEvent) {
             if (this._coNum) {
                 this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
@@ -632,6 +678,7 @@ sap.ui.define(
                 oODataSvc.read(sPath, oParameters);
             }
         };
+
         Controller.prototype._formatInvoiceDate = function (day, month, year) {
             // Pad the date and month
             if (day < 10) {day = '0' + day; }
@@ -639,6 +686,7 @@ sap.ui.define(
             // Format the startDate
             return month + '/' + day + '/' + year;
         };
+
         Controller.prototype._retrDisclosureMessage = function () {
             var oODataSvc = this.getView().getModel('oDataSvc'),
                 oParameters,
@@ -660,8 +708,6 @@ sap.ui.define(
             if (oODataSvc) {
                 oODataSvc.read(sPath, oParameters);
             }
-
-
         };
 
         Controller.prototype._postDPPConfRequest = function (oDataObject) {
@@ -933,8 +979,8 @@ sap.ui.define(
             //Model created for later posting
             this.getView().getModel('oDppStepOnePost').setData({});
 
-            aFilterIds = ["Contract", "BP", "CA"];
-            aFilterValues = [this._coNum, this._bpNum, this._caNum];
+            aFilterIds = ["Contract", "CA"];
+            aFilterValues = [this._coNum, this._caNum];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sPath = '/DPPSetUps';
 
@@ -967,6 +1013,44 @@ sap.ui.define(
                 oODataSvc.read(sPath, oParameters);
             }
         };
+
+        Controller.prototype._retrExistingDpp = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                i,
+                sStartDate,
+                aFilters,
+                aFilterValues,
+                aFilterIds;
+
+            //Model created for later posting
+            this.getView().getModel('oDppDisplay').setData({});
+
+            aFilterIds = ["BP", "CA"];
+            aFilterValues = [this._bpNum, this._caNum];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            sPath = '/DppDisplayS';
+
+            oParameters = {
+                filters : aFilters,
+                success : function (oData) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    if (oData) {
+                        this.getView().getModel('oDppDisplay').setData(oData);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                }.bind(this)
+            };
+
+            if (oODataSvc) {
+                oODataSvc.read(sPath, oParameters);
+            }
+        };
+
         /*-------------------------------------- Notificatiob Area (Jerry 11/18/2015) ---------------------------------------*/
 
         Controller.prototype._retrieveNotification = function () {

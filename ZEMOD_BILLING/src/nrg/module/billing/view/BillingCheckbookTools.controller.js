@@ -88,6 +88,7 @@ sap.ui.define(
             this.ABPPopupCustomControl.prepareABP();
         };
         Controller.prototype._onDppBtnClicked = function (oEvent) {
+ /*
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
                 sPath = '/EligCheckS(\'' + this._coNum + '\')',
                 oModel = this.getView().getModel('oDataEligSvc'),
@@ -112,6 +113,8 @@ sap.ui.define(
             if (oModel && this._coNum) {
                 oModel.read(sPath, oParameters);
             }
+   */
+            this.navTo('billing.DefferedPmtPlan', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
         };
 
         Controller.prototype._onExtnBtnClicked = function (oEvent) {
