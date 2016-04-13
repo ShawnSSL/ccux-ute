@@ -104,7 +104,7 @@
                         <c:Label text="{comp-campaign>Promo}"/>
                         <c:Label text="{comp-campaign>OfferCode}"/>
                         <c:Label text="{comp-campaign>Term}"/>
-                        <c:Label text="{path: 'comp-campaign>EffectDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                        <c:Label text="{path: 'comp-campaign>AvailDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
                         <c:Label text="{path: 'comp-campaign>EndDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
                         <c:Label text="{comp-campaign>CncFee}"/>
                         <c:Label text="{comp-campaign>Incentive}"/>
