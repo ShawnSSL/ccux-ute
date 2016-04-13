@@ -20,81 +20,83 @@
                    class="nrgdashco-root-btn"
                    press=".onClearSearch"   />
 
-   </u:Tag>
-    <u:Table width="auto"
-             id="idnrgdashCoTable"
-             class="nrgCamOvr-left nrgdashCo-top nrgdashCo-pendTable"
-            rows="{view-dashboard>/results}">
-                    <u:columns>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="Select"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="Contract Account"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="Contract"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="Status"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="Move In Date"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="Move Out Date"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="House"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="Street"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="Apt"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="City"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="State"/>
-                        </u:TableColumn>
-                        <u:TableColumn class="nrgdashCo-th">
-                            <c:Label text="Zip"/>
-                        </u:TableColumn>
-                    </u:columns>
-                    <u:rows>
-                        <u:TableRow>
-                            <um:RadioButton group="nrgCO" select=".onSelect"/>
-                            <c:Label text="{view-dashboard>CA}"/>
-                            <c:Label text="{view-dashboard>Contract}"/>
-                            <c:Label text="{view-dashboard>Status}"/>
-                            <c:Label text="{path: 'view-dashboard>MviDate',
-                                           type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
-                            <c:Label text="{path: 'view-dashboard>MvoDate',
-                                           type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
-                            <c:Label text="{view-dashboard>House}"/>
-                            <c:Label text="{view-dashboard>Street}"/>
-                            <c:Label text="{view-dashboard>Apt}"/>
-                            <c:Label text="{view-dashboard>City}"/>
-                            <c:Label text="{view-dashboard>State}"/>
-                            <c:Label text="{view-dashboard>ZIP}"/>
-                        </u:TableRow>
-                </u:rows>
-            </u:Table>
-          <u:Tag>
-            <u:Tag class="nrgdashCo-top">
+    </u:Tag>
+    <u:Tag class="nrgDashboard-viewAllPopup-scrollTable">
+        <u:Table width="auto"
+                 id="idnrgdashCoTable"
+                 class="nrgCamOvr-left nrgdashCo-top nrgdashCo-pendTable"
+                 rows="{view-dashboard>/results}">
+            <u:columns>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="Select"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="Contract Account"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="Contract"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="Status"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="Move In Date"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="Move Out Date"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="House"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="Street"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="Apt"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="City"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="State"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="Zip"/>
+                </u:TableColumn>
+            </u:columns>
+            <u:rows>
+                <u:TableRow>
+                    <um:RadioButton group="nrgCO" select=".onSelect"/>
+                    <c:Label text="{view-dashboard>CA}"/>
+                    <c:Label text="{view-dashboard>Contract}"/>
+                    <c:Label text="{view-dashboard>Status}"/>
+                    <c:Label text="{path: 'view-dashboard>MviDate',
+                                   type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                    <c:Label text="{path: 'view-dashboard>MvoDate',
+                                   type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                    <c:Label text="{view-dashboard>House}"/>
+                    <c:Label text="{view-dashboard>Street}"/>
+                    <c:Label text="{view-dashboard>Apt}"/>
+                    <c:Label text="{view-dashboard>City}"/>
+                    <c:Label text="{view-dashboard>State}"/>
+                    <c:Label text="{view-dashboard>ZIP}"/>
+                </u:TableRow>
+            </u:rows>
+        </u:Table>
+    </u:Tag>
+    <u:Tag>
+        <u:Tag class="nrgdashCo-top">
 <!--                <u:Button
-                    text="Ok"
-                    enabled="true"
-                    press=".SelectCO">
-                </u:Button>-->
-                <u:Button
-                    text="Cancel"
-                    enabled="true"
-                    press=".onCancelCO">
-                </u:Button>
-            </u:Tag>
-          </u:Tag>
+                text="Ok"
+                enabled="true"
+                press=".SelectCO">
+            </u:Button>-->
+            <u:Button
+                text="Cancel"
+                enabled="true"
+                press=".onCancelCO">
+            </u:Button>
+        </u:Tag>
+    </u:Tag>
 </u:Tag>
 </core:FragmentDefinition>
