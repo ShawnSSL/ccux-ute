@@ -176,7 +176,7 @@
             }
     }
     & > .nrgBilling-dPmtPln-lftArea > .nrgBilling-dPmtPln-lftArea-ctnt > .nrgBilling-dPmtPln-lftArea-ctnt-dueAmt{
-        margin-bottom: 10px;
+            margin-bottom: 10px;
     }
 
     & > .nrgBilling-dPmtPln-lftArea > .nrgBilling-dPmtPln-lftArea-ctnt > .nrgBilling-dPmtPln-lftArea-ctnt-dueAmt > .nrgBilling-dlcd-lbl{
@@ -606,4 +606,77 @@
 }
 .nrgBillingDiscButton {
     margin: 10px;
+}
+&  .nrgBilling-dPmtPln-lftArea > .nrgBilling-dPmtPln-lftArea-display {
+        margin-top: 10px;
+    & .nrgBilling-pending-fields {
+        margin: 5px 0px 0px 0px;
+        & > .nrgBilling-pending-lbl {
+                margin: 5px;
+                width: 15rem;
+            & > .uteMLbl-text {
+                   font-size: @nrgFontSize-base;
+                }
+        }
+    }
+    &  .nrgBilling-pending-hdr-lbl {
+            margin: 5px;
+            width: 15rem;
+        & > .uteMLbl-text {
+               font-size: @nrgFontSize-base;
+               font-weight: @nrgFontWeight-semiBold;
+            }
+    }
+    & .nrgBilling-dPmtPln-lftArea-ctnt-table > .nrgBilling-dPmtPln-lftArea-ctnt-hdr {
+        background-color: @nrgColor-blue-link;
+        border-radius: 3px;
+        font-weight: @nrgFontWeight-bold;
+        color: @nrgColor-blue-pearl;
+    }
+    & .nrgBilling-dPmtPln-lftArea-ctnt-table {
+        margin: 10px 30px 0px 0px;
+        display: inline-block;
+        vertical-align: top;
+    }
+    & .nrgBilling-dlch-j2 {
+	    width: 175px;
+    }
+    & .nrgBilling-dPmtPln-lftArea-fields {
+            font-weight: @nrgFontWeight-semiBold;
+            font-size: @nrgFontSize-base;
+            margin: 10px 0px;
+        & > .nrgBilling-dPmtPln-lftArea-fields-label {
+            width: 8rem;
+        }
+    }
+    & .nrgBilling-dlc-cell{
+        display: inline-block;
+        height: 33px;
+        border-right: @nrgColor-grey-light 1px solid;
+        border-left: @nrgColor-grey-highlight 1px solid;
+        padding-top: 6px;
+        padding-left: 6px;
+        vertical-align: top;
+    }
+    & .nrgBilling-dlch-j3{
+        width: 175px;
+        border-right: none;
+    }
+    & .nrgBilling-dPmtPln-lftArea-ctnt-tbl .nrgBilling-dlct-odd{
+        border-radius: 3px;
+    }
+
+    & .nrgBilling-dPmtPln-lftArea-ctnt-tbl .nrgBilling-dlct-evn{
+        border-radius: 3px;
+        background-color: @nrgColor-blue-pearl;
+    }
+
+    & .nrgBilling-dPmtPln-lftArea-ctnt-tbl > div > div{
+        vertical-align: middle;
+    }
+    & .nrgBilling-dPmtPln-lftArea-info {
+        margin: 10px;
+        padding: 10px;
+        border : 1px solid;
+    }
 }

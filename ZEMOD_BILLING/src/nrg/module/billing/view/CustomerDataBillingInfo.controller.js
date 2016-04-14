@@ -211,8 +211,13 @@ sap.ui.define(
                 };
 
             sPath = '/PostInvoices';
-            aFilterIds = ["ContractAccountNumber", "IsCheckBook"];
-            aFilterValues = [this._caNum, false];
+            if (this._coNum) {
+                aFilterIds = ["ContractAccountNumber", "IsCheckBook", "Contract"];
+                aFilterValues = [this._caNum, false, this._coNum];
+            } else {
+                aFilterIds = ["ContractAccountNumber", "IsCheckBook"];
+                aFilterValues = [this._caNum, false];
+            }
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oBindingInfo = {
                 model : "comp-billing",

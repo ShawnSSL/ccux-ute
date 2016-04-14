@@ -268,7 +268,7 @@ sap.ui.define(
                 success : function (oData, oResponse) {
                     if (oData) {
                         ute.ui.main.Popup.Alert({
-                            title: 'DEFERRED PAYMENT PLAN',
+                            title: 'DPP',
                             message: oData.Message
                         });
                         that.navTo('billing.CheckBook', {bpNum: that._bpNum, caNum: that._caNum, coNum: that._coNum});
@@ -593,7 +593,7 @@ sap.ui.define(
                     this._selectScrn('StepTwo');//Initiating step 2
                 } else {
                     ute.ui.main.Popup.Alert({
-                        title: 'DPP REASON',
+                        title: 'DPP',
                         message: 'Please select at least one open item'
                     });
                 }
@@ -876,7 +876,7 @@ sap.ui.define(
                     oTag.addContent(oText);
                     oTag.addContent(oOkButton);
                     oAlert_Dialog = new ute.ui.main.Popup.create({
-                        title: "DEFFERED PAYMENT PLAN",
+                        title: "DPP",
                         content: oTag
                     });
                     oAlert_Dialog.open();
@@ -885,8 +885,8 @@ sap.ui.define(
                 error: function (oError) {
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
-                        message: 'DEFFERED PAYMENT PLAN REQUEST FAILED'
+                        title: 'DPP',
+                        message: 'DEFERRED PAYMENT PLAN REQUEST FAILED'
                     });
                 }.bind(this)
             };
@@ -1027,13 +1027,10 @@ sap.ui.define(
             //Model created for later posting
             this.getView().getModel('oDppDisplay').setData({});
 
-            aFilterIds = ["BP", "CA"];
-            aFilterValues = [this._bpNum, this._caNum];
-            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
-            sPath = '/DppDisplayS';
-
+            sPath = "/DppDisplayS(BP='" + this._bpNum + "',CA='" + this._caNum + "')";
             oParameters = {
-                filters : aFilters,
+                //filters : aFilters,
+                urlParameters : {$expand: "Items"},
                 success : function (oData) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     if (oData) {
@@ -1237,7 +1234,7 @@ sap.ui.define(
             if (oData.eMailCheck) {
                 if (!oData.eMail) {
                     ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
+                        title: 'DPP',
                         message: 'Email field is empty'
                     });
                     return true;
@@ -1246,14 +1243,14 @@ sap.ui.define(
             if (oData.FaxCheck) {
                 if (!(oData.Fax)) {
                     ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
+                        title: 'DPP',
                         message: 'Please enter Fax Number'
                     });
                     return true;
                 }
                 if (!(oData.FaxTo)) {
                     ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
+                        title: 'DPP',
                         message: 'Please enter Fax To'
                     });
                     return true;
@@ -1263,35 +1260,35 @@ sap.ui.define(
                 if (olocalAddress.getProperty('/newAdd')) {
                     if (!(((olocalAddress.getProperty('/HouseNo')) && (olocalAddress.getProperty('/Street'))) || (olocalAddress.getProperty('/PoBox')))) {
                         ute.ui.main.Popup.Alert({
-                            title: 'DEFFERED PAYMENT PLAN',
+                            title: 'DPP',
                             message: 'Please enter street no & street name or PO Box'
                         });
                         return true;
                     }
                     if (!(olocalAddress.getProperty('/City'))) {
                         ute.ui.main.Popup.Alert({
-                            title: 'DEFFERED PAYMENT PLAN',
+                            title: 'DPP',
                             message: 'Please enter city'
                         });
                         return true;
                     }
                     if (!(olocalAddress.getProperty('/State'))) {
                         ute.ui.main.Popup.Alert({
-                            title: 'DEFFERED PAYMENT PLAN',
+                            title: 'DPP',
                             message: 'Please enter state'
                         });
                         return true;
                     }
                     if (!(olocalAddress.getProperty('/ZipCode'))) {
                         ute.ui.main.Popup.Alert({
-                            title: 'DEFFERED PAYMENT PLAN',
+                            title: 'DPP',
                             message: 'Please enter zip Code'
                         });
                         return true;
                     }
                     if (!(olocalAddress.getProperty('/Country'))) {
                         ute.ui.main.Popup.Alert({
-                            title: 'DEFFERED PAYMENT PLAN',
+                            title: 'DPP',
                             message: 'Please enter country'
                         });
                         return true;
@@ -1406,20 +1403,20 @@ sap.ui.define(
                     if (oData.Error) {
                         if (oData.Message) {
                             ute.ui.main.Popup.Alert({
-                                title: 'DEFFERED PAYMENT PLAN',
+                                title: 'DPP',
                                 message: oData.Message,
                                 callback: callQuickPay
                             });
                         } else {
                             ute.ui.main.Popup.Alert({
-                                title: 'DEFFERED PAYMENT PLAN',
+                                title: 'DPP',
                                 message: 'Correspondence Failed',
                                 callback: callQuickPay
                             });
                         }
                     } else {
                         ute.ui.main.Popup.Alert({
-                            title: 'DEFFERED PAYMENT PLAN',
+                            title: 'DPP',
                             message: 'Correspondence Successfully Sent.',
                             callback: callQuickPay
                         });
@@ -1427,7 +1424,7 @@ sap.ui.define(
                 }.bind(this),
                 error: function (oError) {
                     ute.ui.main.Popup.Alert({
-                        title: 'DEFFERED PAYMENT PLAN',
+                        title: 'DPP',
                         message: 'Correspondence Failed'
                     });
                 }.bind(this)

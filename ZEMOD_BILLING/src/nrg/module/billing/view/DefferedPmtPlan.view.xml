@@ -412,113 +412,74 @@
         <!-----------------------------------------------------------------------------DPP Display-------------------------------------------------------------------------->
         <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{oDppScrnControl>/Display}">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
-            <l:MatrixLayout>
-                <l:MatrixLayoutRow>
-                    <l:MatrixLayoutCell>
-                        <l:MatrixLayout>
-                            <l:MatrixLayoutRow>
-                                <l:MatrixLayoutCell>
-                                    <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt">
-                                        <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-hdr">
-                                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3" text="{comp-i18n-billing>nrgBilling-dpp-Amt}"/>
-                                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4" text="{comp-i18n-billing>nrgBilling-dpp-DueDte}"/>
-                                        </ute:Tag>
-                                        <ute:Tag content="{oDppDisplay>/results}" class="nrgBilling-dPmtPln-lftArea-ctnt-tbl">
-                                            <ute:Tag>
-                                                <ute:Tag class="nrgBilling-dlct-odd"
-                                                         visible="{parts:['oDppDisplay>Items/ItemNumber', 'oDppDisplay>Items/Cleared'], formatter:'._isOddDispConf'}">
-                                                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
-                                                             text="{path: 'oDppDisplay>Items/Amount', type: 'nrg.base.type.Price',
-                                                                    formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                                                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4"
-                                                             text="{path: 'oDppSetUps>OpenItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                                                </ute:Tag>
-                                                <ute:Tag class="nrgBilling-dlct-evn"
-                                                         visible="{parts:['oDppDisplay>Items/ItemNumber', 'oDppDisplay>Items/Cleared'], formatter:'._isEvenDispConf'}">
-                                                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
-                                                             text="{path: 'oDppDisplay>Items/Amount', type: 'nrg.base.type.Price',
-                                                                    formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                                                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4"
-                                                             text="{path: 'oDppDisplay>Items/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                                                </ute:Tag>
-                                            </ute:Tag>
-                                        </ute:Tag>
-                                    </ute:Tag>
-                                </l:MatrixLayoutCell>
-                                <l:MatrixLayoutCell>
-                                    <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt">
-                                        <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-hdr">
-                                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3" text="{comp-i18n-billing>nrgBilling-dpp-Amt}"/>
-                                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4" text="{comp-i18n-billing>nrgBilling-dpp-ClearDate}"/>
-                                        </ute:Tag>
-                                        <ute:Tag content="{oDppDisplay>/results}" class="nrgBilling-dPmtPln-lftArea-ctnt-tbl">
-                                            <ute:Tag>
-                                                <ute:Tag class="nrgBilling-dlct-odd"
-                                                         visible="{parts:['oDppDisplay>Items/ItemNumber', 'oDppDisplay>Items/Cleared'], formatter:'._isOddDispPaid'}">
-                                                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
-                                                             text="{path: 'oDppDisplay>Items/Amount', type: 'nrg.base.type.Price',
-                                                                    formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                                                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4"
-                                                             text="{path: 'oDppSetUps>OpenItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                                                </ute:Tag>
-                                                <ute:Tag class="nrgBilling-dlct-evn"
-                                                         visible="{parts:['oDppDisplay>Items/ItemNumber', 'oDppDisplay>Items/Cleared'], formatter:'._isEvenDispPaid'}">
-                                                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
-                                                             text="{path: 'oDppDisplay>Items/Amount', type: 'nrg.base.type.Price',
-                                                                    formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                                                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h4"
-                                                             text="{path: 'oDppDisplay>Items/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                                                </ute:Tag>
-                                            </ute:Tag>
-                                        </ute:Tag>
-                                    </ute:Tag>
-                                </l:MatrixLayoutCell>
-                            </l:MatrixLayoutRow>
-                        </l:MatrixLayout>
-                    </l:MatrixLayoutCell>
-                </l:MatrixLayoutRow>
-                <l:MatrixLayoutRow>
-                    <l:MatrixLayoutCell>
-                        <l:MatrixLayout class="nrgCamChg-mtx nrgCamChg-top">
-                            <l:MatrixLayoutRow>
-                                <l:MatrixLayoutCell>
-                                    <ute:Tag class="nrgBilling-dlbi-lbl" text="{comp-i18n-billing>nrgBilling-dpp-DppTtl}"/>
-                                </l:MatrixLayoutCell>
-                                <l:MatrixLayoutCell>
-                                    <ute:Tag class="nrgBilling-dlbi-val"
-                                             text="{path: 'oDppDisplay>/results/0/Total', type: 'nrg.base.type.Price',
-                                                    formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                                </l:MatrixLayoutCell>
-                            </l:MatrixLayoutRow>
-                            <l:MatrixLayoutRow>
-                                <l:MatrixLayoutCell>
-                                    <ute:Tag class="nrgBilling-dlbi-lbl" text="{comp-i18n-billing>nrgBilling-dpp-PaidTtl}"/>
-                                </l:MatrixLayoutCell>
-                                <l:MatrixLayoutCell>
-                                    <ute:Tag class="nrgBilling-dlbi-val"
-                                             text="{path: 'oDppDisplay>/results/0/Paid', type: 'nrg.base.type.Price',
-                                                    formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                                </l:MatrixLayoutCell>
-                            </l:MatrixLayoutRow>
-                            <l:MatrixLayoutRow>
-                                <l:MatrixLayoutCell>
-                                    <ute:Tag class="nrgBilling-dlbi-lbl" text="{comp-i18n-billing>nrgBilling-dpp-TtlOutstanding}"/>
-                                </l:MatrixLayoutCell>
-                                <l:MatrixLayoutCell>
-                                    <ute:Tag class="nrgBilling-dlbi-val"
-                                             text="{path: 'oDppDisplay>/results/0/Diff', type: 'nrg.base.type.Price',
-                                                    formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
-                                </l:MatrixLayoutCell>
-                            </l:MatrixLayoutRow>
-                        </l:MatrixLayout>
-                    </l:MatrixLayoutCell>
-                </l:MatrixLayoutRow>
-                <l:MatrixLayoutRow>
-                    <l:MatrixLayoutCell>
-                        <ute:Tag class="nrgBilling-dlbi-val" text="{path: 'oDppDisplay>/results/0/Message'}"/>
-                    </l:MatrixLayoutCell>
-                </l:MatrixLayoutRow>
-            </l:MatrixLayout>
+            <ute:Tag class="nrgBilling-dPmtPln-link">
+                <utmain:Button text="{comp-i18n-billing>nrgBilling-dpp-LinkMain}" design="None" press="._onCheckbook"/>
+            </ute:Tag>
+            <ute:Tag class="nrgBilling-dPmtPln-lftArea-divider"/>
+            <ute:Tag class="nrgBilling-dPmtPln-lftArea-top">
+                <ute:Tag class="nrgBilling-dPmtPln-lftArea-top-l">
+                    <ute:Tag class="nrgBilling-dltl-step" text="{comp-i18n-billing>nrgBilling-dpp-DppDisplay}"/>
+                </ute:Tag>
+            </ute:Tag>
+            <ute:Tag class="nrgBilling-dPmtPln-lftArea-display">
+              <ute:Tag class="nrgBilling-dPmtPln-lftArea-part1">
+                     <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-table">
+                       <ute:Tag text="Installments" class="nrgBilling-dPmtPln-lftArea-fields"/>
+                        <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-hdr">
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j2" text="Due"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j3" text="Amount"/>
+                        </ute:Tag>
+                        <ute:Tag content="{oDppDisplay>/Items/results}" class="nrgBilling-dPmtPln-lftArea-ctnt-tbl">
+                            <ute:Tag visible="{= ${oDppDisplay>Paid} ? false : true }">
+                                <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j2"
+                                text="{path: 'oDppDisplay>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                                <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j2"
+                                text="{oDppDisplay>Amount}" />
+                            </ute:Tag>
+                        </ute:Tag>
+                   </ute:Tag>
+                    <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-table">
+                       <ute:Tag text="Payments" class="nrgBilling-dPmtPln-lftArea-fields"/>
+                        <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-hdr">
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j2" text="Payment Received"/>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j3" text="Payment Amount"/>
+                        </ute:Tag>
+                        <ute:Tag content="{oDppDisplay>/Items/results}" class="nrgBilling-dPmtPln-lftArea-ctnt-tbl">
+                            <ute:Tag visible="{oDppDisplay>Paid}">
+                                <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j2"
+                                text="{path: 'oDppDisplay>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }" />
+                                <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j2"
+                                text="{oDppDisplay>Amount}" />
+                            </ute:Tag>
+                         </ute:Tag>
+                        <ute:Tag visible="{= ${oDppDisplay>/Paid} > 0.00 ? false : true }" >
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j2" text="NA" />
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-j2" text="NA" />
+                        </ute:Tag>
+                    </ute:Tag>
+              </ute:Tag>
+              <ute:Tag class="nrgBilling-dPmtPln-lftArea-part2">
+                    <ute:Tag class="nrgBilling-dPmtPln-lftArea-fields">
+                        <utmain:Label text="DPP Total" class="nrgBilling-dPmtPln-lftArea-fields-label"/>
+                        <ute:Textfield fieldType="Underlined" width="10rem" value="{oDppDisplay>/Total}" editable="false" class="nrgBilling-dPmtPln-lftArea-fields-value"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgBilling-dPmtPln-lftArea-fields" >
+                        <utmain:Label text="Minus Payments" class="nrgBilling-dPmtPln-lftArea-fields-label"/>
+                        <ute:Textfield fieldType="Underlined" width="10rem" value="{oDppDisplay>/Paid}" editable="false" class="nrgBilling-dPmtPln-lftArea-fields-value"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgBilling-dPmtPln-lftArea-fields">
+                        <utmain:Label text="Remaining Balance" class="nrgBilling-dPmtPln-lftArea-fields-label"/>
+                        <ute:Textfield fieldType="Underlined" width="10rem" value="{oDppDisplay>/Diff}" editable="false" class="nrgBilling-dPmtPln-lftArea-fields-value"/>
+                    </ute:Tag>
+                </ute:Tag>
+              <core:HTML content='&lt;div class=&quot;nrgBilling-dPmtPln-lftArea-info &quot;&gt;{oDppDisplay>/Message}&lt;/div&gt;'> </core:HTML>
+            </ute:Tag>
+            <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm">
+                <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-btn-left">
+                    <utmain:Button class="nrgBilling-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnOk}"
+                                   press="._onCheckbook"/>
+                </ute:Tag>
+            </ute:Tag>
         </ute:Tag>
         <!--Right Notification Area-->
         <ute:Tag class="nrgBilling-ext-rghtDiv">

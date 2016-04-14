@@ -139,7 +139,7 @@ sap.ui.define(
                         oLocalModel.setProperty("/pendingFlag1", !oData.ExtPending);
                         oLocalModel.setProperty("/pendingFlag2", oData.ExtPending);
                         this.getView().getModel('oExtEligible').setData(oData);
-                        if (this.getView().getModel('oExtEligible').getProperty('/ExtActive')) {
+                        if ((this.getView().getModel('oExtEligible').getProperty('/ExtActive')) || (this.getView().getModel('oExtEligible').getProperty('/ExtPending'))) {
                             this._selectScrn('EXTDisplay');
                         } else {
                             if (this.getView().getModel('oExtEligible').getProperty('/EligibleYes')) {

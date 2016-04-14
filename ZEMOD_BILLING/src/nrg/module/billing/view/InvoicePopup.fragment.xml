@@ -63,6 +63,7 @@
                     <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Rt"
                         editable="false" width="auto"/>
                 </ute:Tag>
+
                 <ute:Tag visible="{ parts:['oPmtItems>CurrChrgInd'],
                                     formatter:'._formatBoolCurChrg'}">
                     <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-dark-label"
