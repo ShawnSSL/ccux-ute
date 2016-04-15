@@ -61,7 +61,13 @@ sap.ui.define(
                         pinFirstCardInvoice : false,
                         pinFirstCardConsumption : false,
                         pin: false,
-                        Contract : ""
+                        Contract : "",
+                        proactive : 0,
+                        reactive : 0,
+                        save : 0,
+                        finalsave : 0,
+                        CYP: 0,
+                        search: 0
                     }),
                     bInvoiceFirstCard = true;
                 oModel.refresh(true, true);//If set to true then the model data will be removed/cleared.
@@ -98,6 +104,7 @@ sap.ui.define(
                     if ((aContent !== undefined) && (aContent.length > 0)) {
                         oNoDataTag.addStyleClass("nrgCamOff-hide");
                         oTileContainer.removeStyleClass("nrgCamOff-hide");
+                        that._updateCounts(oTileContainer.getContent());
                         aFilterIds = ["Type", "Type"];
                         aFilterValues = ["C", that._sType];
                         aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
@@ -122,6 +129,7 @@ sap.ui.define(
                                     }
                                 }
                             });
+
                         }
                     } else {
                         oNoDataTag.removeStyleClass("nrgCamOff-hide");
@@ -158,6 +166,57 @@ sap.ui.define(
             }
 
             //}
+        };
+       /**
+		 * Update the counts for each tier
+		 *
+		 * @function
+		 * @param {Array} aContent to be used as sPath for counts
+         *
+		 * @private
+		 */
+        Controller.prototype._updateCounts = function (aContent) {
+            var olocalModel = this.getView().getModel("localModel"),
+                iProactive = 0,
+                iReactive = 0,
+                iSave = 0,
+                iFinalSave = 0,
+                iSearch = 0,
+                iCYP = 0,
+                sType;
+            aContent.forEach(function (item) {
+                if (item) {
+                    if (item.getBindingContext("comp-campaign").getProperty("Type")) {
+                        sType = item.getBindingContext("comp-campaign").getProperty("Type");
+                        switch (sType) {
+                        case "P":
+                            iProactive = iProactive + 1;
+                            break;
+                        case "R":
+                            iReactive = iReactive + 1;
+                            break;
+                        case "S":
+                            iSave = iSave + 1;
+                            break;
+                        case "F":
+                            iFinalSave = iFinalSave + 1;
+                            break;
+                        case "Y":
+                            iCYP = iCYP + 1;
+                            break;
+                        case "SE":
+                            iSearch = iSearch + 1;
+                            break;
+                        }
+                    }
+                }
+            });
+            olocalModel.setProperty("/proactive", iProactive);
+            olocalModel.setProperty("/reactive", iReactive);
+            olocalModel.setProperty("/save", iSave);
+            olocalModel.setProperty("/finalsave", iFinalSave);
+            olocalModel.setProperty("/CYP", iCYP);
+            olocalModel.setProperty("/search", iSearch);
         };
        /**
 		 * Assign the filter objects based on the input selection
@@ -467,6 +526,7 @@ sap.ui.define(
                 oProactiveButton = this.getView().byId("idCamToggleBtn-P"),
                 oReactiveButton = this.getView().byId("idCamToggleBtn-R"),
                 oSaveButton = this.getView().byId("idCamToggleBtn-S"),
+                oCYPButton = this.getView().byId("idCamToggleBtn-Y"),
                 oFinalSaveButton = this.getView().byId("idCamToggleBtn-F"),
                 oSearchButton = this.getView().byId("idCamToggleBtn-SE"),
                 oNoDataTag = this.getView().byId("idnrgCamHisNoData"),
@@ -474,6 +534,7 @@ sap.ui.define(
             oProactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oReactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSaveButton.removeStyleClass("nrgCamOff-btn-selected");
+            oCYPButton.removeStyleClass("nrgCamOff-btn-selected");
             oSearchButton.removeStyleClass("nrgCamOff-btn-selected");
             oFinalSaveButton.removeStyleClass("nrgCamOff-btn-selected");
             sButtonText = oEvent.getSource().getId();
@@ -496,6 +557,10 @@ sap.ui.define(
             case "F":
                 aFilterValues = ["F", "C"];
                 this._sType = "F";
+                break;
+            case "Y":
+                aFilterValues = ["Y", "C"];
+                this._sType = "Y";
                 break;
             default:
                 aFilterValues = ["F", "C"];
@@ -527,7 +592,9 @@ sap.ui.define(
                         });
                     }
                 });
+                //that._updateCounts(oTileContainer.getContent());
             } else {
+                //that._updateCounts(oTileContainer.getContent());
                 oNoDataTag.removeStyleClass("nrgCamOff-hide");
                 oTileContainer.addStyleClass("nrgCamOff-hide");
             }
@@ -549,6 +616,7 @@ sap.ui.define(
                 oFinalSaveButton = this.getView().byId("idCamToggleBtn-F"),
                 oSearchButton = this.getView().byId("idCamToggleBtn-SE"),
                 oNoDataTag = this.getView().byId("idnrgCamHisNoData"),
+                oCYPButton = this.getView().byId("idCamToggleBtn-Y"),
                 aFilterIds,
                 aFilterValues,
                 aFilters,
@@ -564,6 +632,7 @@ sap.ui.define(
             oProactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oReactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSaveButton.removeStyleClass("nrgCamOff-btn-selected");
+            oCYPButton.removeStyleClass("nrgCamOff-btn-selected");
             oFinalSaveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSearchButton.addStyleClass("nrgCamOff-btn-selected");
             that.getOwnerComponent().getCcuxApp().setOccupied(true);
@@ -578,6 +647,7 @@ sap.ui.define(
                     var aContent = oTileContainer.getContent(),
                         oBinding = oTileContainer.getBinding("content");
                     if ((aContent !== undefined) && (aContent.length > 0)) {
+                        that._updateCounts(oTileContainer.getContent());
                         oNoDataTag.addStyleClass("nrgCamOff-hide");
                         oTileContainer.removeStyleClass("nrgCamOff-hide");
                         aFilterIds = ["Type", "Type"];
@@ -588,6 +658,7 @@ sap.ui.define(
                         oBinding.filter(aFilters, "Application");
                         that.getOwnerComponent().getCcuxApp().setOccupied(false);
                     } else {
+                        that._updateCounts(oTileContainer.getContent());
                         oNoDataTag.removeStyleClass("nrgCamOff-hide");
                         oTileContainer.addStyleClass("nrgCamOff-hide");
                     }

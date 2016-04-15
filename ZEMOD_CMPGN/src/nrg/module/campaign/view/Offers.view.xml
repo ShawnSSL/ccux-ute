@@ -71,7 +71,7 @@
                     <u:Tag class="nrgCmpOff-tier">
                         <um:Button id="idCamToggleBtn-P"
                             press=".toggleTier"
-                            text="{comp-i18n-campaign>nrgCmpOffTProactive}"
+                            text="{comp-i18n-campaign>nrgCmpOffTProactive} ({localModel>/proactive})"
                             class="nrgCamOff-offerBtn"
                             design="None">
                         </um:button>
@@ -79,7 +79,7 @@
                     <u:Tag class="nrgCmpOff-tier">
                         <um:Button id="idCamToggleBtn-R"
                             press=".toggleTier"
-                            text="{comp-i18n-campaign>nrgCmpOffTReactive}"
+                            text="{comp-i18n-campaign>nrgCmpOffTReactive} ({localModel>/reactive})"
                             class="nrgCamOff-offerBtn"
                             design="None">
                         </um:button>
@@ -87,7 +87,7 @@
                     <u:Tag class="nrgCmpOff-tier">
                         <um:Button id="idCamToggleBtn-S"
                             press=".toggleTier"
-                            text="{comp-i18n-campaign>nrgCmpOffTSave}"
+                            text="{comp-i18n-campaign>nrgCmpOffTSave} ({localModel>/save})"
                             class="nrgCamOff-offerBtn"
                             design="None">
                         </um:button>
@@ -95,7 +95,15 @@
                     <u:Tag class="nrgCmpOff-tier">
                         <um:Button id="idCamToggleBtn-F"
                             press=".toggleTier"
-                            text="{comp-i18n-campaign>nrgCmpOffTFinalSave}"
+                            text="{comp-i18n-campaign>nrgCmpOffTFinalSave} ({localModel>/finalsave})"
+                            class="nrgCamOff-offerBtn"
+                            design="None">
+                        </um:button>
+                    </u:Tag>
+                    <u:Tag class="nrgCmpOff-tier">
+                        <um:Button id="idCamToggleBtn-Y"
+                            press=".toggleTier"
+                            text="{comp-i18n-campaign>nrgCmpOffTCYP} ({localModel>/CYP})"
                             class="nrgCamOff-offerBtn"
                             design="None">
                         </um:button>
@@ -103,7 +111,7 @@
                     <u:Tag class="nrgCmpOff-tier">
                         <um:Button id="idCamToggleBtn-SE"
                             press=".promoSearch"
-                            text="{comp-i18n-campaign>nrgCmpOffTSearch}"
+                            text="{comp-i18n-campaign>nrgCmpOffTSearch} ({localModel>/search})"
                             class="nrgCamOff-offerBtn"
                             design="None">
                         </um:button>
