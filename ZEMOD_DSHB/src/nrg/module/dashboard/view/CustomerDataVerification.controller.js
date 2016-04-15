@@ -26,7 +26,7 @@ sap.ui.define(
 
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this.getOwnerComponent().getCcuxApp().setTitle('CUSTOMER DATA');
-
+            this.getOwnerComponent().getModel('comp-dashboard').setSizeLimit(1500);
             this.getView().setModel(this.getOwnerComponent().getModel('comp-dashboard'), 'oODataSvc');
 
             //Model to hold BP info

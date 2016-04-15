@@ -21,7 +21,7 @@
                    press=".onClearSearch"   />
 
     </u:Tag>
-    <u:Tag class="nrgDashboard-viewAllPopup-scrollTable">
+    <u:Tag class="nrgdashCo-root-scrollTable">
         <u:Table width="auto"
                  id="idnrgdashCoTable"
                  class="nrgCamOvr-left nrgdashCo-top nrgdashCo-pendTable"
