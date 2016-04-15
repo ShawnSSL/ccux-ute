@@ -502,6 +502,25 @@ sap.ui.define(
 
         };
         /**
+		 * show message for CYP and toggletier
+		 *
+		 * @function
+		 * @param {sap.ui.base.Event} oEvent pattern match event
+		 * @private
+		 */
+        Controller.prototype.toggleCYP = function (oEvent) {
+            var i18NModel = this.getOwnerComponent().getModel("comp-i18n-campaign"),
+                olocalModel = this.getView().getModel("localModel");
+            if (parseInt(olocalModel.getProperty("/CYP"), 10) > 0) {
+                this.toggleTier(oEvent);
+            } else {
+                ute.ui.main.Popup.Alert({
+                    title: 'Change Campaign',
+                    message: i18NModel.getProperty("nrgCmpOffCYPMsg")
+                });
+            }
+        };
+        /**
 		 * Binds the view based on the Tier selected like Proactive, Reactive, Save and Final Save
 		 *
 		 * @function

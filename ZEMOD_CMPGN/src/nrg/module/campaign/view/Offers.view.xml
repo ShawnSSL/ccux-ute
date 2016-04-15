@@ -102,7 +102,7 @@
                     </u:Tag>
                     <u:Tag class="nrgCmpOff-tier">
                         <um:Button id="idCamToggleBtn-Y"
-                            press=".toggleTier"
+                            press=".toggleCYP"
                             text="{comp-i18n-campaign>nrgCmpOffTCYP} ({localModel>/CYP})"
                             class="nrgCamOff-offerBtn"
                             design="None">
