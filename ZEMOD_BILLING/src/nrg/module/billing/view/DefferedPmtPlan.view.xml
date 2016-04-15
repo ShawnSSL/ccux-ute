@@ -56,7 +56,9 @@
                         </ute:Tag>
                         <ute:Tag class="nrgBilling-dlct-evn"
                                  visible="{parts:['oDppSetUps>OpenItems/ItemNumber'], formatter:'._isEven'}">
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h1"><utmain:Checkbox checked="{oDppSetUps>OpenItems/bSelected}"/></ute:Tag>
+                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h1">
+                            <utmain:Checkbox checked="{oDppSetUps>OpenItems/bSelected}" enabled="{= ${oDppSetUps>OpenItems/DisplayOnlyRow} ? false : true }" select="._onOneItemCheck"/>
+                            </ute:Tag>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h2" text="{oDppSetUps>OpenItems/Description}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h3"
                                      text="{path: 'oDppSetUps>OpenItems/Amount', type: 'nrg.base.type.Price',

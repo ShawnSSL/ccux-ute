@@ -36,19 +36,18 @@
                     <!-- Start Date -->
                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-ctnt">
                         <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-lbl"
-                                 text="{comp-i18n-billing>nrgBilling-billChkBook-Hdr-StaDate}"/>
+                                 text="{comp-i18n-billing>nrgBilling-billChkBook-Hdr-DateRange}"/>
                         <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-val"
-                                 text="{parts:['oChkbkHdr>/InvStrartDate'],
-                                        formatter:'._formatDate'}"/>
+                                 text="{path: 'oChkbkHdr>/InvStrartDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} } - {path: 'oChkbkHdr>/InvEndDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                         </ute:Tag>
                     <!-- End Date -->
-                    <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-ctnt">
+<!--                    <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-ctnt">
                         <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-lbl"
                                  text="{comp-i18n-billing>nrgBilling-billChkBook-Hdr-EndDate}"/>
                         <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-val"
                                  text="{parts:['oChkbkHdr>/InvEndDate'],
                                         formatter:'._formatDate'}"/>
-                    </ute:Tag>
+                    </ute:Tag>-->
                 </ute:Tag>
                 <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-mdl">
                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-mdl-onHover">
