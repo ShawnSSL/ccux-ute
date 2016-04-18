@@ -75,6 +75,7 @@ sap.ui.define(
             // Subscribe CO change events
             oEventBus.unsubscribe("nrg.module.dashoard", "eCoChanged", this._handleCoChanged, this);
             oEventBus.subscribe("nrg.module.dashoard", "eCoChanged", this._handleCoChanged, this);
+            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
         };
 
         /*--------------------------------------------------- CA Changes ----------------------------------------------------*/

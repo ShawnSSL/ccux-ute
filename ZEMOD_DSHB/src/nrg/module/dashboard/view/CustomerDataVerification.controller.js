@@ -40,10 +40,10 @@ sap.ui.define(
 
             //Model to hold all Contracts of selected Buag
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oAllContractsofBuag');
-
+            this.getView().getModel('oAllContractsofBuag').setSizeLimit(1500);
             //Model to hold all Buags
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oAllBuags');
-
+            this.getView().getModel('oAllBuags').setSizeLimit(1500);
             //Model to hold mailing/temp address
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDtaVrfyMailingTempAddr');
             //Model for Edit Popup Screen (Use the model to show on edit screen)
@@ -1179,7 +1179,10 @@ sap.ui.define(
                                 //oAllContractModel.setProperty('/selectedKey', '0');
                                 sSelectedItem = '0';
                             }
+                        } else {
+                            that._onCoSelected(-1);
                         }
+
                         // Reset the CO pagination
                         this._initCoPageModel();
                         // Set up the CO pagination
@@ -1420,20 +1423,38 @@ sap.ui.define(
         Controller.prototype._onCoSelected = function (sSelectedKey) {
             var iSelectedIndex = parseInt(sSelectedKey, 10);
 
-            // Load the selected CO info
-            this.getView().getModel('oDtaVrfyContract').setData(this.getView().getModel('oAllContractsofBuag').oData[iSelectedIndex]);
+            if (iSelectedIndex >= 0) {
+                  // Load the selected CO info
+                this.getView().getModel('oDtaVrfyContract').setData(this.getView().getModel('oAllContractsofBuag').oData[iSelectedIndex]);
 
-            // Update the CO pagination
-            this._refreshPaging();
+                // Update the CO pagination
+                this._refreshPaging();
 
-            // Publish the CO Change event to event bus
-            this._onCoChange(this.getView().getModel('oAllContractsofBuag').oData[iSelectedIndex]);
+                // Publish the CO Change event to event bus
+                this._onCoChange(this.getView().getModel('oAllContractsofBuag').oData[iSelectedIndex]);
 
-            // Confirm with WebUI and CCUX
-            this._routeInfoConfirm();
+                // Confirm with WebUI and CCUX
+                this._routeInfoConfirm();
 
-            // Update the linkability of METER lable
-            this._updateUsageLink();
+                // Update the linkability of METER lable
+                this._updateUsageLink();
+            } else {
+                  // Load the selected CO info
+                this.getView().getModel('oDtaVrfyContract').setData({});
+
+                // Update the CO pagination
+                this._refreshPaging();
+
+                // Publish the CO Change event to event bus
+                this._onCoChange({});
+
+                // Confirm with WebUI and CCUX
+                this._routeInfoConfirm();
+
+                // Update the linkability of METER lable
+                this._updateUsageLink();
+            }
+
         };
 
         Controller.prototype._onCoChange = function (oCoInfo) {
