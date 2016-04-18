@@ -28,7 +28,7 @@ sap.ui.define(
 		/* =========================================================== */
         Controller.prototype.onAfterRendering = function () {
             // Update Footer
-            this.getOwnerComponent().getCcuxApp().updateFooter(this._sBP, this._sCA, this._sContract);
+            //this.getOwnerComponent().getCcuxApp().updateFooter(this._sBP, this._sCA, this._sContract);
         };
         /* =========================================================== */
 		/* lifecycle method- Before Rendering                          */
