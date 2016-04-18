@@ -118,7 +118,7 @@ sap.ui.define(
             this.getOwnerComponent().getCcuxApp().attachNavLeft(this._navLeftCallBack, this);
 
             // Update Footer
-            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+            //this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
         };
 
 

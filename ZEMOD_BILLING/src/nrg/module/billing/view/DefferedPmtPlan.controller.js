@@ -82,8 +82,8 @@ sap.ui.define(
 
         Controller.prototype.onAfterRendering = function () {
             // Update Footer
-            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
-            this.getView().byId('nrgBilling-dpp-DppStartDate-id').attachBrowserEvent('select', this._handleDppStartDateChange, this);
+           // this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+            /*this.getView().byId('nrgBilling-dpp-DppStartDate-id').attachBrowserEvent('select', this._handleDppStartDateChange, this);*/
             this.getView().byId('nrgBilling-dpp-DppDueDate-id').attachBrowserEvent('select', this._handleDppFirstDueDateChange, this);
         };
 
@@ -562,8 +562,8 @@ sap.ui.define(
                 oSetUpsPost = this.getView().getModel('oDppStepOnePost'),
                 aSelectedInd = [],
                 oDppReason = this.getView().getModel('oDppReasons'),
-                sInstallments = oSetUpsPost.getProperty('/InstlmntNo'),
-                oStartDate = this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue();
+                sInstallments = oSetUpsPost.getProperty('/InstlmntNo');
+/*                oStartDate = this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue();*/
 
 
             if (!((!isNaN(parseFloat(sInstallments)) && isFinite(sInstallments)) && (parseInt(sInstallments, 10) > 0))) {
@@ -573,13 +573,13 @@ sap.ui.define(
                 });
                 return;
             }
-            if (!oStartDate) {
+/*            if (!oStartDate) {
                 ute.ui.main.Popup.Alert({
                     title: 'DPP',
                     message: 'Please enter Start Date.'
                 });
                 return;
-            }
+            }*/
             if (oDppReason.getProperty('/selectedReason')) {
                // oSetUpsPost.setProperty('/InstlmntNo', oSetUps.getProperty('/results/0/InstlmntNo'));
                 for (i = 0; i < oSetUps.getData().results.length; i = i + 1) {
@@ -617,11 +617,11 @@ sap.ui.define(
             //this.getView().byId('nrgBilling-dpp-ExtNewDate-id')
         };
 
-        Controller.prototype._handleDppStartDateChange = function (oEvent) {
+/*        Controller.prototype._handleDppStartDateChange = function (oEvent) {
             var oDppStartDate = new Date(this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue());
 
             this.getView().getModel('oDppSetUps').setProperty('/results/0/StartDate', oDppStartDate);
-        };
+        };*/
 
         Controller.prototype._handleDppFirstDueDateChange = function (oEvent) {
             var oDppFirstInslDate = new Date(this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue());
@@ -643,9 +643,11 @@ sap.ui.define(
                 sDueDate,
                 oSelectedStartDate;
 
-            oSelectedStartDate = new Date(this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue());
-            aFilterIds = ["BP", "CA", "Contract", "SelectedData", "InstlmntNo", "ZeroDwnPay", "InitialDate"];
-            aFilterValues = [this._bpNum, this._caNum, this._coNum, this.getView().getModel('oDppStepOneSelectedData').getJSON(), this.getView().getModel('oDppStepOnePost').getProperty('/InstlmntNo'), this.getView().getModel('oDppStepOnePost').getProperty('/ZeroDwnPay'), oSelectedStartDate];
+/*            oSelectedStartDate = new Date(this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue());*/
+/*            aFilterIds = ["BP", "CA", "Contract", "SelectedData", "InstlmntNo", "ZeroDwnPay", "InitialDate"];*/
+            aFilterIds = ["BP", "CA", "Contract", "SelectedData", "InstlmntNo", "ZeroDwnPay"];
+/*            aFilterValues = [this._bpNum, this._caNum, this._coNum, this.getView().getModel('oDppStepOneSelectedData').getJSON(), this.getView().getModel('oDppStepOnePost').getProperty('/InstlmntNo'), this.getView().getModel('oDppStepOnePost').getProperty('/ZeroDwnPay'), oSelectedStartDate];*/
+            aFilterValues = [this._bpNum, this._caNum, this._coNum, this.getView().getModel('oDppStepOneSelectedData').getJSON(), this.getView().getModel('oDppStepOnePost').getProperty('/InstlmntNo'), this.getView().getModel('oDppStepOnePost').getProperty('/ZeroDwnPay')];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
 
             sPath = '/DPPConfs';
@@ -999,8 +1001,8 @@ sap.ui.define(
                         this.getView().getModel('oDppSetUps').setProperty('/results/bSelectedAll', false);
                         this.getView().getModel('oDppStepOnePost').setProperty('/InstlmntNo', this.getView().getModel('oDppSetUps').getProperty('/results/0/InstlmntNo'));
                         this.getView().getModel('oDppStepOnePost').setProperty('/ZeroDwnPay', false);
-                        sStartDate = this._formatInvoiceDate(this.getView().getModel('oDppSetUps').getProperty('/results/0/StartDate').getDate(), this.getView().getModel('oDppSetUps').getProperty('/results/0/StartDate').getMonth() + 1, this.getView().getModel('oDppSetUps').getProperty('/results/0/StartDate').getFullYear());
-                        this.getView().byId('nrgBilling-dpp-DppStartDate-id').setDefaultDate(sStartDate);
+/*                        sStartDate = this._formatInvoiceDate(this.getView().getModel('oDppSetUps').getProperty('/results/0/StartDate').getDate(), this.getView().getModel('oDppSetUps').getProperty('/results/0/StartDate').getMonth() + 1, this.getView().getModel('oDppSetUps').getProperty('/results/0/StartDate').getFullYear());
+                        this.getView().byId('nrgBilling-dpp-DppStartDate-id').setDefaultDate(sStartDate);*/
                     }
                 }.bind(this),
                 error: function (oError) {

@@ -75,11 +75,11 @@
                         <utmain:RadioButton class="nrgBilling-dlbd-left-elem nrgBilling-dlbd-left-radio" checked="true"/>
                         <ute:Tag class="nrgBilling-dlbd-left-elem" text="{comp-i18n-billing>nrgBilling-dpp-Mondth}"/>
                     </ute:Tag>-->
-                    <ute:Tag class="nrgBilling-dlbd-rght">
+<!--                    <ute:Tag class="nrgBilling-dlbd-rght">
                         <ute:Tag class="nrgBilling-dlbd-left-elem" text="{comp-i18n-billing>nrgBilling-dpp-StartDate} "/>
                         <ute:DatePicker id="nrgBilling-dpp-DppStartDate-id" value=""/>
 
-                    </ute:Tag>
+                    </ute:Tag>-->
                     <ute:Tag class="nrgBilling-dlbd-install">
                         <ute:Tag elem="span" text="{comp-i18n-billing>nrgBilling-dpp-NmbrOfInstall}"/>
                         <ute:Textfield class="nrgBilling-dlbd-install-Num" fieldType="Underlined" width="22px"

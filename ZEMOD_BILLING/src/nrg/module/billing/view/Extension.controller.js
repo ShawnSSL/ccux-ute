@@ -58,7 +58,7 @@ sap.ui.define(
 		/* =========================================================== */
         Controller.prototype.onAfterRendering = function () {
             // Update Footer
-            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+            //this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
         };
         Controller.prototype.resetInfo = function () {
             var oContactLogArea = this.getView().byId('idnrgBilling-extDenCL');

@@ -46,7 +46,7 @@ sap.ui.define(
         CustomController.prototype.onAfterRendering = function () {
 
             // Update Footer
-            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+           // this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
 
             // Retrieve Notification
 
