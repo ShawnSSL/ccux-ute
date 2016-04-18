@@ -37,6 +37,7 @@ sap.ui.define(
 
             //Model to hold all Buags
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oAllBuags');
+            this.getView().getModel('oAllBuags').setSizeLimit(1500);
 
             //Model for Edit Popup Screen (Use the model to show on edit screen)
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDtaAddrEdit');
@@ -54,7 +55,7 @@ sap.ui.define(
 		/* =========================================================== */
         Controller.prototype.onAfterRendering = function () {
             // Update Footer
-            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+           // this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
         };
         Controller.prototype._initCaInfoConfigModel = function () {
             var configModel = this.getView().getModel('oCaInfoConfig');

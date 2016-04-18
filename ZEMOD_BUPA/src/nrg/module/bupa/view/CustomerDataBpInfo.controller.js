@@ -123,7 +123,7 @@ sap.ui.define(
             this._bpNum = oRouteInfo.parameters.bpNum;
             this._caNum = oRouteInfo.parameters.caNum;
             this._coNum = oRouteInfo.parameters.coNum;
-            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+            //this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
             // Initialize BP data
             this._initBPData();
 
