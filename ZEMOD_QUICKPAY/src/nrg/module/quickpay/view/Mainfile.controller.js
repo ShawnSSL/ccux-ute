@@ -48,7 +48,9 @@ sap.ui.define(
                     ABD: false,
                     CL: false,
                     CLI : false,
-                    SR: false
+                    SR: false,
+                    showCloseButton : true,
+                    showContactLog : true
                 }),
                 oContactModel,
                 fnRecievedHandler,
@@ -56,6 +58,7 @@ sap.ui.define(
             this._oFormatYyyymmdd = DateFormat.getInstance({
                 pattern: 'MM/dd/yyyy'
             });
+            this.getView().getModel('comp-quickpay').refresh(true, true);//If set to true then the model data will be removed/cleared.
             this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             oContactModel = new sap.ui.model.json.JSONModel();
@@ -123,6 +126,7 @@ sap.ui.define(
             oCreditCardDate.setDefaultDate(this._oFormatYyyymmdd.format(new Date(), true));
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             //oCreditCardDate.setMinDate(new Date());
+            this.setShowCloseButton(false);
             this.getView().setModel(oCreditCardModel, "quickpay-cc");
             WRRecievedHandler = function (oEvent) {
                 jQuery.sap.log.info("Date Received Succesfully");
@@ -248,7 +252,12 @@ sap.ui.define(
                 dCurrentDate.setMinutes("00");
                 dCurrentDate.setSeconds("00");
             }
-            sMessage = oContext.getProperty("CaName") + ", just to confirm, you have requested to make a payment today in the amount of  $" + parseFloat(oCreditCardAmount.getValue()).toFixed(2) + ". Is this correct?";
+            if ((oCreditCardDateValue.getTime() > dCurrentDate.getTime())) {
+                sMessage = oContext.getProperty("CaName") + ", just to confirm, you have requested to make a payment today in the amount of  $" + parseFloat(oCreditCardAmount.getValue()).toFixed(2) + " to be processed on " + oCreditCardDate.getValue() + ". Is this correct?";
+            } else {
+                sMessage = oContext.getProperty("CaName") + ", just to confirm, you have requested to make a payment today in the amount of  $" + parseFloat(oCreditCardAmount.getValue()).toFixed(2) + ". Is this correct?";
+            }
+
 
             oCallSubmit = function (bForward) {
                 if (!bForward) {
@@ -358,6 +367,7 @@ sap.ui.define(
                 fnRecievedHandler,
                 oPendingPaymentsModel = new JSONModel(),
                 that = this;
+            this.setShowCloseButton(false);
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             this._onToggleViews("PCC");
             this._aPendingSelPaths = [];
@@ -613,6 +623,7 @@ sap.ui.define(
                 oAppViewModel = this.getView().getModel("appView");
             oBankDraftDate.setDefaultDate(this._oFormatYyyymmdd.format(new Date(), true));
             //oBankDraftDate.setMinDate(new Date());
+            this.setShowCloseButton(false);
             oPopup.removeStyleClass("nrgQPPay-Popup");
             oPopup.addStyleClass("nrgQPPay-PopupWhite");
             oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
@@ -706,7 +717,14 @@ sap.ui.define(
                 oInvoiceDate,
                 oConfirmDateHandler,
                 oCallDateHandler,
-                iBankDraftAmount;
+                iBankDraftAmount,
+                dCurrentDate = new Date(),
+                sMessage,
+                oContext,
+                oPayAvailFlags = "/PayAvailFlagsSet" + "(BP='" + parseInt(this._sBP, 10) + "',CA='" +  parseInt(this._sCA, 10) + "')",
+                oConfirmMsgCallBack,
+                oCheckAmountFunction;
+            oContext = oModel.getContext(oPayAvailFlags);
             oMsgArea.removeStyleClass("nrgQPPay-hide");
             oMsgArea.addStyleClass("nrgQPPay-black");
             if (!this._ValidateValue(oBankDraftAmount.getValue(), "Enter Amount to be posted")) {
@@ -719,17 +737,38 @@ sap.ui.define(
             sBankKey = oBankAccountDropDown.getSelectedKey();
             sBankAccount = oModel.getProperty("/BankAccountSet(BP='" + this._sBP + "',CA='" + this._sCA + "',BankKey='" + sBankKey + "')/BankAccNum");
             sBankRouting = oModel.getProperty("/BankAccountSet(BP='" + this._sBP + "',CA='" + this._sCA + "',BankKey='" + sBankKey + "')/BankRouting");
-            this._OwnerComponent.getCcuxApp().setOccupied(true);
+
             oBankDraftDateValue = new Date(oBankDraftDate.getValue());
             iInvoiceAmount = parseInt(oBankDraftModel.getProperty("/InvoiceAmount"), 10) || 0;
             oInvoiceDate = oBankDraftModel.getProperty("/InvoiceDate");
+            if (oBankDraftDateValue) {
+                oBankDraftDateValue.setHours("00");
+                oBankDraftDateValue.setMinutes("00");
+                oBankDraftDateValue.setSeconds("00");
+            }
+
+            if (oInvoiceDate) {
+                oInvoiceDate.setHours("00");
+                oInvoiceDate.setMinutes("00");
+                oInvoiceDate.setSeconds("00");
+            }
+            if (dCurrentDate) {
+                dCurrentDate.setHours("00");
+                dCurrentDate.setMinutes("00");
+                dCurrentDate.setSeconds("00");
+            }
+            if ((oBankDraftDateValue.getTime() > dCurrentDate.getTime())) {
+                sMessage = oContext.getProperty("CaName") + ", just to confirm, you have requested to make a payment today in the amount of  $" + parseFloat(oBankDraftAmount.getValue()).toFixed(2) + " to be drafted on " + oBankDraftDate.getValue() + ". Is this correct?";
+            } else {
+                sMessage = oContext.getProperty("CaName") + ", just to confirm, you have requested to make a payment today in the amount of  $" + parseFloat(oBankDraftAmount.getValue()).toFixed(2) + ". Is this correct?";
+            }
             oConfirmCallbackHandler = function (sAction) {
                 switch (sAction) {
                 case ute.ui.main.Popup.Action.Yes:
-                    oCallFunctionHandler();
+                    oCallFunctionHandler(true);
                     break;
                 case ute.ui.main.Popup.Action.No:
-                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                    oCallFunctionHandler(false);
                     break;
                 case ute.ui.main.Popup.Action.Ok:
                     break;
@@ -738,16 +777,19 @@ sap.ui.define(
             oConfirmDateHandler = function (sAction) {
                 switch (sAction) {
                 case ute.ui.main.Popup.Action.Yes:
-                    oCallDateHandler();
+                    oCallDateHandler(true);
                     break;
                 case ute.ui.main.Popup.Action.No:
-                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                    oCallDateHandler(false);
                     break;
                 case ute.ui.main.Popup.Action.Ok:
                     break;
                 }
             };
-            oCallDateHandler = function () {
+            oCallDateHandler = function (bForward) {
+                if (!bForward) {
+                    return;
+                }
                 if ((oBankDraftAmount > 0) && (oInvoiceDate.getTime() < oBankDraftDateValue.getTime())) {
                     ute.ui.main.Popup.Confirm({
                         title: 'Information',
@@ -758,7 +800,10 @@ sap.ui.define(
                     oCallFunctionHandler();
                 }
             };
-            oCallFunctionHandler = function () {
+            oCallFunctionHandler = function (bForward) {
+                if (!bForward) {
+                    return;
+                }
                 mParameters = {
                     method : "POST",
                     urlParameters : {
@@ -796,18 +841,39 @@ sap.ui.define(
                         that._OwnerComponent.getCcuxApp().setOccupied(false);
                     }.bind(this)
                 };
+                that._OwnerComponent.getCcuxApp().setOccupied(true);
                 oModel.callFunction(sCurrentPath, mParameters);
             };
-            iBankDraftAmount = parseInt(oBankDraftAmount.getValue(), 10) || 0;
-            if (iBankDraftAmount > iInvoiceAmount) {
-                ute.ui.main.Popup.Confirm({
-                    title: 'Information',
-                    message: 'Payment amount is greater than Total amount due. Do you wish to continue?',
-                    callback: oConfirmDateHandler
-                });
-            } else {
-                oCallDateHandler();
-            }
+            oCheckAmountFunction = function (bForward) {
+                if (!bForward) {
+                    return;
+                }
+                iBankDraftAmount = parseInt(oBankDraftAmount.getValue(), 10) || 0;
+                if (iBankDraftAmount > iInvoiceAmount) {
+                    ute.ui.main.Popup.Confirm({
+                        title: 'Information',
+                        message: 'Payment amount is greater than Total amount due. Do you wish to continue?',
+                        callback: oConfirmDateHandler
+                    });
+                } else {
+                    oCallDateHandler();
+                }
+            };
+            oConfirmMsgCallBack = function (sAction) {
+                switch (sAction) {
+                case ute.ui.main.Popup.Action.Yes:
+                    oCheckAmountFunction(true);
+                    break;
+                case ute.ui.main.Popup.Action.No:
+                    oCheckAmountFunction(false);
+                    break;
+                }
+            };
+            ute.ui.main.Popup.Confirm({
+                title: 'Information',
+                message: sMessage,
+                callback: oConfirmMsgCallBack
+            });
         };
         /**
 		 * Pending Bank Draft Process initialization
@@ -829,6 +895,7 @@ sap.ui.define(
                 fnRecievedHandler,
                 oPendingPaymentsModel = new JSONModel(),
                 that = this;
+            this.setShowCloseButton(false);
             that._OwnerComponent.getCcuxApp().setOccupied(true);
             this._onToggleViews("PBD");
             this._aPendingSelPaths = [];
@@ -1054,6 +1121,7 @@ sap.ui.define(
             oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
             oReliantRedeem.addStyleClass("nrgQPPay-hide");
             this._onToggleViews("RED");
+            this.setShowCloseButton(false);
             oReliantDate.setValue(this._oFormatYyyymmdd.format(new Date(), true));
             oReliantDate.setEditable(false);
         };
@@ -1073,7 +1141,8 @@ sap.ui.define(
                 oReliantRedeem = this.getView().byId("idnrgQPCC-reliantRedeem"),
                 oReliantCard = this.getView().byId("idnrgQPCC-ReliantCard"),
                 fnRecievedHandler,
-                that = this;
+                that = this,
+                oBindingInfo;
             sCurrentPath = "/ReliantSet";
             oMsgArea.removeStyleClass("nrgQPPay-hide");
             oMsgArea.addStyleClass("nrgQPPay-black");
@@ -1082,7 +1151,7 @@ sap.ui.define(
             }
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             sCurrentPath = sCurrentPath + "(BP='" + this._sBP + "',CA='" + this._sCA + "',ReliantCard='" + oReliantCard.getValue() + "')";
-            fnRecievedHandler = function (oEvent) {
+/*            fnRecievedHandler = function (oEvent) {
                 if (oEvent.mParameters.data.Error !== "") {
                     that.getView().getModel("appView").setProperty("/message", oEvent.mParameters.data.Message);
                 } else {
@@ -1097,7 +1166,26 @@ sap.ui.define(
                 model : "comp-quickpay",
                 path : sCurrentPath,
                 events: {dataReceived : fnRecievedHandler}
-            });
+            });*/
+            oBindingInfo = {
+                success : function (oData) {
+                    if (oData && (oData.Error !== "")) {
+                        that.getView().getModel("appView").setProperty("/message", oData.Message);
+                    } else {
+                        that.getView().getModel("appView").setProperty("/message", "Success");
+                        oReliantButton.addStyleClass("nrgQPPay-hide");
+                        oReliantRedeem.removeStyleClass("nrgQPPay-hide");
+                    }
+                    jQuery.sap.log.info("Odata Read Successfully:::");
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                }.bind(this),
+                error: function (oError) {
+                    jQuery.sap.log.info("Error occured");
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sCurrentPath, oBindingInfo);
+            }
         };
 
         /**
@@ -1149,6 +1237,7 @@ sap.ui.define(
                     oPopup.removeStyleClass("nrgQPPay-PopupWhite");
                     oPopup.addStyleClass("nrgQPPay-Popup");
                     oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
+                    that.getView().getModel("appView").setProperty("/showContactLog", false);
                     that._onToggleViews("CLI");
                     oMsgArea.addStyleClass("nrgQPPay-hide");
                     jQuery.sap.log.info("Create successfull");
@@ -1184,6 +1273,7 @@ sap.ui.define(
                 oReceiptDate = this.getView().byId("idnrgQPRC-RcDate"),
                 that = this;
             //this._OwnerComponent.getCcuxApp().setOccupied(true);
+            this.setShowCloseButton(false);
             oReceiptDate.setValue(this._oFormatYyyymmdd.format(new Date(), true));
             oPopup.removeStyleClass("nrgQPPay-Popup");
             oPopup.addStyleClass("nrgQPPay-PopupWhite");
@@ -1394,9 +1484,14 @@ sap.ui.define(
 		 */
         Controller.prototype.onContactLog = function () {
             var oPopup = this.getView().byId("idnrgQPPay-Popup");
-            this._onToggleViews("CL");
-            oPopup.removeStyleClass("nrgQPPay-Popup");
-            oPopup.addStyleClass("nrgQPPay-PopupPayment");
+            if (this.getView().getModel("appView").getProperty("/showContactLog")) {
+                this._onToggleViews("CL");
+                oPopup.removeStyleClass("nrgQPPay-Popup");
+                oPopup.addStyleClass("nrgQPPay-PopupPayment");
+            } else {
+                this.onPopupClose();
+            }
+
         };
         /**
          * handler for contact log maintenance
@@ -1428,6 +1523,18 @@ sap.ui.define(
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
                 }
             });
+        };
+        /**
+         * handler close button issues
+		 *
+		 * @function onQuickPay
+         * @param {boolean} bValue = true to show; false to hide
+		 */
+        Controller.prototype.setShowCloseButton = function (bValue) {
+            var oAppViewModel = this.getView().getModel("appView");
+            if (oAppViewModel.getProperty("/showCloseButton") !== bValue) {
+                oAppViewModel.setProperty("/showCloseButton", bValue);
+            }
         };
         /**
          * handler for contact log maintenance

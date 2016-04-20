@@ -14,7 +14,7 @@
                 <um:Button press=".onPopupClose"
                                          class="nrgQPPay-close"
                                         design="None">
-                   <u:Tag class="nrgQPPayBt-close" id="idnrgQPPayBt-close" />
+                   <u:Tag class="nrgQPPayBt-close" id="idnrgQPPayBt-close" visible="{appView>/showCloseButton}" />
                 </um:Button>
             </u:Tag>
              <u:Tag visible="{appView>/SR}">

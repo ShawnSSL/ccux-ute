@@ -1,6 +1,6 @@
 /*globals sap, ute*/
 /*jslint nomen:true*/
-
+/*******************************************DEPRECATED**********************************************************************************/
 sap.ui.define(
     [
         'nrg/base/view/BaseController',
