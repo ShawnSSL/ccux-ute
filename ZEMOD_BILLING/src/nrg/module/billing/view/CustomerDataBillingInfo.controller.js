@@ -779,10 +779,7 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onDPPActive = function (oEvent) {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
-            oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "Z_DPP"
-            });
+            this.navTo('billing.DefferedPmtPlan', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
         };
         /**
 		 * Handler for ABP Active press

@@ -1674,6 +1674,7 @@ sap.ui.define(
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             aFilterIds = ["BP"];
             oContractsModel = new sap.ui.model.json.JSONModel();
+            oContractsModel.setSizeLimit(1500);
             aFilterValues = [this._bpNum];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             if (!this._oDialogFragment) {
