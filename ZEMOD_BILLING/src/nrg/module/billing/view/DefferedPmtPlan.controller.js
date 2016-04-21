@@ -542,6 +542,15 @@ sap.ui.define(
             }
         };
 
+        Controller.prototype._onDppCorresCancelClick = function (oEvent) {
+            var QuickControl = new QuickPayControl(),
+                that = this;
+            this.getView().addDependent(QuickControl);
+            QuickControl.openQuickPay(that._coNum, that._bpNum, that._caNum);
+            QuickControl.attachEvent("PaymentCompleted", function () {
+                that._onCheckbook();
+            }, this);
+        };
         Controller.prototype._onDppConfCancelClick = function (oEvent) {
             if (this._coNum) {
                 this.navTo('billing.CheckBook', {bpNum: this._bpNum, caNum: this._caNum, coNum: this._coNum});
