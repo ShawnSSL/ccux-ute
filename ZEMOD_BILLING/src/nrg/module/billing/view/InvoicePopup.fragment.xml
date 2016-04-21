@@ -52,8 +52,8 @@
 
         <ute:Tag content="{oPmtItems>/results}">
             <ute:Tag>
-                <ute:Tag visible="{ parts:['oPmtItems>CurrChrgInd'],
-                                    formatter:'._formatBoolCurChrg_Rev'}">
+                <ute:Tag visible="{ parts:[{path: 'oPmtItems>CurrChrgInd'}, {path: 'oPmtItems>ValueLt'}],
+                                    formatter:'._formatleftValue'}">
                     <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-label" editable="false"
                         text="{oPmtItems>ItemDesc}"/>
                     <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Lt" editable="false"
@@ -63,7 +63,16 @@
                     <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Rt"
                         editable="false" width="auto"/>
                 </ute:Tag>
-
+                <ute:Tag visible="{ parts:[{path: 'oPmtItems>CurrChrgInd'}, {path: 'oPmtItems>ValueLt'}, {path: 'oPmtItems>ValueRt'}],
+                                    formatter:'._formatRightValue'}">
+                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-label" editable="false"
+                        text="{oPmtItems>ItemDesc}"/>
+                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Lt" editable="false"/>
+                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Rt"
+                        editable="false" width="auto"  text="{path: 'oPmtItems>ValueRt',
+                               type: 'nrg.base.type.Price',
+                               formatOptions: { currencySymbol: ''}}"/>
+                </ute:Tag>
                 <ute:Tag visible="{ parts:['oPmtItems>CurrChrgInd'],
                                     formatter:'._formatBoolCurChrg'}">
                     <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-dark-label"

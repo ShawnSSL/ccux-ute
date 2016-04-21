@@ -373,13 +373,39 @@ sap.ui.define(
                 return false;
             }
         };
-        CustomController.prototype._formatBoolCurChrg_Rev = function (sIndicator) {
+        CustomController.prototype._formatleftValue = function (sIndicator, sLeftValue) {
+            if (sIndicator === 'X' || sIndicator === 'x') {
+                return false;
+            } else {
+                if (sLeftValue && (parseFloat(sLeftValue) > 0.00)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        CustomController.prototype._formatRightValue = function (sIndicator, sLeftValue, sRightValue) {
+            if (sIndicator === 'X' || sIndicator === 'x') {
+                return false;
+            } else {
+                if (sLeftValue && (parseFloat(sLeftValue) > 0.00)) {
+                    return false;
+                } else {
+                    if (sRightValue && (parseFloat(sRightValue) > 0.00)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        };
+/*        CustomController.prototype._formatBoolCurChrg_Rev = function (sIndicator) {
             if (sIndicator === 'X' || sIndicator === 'x') {
                 return false;
             } else {
                 return true;
             }
-        };
+        };*/
         CustomController.prototype._formatVisElig = function (sIndicator) {
             if (!sIndicator) {
                 return false;

@@ -89,7 +89,7 @@
                 </ute:Tag>
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-botm-zeroDown">
                     <utmain:Checkbox class="nrgBilling-dlbz-chk"
-                                     enabled="{oDppSetUps>/results/0/InstlmntNoAuth}"
+                                     enabled="{oDppSetUps>/results/0/ZeroDwPayAuth}"
                                      checked="{oDppStepOnePost>/ZeroDwnPay}"/>
                     <ute:Tag class="nrgBilling-dlbz-chkLabel" text="{comp-i18n-billing>nrgBilling-dpp-PlanZroDownPmt}"/>
                 </ute:Tag>
@@ -164,7 +164,7 @@
                 </ute:Tag>
                 <ute:Tag class="nrgBilling-dlct-date" visible="{= ${oDppStepOnePost>/ZeroDwnPay} ? false : true }">
                         <ute:Tag class="nrgBilling-dlct-date-lbl" text="{comp-i18n-billing>nrgBilling-dpp-FirstInstlDate} "/>
-                        <ute:DatePicker id="nrgBilling-dpp-DppDueDate-id"/>
+                        <ute:DatePicker id="nrgBilling-dpp-DppDueDate-id" editable="{oDppSetUps>/results/0/InstlmntNoAuth}"/>
                 </ute:Tag>
             </ute:Tag>
             <utmain:Infoline expanded="true" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline">

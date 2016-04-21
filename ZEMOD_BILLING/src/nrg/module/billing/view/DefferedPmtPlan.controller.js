@@ -643,10 +643,7 @@ sap.ui.define(
                 sDueDate,
                 oSelectedStartDate;
 
-/*            oSelectedStartDate = new Date(this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue());*/
-/*            aFilterIds = ["BP", "CA", "Contract", "SelectedData", "InstlmntNo", "ZeroDwnPay", "InitialDate"];*/
             aFilterIds = ["BP", "CA", "Contract", "SelectedData", "InstlmntNo", "ZeroDwnPay"];
-/*            aFilterValues = [this._bpNum, this._caNum, this._coNum, this.getView().getModel('oDppStepOneSelectedData').getJSON(), this.getView().getModel('oDppStepOnePost').getProperty('/InstlmntNo'), this.getView().getModel('oDppStepOnePost').getProperty('/ZeroDwnPay'), oSelectedStartDate];*/
             aFilterValues = [this._bpNum, this._caNum, this._coNum, this.getView().getModel('oDppStepOneSelectedData').getJSON(), this.getView().getModel('oDppStepOnePost').getProperty('/InstlmntNo'), this.getView().getModel('oDppStepOnePost').getProperty('/ZeroDwnPay')];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
 
@@ -660,6 +657,12 @@ sap.ui.define(
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             this.getView().getModel('oDppConfs').setProperty('/results/' + i + '/Checked', false);
                             this.getView().getModel('oDppConfs').setProperty('/results/' + i + '/ConfirmdItems/Amount', parseFloat(this.getView().getModel('oDppConfs').getProperty('/results/' + i + '/ConfirmdItems/Amount')));
+                        }
+                        if (this.getView().getModel('oDppConfs').getProperty('/results/0/DPPError')) {
+                            ute.ui.main.Popup.Alert({
+                                title: 'DPP',
+                                message: this.getView().getModel('oDppConfs').getProperty('/results/0/Message')
+                            });
                         }
                         this.getView().getModel('oDppConfs').setProperty('/results/AllChecked', false);
                         this.getView().getModel('oDppConfs').setProperty('/results/0/SelTot', 0);
