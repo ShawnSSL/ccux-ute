@@ -1173,6 +1173,10 @@ sap.ui.define(
                         that.getView().getModel("appView").setProperty("/message", oData.Message);
                     } else {
                         that.getView().getModel("appView").setProperty("/message", "Success");
+                        that.getView().byId("idnrgQPCC-Amt2").bindElement({
+                            model : "comp-quickpay",
+                            path : sCurrentPath
+                        });
                         oReliantButton.addStyleClass("nrgQPPay-hide");
                         oReliantRedeem.removeStyleClass("nrgQPPay-hide");
                     }

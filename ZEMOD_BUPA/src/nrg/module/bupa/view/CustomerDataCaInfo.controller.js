@@ -296,9 +296,8 @@ sap.ui.define(
                     if (oData && oData.Message) {
                         sap.ui.commons.MessageBox.alert(oData.Message);
                     } else {
-                        sap.ui.commons.MessageBox.alert("success");
+                        sap.ui.commons.MessageBox.alert("Address Updated Successfully");
                     }
-
                     //this._retrBuag(this.getView().getModel('oDtaVrfyBuags').getProperty('/PartnerID'), this.getView().getModel('oAllBuags').getProperty('/selectedKey'));
                     this._oMailEditPopup.close();
                     this._retrAllBuags(this._bpNum);
