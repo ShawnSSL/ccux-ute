@@ -408,7 +408,7 @@ sap.ui.define(
                     if (oData && oData.Message) {
                         sap.ui.commons.MessageBox.alert(oData.Message);
                     } else {
-                        sap.ui.commons.MessageBox.alert("success");
+                        sap.ui.commons.MessageBox.alert("Address Updated Successfully");
                     }
                     this._retrAllCa(this.getView().getModel('oDtaVrfyBuags').getProperty('/PartnerID'));
                     this._oMailEditPopup.close();
@@ -977,7 +977,7 @@ sap.ui.define(
                 success : function (oData) {
                     if (oData) {
                         // Determine if Seibel Customer
-                        if (oData.SiebelCustomer === 'X' || oData.SiebelCustomer === 'x') {this._showSiebelAlert(); }
+                        //if (oData.SiebelCustomer) {this._showSiebelAlert(); }
                         // Determine the SMS button
                         this.getView().getModel('oCfrmStatus').setProperty('/ShowSMSBtn', true);// change to show always
 
@@ -1038,20 +1038,7 @@ sap.ui.define(
             }
         };
 
-        Controller.prototype._showSiebelAlert = function () {
-            // Label the Siebel Customer
-            this._bSiebelCustomer = true;
-            // Disable the edit function
-            this.getView().getModel('oCfrmStatus').setProperty('/bEditable', false);
-            // Hide the buttons
-            this.getView().byId('id_confmBtn').setVisible(false);
-            this.getView().byId('id_updtBtn').setVisible(false);
-            // Display the alert
-            ute.ui.main.Popup.Alert({
-                title: 'Siebel Contracted Account',
-                message: 'This is a Siebel Contracted account. Connect the caller to the CI Account Management Team for all account inquiries during their business hours of 7:30 AM to 5:30 PM, Monday through Friday (except holidays). After Hours: For service outages and Other Service Order requests, follow the defined process. For all other call types provide the customer with the CI Account Management Team’s toll free number and ask the customer to call back during business hours.'
-            });
-        };
+
 
 
 
@@ -1127,6 +1114,8 @@ sap.ui.define(
                     if (parseInt(oAllCaModel.oData[i].ContractAccountID, 10) ===  parseInt(sCaNum, 10)) {
                         // Load as default to display
                         this.getView().getModel('oDtaVrfyBuags').setData(oAllCaModel.oData[i]);
+                        // once CA is selected or changed update and validate CA info
+                        this._onCaValidations();
                         // Retrieve the Mailing Address for the selected CA
                         this._retrCaMailingAddr(
                             this.getView().getModel('oDtaVrfyBuags').getProperty('/PartnerID'),
@@ -1182,7 +1171,7 @@ sap.ui.define(
                         } else {
                             that._onCoSelected(-1);
                         }
-
+                        this._onCOValidations();
                         // Reset the CO pagination
                         this._initCoPageModel();
                         // Set up the CO pagination
@@ -1340,6 +1329,35 @@ sap.ui.define(
         /************** CA Dropdown Select ************/
         /**********************************************/
 
+
+        Controller.prototype._onCaValidations = function () {
+            // To update global data manager
+            var oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager(),
+                oCAModel = this.getView().getModel('oDtaVrfyBuags');
+            if (oCAModel.getProperty('/BadgeSS')) {
+                oGlobalDataManager.setPrepay(true);
+            } else {
+                oGlobalDataManager.setPrepay(false);
+            }
+/*            if (oCAModel.getProperty('/BadgeSS')) {
+                oGlobalDataManager.setPrepay(true);
+            } else {
+                oGlobalDataManager.setPrepay(true);
+            } */
+/*            if (oCAModel.getProperty('/IsSiebelCust')) {
+                this._showSiebelAlert();
+            }*/
+        };
+        Controller.prototype._onCOValidations = function () {
+            // To update global data manager
+            var oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager(),
+                oCOModel = this.getView().getModel('oDtaVrfyContract');
+            if (oCOModel.getProperty('/IsREBs')) {
+                oGlobalDataManager.setREBS(true);
+            } else {
+                oGlobalDataManager.setREBS(false);
+            }
+        };
         Controller.prototype._onCaSelect = function (oEvent) {
             var sSelectedKey = oEvent.getParameters().selectedKey;
             this._onCaSelected(sSelectedKey);
@@ -1351,7 +1369,8 @@ sap.ui.define(
 
             // Load the selected CA info
             this.getView().getModel('oDtaVrfyBuags').setData(this.getView().getModel('oAllBuags').oData[iSelectedIndex]);
-
+            // once CA is selected or changed update and validate CA info
+            this._onCaValidations();
             // Publish the CA Change event to event bus
             this._onCaChange(iSelectedIndex);
 
@@ -1426,7 +1445,7 @@ sap.ui.define(
             if (iSelectedIndex >= 0) {
                   // Load the selected CO info
                 this.getView().getModel('oDtaVrfyContract').setData(this.getView().getModel('oAllContractsofBuag').oData[iSelectedIndex]);
-
+                this._onCOValidations();
                 // Update the CO pagination
                 this._refreshPaging();
 
@@ -1477,7 +1496,7 @@ sap.ui.define(
                 isPrepaidUser = false;
 
             // Determine if it is Prepaid User
-            if (badgeSS === 'x' || badgeSS === 'X') {
+            if (badgeSS) {
                 isPrepaidUser = true;
             }
 

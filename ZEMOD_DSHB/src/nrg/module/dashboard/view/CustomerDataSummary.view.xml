@@ -53,20 +53,14 @@
             <!-- CA Level Badges -->
             <ute:Badge id="idBadgeSS" size="30px"
                 class="nrgDashboard-cusDataSum-badge"
-                visible="{
-                    parts:['oSmryBuagInf>/BadgeSS'],
-                    formatter:'._formatBadge'
-                }"
+                visible="{oSmryBuagInf>/BadgeSS}"
                 design="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_SSClr}"
                 text="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_SSTxt}">
                 <ute:tooltip><c:RichTooltip  text="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_SSSummary}"/></ute:tooltip>
             </ute:Badge>
             <ute:Badge id="idBadgeGT" size="30px"
                 class="nrgDashboard-cusDataSum-badge"
-                visible="{
-                    parts:['oSmryBuagInf>/BadgeGT'],
-                    formatter:'._formatBadge'
-                }"
+                visible="{oSmryBuagInf>/BadgeGT}"
                 design="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_GTClr}"
                 text="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_GTTxt}">
                 <ute:tooltip><c:RichTooltip  text="{oSmryBuagInf>/GTText}"/></ute:tooltip>
@@ -144,14 +138,10 @@
                     design="None" visible="true"
                     press="._onBpNumClicked"
                     text="{oSmryBpInf>/PartnerID}"/>
-                <core:Icon visible="{
-                        parts:['oSmryBpInf>/SiebelCustomer'],
-                        formatter:'._formatSiebel'}"
+                <core:Icon visible="{oSmryBuagInf>/IsSiebelCust}"
                     src="sap-icon://nrg-icon/notification"
                     class="nrgDashboard-cusDataSum-bpCaArea-SiebelIcon"/>
-                <ute:Tag visible="{
-                        parts:['oSmryBpInf>/SiebelCustomer'],
-                        formatter:'._formatSiebel'}"
+                <ute:Tag visible="{oSmryBuagInf>/IsSiebelCust}"
                     elem="span"
                     id="id_siebel_alert" class="nrgDashboard-cusDataSum-bpCaArea-SiebelInd"
                     text="{comp-i18n-dashboard>nrgDashboardCusDatSum_SiebelAcc}">

@@ -183,14 +183,10 @@ sap.ui.define(
                 oModel.read(sPath, oParameters);
             }
         };
-
-
-        Controller.prototype._retrUrlHash = function () {
-            //Get the hash to retrieve bp #
-            var oHashChanger = new HashChanger(),
-                sUrlHash = oHashChanger.getHash();
-
-            return sUrlHash;
+        Controller.prototype._validateCA = function () {
+            if (this.getView().getModel('oSmryBuagInf').getProperty('/IsSiebelCust')) {
+                this._showSiebelAlert();
+            }
         };
 
         Controller.prototype._retrCaInf = function (sPath) {
@@ -211,7 +207,7 @@ sap.ui.define(
                         } else {
                             this.getView().getModel('oSmryBuagInf').setData(oData.results[0]);
                         }
-
+                        this._validateCA();
                         this._initRetrAssignedAccount(this.getView().getModel('oSmryBuagInf').getProperty('/ContractAccountID'));
                         this._caNum = this.getView().getModel('oSmryBuagInf').getProperty('/ContractAccountID');
                     }
@@ -229,6 +225,7 @@ sap.ui.define(
         Controller.prototype._selectBuag = function (iIndex) {
             if (this.getView().getModel('oSmryAllBuags').getProperty('/results').length >= iIndex) {
                 this.getView().getModel('oSmryBuagInf').setData(this.getView().getModel('oSmryAllBuags').getProperty('/results')[iIndex]);
+                this._validateCA();
                 this.getView().getModel('oSmryAllBuags').setProperty('/selectedIndex', iIndex);
                 if (this.getView().getModel('oSmryBuagInf').getProperty('/ContractAccountID')) {
                     this._initRetrAssignedAccount(this.getView().getModel('oSmryBuagInf').getProperty('/ContractAccountID'));
@@ -551,14 +548,27 @@ sap.ui.define(
                 return false;
             }
         };
-
-        Controller.prototype._formatSiebel = function (cIndicator) {
+        Controller.prototype._showSiebelAlert = function () {
+            // Label the Siebel Customer
+            this._bSiebelCustomer = true;
+            // Disable the edit function
+            this.getView().getModel('oCfrmStatus').setProperty('/bEditable', false);
+            // Hide the buttons
+            this.getView().byId('id_confmBtn').setVisible(false);
+            this.getView().byId('id_updtBtn').setVisible(false);
+            // Display the alert
+            ute.ui.main.Popup.Alert({
+                title: 'Siebel Contracted Account',
+                message: 'This is a Siebel Contracted account. Connect the caller to the CI Account Management Team for all account inquiries during their business hours of 7:30 AM to 5:30 PM, Monday through Friday (except holidays). After Hours: For service outages and Other Service Order requests, follow the defined process. For all other call types provide the customer with the CI Account Management Team’s toll free number and ask the customer to call back during business hours.'
+            });
+        };
+/*        Controller.prototype._formatSiebel = function (cIndicator) {
             if (cIndicator === 'x' || cIndicator === 'X') {
                 return true;
             } else {
                 return false;
             }
-        };
+        };*/
 
 
         return Controller;
