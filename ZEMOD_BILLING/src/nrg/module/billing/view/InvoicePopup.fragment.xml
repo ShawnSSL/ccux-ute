@@ -9,41 +9,37 @@
     xmlns:m="sap.m">
     <ute:Tag class="nrgBilling-invoicePopup">
         <ute:Tag elem="div">
-            <ute:TextView fieldType="Noborder"
-                editable="false" width="auto"
+            <ute:TextView width="auto"
                 text="{comp-i18n-billing>nrgBilling-invoicePopup-PREVIOUS_AMNT_DUE}"
                 class="nrgBilling-invoicePopup-label"/>
-            <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Lt"
-                editable="false" width="auto"
+            <ute:TextView class="nrgBilling-invoicePopup-value-Lt"
+                width="auto"
                 text="{path: 'oPmtSummary>/PrvAmtDue',
                        type: 'nrg.base.type.Price',
                        formatOptions: { currencySymbol: ''}}"/>
-            <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Rt"
-                editable="false" width="auto"/>
+            <ute:TextView class="nrgBilling-invoicePopup-value-Rt"
+                width="auto"/>
         </ute:Tag>
 
         <ute:Tag content="{oPmtPayments>/results}">
             <ute:Tag>
-                <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-label" editable="false"
-                    text="{oPmtPayments>ItemDesc}"/>
-                <ute:TextView fieldType="Underlined" class="nrgBilling-invoicePopup-value-Lt"
-                    editable="false" width="auto"
+                <ute:TextView class="nrgBilling-invoicePopup-label" text="{oPmtPayments>ItemDesc}"/>
+                <ute:TextView class="nrgBilling-invoicePopup-value-Lt"
+                   width="auto"
                     text="{path: 'oPmtPayments>Paidamt',
                            type: 'nrg.base.type.Price',
                            formatOptions: { currencySymbol: ''}}"/>
-                <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Rt"
-                    editable="false" width="auto"/>
+                <ute:TextView class="nrgBilling-invoicePopup-value-Rt"
+                    width="auto"/>
             </ute:Tag>
         </ute:Tag>
 
         <ute:Tag elem="div">
-            <ute:TextView fieldType="Noborder" editable="false"
-                text="{comp-i18n-billing>nrgBilling-invoicePopup-BAL_FORWARD}"
+            <ute:TextView text="{comp-i18n-billing>nrgBilling-invoicePopup-BAL_FORWARD}"
                 class="nrgBilling-invoicePopup-dark-label"/>
-            <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Lt nrgBilling-invoicePopup-borderTop"
-                    editable="false" width="auto"/>
-            <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-dark-value nrgBilling-invoicePopup-borderTop" editable="false"
-                text="{path: 'oPmtSummary>/BalFwd',
+            <ute:TextView class="nrgBilling-invoicePopup-value-Lt nrgBilling-invoicePopup-borderTop"
+                   width="auto"/>
+            <ute:TextView class="nrgBilling-invoicePopup-dark-value nrgBilling-invoicePopup-borderTop" text="{path: 'oPmtSummary>/BalFwd',
                        type: 'nrg.base.type.Price',
                        formatOptions: { currencySymbol: ''}}"/>
         </ute:Tag>
@@ -52,36 +48,30 @@
 
         <ute:Tag content="{oPmtItems>/results}">
             <ute:Tag>
-                <ute:Tag visible="{ parts:[{path: 'oPmtItems>CurrChrgInd'}, {path: 'oPmtItems>ValueLt'}],
+                <ute:Tag visible="{ parts:[{path: 'oPmtItems>CurrChrgInd'}, {path: 'oPmtItems>ValueLt'}, {path: 'oPmtItems>ValueRt'}, {path: 'oPmtItems>ItemDesc'}],
                                     formatter:'._formatleftValue'}">
-                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-label" editable="false"
-                        text="{oPmtItems>ItemDesc}"/>
-                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Lt" editable="false"
-                        text="{path: 'oPmtItems>ValueLt',
-                               type: 'nrg.base.type.Price',
-                               formatOptions: { currencySymbol: ''}}"/>
-                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Rt"
-                        editable="false" width="auto"/>
+                    <ute:TextView class="nrgBilling-invoicePopup-label" text="{oPmtItems>ItemDesc}"/>
+                    <ute:TextView class="nrgBilling-invoicePopup-value-Lt"
+                        text="{ parts:[{path: 'oPmtItems>ValueLt'}, {path: 'oPmtItems>ValueRt'}, {path: 'oPmtItems>ItemDesc'}],
+                                    formatter:'._formatleftDisplayValue'}"/>
+                    <ute:TextView class="nrgBilling-invoicePopup-value-Rt" width="auto" text=""/>
                 </ute:Tag>
-                <ute:Tag visible="{ parts:[{path: 'oPmtItems>CurrChrgInd'}, {path: 'oPmtItems>ValueLt'}, {path: 'oPmtItems>ValueRt'}],
+                <ute:Tag visible="{ parts:[{path: 'oPmtItems>CurrChrgInd'}, {path: 'oPmtItems>ValueLt'}, {path: 'oPmtItems>ValueRt'}, {path: 'oPmtItems>ItemDesc'}],
                                     formatter:'._formatRightValue'}">
-                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-label" editable="false"
-                        text="{oPmtItems>ItemDesc}"/>
-                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Lt" editable="false"/>
-                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Rt"
-                        editable="false" width="auto"  text="{path: 'oPmtItems>ValueRt',
-                               type: 'nrg.base.type.Price',
-                               formatOptions: { currencySymbol: ''}}"/>
+                    <ute:TextView class="nrgBilling-invoicePopup-label" text="{oPmtItems>ItemDesc}"/>
+                    <ute:TextView class="nrgBilling-invoicePopup-value-Lt" text=""/>
+                    <ute:TextView class="nrgBilling-invoicePopup-value-Rt"
+                        width="auto"  text="{ parts:[{path: 'oPmtItems>ValueLt'}, {path: 'oPmtItems>ValueRt'}, {path: 'oPmtItems>ItemDesc'}],
+                                    formatter:'._formatRightDisplayValue'}"/>
                 </ute:Tag>
                 <ute:Tag visible="{ parts:['oPmtItems>CurrChrgInd'],
                                     formatter:'._formatBoolCurChrg'}">
-                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-dark-label"
-                        editable="false" width="300px"
+                    <ute:TextView class="nrgBilling-invoicePopup-dark-label" width="300px"
                         text="{oPmtItems>ItemDesc}"/>
-                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-value-Lt nrgBilling-invoicePopup-borderTop"
-                        editable="false" width="auto"/>
-                    <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-dark-value nrgBilling-invoicePopup-borderTop"
-                        editable="false" width="100px"
+                    <ute:TextView class="nrgBilling-invoicePopup-value-Lt nrgBilling-invoicePopup-borderTop"
+                        width="auto" text="" />
+                    <ute:TextView class="nrgBilling-invoicePopup-dark-value nrgBilling-invoicePopup-borderTop"
+                        width="100px"
                         text="{path: 'oPmtItems>ValueRt',
                                type: 'nrg.base.type.Price',
                                formatOptions: { currencySymbol: ''}}"/>
@@ -92,12 +82,13 @@
         <ute:HorizontalDivider class="nrgBilling-invoicePopup-horDvi"/>
 
         <ute:Tag elem="div">
-            <ute:TextView fieldType="Noborder"
-                editable="false" width="300px"
+            <ute:TextView width="300px"
                 text="{comp-i18n-billing>nrgBilling-invoicePopup-AMNT_DUE}"
                 class="nrgBilling-invoicePopup-dark-label"/>
-            <ute:TextView fieldType="Noborder" class="nrgBilling-invoicePopup-dark-value"
-                editable="false" width="100px"
+            <ute:TextView class="nrgBilling-invoicePopup-value-Lt"
+                width="auto" text="" />
+            <ute:TextView class="nrgBilling-invoicePopup-dark-value"
+                 width="100px"
                 text="{path: 'oPmtSummary>/DueAmt',
                        type: 'nrg.base.type.Price',
                        formatOptions: { currencySymbol: ''}}"/>

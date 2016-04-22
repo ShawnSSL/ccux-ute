@@ -51,7 +51,9 @@ sap.ui.define(
             this.getView().setModel(new JSONModel({
                 GrantCL : "",
                 DeniedCL : "",
-                prepay : false
+                prepay : false,
+                showDownPay : false,
+                showFirstInstal : false
             }), 'oLocalModel');
             this.getView().setModel(new sap.ui.model.json.JSONModel({
                 current : false,
@@ -85,6 +87,7 @@ sap.ui.define(
            // this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
             /*this.getView().byId('nrgBilling-dpp-DppStartDate-id').attachBrowserEvent('select', this._handleDppStartDateChange, this);*/
             this.getView().byId('nrgBilling-dpp-DppDueDate-id').attachBrowserEvent('select', this._handleDppFirstDueDateChange, this);
+            this.getView().byId('nrgBilling-dpp-DppFirstInstlDate-id').attachBrowserEvent('select', this._handleDppFirstInstlChange, this);
         };
 
         Controller.prototype._checkPrePay = function () {
@@ -479,7 +482,11 @@ sap.ui.define(
                 fDifference = oDppConfs.getProperty('/results/0/DiffTot'),
                 iCount = 0,
                 sTemp,
-                bzeroDownPay = false;
+                bzeroDownPay = false,
+                sFirstinstlDate = this.getView().byId('nrgBilling-dpp-DppFirstInstlDate-id').getValue(),
+                oCurrentDate = new Date(),
+                oLocalModel = this.getView().getModel('oLocalModel'),
+                bFirstInstl = false;
 
             if (!((!isNaN(parseFloat(fDifference)) && isFinite(fDifference)) && (parseFloat(fDifference) === 0.00))) {
                 ute.ui.main.Popup.Alert({
@@ -488,14 +495,59 @@ sap.ui.define(
                 });
                 return;
             }
-            bzeroDownPay = oSetUpsPost.getProperty("/ZeroDwnPay") || false;
+            if (oCurrentDate) {
+                oCurrentDate.setHours("00");
+                oCurrentDate.setMinutes("00");
+                oCurrentDate.setSeconds("00");
+            }
+            bzeroDownPay = oLocalModel.getProperty("/showDownPay") || false;
             oDueDate = this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue();
-            if (!oDueDate && !bzeroDownPay) {
-                ute.ui.main.Popup.Alert({
-                    title: 'DPP',
-                    message: 'Please enter Down Payment Due Date.'
-                });
-                return;
+            if (bzeroDownPay) {
+                if (!oDueDate) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DPP',
+                        message: 'Please enter Down Payment Due Date.'
+                    });
+                    return;
+                }
+                oDueDate = new Date(oDueDate);
+                if (oDueDate) {
+                    oDueDate.setHours("00");
+                    oDueDate.setMinutes("00");
+                    oDueDate.setSeconds("00");
+                }
+/*                if (oCurrentDate.getTime() > oDueDate.getTime()) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'DPP',
+                        message: 'Due Date(s) can not be earlier than today.'
+                    });
+                    return;
+                }*/
+            }
+            bFirstInstl = oLocalModel.getProperty("/showFirstInstal") || false;
+            if (bFirstInstl) {
+                if (!sFirstinstlDate) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'DPP',
+                        message: 'Please enter First Instalment Date.'
+                    });
+                    return;
+                }
+                sFirstinstlDate = new Date(sFirstinstlDate);
+                if (sFirstinstlDate) {
+                    sFirstinstlDate.setHours("00");
+                    sFirstinstlDate.setMinutes("00");
+                    sFirstinstlDate.setSeconds("00");
+                }
+                if (oDueDate.getTime() > sFirstinstlDate.getTime()) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'DPP',
+                        message: 'Installment 2 must occur after ' + this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue()
+                    });
+                    return;
+                }
             }
             // First calculate the sum which is not checked and checked separately
             for (iCount = 0; iCount < oDppConfs.getData().results.length; iCount = iCount + 1) {
@@ -615,27 +667,29 @@ sap.ui.define(
             }
         };
 
-        Controller.prototype._handleExtDateChange = function (oEvent) {
-            var extDate = new Date(this.getView().byId('nrgBilling-dpp-ExtNewDate-id').getValue()),
-                oExtensions = this.getView().getModel('oExtExtensions'),
-                i;
-
-            for (i = 0; i < oExtensions.oData.results.length; i = i + 1) {
-                oExtensions.setProperty('/results/' + i + '/OpenItems/DefferalDate', extDate);
-            }
-            //this.getView().byId('nrgBilling-dpp-ExtNewDate-id')
-        };
-
-/*        Controller.prototype._handleDppStartDateChange = function (oEvent) {
-            var oDppStartDate = new Date(this.getView().byId('nrgBilling-dpp-DppStartDate-id').getValue());
-
-            this.getView().getModel('oDppSetUps').setProperty('/results/0/StartDate', oDppStartDate);
-        };*/
-
         Controller.prototype._handleDppFirstDueDateChange = function (oEvent) {
-            var oDppFirstInslDate = new Date(this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue());
+            var oDppFirstInslDate = new Date(this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue()),
+                aConfData = this.getView().getModel('oDppConfs').oData,
+                iCount = 0;
 
-            this.getView().getModel('oDppConfs').setProperty('/results/0/ConfirmdItems/DueDate', oDppFirstInslDate);
+            for (iCount = 0; iCount < aConfData.results.length; iCount = iCount + 1) {
+                if (aConfData.results[iCount].ConfirmdItems.IsDownPay) {
+                    this.getView().getModel('oDppConfs').setProperty('/results/' + iCount + '/ConfirmdItems/DueDate', oDppFirstInslDate);
+                }
+            }
+
+        };
+        Controller.prototype._handleDppFirstInstlChange = function (oEvent) {
+            var oDppFirstInslDate = new Date(this.getView().byId('nrgBilling-dpp-DppFirstInstlDate-id').getValue()),
+                aConfData = this.getView().getModel('oDppConfs').oData,
+                iCount = 0;
+
+            for (iCount = 0; iCount < aConfData.results.length; iCount = iCount + 1) {
+                if (aConfData.results[iCount].ConfirmdItems.Is1stInstall) {
+                    this.getView().getModel('oDppConfs').setProperty('/results/' + iCount + '/ConfirmdItems/DueDate', oDppFirstInslDate);
+                }
+            }
+
         };
 
         /****************************************************************************************************************/
@@ -661,6 +715,7 @@ sap.ui.define(
             oParameters = {
                 filters: aFilters,
                 success : function (oData) {
+                    var tempDate;
                     if (oData) {
                         this.getView().getModel('oDppConfs').setData(oData);
                         for (i = 0; i < oData.results.length; i = i + 1) {
@@ -676,9 +731,28 @@ sap.ui.define(
                         this.getView().getModel('oDppConfs').setProperty('/results/AllChecked', false);
                         this.getView().getModel('oDppConfs').setProperty('/results/0/SelTot', 0);
                         this._onStepTwoInstlChange();
-                        if (this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate')) {
-                            sDueDate = this._formatInvoiceDate(this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getDate(),      this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getMonth() + 1,    this.getView().getModel('oDppConfs').getProperty('/results/0/ConfirmdItems/DueDate').getFullYear());
-                            this.getView().byId('nrgBilling-dpp-DppDueDate-id').setDefaultDate(sDueDate);
+
+                        for (i = 0; i < oData.results.length; i = i + 1) {
+                            if (oData.results[i].ConfirmdItems.IsDownPay) {
+                                if (oData.results[i].ConfirmdItems.DueDate) {
+                                    tempDate = oData.results[i].ConfirmdItems.DueDate;
+                                    sDueDate = this._formatInvoiceDate(tempDate.getDate(), tempDate.getMonth() + 1, tempDate.getFullYear());
+                                    this.getView().getModel('oLocalModel').setProperty('/showDownPay', true);
+                                    this.getView().byId('nrgBilling-dpp-DppDueDate-id').setDefaultDate(sDueDate);
+                                }
+                            }
+                            if (oData.results[i].ConfirmdItems.Is1stInstall) {
+                                if (oData.results[i].ConfirmdItems.DueDate) {
+                                    tempDate = oData.results[i].ConfirmdItems.DueDate;
+                                    sDueDate = this._formatInvoiceDate(tempDate.getDate(), tempDate.getMonth() + 1, tempDate.getFullYear());
+                                    this.getView().getModel('oLocalModel').setProperty('/showFirstInstal', true);
+                                    this.getView().byId('nrgBilling-dpp-DppFirstInstlDate-id').setDefaultDate(sDueDate);
+                                }
+                            }
+                        }
+                        if (!(this.getView().getModel('oDppSetUps').getProperty('/results/0/InstlmntNoAuth'))) {
+                            this.getView().getModel('oLocalModel').setProperty('/showDownPay', false);
+                            this.getView().getModel('oLocalModel').setProperty('/showFirstInstal', false);
                         }
 
                     }
@@ -723,7 +797,7 @@ sap.ui.define(
                 oODataSvc.read(sPath, oParameters);
             }
         };
-
+// clear unnecessary fields
         Controller.prototype._postDPPConfRequest = function (oDataObject) {
             var oODataSvc = this.getView().getModel('oDataSvc'),
                 sPath,
@@ -758,7 +832,8 @@ sap.ui.define(
                 sTempCOpupz,
                 oContactLogArea = this.getView().byId('idnrgBilling-DPPAccCL'),
                 sDwnPayDate = this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue(),
-                oLocalModel = this.getView().getModel('oLocalModel');
+                oLocalModel = this.getView().getModel('oLocalModel'),
+                sFirstInstlDate = this.getView().byId('nrgBilling-dpp-DppFirstInstlDate-id').getValue();
 
             sPath = '/DPPConfs';
             oConfPost.setProperty('/CA', this._caNum);
@@ -772,12 +847,18 @@ sap.ui.define(
 
             oConfPost.setProperty('/ZeroDwnPay', oConf.oData.results[0].ZeroDwnPay);
 
-            oConfPost.setProperty('/InitialDate', oConf.oData.results[0].InitialDate);
+            if (sFirstInstlDate) {
+                oConfPost.setProperty('/InitialDate', new Date(sFirstInstlDate));
+            } else {
+                oConfPost.setProperty('/InitialDate', null);
+            }
+            if (sDwnPayDate) {
+                oConfPost.setProperty('/DwnPayDate', new Date(sDwnPayDate));
+            } else {
+                oConfPost.setProperty('/DwnPayDate', null);
+            }
 
             oConfPost.setProperty('/DwnPay', "'" + parseFloat(oConf.getProperty('/results/0/ConfirmdItems/Amount')) + "'");
-
-            oConfPost.setProperty('/DwnPayDate', new Date(sDwnPayDate) || new Date());
-
             oConfPost.setProperty('/ReasonCode', this.getView().getModel('oDppReasons').getProperty('/selectedKey'));
             oConfPost.setProperty('/Message', (oLocalModel.getProperty("/GrantCL") || ""));
 
@@ -844,39 +925,39 @@ sap.ui.define(
                 if (i === oConf.getData().results.length - 1) {
                     sCItemNum = sCItemNum + oConf.getData().results[i].ConfirmdItems.ItemNumber.toString();
                     sCAmt = sCAmt + sTempAmt;
-                    sCDueDate = sCDueDate + sTempDueDate;
+/*                    sCDueDate = sCDueDate + sTempDueDate;
                     sCClearDate = sCClearDate + sTempClearDate;
                     sCCleared = sCCleared + sTempCleared;
                     sCClearedAmt = sCClearedAmt + sTempClrAmt;
                     sCOpbel = sCOpbel + sTempCOpbel;
                     sCOpupw = sCOpupw + sTempCOpupw;
                     sCOpupk = sCOpupk + sTempCOpupk;
-                    sCOpupz = sCOpupz + sTempCOpupz;
+                    sCOpupz = sCOpupz + sTempCOpupz;*/
                 } else {
                     sCItemNum = sCItemNum + oConf.getData().results[i].ConfirmdItems.ItemNumber.toString() + ',';
                     sCAmt = sCAmt + sTempAmt + ',';
-                    sCDueDate = sCDueDate + sTempDueDate + ',';
+/*                    sCDueDate = sCDueDate + sTempDueDate + ',';
                     sCClearDate = sCClearDate + sTempClearDate + ',';
                     sCCleared = sCCleared + sTempCleared + ',';
                     sCClearedAmt = sCClearedAmt + sTempClrAmt + ',';
                     sCOpbel = sCOpbel + sTempCOpbel + ',';
                     sCOpupw = sCOpupw + sTempCOpupw + ',';
                     sCOpupk = sCOpupk + sTempCOpupk + ',';
-                    sCOpupz = sCOpupz + sTempCOpupz + ',';
+                    sCOpupz = sCOpupz + sTempCOpupz + ',';*/
                 }
 
             }
 
             oConfPost.setProperty('/CItemNum', sCItemNum);
             oConfPost.setProperty('/CAmt', sCAmt);
-            oConfPost.setProperty('/CDueDate', sCDueDate);
+/*            oConfPost.setProperty('/CDueDate', sCDueDate);
             oConfPost.setProperty('/CClearDate', sCClearDate);
             oConfPost.setProperty('/CCleared', sCCleared);
             oConfPost.setProperty('/CClearedAmt', sCClearedAmt);
             oConfPost.setProperty('/COpbel', sCOpbel);
             oConfPost.setProperty('/COpupw', sCOpupw);
             oConfPost.setProperty('/COpupk', sCOpupk);
-            oConfPost.setProperty('/COpupz', sCOpupz);
+            oConfPost.setProperty('/COpupz', sCOpupz);*/
             oParameters = {
                 merge: false,
                 success : function (oData) {

@@ -293,13 +293,13 @@ sap.ui.define(
                 aFilterValues,
                 aFilters;
 
-            //sPath = '/PaymentHdrs(\'' + sInvNum + '\')/Payments';
-            sPath = '/Payments';
-            aFilterIds = ['CA'];
+            sPath = '/PaymentHdrs(\'' + sInvNum + '\')/Payments';
+            //sPath = '/Payments(\'' + sInvNum + '\')';
+/*            aFilterIds = ['CA'];
             aFilterValues = [this._caNum];
-            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);*/
             oParameters = {
-                filters: aFilters,
+                //filters: aFilters,
                 success : function (oData) {
                     if (oData) {
                         this.getView().getModel('oPmtPayments').setData(oData);
@@ -373,18 +373,48 @@ sap.ui.define(
                 return false;
             }
         };
-        CustomController.prototype._formatleftValue = function (sIndicator, sLeftValue) {
+        CustomController.prototype._formatleftDisplayValue = function (sLeftValue, sRightValue, sDesc) {
+            if ((sLeftValue && parseFloat(sLeftValue) > 0.00) || (sRightValue && parseFloat(sRightValue) > 0.00)) {
+                if (sLeftValue) {
+                    return parseFloat(sLeftValue).toFixed(2);
+                } else {
+                    return '';
+                }
+            } else {
+                if (sDesc.toUpperCase().indexOf("PERIOD") >= 0) {
+                    return '';
+                }
+            }
+        };
+        CustomController.prototype._formatRightDisplayValue = function (sLeftValue, sRightValue, sDesc) {
+            if ((sLeftValue && parseFloat(sLeftValue) > 0.00) || (sRightValue && parseFloat(sRightValue) > 0.00)) {
+                if (sLeftValue) {
+                    return parseFloat(sRightValue).toFixed(2);
+                } else {
+                    return '0.00';
+                }
+            } else {
+                if (sDesc.toUpperCase().indexOf("PERIOD") >= 0) {
+                    return '';
+                }
+            }
+        };
+        CustomController.prototype._formatleftValue = function (sIndicator, sLeftValue, sRightValue, sDesc) {
             if (sIndicator === 'X' || sIndicator === 'x') {
                 return false;
             } else {
                 if (sLeftValue && (parseFloat(sLeftValue) > 0.00)) {
                     return true;
                 } else {
-                    return false;
+                    if (sRightValue && (parseFloat(sRightValue) > 0.00)) {
+                        return false;
+                    } else {
+                        return true;
+                    }
                 }
             }
         };
-        CustomController.prototype._formatRightValue = function (sIndicator, sLeftValue, sRightValue) {
+        CustomController.prototype._formatRightValue = function (sIndicator, sLeftValue, sRightValue, sDesc) {
             if (sIndicator === 'X' || sIndicator === 'x') {
                 return false;
             } else {

@@ -11,7 +11,7 @@
     controllerName="nrg.module.billing.view.DefferedPmtPlan">
     <ute:Tag class="nrgAppMain-generalContent nrgBilling-dPmtPln">
         <!----------------------------------------------------------------------------------STEP 1------------------------------------------------------------------->
-        <ute:Tag class="nrgBilling-dPmtPln-lftArea" visible="{oDppScrnControl>/StepOne}">
+        <ute:Tag class="nrgBilling-dPmtPln-lftArea" visible="{= ${oDppScrnControl>/StepOne} ? true : false }">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
             <ute:Tag class="nrgBilling-dPmtPln-link">
                 <utmain:Button text="{comp-i18n-billing>nrgBilling-dpp-LinkMain}" design="None" press="._onCheckbook"/>
@@ -98,7 +98,7 @@
             </ute:Tag>
         </ute:Tag>
         <!-------------------------------------------------------------------------Step 2------------------------------------------------------------------------------>
-        <ute:Tag class="nrgBilling-dPmtPln-lftArea" visible="{oDppScrnControl>/StepTwo}">
+        <ute:Tag class="nrgBilling-dPmtPln-lftArea" visible="{= ${oDppScrnControl>/StepTwo} ? true : false }">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
             <ute:Tag class="nrgBilling-dPmtPln-link">
                 <utmain:Button text="{comp-i18n-billing>nrgBilling-dpp-LinkMain}" design="None" press="._onCheckbook"/>
@@ -114,9 +114,6 @@
                     <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-h1"><utmain:Checkbox checked="{oDppConfs>/AllChecked}" select="._onDppConfAllCheck"/></ute:Tag>
                     <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i2" text="{comp-i18n-billing>nrgBilling-dpp-Amt}"/>
                     <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3" text="{comp-i18n-billing>nrgBilling-dpp-DueDte}"/>
-                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i4" text="{comp-i18n-billing>nrgBilling-dpp-ClearDate}"/>
-                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i5" text="{comp-i18n-billing>nrgBilling-dpp-Cleared}"/>
-                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i6" text="{comp-i18n-billing>nrgBilling-dpp-ClearAmt}"/>
                 </ute:Tag>
                 <ute:Tag content="{oDppConfs>/results}" class="nrgBilling-dPmtPln-lftArea-ctnt-tbl">
                     <ute:Tag>
@@ -133,12 +130,6 @@
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3"
                                      text="{path: 'oDppConfs>ConfirmdItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i4"
-                                     text="{path: 'oDppConfs>ConfirmdItems/ClearDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i5" text="{oDppConfs>ConfirmdItems/Cleared}"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i6"
-                                     text="{path: 'oDppConfs>ConfirmdItems/ClearedAmt', type: 'nrg.base.type.Price',
-                                            formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
                         </ute:Tag>
                         <ute:Tag class="nrgBilling-dlct-evn"
                                  visible="{parts:['oDppConfs>ConfirmdItems/ItemNumber'], formatter:'._isEven'}">
@@ -151,20 +142,19 @@
                                                formatOptions: { minFractionDigits: '2', maxFractionDigits: '2' }}"
                                                 change="._onStepTwoInstlChange" enterKeyPress="_onStepTwoInstlChange" liveChange="_onStepTwoInstlChange"/>
                             </ute:Tag>
+
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i3"
                                      text="{path: 'oDppConfs>ConfirmdItems/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i4"
-                                     text="{path: 'oDppConfs>ConfirmdItems/ClearDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i5" text="{oDppConfs>ConfirmdItems/Cleared}"/>
-                            <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-i6"
-                                     text="{path: 'oDppConfs>ConfirmdItems/ClearedAmt', type: 'nrg.base.type.Price',
-                                            formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
                         </ute:Tag>
                     </ute:Tag>
                 </ute:Tag>
-                <ute:Tag class="nrgBilling-dlct-date" visible="{= ${oDppStepOnePost>/ZeroDwnPay} ? false : true }">
+                <ute:Tag class="nrgBilling-dlct-date" visible="{= ${oLocalModel>/showDownPay} ? true : false }">
+                        <ute:Tag class="nrgBilling-dlct-date-lbl" text="{comp-i18n-billing>nrgBilling-dpp-DownPaymentDueDate} "/>
+                        <ute:DatePicker id="nrgBilling-dpp-DppDueDate-id" editable="{oDppSetUps>/results/0/InstlmntNoAuth}" change="._handleDppFirstDueDateChange"/>
+                </ute:Tag>
+                <ute:Tag class="nrgBilling-dlct-date" visible="{= ${oLocalModel>/showFirstInstal} ? true : false }">
                         <ute:Tag class="nrgBilling-dlct-date-lbl" text="{comp-i18n-billing>nrgBilling-dpp-FirstInstlDate} "/>
-                        <ute:DatePicker id="nrgBilling-dpp-DppDueDate-id" editable="{oDppSetUps>/results/0/InstlmntNoAuth}"/>
+                        <ute:DatePicker id="nrgBilling-dpp-DppFirstInstlDate-id" editable="{oDppSetUps>/results/0/InstlmntNoAuth}" change="._handleDppFirstInstlChange"/>
                 </ute:Tag>
             </ute:Tag>
             <utmain:Infoline expanded="true" class="nrgBilling-dPmtPln-lftArea-ctnt-infoline">
@@ -230,7 +220,7 @@
             </ute:Tag>
         </ute:Tag>
         <!-----------------------------------------------------------------------Step 3------------------------------------------------------------------------>
-        <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{oDppScrnControl>/StepThree}">
+        <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{= ${oDppScrnControl>/StepThree} ? true : false }">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
             <ute:Tag class="nrgBilling-dPmtPln-link">
                 <utmain:Button text="{comp-i18n-billing>nrgBilling-dpp-LinkMain}" design="None" press="._onCheckbook"/>
@@ -356,7 +346,7 @@
             </ute:Tag>
         </ute:Tag>
         <!-----------------------------------------------------------------------------DPP Denied-------------------------------------------------------------------------->
-        <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{oDppScrnControl>/DPPDenied}">
+        <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{= ${oDppScrnControl>/DPPDenied} ? true : false }">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
             <ute:Tag class="nrgBilling-dPmtPln-link">
                 <utmain:Button text="{comp-i18n-billing>nrgBilling-dpp-LinkMain}" design="None" press="._onCheckbook"/>
@@ -412,7 +402,7 @@
             </ute:Tag>
         </ute:Tag>
         <!-----------------------------------------------------------------------------DPP Display-------------------------------------------------------------------------->
-        <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{oDppScrnControl>/Display}">
+        <ute:Tag class="nrgBilling-dPmtPln-lftArea"  visible="{= ${oDppScrnControl>/Display} ? true : false }">
             <ute:Tag class="nrgBilling-dPmtPln-title" text="{comp-i18n-billing>nrgBilling-dpp-PageTitle}"/>
             <ute:Tag class="nrgBilling-dPmtPln-link">
                 <utmain:Button text="{comp-i18n-billing>nrgBilling-dpp-LinkMain}" design="None" press="._onCheckbook"/>
