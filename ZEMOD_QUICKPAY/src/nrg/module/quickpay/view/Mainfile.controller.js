@@ -797,7 +797,7 @@ sap.ui.define(
                         callback: oConfirmCallbackHandler
                     });
                 } else {
-                    oCallFunctionHandler();
+                    oCallFunctionHandler(true);
                 }
             };
             oCallFunctionHandler = function (bForward) {
@@ -856,7 +856,7 @@ sap.ui.define(
                         callback: oConfirmDateHandler
                     });
                 } else {
-                    oCallDateHandler();
+                    oCallDateHandler(true);
                 }
             };
             oConfirmMsgCallBack = function (sAction) {
