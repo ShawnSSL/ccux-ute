@@ -549,13 +549,6 @@ sap.ui.define(
             }
         };
         Controller.prototype._showSiebelAlert = function () {
-            // Label the Siebel Customer
-            this._bSiebelCustomer = true;
-            // Disable the edit function
-            this.getView().getModel('oCfrmStatus').setProperty('/bEditable', false);
-            // Hide the buttons
-            this.getView().byId('id_confmBtn').setVisible(false);
-            this.getView().byId('id_updtBtn').setVisible(false);
             // Display the alert
             ute.ui.main.Popup.Alert({
                 title: 'Siebel Contracted Account',

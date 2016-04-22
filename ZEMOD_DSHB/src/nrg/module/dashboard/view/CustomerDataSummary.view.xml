@@ -42,10 +42,7 @@
             </ute:Badge>
             <ute:Badge id="idBadgeCI" size="30px"
                 class="nrgDashboard-cusDataSum-badge"
-                visible="{
-                    parts:['oSmryBpInf>/BadgeCI'],
-                    formatter:'._formatBadge'
-                }"
+                visible="{= ${oSmryBuagInf>/IsCNI} ? true : false }"
                 design="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_CIClr}"
                 text="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_CITxt}">
                 <ute:tooltip><c:RichTooltip  text="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_CISummary}"/></ute:tooltip>
@@ -53,14 +50,14 @@
             <!-- CA Level Badges -->
             <ute:Badge id="idBadgeSS" size="30px"
                 class="nrgDashboard-cusDataSum-badge"
-                visible="{oSmryBuagInf>/BadgeSS}"
+                visible="{= ${oSmryBuagInf>/BadgeSS} ? true : false }"
                 design="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_SSClr}"
                 text="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_SSTxt}">
                 <ute:tooltip><c:RichTooltip  text="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_SSSummary}"/></ute:tooltip>
             </ute:Badge>
             <ute:Badge id="idBadgeGT" size="30px"
                 class="nrgDashboard-cusDataSum-badge"
-                visible="{oSmryBuagInf>/BadgeGT}"
+                visible="{= ${oSmryBuagInf>/BadgeGT} ? true : false }"
                 design="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_GTClr}"
                 text="{comp-i18n-dashboard>nrgDashboardCusDatSum_Bg_GTTxt}">
                 <ute:tooltip><c:RichTooltip  text="{oSmryBuagInf>/GTText}"/></ute:tooltip>
@@ -138,10 +135,10 @@
                     design="None" visible="true"
                     press="._onBpNumClicked"
                     text="{oSmryBpInf>/PartnerID}"/>
-                <core:Icon visible="{oSmryBuagInf>/IsSiebelCust}"
+                <core:Icon visible="{= ${oSmryBuagInf>/IsSiebelCust} ? true : false }"
                     src="sap-icon://nrg-icon/notification"
                     class="nrgDashboard-cusDataSum-bpCaArea-SiebelIcon"/>
-                <ute:Tag visible="{oSmryBuagInf>/IsSiebelCust}"
+                <ute:Tag visible="{= ${oSmryBuagInf>/IsSiebelCust} ? true : false }"
                     elem="span"
                     id="id_siebel_alert" class="nrgDashboard-cusDataSum-bpCaArea-SiebelInd"
                     text="{comp-i18n-dashboard>nrgDashboardCusDatSum_SiebelAcc}">
