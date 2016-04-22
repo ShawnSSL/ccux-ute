@@ -220,7 +220,7 @@ sap.ui.define(
             this.updateFooterNotification(channel, event, data);
             this.updateFooterRhs(channel, event, data);
             this.updateFooterCampaign(channel, event, data);
-            this.footerClose();
+            //this.footerClose();
         };
 
         /*--------------------------- Notification ---------------------------*/
