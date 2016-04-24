@@ -545,7 +545,7 @@ sap.ui.define(
                 oProactiveButton = this.getView().byId("idCamToggleBtn-P"),
                 oReactiveButton = this.getView().byId("idCamToggleBtn-R"),
                 oSaveButton = this.getView().byId("idCamToggleBtn-S"),
-                oCYPButton = this.getView().byId("idCamToggleBtn-Y"),
+               // oCYPButton = this.getView().byId("idCamToggleBtn-Y"),
                 oFinalSaveButton = this.getView().byId("idCamToggleBtn-F"),
                 oSearchButton = this.getView().byId("idCamToggleBtn-SE"),
                 oNoDataTag = this.getView().byId("idnrgCamHisNoData"),
@@ -553,7 +553,7 @@ sap.ui.define(
             oProactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oReactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSaveButton.removeStyleClass("nrgCamOff-btn-selected");
-            oCYPButton.removeStyleClass("nrgCamOff-btn-selected");
+            //oCYPButton.removeStyleClass("nrgCamOff-btn-selected");
             oSearchButton.removeStyleClass("nrgCamOff-btn-selected");
             oFinalSaveButton.removeStyleClass("nrgCamOff-btn-selected");
             sButtonText = oEvent.getSource().getId();
@@ -635,7 +635,7 @@ sap.ui.define(
                 oFinalSaveButton = this.getView().byId("idCamToggleBtn-F"),
                 oSearchButton = this.getView().byId("idCamToggleBtn-SE"),
                 oNoDataTag = this.getView().byId("idnrgCamHisNoData"),
-                oCYPButton = this.getView().byId("idCamToggleBtn-Y"),
+                //oCYPButton = this.getView().byId("idCamToggleBtn-Y"),
                 aFilterIds,
                 aFilterValues,
                 aFilters,
@@ -651,7 +651,7 @@ sap.ui.define(
             oProactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oReactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSaveButton.removeStyleClass("nrgCamOff-btn-selected");
-            oCYPButton.removeStyleClass("nrgCamOff-btn-selected");
+            //oCYPButton.removeStyleClass("nrgCamOff-btn-selected");
             oFinalSaveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSearchButton.addStyleClass("nrgCamOff-btn-selected");
             that.getOwnerComponent().getCcuxApp().setOccupied(true);
