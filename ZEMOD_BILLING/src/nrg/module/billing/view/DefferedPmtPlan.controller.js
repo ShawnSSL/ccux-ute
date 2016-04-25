@@ -502,6 +502,9 @@ sap.ui.define(
             }
             bzeroDownPay = oLocalModel.getProperty("/showDownPay") || false;
             oDueDate = this.getView().byId('nrgBilling-dpp-DppDueDate-id').getValue();
+            if (oDueDate) {
+                oDueDate = new Date(oDueDate);
+            }
             if (bzeroDownPay) {
                 if (!oDueDate) {
                     ute.ui.main.Popup.Alert({
@@ -510,7 +513,6 @@ sap.ui.define(
                     });
                     return;
                 }
-                oDueDate = new Date(oDueDate);
                 if (oDueDate) {
                     oDueDate.setHours("00");
                     oDueDate.setMinutes("00");
@@ -540,7 +542,7 @@ sap.ui.define(
                     sFirstinstlDate.setMinutes("00");
                     sFirstinstlDate.setSeconds("00");
                 }
-                if (oDueDate.getTime() > sFirstinstlDate.getTime()) {
+                if ((oDueDate) && (sFirstinstlDate) && (oDueDate.getTime() > sFirstinstlDate.getTime())) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'DPP',
