@@ -18,13 +18,24 @@ sap.ui.define(
         var CustomController = Controller.extend('nrg.module.app.view.CcuxApp');
 
         CustomController.prototype.onBeforeRendering = function () {
-
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            if (oWebUiManager.isAvailable()) {
+                oWebUiManager.notifyWebUi('getBusinessRole', {}, this._onBusinessRoleCallback, this);
+            } else {
+                this._onEsidToolPressCallback();
+            }
         };
         CustomController.prototype.onAfterRendering = function () {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
             oWebUiManager.attachEvent("clearAccount2", jQuery.proxy(this._onClearAccPressCallback, this));
             oWebUiManager.attachEvent("dashboardgo", jQuery.proxy(this._onGoDashBoardCallback, this));
             oWebUiManager.attachEvent("ToggleBusy", jQuery.proxy(this._onToggleBusy, this));
+        };
+        CustomController.prototype._onBusinessRoleCallback = function (oEvent) {
+            var oClearAccount = this.getView().byId('appHMItemClearAcc');
+            if ((oEvent.mParameters) && (oEvent.mParameters === 'ZU_CALL_CTR') && (oClearAccount)) {
+                oClearAccount.setVisible(true);
+            }
         };
         CustomController.prototype._onToggleBusy = function (oEvent) {
             if (oEvent.mParameters.busy) {

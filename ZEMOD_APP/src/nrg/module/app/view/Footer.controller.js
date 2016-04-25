@@ -44,7 +44,12 @@ sap.ui.define(
             // Get the routing info
             var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
             this._updateRouting(oRouteInfo.parameters.bpNum, oRouteInfo.parameters.caNum, oRouteInfo.parameters.coNum);
-
+            // this code to make sure footer is up only for dashboard screen else close it always
+            if ((oRouteInfo.name.indexOf("Verification") > 0) || (oRouteInfo.name.indexOf("Billing") > 0)) {
+                this.footerOpen();
+            } else {
+                this.footerClose();
+            }
             // Subscribe to the update events
             if (this.bFirstTimeRender) {
                 this.bFirstTimeRender = false;
@@ -171,6 +176,13 @@ sap.ui.define(
                 jQuery('.uteAppBodyCnt-footer').css('border-bottom', '6px solid #FFF');
             }
         };
+        Controller.prototype.footerOpen = function () {
+            if (!this.getView().byId('nrgAppMain-footerWrap').hasStyleClass('open')) {
+                // Show footer
+                this.getView().byId('nrgAppMain-footerWrap').addStyleClass('open');
+                jQuery('.uteAppBodyCnt-footer').css('border-bottom', 'none');
+            }
+        };
 
         Controller.prototype.initUiBlocks = function () {
             this.footerElement = {};
@@ -220,7 +232,6 @@ sap.ui.define(
             this.updateFooterNotification(channel, event, data);
             this.updateFooterRhs(channel, event, data);
             this.updateFooterCampaign(channel, event, data);
-            //this.footerClose();
         };
 
         /*--------------------------- Notification ---------------------------*/
