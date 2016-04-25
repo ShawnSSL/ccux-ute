@@ -38,7 +38,7 @@
                         <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-lbl"
                                  text="{comp-i18n-billing>nrgBilling-billChkBook-Hdr-DateRange}"/>
                         <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-val"
-                                 text="{path: 'oChkbkHdr>/InvStrartDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} } - {path: 'oChkbkHdr>/InvEndDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
+                                 text="{path: 'oChkbkHdr>/InvStrartDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} } - {path: 'oChkbkHdr>/InvEndDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                         </ute:Tag>
                     <!-- End Date -->
 <!--                    <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-ctnt">
@@ -225,13 +225,14 @@
                         <utmain:headerContent>
                             <ute:Tag visible="{oPaymentHdr>bRegul}"
                                      class="nrgBilling-blChkBk-lftDiv-scrllArea-hh-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-hh1"
-                                     text="{parts:['oPaymentHdr>BillDate'],
-                                            formatter:'._formatDate'}" /> <!--1. nrgBilling-blChkBk-lftDiv-scrllArea-hdr-notify for yellow bgclr-->
+                                     text="{path: 'oPaymentHdr>BillDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }" /> <!--1. nrgBilling-blChkBk-lftDiv-scrllArea-hdr-notify for yellow bgclr-->
                                                                           <!--2. nrgBilling-blChkBk-lftDiv-scrllArea-hdr-alert for red bgclr-->
+                            <ute:Tag visible="{oPaymentHdr>bYellow}"
+                                     class="nrgBilling-blChkBk-lftDiv-scrllArea-hh-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-hh1 nrgBilling-blChkBk-lftDiv-scrllArea-hdr-Yellow"
+                                     text="{path: 'oPaymentHdr>BillDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }" />
                             <ute:Tag visible="{oPaymentHdr>bAlert}"
                                      class="nrgBilling-blChkBk-lftDiv-scrllArea-hh-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-hh1 nrgBilling-blChkBk-lftDiv-scrllArea-hdr-alert"
-                                     text="{parts:['oPaymentHdr>BillDate'],
-                                            formatter:'._formatDate'}" />
+                                     text="{path: 'oPaymentHdr>BillDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }" />
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-hh-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-hh2"
                                      text="{comp-i18n-billing>nrgBilling-billChkBook-PmtHdr-InvAmt} {oPaymentHdr>InvoiceNum}"/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-hh-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-hh3"
@@ -239,8 +240,7 @@
                                         type: 'nrg.base.type.Price',
                                         formatOptions: { currencySymbol: ''}}"/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-hh-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-hh4"
-                                     text="{parts:['oPaymentHdr>DueDate'],
-                                            formatter:'._formatDate'}"/>
+                                     text="{path: 'oPaymentHdr>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                             <ute:Tag visible="true"
                                      class="nrgBilling-blChkBk-lftDiv-scrllArea-hh-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-hh5">
                                 <!--1. Cases when BPP is not in the showing call out (so could ne N+ showing in call out)-->
@@ -413,8 +413,7 @@
                                 <ute:Tag visible="{ parts:['oPaymentHdr>HyperLinkInd'],
                                                     formatter:'._formatBoolHyperLink'}">
                                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-ctnt-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-c1"
-                                             text="{ parts:['oPaymentHdr>Date'],
-                                                     formatter:'._formatDate'}"/>
+                                             text="{path: 'oPaymentHdr>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-ctnt-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-c2 nrgBilling-blChkBk-lftDiv-scrllArea-ctnt-cell-link"
                                              text="{oPaymentHdr>ItemDesc}">
                                         <ute:tooltip>
@@ -449,25 +448,25 @@
                                                             <ute:Tag visible="{ parts:['oPaymentHdr>Color'], formatter:'._formatDppIntGrn'}" class="nrgBilling-blshc2-dpInst-inst-grn">
                                                                 <ute:Tag text="{oPaymentHdr>InstlMent}"/>
                                                                 <ute:Tag text="{path: 'oPaymentHdr>AmtOfInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
-                                                                <ute:Tag text="{ parts:['oPaymentHdr>DueDate'], formatter:'._formatDate'}"/>
+                                                                <ute:Tag text="{path: 'oPaymentHdr>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                                                 <ute:Tag text="{path: 'oPaymentHdr>BalAftInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                                             </ute:Tag>
                                                             <ute:Tag visible="{ parts:['oPaymentHdr>Color'], formatter:'._formatDppIntYlw'}" class="nrgBilling-blshc2-dpInst-inst-ylw">
                                                                 <ute:Tag text="{oPaymentHdr>InstlMent}"/>
                                                                 <ute:Tag text="{path: 'oPaymentHdr>AmtOfInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
-                                                                <ute:Tag text="{ parts:['oPaymentHdr>DueDate'], formatter:'._formatDate'}"/>
+                                                                <ute:Tag text="{path: 'oPaymentHdr>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                                                 <ute:Tag text="{path: 'oPaymentHdr>BalAftInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                                             </ute:Tag>
                                                             <ute:Tag visible="{ parts:['oPaymentHdr>Color'], formatter:'._formatDppIntRed'}" class="nrgBilling-blshc2-dpInst-inst-red">
                                                                 <ute:Tag text="{oPaymentHdr>InstlMent}"/>
                                                                 <ute:Tag text="{path: 'oPaymentHdr>AmtOfInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
-                                                                <ute:Tag text="{ parts:['oPaymentHdr>DueDate'], formatter:'._formatDate'}"/>
+                                                                <ute:Tag text="{path: 'oPaymentHdr>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                                                 <ute:Tag text="{path: 'oPaymentHdr>BalAftInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                                             </ute:Tag>
                                                             <ute:Tag visible="{ parts:['oPaymentHdr>Color'], formatter:'._formatDppIntWte'}" class="nrgBilling-blshc2-dpInst-inst-wte">
                                                                 <ute:Tag text="{oPaymentHdr>InstlMent}"/>
                                                                 <ute:Tag text="{path: 'oPaymentHdr>AmtOfInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
-                                                                <ute:Tag text="{ parts:['oPaymentHdr>DueDate'], formatter:'._formatDate'}"/>
+                                                                <ute:Tag text="{path: 'oPaymentHdr>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                                                 <ute:Tag text="{path: 'oPaymentHdr>BalAftInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                                             </ute:Tag>
                                                         </ute:Tag>
@@ -494,8 +493,7 @@
                                                     formatter:'._formatBoolCurChrg'}"
                                          class="nrgBilling-blChkBk-lftDiv-scrllArea-snglUperln nrgBilling-blChkBk-lftDiv-scrllArea-snglUndrln">
                                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-ctnt-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-c1"
-                                             text="{ parts:['oPaymentHdr>Date'],
-                                                     formatter:'._formatDate'}"/>
+                                             text="{path: 'oPaymentHdr>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-ctnt-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-c2"
                                              text="{oPaymentHdr>ItemDesc}"/>
                                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-ctnt-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-c3_1"
@@ -515,8 +513,7 @@
                                 <ute:Tag visible="{ parts:['oPaymentHdr>CurrChrgInd', 'oPaymentHdr>HyperLinkInd'],
                                                     formatter:'._formatBoolNormalPitem'}">
                                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-ctnt-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-c1"
-                                             text="{ parts:['oPaymentHdr>Date'],
-                                                     formatter:'._formatDate'}"/>
+                                             text="{path: 'oPaymentHdr>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-ctnt-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-c2"
                                              text="{oPaymentHdr>ItemDesc}"/>
                                     <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-ctnt-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-c3_1"
@@ -544,8 +541,7 @@
                                             formatter:'._formatPostInv2VL'}"
                                  class="nrgBilling-blChkBk-lftDiv-scrllArea-poInvc">
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po1"
-                                     text="{parts:['oPostInvoiceItems>Date'],
-                                            formatter:'._formatDate'}" />
+                                     text="{path: 'oPostInvoiceItems>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }" />
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po2"
                                      text="{oPostInvoiceItems>ItemDesc}"/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po3-1"
@@ -555,8 +551,7 @@
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po3-2"
                                      text=" "/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po4"
-                                     text="{parts:['oPostInvoiceItems>DueDate'],
-                                            formatter:'._formatDate'}"/>
+                                     text="{path: 'oPostInvoiceItems>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                             <ute:Tag visible="{ parts:['oPostInvoiceItems>CallOutColor'],
                                                 formatter:'._formatPostClotGrn'}"
                                      class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po5 nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po5-grn"
@@ -570,8 +565,7 @@
                                             formatter:'._formatPostInv2VR'}"
                                  class="nrgBilling-blChkBk-lftDiv-scrllArea-poInvc">
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po1"
-                                     text="{parts:['oPostInvoiceItems>Date'],
-                                            formatter:'._formatDate'}" />
+                                     text="{path: 'oPostInvoiceItems>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }" />
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po2"
                                      text="{oPostInvoiceItems>ItemDesc}"/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po3-1"
@@ -581,8 +575,7 @@
                                             type: 'nrg.base.type.Price',
                                             formatOptions: { currencySymbol: ''}}"/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po4"
-                                     text="{parts:['oPostInvoiceItems>DueDate'],
-                                            formatter:'._formatDate'}"/>
+                                     text="{path: 'oPostInvoiceItems>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                             <ute:Tag visible="{ parts:['oPostInvoiceItems>CallOutColor'],
                                                 formatter:'._formatPostClotGrn'}"
                                      class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po5 nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po5-grn"
@@ -597,8 +590,7 @@
                                             formatter:'._formatPostInv1V'}"
                                  class="nrgBilling-blChkBk-lftDiv-scrllArea-poInvc">
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po1"
-                                     text="{parts:['oPostInvoiceItems>Date'],
-                                            formatter:'._formatDate'}" />
+                                     text="{path: 'oPostInvoiceItems>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }" />
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po2 nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po2-hl"
                                      text="{oPostInvoiceItems>ItemDesc}"/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po3"
@@ -606,8 +598,7 @@
                                             type: 'nrg.base.type.Price',
                                             formatOptions: { currencySymbol: ''}}"/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po4"
-                                     text="{parts:['oPostInvoiceItems>DueDate'],
-                                            formatter:'._formatDate'}"/>
+                                     text="{path: 'oPostInvoiceItems>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po5"
                                      text="{oPostInvoiceItems>CallOut}"/>
                         </ute:Tag>
@@ -616,8 +607,7 @@
                                             formatter:'._formatBoolHyperLink'}"
                                  class="nrgBilling-blChkBk-lftDiv-scrllArea-poInvc">
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po1"
-                                     text="{ parts:['oPostInvoiceItems>Date'],
-                                             formatter:'._formatDate'}"/>
+                                     text="{path: 'oPostInvoiceItems>Date', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po2 nrgBilling-blChkBk-lftDiv-scrllArea-po-link"
                                      text="{oPostInvoiceItems>ItemDesc}">
                                 <ute:tooltip>
@@ -652,25 +642,25 @@
                                                     <ute:Tag visible="{ parts:['oPostInvoiceItems>Color'], formatter:'._formatDppIntGrn'}" class="nrgBilling-blshc2-dpInst-inst-grn">
                                                         <ute:Tag text="{oPostInvoiceItems>InstlMent}"/>
                                                         <ute:Tag text="{path: 'oPostInvoiceItems>AmtOfInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
-                                                        <ute:Tag text="{ parts:['oPostInvoiceItems>DueDate'], formatter:'._formatDate'}"/>
+                                                        <ute:Tag text="{path: 'oPostInvoiceItems>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                                         <ute:Tag text="{path: 'oPostInvoiceItems>BalAftInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                                     </ute:Tag>
                                                     <ute:Tag visible="{ parts:['oPostInvoiceItems>Color'], formatter:'._formatDppIntYlw'}" class="nrgBilling-blshc2-dpInst-inst-ylw">
                                                         <ute:Tag text="{oPostInvoiceItems>InstlMent}"/>
                                                         <ute:Tag text="{path: 'oPostInvoiceItems>AmtOfInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
-                                                        <ute:Tag text="{ parts:['oPostInvoiceItems>DueDate'], formatter:'._formatDate'}"/>
+                                                        <ute:Tag text="{path: 'oPostInvoiceItems>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                                         <ute:Tag text="{path: 'oPostInvoiceItems>BalAftInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                                     </ute:Tag>
                                                     <ute:Tag visible="{ parts:['oPostInvoiceItems>Color'], formatter:'._formatDppIntRed'}" class="nrgBilling-blshc2-dpInst-inst-red">
                                                         <ute:Tag text="{oPostInvoiceItems>InstlMent}"/>
                                                         <ute:Tag text="{path: 'oPostInvoiceItems>AmtOfInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
-                                                        <ute:Tag text="{ parts:['oPostInvoiceItems>DueDate'], formatter:'._formatDate'}"/>
+                                                        <ute:Tag text="{path: 'oPostInvoiceItems>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                                         <ute:Tag text="{path: 'oPostInvoiceItems>BalAftInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                                     </ute:Tag>
                                                     <ute:Tag visible="{ parts:['oPostInvoiceItems>Color'], formatter:'._formatDppIntWte'}" class="nrgBilling-blshc2-dpInst-inst-wte">
                                                         <ute:Tag text="{oPostInvoiceItems>InstlMent}"/>
                                                         <ute:Tag text="{path: 'oPostInvoiceItems>AmtOfInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
-                                                        <ute:Tag text="{ parts:['oPostInvoiceItems>DueDate'], formatter:'._formatDate'}"/>
+                                                        <ute:Tag text="{path: 'oPostInvoiceItems>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                                                         <ute:Tag text="{path: 'oPostInvoiceItems>BalAftInstlMent', type: 'nrg.base.type.Price', formatOptions: { currencySymbol: ''}}"/>
                                                     </ute:Tag>
                                                 </ute:Tag>
@@ -690,8 +680,7 @@
                                             formatOptions: { currencySymbol: ''},
                                             formatter:'._formatLfRtZroVal'}"/>
                             <ute:Tag class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po4"
-                                     text="{parts:['oPostInvoiceItems>DueDate'],
-                                            formatter:'._formatDate'}"/>
+                                     text="{path: 'oPostInvoiceItems>DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                             <ute:Tag visible="{ parts:['oPostInvoiceItems>CallOutColor'],
                                                 formatter:'._formatPostClotGrn'}"
                                      class="nrgBilling-blChkBk-lftDiv-scrllArea-po-cell nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po5 nrgBilling-blChkBk-lftDiv-scrllArea-hdr-po5-grn"

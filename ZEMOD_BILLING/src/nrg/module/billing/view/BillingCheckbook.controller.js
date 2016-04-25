@@ -303,17 +303,6 @@ sap.ui.define(
             }
         };
 
-        CustomController.prototype._formatDate = function (oDate) {
-            var sFormattedDate;
-
-            if (!oDate) {
-                return null;
-            } else {
-                sFormattedDate = (oDate.getMonth() + 1).toString() + '/' + oDate.getDate().toString() + '/' + oDate.getFullYear().toString().substring(2, 4);
-                return sFormattedDate;
-            }
-        };
-
         CustomController.prototype._getCurDate = function () {
             var sCurDate,
                 oCurDate = new Date();
@@ -558,10 +547,17 @@ sap.ui.define(
                 j,
                 oCurDate = new Date(),
                 oScrlCtaner = this.getView().byId('nrgChkbookScrollContainer'),
-                that = this;
+                that = this,
+                oCheckBookHdrModel = this.getView().getModel('oChkbkHdr');
 
             oParameters = {
                 success : function (oData) {
+                    var sCurrentInvAmount = oCheckBookHdrModel.getProperty("/InvAmount");
+                    if (sCurrentInvAmount) {
+                        sCurrentInvAmount = parseFloat(sCurrentInvAmount);
+                    } else {
+                        sCurrentInvAmount = parseFloat("0.00");
+                    }
                     if (oData && oData.results && oData.results.length > 0) {
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             oData.results[i].oCallOut = {};
@@ -609,16 +605,23 @@ sap.ui.define(
                             }
                             oData.results[i].bRegul = true;
                             oData.results[i].bAlert = false;
+                            oData.results[i].bYellow = false;
                         }
 
                         i = i - 1;  //At this moment i is the lengh of oData, need the index of the last element
 
-                        //Check over due invoices
-                        if (oData.results[i] && oData.results[i].DueDate && oData.results[i].DueDate < oCurDate) {
+                        //Check over due invoices to show red color
+                        if ((oData.results[i] && oData.results[i].DueDate && oData.results[i].DueDate < oCurDate) && (sCurrentInvAmount > 0)) {
                             oData.results[i].bAlert = true;
                             oData.results[i].bRegul = false;
+                            oData.results[i].bYellow = false;
                         }
-
+                        //Check over due invoices
+                        if ((oData.results[i] && oData.results[i].DueDate && oData.results[i].DueDate > oCurDate) && (sCurrentInvAmount > 0)) {
+                            oData.results[i].bAlert = false;
+                            oData.results[i].bRegul = false;
+                            oData.results[i].bYellow = true;
+                        }
                         this.getView().getModel('oPaymentHdr').setData(oData);
                         this._retrPayments(oData.results[i].InvoiceNum, '/results/' + i);
                         this._retrPaymentSumrys(oData.results[i].InvoiceNum, '/results/' + i);

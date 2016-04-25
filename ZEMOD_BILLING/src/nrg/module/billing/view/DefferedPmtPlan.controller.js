@@ -977,7 +977,9 @@ sap.ui.define(
                         content: oTag
                     });
                     oAlert_Dialog.open();
-                    that._selectScrn('StepThree');
+                    if (!oData.DPPError) {
+                        that._selectScrn('StepThree');
+                    }
                 }.bind(this),
                 error: function (oError) {
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);

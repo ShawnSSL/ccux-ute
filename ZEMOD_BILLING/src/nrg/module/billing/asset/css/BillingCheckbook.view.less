@@ -1,6 +1,7 @@
 @import '../../view/control/AverageBillingPlan.less';
 
 @nrgFontSize-special: 11pt;
+@nrgYellowColorlocal : #FFFF00;
 .nrgBilling-blChkBk {
     padding: 25px;
     display: flex;
@@ -106,6 +107,14 @@
         text-align: center !important;
     }
 
+    & > .nrgBilling-blChkBk-lftDiv .nrgBilling-blChkBk-lftDiv-scrllArea-hdr-hh1.nrgBilling-blChkBk-lftDiv-scrllArea-hdr-Yellow{
+        background-color: @nrgYellowColorlocal;
+        color: @nrgColor-grey-light;
+        font-weight: @nrgFontWeight-bold;
+        padding-top: 6px !important;
+        height: 32px;
+        vertical-align: top;
+    }
     & > .nrgBilling-blChkBk-lftDiv .nrgBilling-blChkBk-lftDiv-scrllArea-hdr-hh1.nrgBilling-blChkBk-lftDiv-scrllArea-hdr-alert{
         background-color: @nrgColor-red-alert;
         color: @nrgColor-blue-pearl;
@@ -114,7 +123,6 @@
         height: 32px;
         vertical-align: top;
     }
-
     & > .nrgBilling-blChkBk-lftDiv .nrgBilling-blChkBk-lftDiv-scrllArea-hdr-hh1.nrgBilling-blChkBk-lftDiv-scrllArea-hdr-notify{
         background-color: @nrgColor-orange-attention;
         font-weight: @nrgFontWeight-bold;

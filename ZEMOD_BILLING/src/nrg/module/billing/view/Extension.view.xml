@@ -266,7 +266,7 @@
                                                    fieldType="Regular" width="8rem" value="{oExtEligible>/EP_PymntPost}" editable="false"/>
                        </ute:Tag>
                        <ute:Tag class="nrgBilling-pending-fields">
-                            <utmain:Label class="nrgBilling-pending-lbl" text="Payment Remaining"/>
+                            <utmain:Label class="nrgBilling-pending-lbl" text="Down Payment Remaining"/>
                             <ute:Textfield class="nrgBilling-payment-lbl"
                                                    fieldType="Regular" width="8rem" value="{oExtEligible>/EP_PymntRemain}" editable="false"/>
                        </ute:Tag>
