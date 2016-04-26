@@ -28,10 +28,11 @@ sap.ui.define(
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this._initRoutingInfo();
             var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
-                oBindingInfo,
-                sPath = "/PrepayFlagS('" + this._caNum + "')",
-                that = this;
-            oBindingInfo = {
+                //oBindingInfo,
+                //sPath = "/PrepayFlagS('" + this._caNum + "')",
+                that = this,
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
+/*            oBindingInfo = {
                 success : function (oData) {
                     if (oData && oData.Prepay) {
                         if (that._coNum) {
@@ -50,9 +51,17 @@ sap.ui.define(
             };
             if (oModel) {
                 oModel.read(sPath, oBindingInfo);
+            }*/
+
+            if (oGlobalDataManager.isPrepay()) {
+                if (that._coNum) {
+                    that.navTo('billing.PrePayCheckBook', {bpNum: that._bpNum, caNum: that._caNum, coNum: this._coNum});
+                } else {
+                    that.navTo('billing.PrePayCheckBookNoCo', {bpNum: that._bpNum, caNum: that._caNum});
+                }
+            } else {
+                that.PostPaidAccounts();
             }
-
-
         };
 
         CustomController.prototype.PostPaidAccounts = function () {

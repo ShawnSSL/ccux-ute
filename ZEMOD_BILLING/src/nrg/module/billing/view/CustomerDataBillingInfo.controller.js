@@ -29,10 +29,11 @@ sap.ui.define(
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this._initRoutingInfo();
             var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
-                oBindingInfo,
-                sPath = "/PrepayFlagS('" + this._caNum + "')",
-                that = this;
-            oBindingInfo = {
+                //oBindingInfo,
+                //sPath = "/PrepayFlagS('" + this._caNum + "')",
+                that = this,
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
+/*            oBindingInfo = {
                 success : function (oData) {
                     if (oData && oData.Prepay) {
                         if (that._coNum) {
@@ -52,8 +53,16 @@ sap.ui.define(
             };
             if (oModel) {
                 oModel.read(sPath, oBindingInfo);
+            }*/
+            if (oGlobalDataManager.isPrepay()) {
+                if (that._coNum) {
+                    that.navTo('billing.BillingPrePaid', {bpNum: that._bpNum, caNum: that._caNum, coNum: that._coNum});
+                } else {
+                    that.navTo('billing.BillingPrePaidNoCo', {bpNum: that._bpNum, caNum: that._caNum});
+                }
+            } else {
+                that.PostPaidAccounts();
             }
-
 
         };
         CustomController.prototype.PostPaidAccounts = function () {
@@ -374,7 +383,7 @@ sap.ui.define(
             }
         };
         CustomController.prototype._formatleftDisplayValue = function (sLeftValue, sRightValue, sDesc) {
-            if ((sLeftValue && parseFloat(sLeftValue) > 0.00) || (sRightValue && parseFloat(sRightValue) > 0.00)) {
+            if ((sLeftValue && parseFloat(sLeftValue) !== 0.00) || (sRightValue && parseFloat(sRightValue) !== 0.00)) {
                 if (sLeftValue) {
                     return parseFloat(sLeftValue).toFixed(2);
                 } else {
@@ -387,7 +396,7 @@ sap.ui.define(
             }
         };
         CustomController.prototype._formatRightDisplayValue = function (sLeftValue, sRightValue, sDesc) {
-            if ((sLeftValue && parseFloat(sLeftValue) > 0.00) || (sRightValue && parseFloat(sRightValue) > 0.00)) {
+            if ((sLeftValue && parseFloat(sLeftValue) !== 0.00) || (sRightValue && parseFloat(sRightValue) !== 0.00)) {
                 if (sLeftValue) {
                     return parseFloat(sRightValue).toFixed(2);
                 } else {
