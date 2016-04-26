@@ -326,6 +326,8 @@ sap.ui.define(
                             message: 'Your Scheduled payment date is after the due date. You will be subject to applicable late fees and/or disconnection.',
                             callback: oConfirmCallbackHandler
                         });
+                    } else {
+                        oCallSubmit(true);
                     }
                 } else {
                     oCallSubmit(true);

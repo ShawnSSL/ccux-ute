@@ -84,7 +84,8 @@ sap.ui.define(
                         for (sDataReal in oDataReal) {
                             if (oDataReal.hasOwnProperty(sDataReal)) {
                                 oModel = this._oComponent.getModel(sDataReal);
-                                oModel.refresh(true, true);//If set to true then the model data will be removed/cleared.
+                                oModel.oData = {};
+                                //oModel.refresh(false, true);//If set to true then the model data will be removed/cleared.
                             }
                         }
                     }
