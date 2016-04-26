@@ -67,18 +67,25 @@ sap.ui.define(
                         save : 0,
                         finalsave : 0,
                         CYP: 0,
-                        search: 0
+                        search: 0,
+                        showConsumption : true,
+                        showCYP : false
                     }),
-                    bInvoiceFirstCard = true;
-                oModel.refresh(true, true);//If set to true then the model data will be removed/cleared.
+                    bInvoiceFirstCard = true,
+                    oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
+                //oModel.refresh(false, true);//If set to true then the model data will be removed/cleared.
+                oModel.oData = {};// to clear all the data to make sure previous data is not reloaded
                 this._sContract = oRouteInfo.parameters.coNum;
                 this._sBP = oRouteInfo.parameters.bpNum;
                 this._sCA = oRouteInfo.parameters.caNum;
                 this._sType = oRouteInfo.parameters.typeV;
-                this.resetView();
                 this._aSelectedComparisionCards = [];
+                this.resetView();
                 this._bSearchEnabled = false;
                 this.getView().setModel(oViewModel, "localModel");
+                if (oGlobalDataManager.isREBS()) {
+                    oViewModel.setProperty("/showConsumption", false);
+                }
                 i18NModel = this.getOwnerComponent().getModel("comp-i18n-campaign");
                 this.getOwnerComponent().getCcuxApp().setOccupied(true);
 
@@ -163,9 +170,39 @@ sap.ui.define(
                    /* events: {dataReceived : fnTagDataRecHandler}*/
                 };
                 oTagContainer.bindAggregation("content", mParameters);
+                // to check whether to show CYP or not
+                this._checkCYP();
             }
 
             //}
+        };
+       /**
+		 * check CYP whether
+		 *
+		 * @function
+		 *
+         *
+		 * @private
+		 */
+        Controller.prototype._checkCYP = function () {
+            var oModel = this.getOwnerComponent().getModel('comp-campaign'),
+                oBindingInfo,
+                sPath = "/CYPS('123')",
+                that = this,
+                oViewModel = this.getView().getModel("localModel");
+            oBindingInfo = {
+                success : function (oData) {
+                    if (oData && oData.ShowCYP) {
+                        oViewModel.setProperty("/showCYP", true);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    jQuery.sap.log.info("Odata Error occured");
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sPath, oBindingInfo);
+            }
         };
        /**
 		 * Update the counts for each tier
@@ -435,6 +472,7 @@ sap.ui.define(
                 oIcon,
                 oCheckBox;
             //myControl = this.byId(sap.ui.core.Fragment.createId("part1", "nrgCamOff-PinId"))
+
             aTabBarItems.forEach(function (item) {
                 if ((item.getSelected) && (item.getSelected())) {
                     if ((item.getKey()) && (item.getKey() ===  "Invoice")) {
@@ -446,6 +484,10 @@ sap.ui.define(
                     }
                 }
             });
+            if ((this._aSelectedComparisionCards) && (this._aSelectedComparisionCards.length === 0)) {
+                // if thr is no comparisions tiles pre-selected then just ignore and return
+                return;
+            }
             if (bSelectedType) {
                 this._aSelectedComparisionCards.forEach(function (item, index) {
                     if (index === 0) {
@@ -553,7 +595,9 @@ sap.ui.define(
             oProactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oReactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSaveButton.removeStyleClass("nrgCamOff-btn-selected");
-            oCYPButton.removeStyleClass("nrgCamOff-btn-selected");
+            if (oCYPButton) {
+                oCYPButton.removeStyleClass("nrgCamOff-btn-selected");
+            }
             oSearchButton.removeStyleClass("nrgCamOff-btn-selected");
             oFinalSaveButton.removeStyleClass("nrgCamOff-btn-selected");
             sButtonText = oEvent.getSource().getId();
@@ -651,7 +695,9 @@ sap.ui.define(
             oProactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oReactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSaveButton.removeStyleClass("nrgCamOff-btn-selected");
-            oCYPButton.removeStyleClass("nrgCamOff-btn-selected");
+            if (oCYPButton) {
+                oCYPButton.removeStyleClass("nrgCamOff-btn-selected");
+            }
             oFinalSaveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSearchButton.addStyleClass("nrgCamOff-btn-selected");
             that.getOwnerComponent().getCcuxApp().setOccupied(true);
@@ -723,9 +769,10 @@ sap.ui.define(
                 sLPReqName,
                 that = this,
                 sType;
-            that.getOwnerComponent().getCcuxApp().setOccupied(true);
+
             oContext = oEvent.getSource().getBindingContext("comp-campaign");
             if (oContext) {
+                that.getOwnerComponent().getCcuxApp().setOccupied(true);
                 sPath = oContext.getPath();
                 sDate = sPath.substring(sPath.lastIndexOf("=") + 1, sPath.lastIndexOf(")"));
                 sOfferCode = oContext.getProperty("OfferCode");
@@ -765,6 +812,12 @@ sap.ui.define(
                     that.getOwnerComponent().setModel(oViewModel, 'comp-campLocal');
                     this.navTo("campaignchg", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, offercodeNum: sOfferCode, stype : sType, sPromo : sPromo});
                 }
+            } else {
+                ute.ui.main.Popup.Alert({
+                    title: 'Change Campaign',
+                    message: 'Please select a campaign for comparision'
+                });
+                return;
             }
 
         };

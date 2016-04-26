@@ -183,7 +183,10 @@ sap.ui.define(
                             return;
                         }
                         if (oData.Flag === 'E') {
-                            sap.ui.commons.MessageBox.alert(oData.Script);
+                            ute.ui.main.Popup.Alert({
+                                title: 'Change Campaign',
+                                message: oData.Script
+                            });
                             return;
                         }
                         if (oData.Flag === 'Y') {
@@ -283,7 +286,7 @@ sap.ui.define(
             this.onNNP();
         };
         /**
-		 * Action to be taken after Swap Script query to launch NNP
+		 * Action to be taken after Swap Script query to launch NNP and in case of REBS customer call overscript directly
 		 *
 		 * @function
          * @param {sap.ui.base.Event} oEvent pattern match event
@@ -292,24 +295,30 @@ sap.ui.define(
             var sCurrentPath,
                 oModel = this.getOwnerComponent().getModel('comp-campaign'),
                 oBindingInfo,
-                NNPPopupControl = new NNPPopup();
-            NNPPopupControl.attachEvent("NNPCompleted", this.invokeOverviewScript, this);
-            this.getView().addDependent(NNPPopupControl);
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            sCurrentPath = "/NNPS('" + this._sBP + "')";
-            oBindingInfo = {
-                success : function (oData) {
-                    NNPPopupControl.openNNP(oData.BP, oData.Email, oData.ConsNum);
-                    jQuery.sap.log.info("Odata Read Successfully:::");
-                }.bind(this),
-                error: function (oError) {
-                    this.getOwnerComponent().getCcuxApp().setOccupied(true);
-                    jQuery.sap.log.info("NNP Error occured");
-                }.bind(this)
-            };
-            if (oModel) {
-                oModel.read(sCurrentPath, oBindingInfo);
+                NNPPopupControl = new NNPPopup(),
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
+            if (oGlobalDataManager.isREBS()) {
+                this.invokeOverviewScript();
+            } else {
+                NNPPopupControl.attachEvent("NNPCompleted", this.invokeOverviewScript, this);
+                this.getView().addDependent(NNPPopupControl);
+                this.getOwnerComponent().getCcuxApp().setOccupied(true);
+                sCurrentPath = "/NNPS('" + this._sBP + "')";
+                oBindingInfo = {
+                    success : function (oData) {
+                        NNPPopupControl.openNNP(oData.BP, oData.Email, oData.ConsNum);
+                        jQuery.sap.log.info("Odata Read Successfully:::");
+                    }.bind(this),
+                    error: function (oError) {
+                        this.getOwnerComponent().getCcuxApp().setOccupied(true);
+                        jQuery.sap.log.info("NNP Error occured");
+                    }.bind(this)
+                };
+                if (oModel) {
+                    oModel.read(sCurrentPath, oBindingInfo);
+                }
             }
+
 
         };
         /**
@@ -594,7 +603,10 @@ sap.ui.define(
                     jQuery.sap.log.info("Odata Read Successfully:::" + oData.Code);
                     if ((oData !== undefined) && (oData.Code === "S")) {
                         that.getOwnerComponent().getCcuxApp().setOccupied(false);
-                        sap.ui.commons.MessageBox.alert("SWAP is completed");
+                        ute.ui.main.Popup.Alert({
+                            title: 'Change Campaign',
+                            message: "SWAP is completed"
+                        });
                         oWebUiManager = that.getOwnerComponent().getCcuxWebUiManager();
                         oWebUiManager.notifyWebUi('openIndex', {
                             LINK_ID: "ZVASOPTSLN"
@@ -603,14 +615,20 @@ sap.ui.define(
                         return;
                     } else {
                         that.getOwnerComponent().getCcuxApp().setOccupied(false);
-                        sap.ui.commons.MessageBox.alert("SWAP Failed");
+                        ute.ui.main.Popup.Alert({
+                            title: 'Change Campaign',
+                            message: "SWAP Failed"
+                        });
                         this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, typeV : "N"});
                         return;
                     }
                 }.bind(this),
                 error: function (oError) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    sap.ui.commons.MessageBox.alert("Swap Failed");
+                    ute.ui.main.Popup.Alert({
+                        title: 'Change Campaign',
+                        message: "SWAP Failed"
+                    });
                     this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "N"});
                 }.bind(this)
             };
@@ -676,18 +694,27 @@ sap.ui.define(
                 success : function (oData) {
                     if ((oData !== undefined) && (oData.Code === "S")) {
                         this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                        sap.ui.commons.MessageBox.alert("Disposition process is completed");
+                        ute.ui.main.Popup.Alert({
+                            title: 'Change Campaign',
+                            message: "Disposition process is completed"
+                        });
                         this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "N"});
                     } else {
                         this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                        sap.ui.commons.MessageBox.alert("Disposition process is Failed");
+                        ute.ui.main.Popup.Alert({
+                            title: 'Change Campaign',
+                            message: "Disposition process is Failed"
+                        });
                         this.navTo("campaignoffers", {bpNum: that._sBP, caNum: that._sCA, coNum: that._sContract, typeV : "N"});
                     }
                     jQuery.sap.log.info("Odata Read Successfully:::" + oData.Code);
                 }.bind(this),
                 error: function (oError) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
-                    sap.ui.commons.MessageBox.alert("Disposition process is Failed");
+                    ute.ui.main.Popup.Alert({
+                        title: 'Change Campaign',
+                        message: "Disposition process is Failed"
+                    });
                 }.bind(this)
             };
             oModel.callFunction("/RejectCampaign", mParameters); // callback function for error

@@ -30,7 +30,7 @@
                             <u:Tag text="{comp-i18n-campaign>nrgCmpOffCpInvoice}" />
                         </um:TabBarItem>
                        <div class="nrgCmpOff-div"/>
-                        <um:TabBarItem key="consumption"  design="None" class="nrgCamOff-tabBarItem" id="idnrgCamoff-Consum">
+                        <um:TabBarItem key="consumption"  design="None" class="nrgCamOff-tabBarItem" id="idnrgCamoff-Consum" visible="{localModel>/showConsumption}">
                             <u:Tag text="{comp-i18n-campaign>nrgCmpOffCpConsumption}" />
                         </um:TabBarItem>
                     </um:TabBar>
@@ -100,7 +100,7 @@
                             design="None">
                         </um:button>
                     </u:Tag>
-                    <u:Tag class="nrgCmpOff-tier">
+                    <u:Tag class="nrgCmpOff-tier" visible="{= ${localModel>/showCYP} ? true : false }">
                         <um:Button id="idCamToggleBtn-Y"
                             press=".toggleCYP"
                             text="{comp-i18n-campaign>nrgCmpOffTCYP} ({localModel>/CYP})"
