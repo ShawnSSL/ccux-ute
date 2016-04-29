@@ -44,6 +44,7 @@
                         <u:Tag class="nrgUsgTable-RdExpander" />
                     </um:Button>
                     <u:Tag text="{comp-usage>KwhUsage}" class="nrgUsgTable-Data nrgUsgTable-Data-kwh"/>
+                    <u:Tag text="{comp-usage>KvaDemand}" class="nrgUsgTable-Data nrgUsgTable-Data-kwh" visible="{= ${localModel>/isREBS} ? true : false }"/>
                     <u:Tag text="{comp-usage>ConvText}" class="nrgUsgTable-Data nrgUsgTable-Data-Ac"/>
                     <u:Tag class="nrgUsgTable-Data nrgUsgTable-Data-Wt">
                         <u:Tag text="High {comp-usage>HighTemp}F" class="nrgUsgTable-Data-Wt-temp"/>
@@ -77,6 +78,7 @@
                             <u:Tag text="{comp-usage>NumOfDays}" class="nrgUsgTable-Data nrgUsgTable-Data-days"/>
                             <u:Tag text="{= ${comp-usage>Reading} ? ${comp-usage>Reading} : 'Reading'}" class="nrgUsgTable-Data nrgUsgTable-hd-RDInner"/>
                             <u:Tag text="{comp-usage>KwhUsage}" class="nrgUsgTable-Data nrgUsgTable-Data-kwh"/>
+                            <u:Tag text="{comp-usage>KvaDemand}" class="nrgUsgTable-Data nrgUsgTable-Data-kwh" visible="{= ${localModel>/isREBS} ? true : false }"/>
                             <u:Tag text="{comp-usage>ConvText}" class="nrgUsgTable-Data nrgUsgTable-Data-Ac"/>
                             <u:Tag class="nrgUsgTable-Data nrgUsgTable-Data-Wt">
                                 <u:Tag text="High {comp-usage>HighTemp}F" class="nrgUsgTable-Data-Wt-temp"/>

@@ -47,7 +47,14 @@ sap.ui.define(
                 oGraph = this.getView().byId('idnrgUsg-Graph-chart'),
                 oGraphNoData = this.getView().byId('idnrgUsg-Graph-NoData'),
                 oNoDataTag = this.getView().byId("idnrgUsgNoData").clone(),
-                oRadioWeekly = this.getView().byId("idnrgUsgRadioweekly");
+                oRadioWeekly = this.getView().byId("idnrgUsgRadioweekly"),
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager(),
+                oViewModel = new JSONModel({
+                    isREBS : false  // true for invoice & false for consumption
+                });
+            if (oGlobalDataManager.isREBS()) {
+                oViewModel.setProperty("/isREBS", true);
+            }
             oRadioWeekly.setChecked(true);
             this._SelectedInfoLines = [];
             that._oGraphModel = new JSONModel();
@@ -59,6 +66,7 @@ sap.ui.define(
             aFilterIds = ["CA"];
             aFilterValues = [this._sCA];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            this.getView().setModel(oViewModel, "localModel");
             //aFilters.push(new Filter("CA", FilterOperator.Contains, "23", ""));
             fnRecievedHandler = function (oEvent, oData) {
                 var aContent = oServiceAddressDropDown.getContent(),
