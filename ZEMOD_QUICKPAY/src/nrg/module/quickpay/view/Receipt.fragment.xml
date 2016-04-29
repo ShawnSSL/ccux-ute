@@ -13,6 +13,7 @@
                                  class="nrgQPCC-input"
                                  width="10rem"
                                  editable="true"
+                                 valueType="D"
                                  id="idnrgQPRC-Amt">
                     </u:Textfield>
                 </u:Tag>
@@ -35,6 +36,7 @@
                                  fieldType="Regular"
                                  class="nrgQPCC-input"
                                  width="10rem"
+                                 valueType="I"
                                  id="idnrgQPRC-RNum">
                     </u:Textfield>
                 </u:Tag>

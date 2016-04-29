@@ -4,7 +4,7 @@
 sap.ui.define(
     [
         'nrg/base/view/BaseController',
-        'nrg/module/quickpay/view/QuickPayPopup',
+        'nrg/module/quickpay/view/QuickPayControl',
         'sap/ui/model/json/JSONModel'
     ],
 
@@ -48,7 +48,7 @@ sap.ui.define(
             this._sBP = oRouteInfo.parameters.bpNum;
             this._sCA = oRouteInfo.parameters.caNum;
             this.getView().addDependent(QuickControl);
-            QuickControl.open(this._sContract, this._sBP, this._sCA);
+            QuickControl.openQuickPay(this._sContract, this._sBP, this._sCA);
         };
 
         return Controller;

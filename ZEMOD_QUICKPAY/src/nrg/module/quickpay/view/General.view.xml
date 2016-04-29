@@ -1,6 +1,6 @@
 <mvc:View
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ute="ute.ui.commons"
+    xmlns:u="ute.ui.commons"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:um="ute.ui.main"
     xmlns:sm="sap.m"
@@ -8,9 +8,22 @@
     height="100%"
     width="100%"
     displayBlock="true">
-            <um:Button press=".onQuickPay"
+           <u:Tag>
+             <um:Button press=".onQuickPay"
                    text="Quick Pay"
                    class="nrgCamOff-btn"
                    id="idnrgCamOffBt" design="Default">
             </um:Button>
+            <u:Textfield fieldType="Regular"
+                         width="10rem"
+                         valueType="D"
+                         editable="true">
+            </u:Textfield>
+<!--            <u:Textfield fieldType="Regular"
+                         width="10rem"
+                         valueType="D"
+                         editable="true">
+            </u:Textfield> -->
+           </u:Tag>
+
 </mvc:View>

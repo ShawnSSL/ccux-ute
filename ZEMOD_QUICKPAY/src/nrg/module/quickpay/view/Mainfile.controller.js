@@ -271,10 +271,10 @@ sap.ui.define(
                         "CA" : that._sCA,
                         "CardNumber" : oCreditCardDropDown.getSelectedKey(),
                         "PaymentDate" : oCreditCardDateValue,
-                        "Amount" : oCreditCardAmount.getValue(),
+                        "Amount" : oCreditCardAmount.getValue().trim(),
                         "WaiveFlag" : oWaiveReasonDropDown.getSelectedKey(),
-                        "Cvval" : oCVVCode.getValue(),
-                        "ZipCode" : oZipCode.getValue(),
+                        "Cvval" : oCVVCode.getValue().trim(),
+                        "ZipCode" : oZipCode.getValue().trim(),
                         "Activit" : "0",
                         "CardType" : "0",
                         "Class" : "0",
@@ -814,7 +814,7 @@ sap.ui.define(
                         "CA" : that._sCA,
                         "BankAccNum" : sBankAccount,
                         "PaymentDate" : oBankDraftDateValue,
-                        "Amount" : oBankDraftAmount.getValue(),
+                        "Amount" : oBankDraftAmount.getValue().trim(),
                         "WaiveFlag" : oWaiveReasonDropDown.getSelectedKey(),
                         "BankKey" : sBankKey,
                         "BankRouting" : sBankRouting,
@@ -1336,8 +1336,8 @@ sap.ui.define(
                 "ContractID" : "",
                 "BP" : this._sBP,
                 "CA" : this._sCA,
-                "ReceiptNumber" : oReceiptNum.getValue(),
-                "Amount" : oReceiptAmount.getValue()
+                "ReceiptNumber" : oReceiptNum.getValue().trim(),
+                "Amount" : oReceiptAmount.getValue().trim()
                 //"WaiveFlag" : oReceiptDropDown.getSelectedKey()
             }, {
                 success : function (oData, oResponse) {

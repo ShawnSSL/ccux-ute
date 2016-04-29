@@ -13,6 +13,7 @@
                                  fieldType="Regular"
                                  class="nrgQPCC-input"
                                  width="10rem"
+                                 valueType="I"
                                  value="{appView>/newBankRouting}"
                                  id="idnrgQPBD-newRouting">
                     </u:Textfield>

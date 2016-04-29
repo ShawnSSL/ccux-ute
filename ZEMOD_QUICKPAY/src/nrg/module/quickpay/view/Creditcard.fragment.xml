@@ -19,6 +19,7 @@
                                  id="idnrgQPCC-Amt"
                                  class="nrgQPCC-input"
                                  width="10rem"
+                                 valueType="D"
                                  editable="true">
                     </u:Textfield>
                 </u:Tag>
@@ -57,12 +58,14 @@
                              id="idnrgQPCC-cvv"
                              class="nrgQPCC-cvv"
                              width="3rem"
+                             valueType="I"
                              placeholder="CVV">
                 </u:Textfield>
                 <u:Textfield fieldType="Regular"
                              id="idnrgQPCC-zipcode"
                              class="nrgQPCC-zipcode"
                              width="5rem"
+                             valueType="I"
                              placeholder="ZIPCODE">
                 </u:Textfield>
             </u:Tag>
