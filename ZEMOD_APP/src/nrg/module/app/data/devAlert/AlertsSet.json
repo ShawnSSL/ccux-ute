@@ -3,60 +3,65 @@
         "results":[
             {
                 "__metadata":{
-                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='3619065',Identifier='FOOTER',FilterType='M2M')",
-                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='3619065',Identifier='FOOTER',FilterType='M2M')",
+                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='0007672597',CA='000011608439',Identifier='FOOTER',FilterType='M2M')",
+                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='0007672597',CA='000011608439',Identifier='FOOTER',FilterType='M2M')",
                     "type":"ZE_CCUX_ALERTS_SRV.Alerts"
                 },
-                "BP":"83248",
-                "CA":"3619065",
+                "BP":"0007672597",
+                "CA":"000011608439",
+                "Contract":"32192644",
                 "Identifier":"FOOTER",
                 "FilterType":"M2M",
                 "MessageText":"Month-2-Month Invoice"
             },
             {
                 "__metadata":{
-                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='3619065',Identifier='FOOTER',FilterType='SMTP')",
-                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='3619065',Identifier='FOOTER',FilterType='SMTP')",
+                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='000011608439',Identifier='FOOTER',FilterType='CSA')",
+                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='000011608439',Identifier='FOOTER',FilterType='CSA')",
                     "type":"ZE_CCUX_ALERTS_SRV.Alerts"
                 },
-                "BP":"83248",
-                "CA":"3619065",
+                "BP":"0007672597",
+                "CA":"000011608439",
+                "Contract":"32192644",
                 "Identifier":"FOOTER",
-                "FilterType":"SMTP",
-                "MessageText":"Invalid Email Address"
+                "FilterType":"CSA",
+                "MessageText":"CSA"
             },
             {
                 "__metadata":{
-                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='3619065',Identifier='FOOTER',FilterType='MAIL')",
-                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='3619065',Identifier='FOOTER',FilterType='MAIL')",
+                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='0007672597',CA='000011608439',Identifier='FOOTER',FilterType='EXTP')",
+                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='0007672597',CA='000011608439',Identifier='FOOTER',FilterType='EXTP')",
                     "type":"ZE_CCUX_ALERTS_SRV.Alerts"
                 },
-                "BP":"83248",
-                "CA":"3619065",
+                "BP":"0007672597",
+                "CA":"000011608439",
+                "Contract":"32192644",
                 "Identifier":"FOOTER",
-                "FilterType":"MAIL",
-                "MessageText":"Invalid Mailing Address"
+                "FilterType":"EXTP",
+                "MessageText":"Extension Pending"
             },
             {
                 "__metadata":{
-                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='3619065',Identifier='FOOTER',FilterType='SMS')",
-                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='3619065',Identifier='FOOTER',FilterType='SMS')",
+                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='0007672597',CA='000011608439',Identifier='FOOTER',FilterType='SMS')",
+                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='0007672597',CA='000011608439',Identifier='FOOTER',FilterType='SMS')",
                     "type":"ZE_CCUX_ALERTS_SRV.Alerts"
                 },
-                "BP":"83248",
-                "CA":"3619065",
+                "BP":"0007672597",
+                "CA":"000011608439",
+                "Contract":"32192644",
                 "Identifier":"FOOTER",
                 "FilterType":"SMS",
                 "MessageText":"Invalid SMS"
             },
             {
                 "__metadata":{
-                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='3619065',Identifier='FOOTER',FilterType='OAM')",
-                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='83248',CA='3619065',Identifier='FOOTER',FilterType='OAM')",
+                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='0007672597',CA='000011608439',Identifier='FOOTER',FilterType='OAM')",
+                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_ALERTS_SRV/AlertsSet(BP='0007672597',CA='000011608439',Identifier='FOOTER',FilterType='OAM')",
                     "type":"ZE_CCUX_ALERTS_SRV.Alerts"
                 },
-                "BP":"83248",
-                "CA":"3619065",
+                "BP":"0007672597",
+                "CA":"000011608439",
+                "Contract":"32192644",
                 "Identifier":"FOOTER",
                 "FilterType":"OAM",
                 "MessageText":"Invalid OAM Email"

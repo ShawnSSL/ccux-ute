@@ -46,7 +46,7 @@
                                     content="{oFooterNotification>/}">
                                     <ua:FooterNotificationItem
                                         link="true"
-                                        design="Error"
+                                        design="{oFooterNotification>Design}"
                                         text="{oFooterNotification>MessageText}"
                                         linkPress=".onNotiLinkPress"/>
                                 </ua:FooterNotificationCenter>

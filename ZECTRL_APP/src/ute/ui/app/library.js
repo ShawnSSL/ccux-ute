@@ -80,7 +80,8 @@ sap.ui.define(
             Information: 'Information',
             Error: 'Error',
             Warning: 'Warning',
-            Success: 'Success'
+            Success: 'Success',
+            Status: 'Status'
         };
 
         ute.ui.app.MessageDesign = sap.ui.core.MessageType;

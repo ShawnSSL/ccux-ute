@@ -262,6 +262,18 @@ sap.ui.define(
                 filters: aFilters,
                 success : function (oData) {
                     if (oData.results.length) {
+                        for (i = 0; i < oData.results.length; i = i + 1) {
+                            if (oData.results[i].FilterType === 'M2M' ||
+                                oData.results[i].FilterType === 'SMTP' ||
+                                oData.results[i].FilterType === 'MAIL' ||
+                                oData.results[i].FilterType === 'SMS' ||
+                                oData.results[i].FilterType === 'OAM') {
+                                oData.results[i].Design = "Error";
+                            }
+                            else {
+                                oData.results[i].Design = "Status";
+                            }
+                        }
                         this.getView().getModel('oFooterNotification').setData(oData.results);
                         this.notificationLinkPressActions = {};
                         for (i = 0; i < oData.results.length; i = i + 1) {
