@@ -94,7 +94,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oModel) {
+            if (oModel && sBpNum) {
                 oModel.read(sPath, oParameters);
             }
         };
@@ -120,7 +120,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oModel) {
+            if (oModel && oRouting.oData.CoNumber) {
                 oModel.read(sPath, oParameters);
             }
         };
@@ -151,7 +151,7 @@ sap.ui.define(
                     }.bind(this)
                 };
 
-            if (oModel) {
+            if (oModel && oRouting.oData.CaNumber) {
                 oModel.read(sPath, oParameters);
             }
         };
@@ -252,7 +252,10 @@ sap.ui.define(
             // Set up filters
             aFilters.push(new Filter({ path: 'BP', operator: FilterOperator.EQ, value1: data.bpNum}));
             aFilters.push(new Filter({ path: 'CA', operator: FilterOperator.EQ, value1: data.caNum}));
-            aFilters.push(new Filter({ path: 'Contract', operator: FilterOperator.EQ, value1: data.coNum}));
+            if (data.coNum) {
+                aFilters.push(new Filter({ path: 'Contract', operator: FilterOperator.EQ, value1: data.coNum}));
+            }
+
             aFilters.push(new Filter({ path: 'Identifier', operator: FilterOperator.EQ, value1: 'FOOTER'}));
 
             oParameters = {
@@ -500,7 +503,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oModel) {
+            if (oModel && sCoNumber) {
                 oModel.read(sPath, oParameters);
             }
         };
@@ -594,7 +597,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oModel) {
+            if (oModel && oRouting.oData.CoNumber) {
                 oModel.read(sPath, mParameters);
             }
         };
