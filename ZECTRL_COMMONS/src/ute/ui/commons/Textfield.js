@@ -1,5 +1,7 @@
 /*global sap*/
 /*jslint nomen:true*/
+/*jslint regexp: true*/
+
 
 
 sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/core/ValueStateSupport'],
@@ -37,7 +39,10 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
                 fieldType : { type: "ute.ui.commons.TextfieldType", group: "Appearance", defaultValue: "Regular" },
                 //Two types of inputs, one is "field1" and the other is "field2""
 
-                label: { type: "string", group: "Appearance", defaultvalue: null }
+                label: { type: "string", group: "Appearance", defaultvalue: null },
+
+                //check if it restricts to numeric/ decimal / string
+                valueType : {type : "string", group : "Data", defaultValue : 'S'}
             },
             events : {
                 /*Fired when textfield is edit*/
@@ -87,12 +92,100 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
             this._checkChange(oEvent);
             this.fireEnterKeyPress(oEvent);
         };
+        Textfield.prototype.onkeypress = function (oEvent) {
+            if (oEvent.which === jQuery.sap.KeyCodes.Z && oEvent.ctrlKey && !oEvent.altKey) {
+                // prevent browsers standard history logic because different in different browsers
+                oEvent.preventDefault();
+            }
+            if ((this.getValueType()) && ((this.getValueType() === 'I') || (this.getValueType() === 'i'))) {
+                jQuery(this.getInputDomRef()).val(jQuery(this.getInputDomRef()).val().replace(/[^\d].+/, ""));
+                if ((oEvent.which < 48 || oEvent.which > 57)) {
+                    oEvent.preventDefault();
+                }
+            }
+            if ((this.getValueType()) && ((this.getValueType() === 'd') || (this.getValueType() === 'D'))) {
+                var inputCode = oEvent.which,
+                    currentValue = jQuery(this.getInputDomRef()).val(),
+                    tempValue;
+                if (inputCode > 0 && (inputCode < 48 || inputCode > 57)) {
+                    if (inputCode === 46) {
+                        if (this.getCursorPosition(this) === 0 && currentValue.charAt(0) === '-') {
+                            oEvent.preventDefault();
+                        }
+                        if (currentValue.match(/[.]/)) {
+                            oEvent.preventDefault();
+                        }
+                    } else if (inputCode === 45) {
+                        if (currentValue.charAt(0) === '-') {
+                            oEvent.preventDefault();
+                        }
+                        if (this.getCursorPosition(this) !== 0) {
+                            oEvent.preventDefault();
+                        }
+                    } else if (inputCode === 8) {
+                        return true;
+                    } else {
+                        oEvent.preventDefault();
+                    }
 
+                } else if (inputCode > 0 && (inputCode >= 48 && inputCode <= 57)) {
+                    if (currentValue.charAt(0) === '-' && this.getCursorPosition(this) === 0) {
+                        oEvent.preventDefault();
+                    }
+                    tempValue = currentValue.split('.');
+                    if (tempValue[1].length > 1) {
+                        oEvent.preventDefault();
+                    }
+
+                }
+            }
+        };
+        Textfield.prototype.getCursorPosition = function (element) {
+            var r,
+                re,
+                rc;
+            if (element.selectionStart) {
+                return element.selectionStart;
+            } else if (document.selection) {
+                element.focus();
+                r = document.selection.createRange();
+                if (r === null) {
+                    return 0;
+                }
+
+                re = element.createTextRange();
+                rc = re.duplicate();
+                re.moveToBookmark(r.getBookmark());
+                rc.setEndPoint('EndToStart', re);
+                return rc.text.length;
+            }
+            return 0;
+        };
+        /**
+         * Event handler called on Paste
+         *
+         * @param {jQuery.Event} oEvent The event object
+         * @private
+         */
+        Textfield.prototype.onpaste = function (oEvent) {
+            if ((this.getValueType()) && ((this.getValueType() === 'I') || (this.getValueType() === 'i'))) {
+                oEvent.preventDefault();
+            }
+            if ((this.getValueType()) && ((this.getValueType() === 'd') || (this.getValueType() === 'D'))) {
+                oEvent.preventDefault();
+            }
+        };
         Textfield.prototype._checkChange = function (oEvent) {
             var oInput = this.getInputDomRef(),
                 newVal = oInput && oInput.value,
                 oldVal = this.getValue();
 
+            if (newVal) {
+                newVal = newVal.trim();
+            }
+            if (oldVal) {
+                oldVal = oldVal.trim();
+            }
             if (this.getEditable() && this.getEnabled() && (oldVal !== newVal)) {
                 this.setProperty("value", newVal, true); // suppress rerendering
                 //console.log(this.getValue());
