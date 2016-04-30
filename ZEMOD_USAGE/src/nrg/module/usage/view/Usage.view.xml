@@ -89,7 +89,7 @@
                                     <u:Tag text="{comp-i18n-usage>nrgUsgHdBillingDays}" class="nrgUsgTag-hd nrgUsgTable-hd-BD"/>
                                     <u:Tag text="{comp-i18n-usage>nrgUsgHdReading}" class="nrgUsgTag-hd nrgUsgTable-hd-RD"/>
                                     <u:Tag text="{comp-i18n-usage>nrgUsgHdKWh}" class="nrgUsgTag-hd nrgUsgTable-hd-kwh"/>
-                                    <u:Tag text="{comp-i18n-usage>nrgUsgHdKVA}" class="nrgUsgTag-hd nrgUsgTable-hd-kwh"/>
+                                    <u:Tag text="{comp-i18n-usage>nrgUsgHdKVA}" class="nrgUsgTag-hd nrgUsgTable-hd-kwh" visible="{= ${localModel>/isREBS} ? true : false }"/>
                                     <u:Tag text="{comp-i18n-usage>nrgUsgHdActualEst}" class="nrgUsgTag-hd nrgUsgTable-hd-Ac"/>
                                     <u:Tag text="{comp-i18n-usage>nrgUsgHdWeather}" class="nrgUsgTag-hd nrgUsgTable-hd-Wt"/>
                                     <u:Tag text="{comp-i18n-usage>nrgUsgHdCDIHDI}" class="nrgUsgTag-hd nrgUsgTable-hd-ch"/>

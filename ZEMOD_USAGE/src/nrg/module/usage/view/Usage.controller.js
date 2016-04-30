@@ -85,6 +85,7 @@ sap.ui.define(
                     if (oTableBinding) {
                         oTableBinding.detachDataReceived(fnTableDataRecdHandler);
                     }
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
                 };
                 if ((aContent) && (aContent.length > 0)) {
                     if (that._sContract) {
@@ -113,7 +114,7 @@ sap.ui.define(
                         oUsageTable.addContent(oNoDataTag);
                     }
                 }
-                that.getOwnerComponent().getCcuxApp().setOccupied(false);
+
                 if (oBinding) {
                     oBinding.detachDataReceived(fnRecievedHandler);
                 }
