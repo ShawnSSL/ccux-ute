@@ -173,6 +173,7 @@
                 "EveningPhoneType":"",
                 "SMSUrl": "http://dev1-ccrportal.reliant.com/esiidlookup/ActivateMobileServlet?businessPartner=0000100525&contractAccount=&contactNo=281-989-9312&companyCode=0121&brandId=RE",
                 "IsSMS": "",
+                "ServiceLength":"190",
                 "Buags":{
                     "__deferred":{
                         "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/Partners('64041')/Buags"
