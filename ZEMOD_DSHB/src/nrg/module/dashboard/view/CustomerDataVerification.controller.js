@@ -81,7 +81,7 @@ sap.ui.define(
 
 
 
-            this._initToggleArea();
+            //this._initToggleArea();
             this._initDtaVrfRetr();
             this._initCfrmStatus();
             this._initPhnTypes();
@@ -105,7 +105,7 @@ sap.ui.define(
         Controller.prototype._dhsbVerificationNavLeftCallBack = function () {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
 
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
 
 /*            if (true) {*/
             oWebUiManager.notifyWebUi('clearAccount', {}, this._navLeftClearAccCallBack, this);
@@ -173,6 +173,18 @@ sap.ui.define(
                 this.getView().byId('idContractDropdown').setVisible(false);
             }
 
+        };
+
+        Controller.prototype._onLeftTglBarSelected = function (oEvent) {
+            this.getView().byId('mailadd_area').setVisible(false);
+            this.getView().byId('serviceadd_area').setVisible(true);
+            this.getView().byId('idContractDropdown').setVisible(true);
+        };
+
+        Controller.prototype._onRightTglBarSelected = function (oEvent) {
+            this.getView().byId('serviceadd_area').setVisible(false);
+            this.getView().byId('mailadd_area').setVisible(true);
+            this.getView().byId('idContractDropdown').setVisible(false);
         };
 
         Controller.prototype._handleUpdate = function () {
@@ -389,7 +401,7 @@ sap.ui.define(
         };
 
         Controller.prototype._updateMailingAddr = function () {
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
 
             var oModel = this.getView().getModel('oODataSvc'),
                 sPath,
