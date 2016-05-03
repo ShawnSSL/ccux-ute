@@ -57,7 +57,17 @@ sap.ui.define(
         Manager.prototype.isREBS = function () {
             return this.getGDCProperty("/REBS") || false;
         };
+        Manager.prototype.setCAConfirm = function (bisFirstTimeConfirm) {
+            if (bisFirstTimeConfirm) {
+                this.setGDCProperty("/CAConfirm", true);
+            } else {
+                this.setGDCProperty("/CAConfirm", false);
+            }
+        };
 
+        Manager.prototype.isCAConfirm = function () {
+            return this.getGDCProperty("/CAConfirm") || false;
+        };
         Manager.prototype.getGDCProperty = function (sPath) {
             if (sPath) {
                 return this._globalModel.getProperty(sPath);
