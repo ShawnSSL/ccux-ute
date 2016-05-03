@@ -163,7 +163,7 @@ sap.ui.define(
             this._retrAllCa(sNewSelectedBuagIndex);
         };*/
 
-        /*Controller.prototype._onToggleButtonPress = function (oEvent) {
+        Controller.prototype._onToggleButtonPress = function (oEvent) {
             //var l_selected = this.getView().byId('id_DshbTglBtn').getLeftSelected();
             if (this.getView().byId('mailadd_area').getVisible()) {
                 this.getView().byId('mailadd_area').setVisible(false);
@@ -176,21 +176,17 @@ sap.ui.define(
             }
 
         };
-*/
+
         Controller.prototype._onLeftTglBarSelected = function (oEvent) {
-            if (typeof (this.getView().byId('mailadd_area')) !== 'undefined') {
-                this.getView().byId('mailadd_area').setVisible(false);
-                this.getView().byId('serviceadd_area').setVisible(true);
-                this.getView().byId('idContractDropdown').setVisible(true);
-            }
+            this.getView().byId('mailadd_area').setVisible(false);
+            this.getView().byId('serviceadd_area').setVisible(true);
+            this.getView().byId('idContractDropdown').setVisible(true);
         };
 
         Controller.prototype._onRightTglBarSelected = function (oEvent) {
-            if (typeof (this.getView().byId('serviceadd_area')) !== 'undefined') {
-                this.getView().byId('serviceadd_area').setVisible(false);
-                this.getView().byId('mailadd_area').setVisible(true);
-                this.getView().byId('idContractDropdown').setVisible(false);
-            }
+            this.getView().byId('serviceadd_area').setVisible(false);
+            this.getView().byId('mailadd_area').setVisible(true);
+            this.getView().byId('idContractDropdown').setVisible(false);
         };
 
         Controller.prototype._handleUpdate = function () {
@@ -208,6 +204,7 @@ sap.ui.define(
             oParameters = {
                 merge: false,
                 success : function (oData) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Customer data update ',
                         message: 'Update Success'
@@ -215,6 +212,7 @@ sap.ui.define(
                     this._initDtaVrfRetr();
                 }.bind(this),
                 error: function (oError) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Customer data update ',
                         message: 'Update Failed'
@@ -229,6 +227,7 @@ sap.ui.define(
                 if (oDataBPVrfy.hasOwnProperty("PsnBP")) {
                     delete oDataBPVrfy.PsnBP;
                 }
+                this.getOwnerComponent().getCcuxApp().setOccupied(true);
                 oModel.update(sPath, oDataBPVrfy, oParameters);
             }
         };
