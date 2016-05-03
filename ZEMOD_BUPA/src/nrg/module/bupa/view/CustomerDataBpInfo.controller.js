@@ -415,8 +415,13 @@ sap.ui.define(
         /*------------------------------------------ Data Set Up & Update Methods -------------------------------------------*/
 
         CustomController.prototype._initBpConfig = function () {
-            var oModel = this.getView().getModel('oBpInfoConfig');
-            
+            var oModel = this.getView().getModel('oBpInfoConfig'),
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
+            if (oGlobalDataManager.isREBS()) {
+                oModel.setProperty('/isREBS', true);
+            } else {
+                oModel.setProperty('/isREBS', false);
+            }
             // Title Section
             oModel.setProperty('/titleEditVisible', true);
             oModel.setProperty('/titleSaveVisible', false);

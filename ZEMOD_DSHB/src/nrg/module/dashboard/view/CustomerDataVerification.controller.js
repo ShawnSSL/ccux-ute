@@ -147,8 +147,10 @@ sap.ui.define(
         };
 
         Controller.prototype._initCfrmStatus = function () {
+
             this.getView().getModel('oCfrmStatus').setProperty('/bEditable', true);
             this.getView().getModel('oCfrmStatus').setProperty('/ShowSMSBtn', false);
+
             this.getView().byId('id_confmBtn').setVisible(true);
             this.getView().byId('id_unConfmBtn').setVisible(false);
             this.getView().byId('id_updtBtn').setEnabled(true);
@@ -191,8 +193,13 @@ sap.ui.define(
             var oModel = this.getView().getModel('oODataSvc'),
                 sPath,
                 oParameters,
-                oDataBPVrfy = this.getView().getModel('oDtaVrfyBP').oData;
-
+                oDataBPVrfy = this.getView().getModel('oDtaVrfyBP').oData,
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
+            if (oGlobalDataManager.isREBS()) {
+                oDataBPVrfy.IsRebs = true;
+            } else {
+                oDataBPVrfy.IsRebs = false;
+            }
             sPath = '/Partners' + '(\'' + this.getView().getModel('oDtaVrfyBP').getProperty('/PartnerID') + '\')';
             oParameters = {
                 merge: false,
@@ -1032,7 +1039,7 @@ sap.ui.define(
                         var checkCoRetrComplete = setInterval(function () {
                             if (bCoRetrieveComplate) {
                                 // Confirm with WebUI and CCUX
-                                this._routeInfoConfirm();
+                                this._routeInfoConfirm(true);
                                 // Update the linkability of METER lable
                                 this._updateUsageLink();
                                 clearInterval(checkCoRetrComplete);
@@ -1245,7 +1252,7 @@ sap.ui.define(
 
         /*----------------------------------------------- CCUX Level Methods ------------------------------------------------*/
 
-        Controller.prototype._routeInfoConfirm = function () {
+        Controller.prototype._routeInfoConfirm = function (bFirstTime) {
             var sCurrentBp = this.getView().getModel('oDtaVrfyBP').getProperty('/PartnerID'),
                 sCurrentCa = this.getView().getModel('oDtaVrfyBuags').getProperty('/ContractAccountID'),
                 sCurrentCo = this.getView().getModel('oDtaVrfyContract').getProperty('/ContractID'),
@@ -1253,16 +1260,31 @@ sap.ui.define(
                 oWebUiManager = oComponent.getCcuxWebUiManager(),
                 iCompleteCheck = 0,
                 checkComplete,
-                eventBus = sap.ui.getCore().getEventBus();
+                eventBus = sap.ui.getCore().getEventBus(),
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager(),
+                bisCAConfirmed = false;
 
-            // Update WebUI
-            if (oWebUiManager.isAvailable()) {
-                this._updateWebUI(sCurrentBp, sCurrentCa, sCurrentCo, function () {
-                    iCompleteCheck += 1;
-                }, this);
-            } else {
-                iCompleteCheck += 1;
+            if (bFirstTime) {
+                if (oGlobalDataManager.isCAConfirm()) {
+                    bisCAConfirmed = true;
+                } else {
+                    oGlobalDataManager.setCAConfirm(true);// informing global manager to maintain CA already confirmed
+                    bisCAConfirmed = false;
+                }
             }
+            // Update WebUI
+            if (bisCAConfirmed) {
+                iCompleteCheck += 1;
+            } else {
+                if (oWebUiManager.isAvailable()) {
+                    this._updateWebUI(sCurrentBp, sCurrentCa, sCurrentCo, function () {
+                        iCompleteCheck += 1;
+                    }, this);
+                } else {
+                    iCompleteCheck += 1;
+                }
+            }
+
 
             // Update CCUX
             this._updateCcux(sCurrentBp, sCurrentCa, sCurrentCo, function () {
@@ -1366,8 +1388,10 @@ sap.ui.define(
                 oCOModel = this.getView().getModel('oDtaVrfyContract');
             if (oCOModel.getProperty('/IsREBs')) {
                 oGlobalDataManager.setREBS(true);
+                this.getView().getModel('oCfrmStatus').setProperty('/isREBS', true);
             } else {
                 oGlobalDataManager.setREBS(false);
+                this.getView().getModel('oCfrmStatus').setProperty('/isREBS', false);
             }
         };
         Controller.prototype._onCaSelect = function (oEvent) {
