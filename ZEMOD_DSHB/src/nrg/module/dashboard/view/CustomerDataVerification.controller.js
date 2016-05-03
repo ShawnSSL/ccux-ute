@@ -178,15 +178,15 @@ sap.ui.define(
         };
 
         Controller.prototype._onLeftTglBarSelected = function (oEvent) {
-            this.getView().byId('mailadd_area').setVisible(false);
+/*            this.getView().byId('mailadd_area').setVisible(false);
             this.getView().byId('serviceadd_area').setVisible(true);
-            this.getView().byId('idContractDropdown').setVisible(true);
+            this.getView().byId('idContractDropdown').setVisible(true);*/
         };
 
         Controller.prototype._onRightTglBarSelected = function (oEvent) {
-            this.getView().byId('serviceadd_area').setVisible(false);
+/*            this.getView().byId('serviceadd_area').setVisible(false);
             this.getView().byId('mailadd_area').setVisible(true);
-            this.getView().byId('idContractDropdown').setVisible(false);
+            this.getView().byId('idContractDropdown').setVisible(false);*/
         };
 
         Controller.prototype._handleUpdate = function () {
@@ -204,6 +204,7 @@ sap.ui.define(
             oParameters = {
                 merge: false,
                 success : function (oData) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Customer data update ',
                         message: 'Update Success'
@@ -211,6 +212,7 @@ sap.ui.define(
                     this._initDtaVrfRetr();
                 }.bind(this),
                 error: function (oError) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Customer data update ',
                         message: 'Update Failed'
@@ -225,6 +227,7 @@ sap.ui.define(
                 if (oDataBPVrfy.hasOwnProperty("PsnBP")) {
                     delete oDataBPVrfy.PsnBP;
                 }
+                this.getOwnerComponent().getCcuxApp().setOccupied(true);
                 oModel.update(sPath, oDataBPVrfy, oParameters);
             }
         };
