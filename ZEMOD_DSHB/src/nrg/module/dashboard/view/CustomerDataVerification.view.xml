@@ -210,13 +210,18 @@
             <ute:Tag class="nrgDashboard-cusDataVerify-middle">
                 <ute:Tag class="nrgDashboard-cusDataVerify-middle-wrap">
                     <!-- 1. Toggle Tab -->
-                    <ute:ToggleButton id="id_DshbTglBtn" design="ToggleDashboard"
-                        leftSelected="true"
-                        leftBtnText="{comp-i18n-dashboard>nrgDashboardCusDatVrf_TglBtnLTxt}"
-                        rightBtnText="{comp-i18n-dashboard>nrgDashboardCusDatVrf_TglBtnRTxt}"
-                        class="nrgDashboard-cusDataVerify-mTgBtn"
-                        press="._onToggleButtonPress">
-                    </ute:ToggleButton>
+                    <utmain:TabBar design="Invert" class="nrgDashboard-cusDataVerify-middle-wrap-tabBar">
+                        <utmain:TabBarItem design="Invert"  selected="true"
+                            class="nrgDashboard-cusDataVerify-middle-wrap-tabBar-left"
+                            select="._onLeftTglBarSelected">
+                            <ute:Tag text="{comp-i18n-dashboard>nrgDashboardCusDatVrf_TglBtnLTxt}"/>
+                        </utmain:TabBarItem>
+                        <utmain:TabBarItem design="Invert" selected="false"
+                            class="nrgDashboard-cusDataVerify-middle-wrap-tabBar-right"
+                            select="._onRightTglBarSelected">
+                            <ute:Tag text="{comp-i18n-dashboard>nrgDashboardCusDatVrf_TglBtnRTxt}"/>
+                        </utmain:TabBarItem>
+                    </utmain:TabBar>
                     <!-- 2. Dropdown Menus -->
                     <ute:Tag class="nrgDashboard-cusDataVerify-middle-dropdownArea">
                         <!-- Contract Dropdown -->

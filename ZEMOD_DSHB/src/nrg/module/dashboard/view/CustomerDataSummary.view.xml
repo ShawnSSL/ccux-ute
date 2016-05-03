@@ -203,6 +203,13 @@
                 </ute:TextView>
             </ute:Tag>
 
+            <ute:HorizontalDivider class="nrgDashboard-cusDataSum-horiLine"/>
+
+            <ute:Tag class="nrgDashboard-cusDataSum-serviceLength">
+                <c:TextView class="nrgDashboard-cusDataSum-serviceLength"
+                            text="Service length: {oSmryBpInf>/ServiceLength}">
+                </ute:TextView>
+            </ute:Tag>
 
             <ute:HorizontalDivider class="nrgDashboard-cusDataSum-horiLine"/>
 
@@ -315,5 +322,4 @@
                     </l:MatrixLayout>
         </ute:Tag>
     </div>
-
 </mvc:View>
