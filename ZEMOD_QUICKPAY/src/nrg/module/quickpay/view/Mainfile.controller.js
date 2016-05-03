@@ -58,7 +58,8 @@ sap.ui.define(
             this._oFormatYyyymmdd = DateFormat.getInstance({
                 pattern: 'MM/dd/yyyy'
             });
-            this.getView().getModel('comp-quickpay').refresh(true, true);//If set to true then the model data will be removed/cleared.
+            this.getView().getModel('comp-quickpay').oData = {};
+            //this.getView().getModel('comp-quickpay').refresh(true, true);//If set to true then the model data will be removed/cleared.
             this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             oContactModel = new sap.ui.model.json.JSONModel();
@@ -123,6 +124,7 @@ sap.ui.define(
                 oAppViewModel = this.getView().getModel("appView");
             this._bCreditCard = true;
             this._onToggleViews("SR");
+            this.onRecordingPause();
             oCreditCardDate.setDefaultDate(this._oFormatYyyymmdd.format(new Date(), true));
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             //oCreditCardDate.setMinDate(new Date());
@@ -1445,7 +1447,7 @@ sap.ui.define(
         };
 
         /**
-		 * When Popup is closed
+		 * Recording Stop and Resume
 		 *
 		 * @function onQuickPay
          * @param {sap.ui.base.Event} oEvent pattern match event
@@ -1466,6 +1468,27 @@ sap.ui.define(
                 this._bCreditCard = false;
             }
             this.getView().getParent().close();
+        };
+        /**
+		 * Recording Pause
+		 *
+		 * @function onQuickPay
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onRecordingPause = function () {
+            var sPath = "/RecordingSet(BP='" + this._sBP + "',CA='" + this._sCA + "')",
+                mParameters = {
+                    success : function (oData, oResponse) {
+                    }.bind(this),
+                    error: function (oError) {
+                    }.bind(this)
+                },
+                oModel = this.getView().getModel('comp-quickpay');
+            if (this._bCreditCard) {
+                oModel.update(sPath, {
+                    "Resume" : false
+                }, mParameters);
+            }
         };
         /**
 		 * Enable Payment Success
