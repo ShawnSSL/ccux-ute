@@ -177,7 +177,7 @@ sap.ui.define(
 
         };
 
-        Controller.prototype._onLeftTglBarSelected = function (oEvent) {
+        /*Controller.prototype._onLeftTglBarSelected = function (oEvent) {
             if ((typeof (this.getView().byId('mailadd_area')) !== undefined) && (typeof (this.getView().byId('serviceadd_area')) !== undefined) && (typeof (this.getView().byId('idContractDropdown')) !== undefined)) {
                 this.getView().byId('mailadd_area').setVisible(false);
                 this.getView().byId('serviceadd_area').setVisible(true);
@@ -191,7 +191,7 @@ sap.ui.define(
                 this.getView().byId('mailadd_area').setVisible(true);
                 this.getView().byId('idContractDropdown').setVisible(false);
             }
-        };
+        };*/
 
         Controller.prototype._handleUpdate = function () {
             var oModel = this.getView().getModel('oODataSvc'),
