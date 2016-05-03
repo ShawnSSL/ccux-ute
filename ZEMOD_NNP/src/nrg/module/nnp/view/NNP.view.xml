@@ -48,7 +48,19 @@
             </ute:Tag>
 
             <ute:Tag class="nrgNnp-Nnp-option">
-                <ute:ToggleButton id="idEmail_yn_ctaddr"
+                <utmain:TabBar design="Invert" select="._onMktPrefTogg" id="idEmail_yn_ctaddr">
+                    <utmain:TabBarItem id="idEmail_yn_ctaddr_left" design="Invert"
+                        selected="{parts:['oEditEmailNNP>/Ecd'],
+                                   formatter:'._formatEmailMkt'}">
+                        <ute:Tag text="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_Y}"/>
+                    </utmain:TabBarItem>
+                    <utmain:TabBarItem id="idEmail_yn_ctaddr_right" design="Invert"
+                        selected="{parts:['oEditEmailNNP>/Ecd'],
+                                   formatter:'._formatEmailMktReverse'}">
+                        <ute:Tag text="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_N}"/>
+                    </utmain:TabBarItem>
+                </utmain:TabBar>
+                <!--ute:ToggleButton id="idEmail_yn_ctaddr"
                     class="nrgNnp-Nnp-toggle"
                     design="ToggleDashboard" press="._onMktPrefTogg"
                     leftSelected="{
@@ -57,11 +69,23 @@
                     leftBtnWidth="45px" rightBtnWidth="45px"
                     leftBtnText="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_Y}"
                     rightBtnText="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_N}">
-                </ute:ToggleButton>
+                </ute:ToggleButton-->
                 <utmain:Label labelFor="idEmail_yn_ctaddr" text="Email Contract Documents"/>
             </ute:Tag>
             <ute:Tag class="nrgNnp-Nnp-option">
-                <ute:ToggleButton id="idEmail_yn_rpdsrv"
+                <utmain:TabBar design="Invert" select="._onMktPrefTogg" id="idEmail_yn_rpdsrv">
+                    <utmain:TabBarItem id="idEmail_yn_rpdsrv_left" design="Invert"
+                        selected="{parts:['oEditEmailNNP>/Mkt'],
+                                   formatter:'._formatEmailMkt'}">
+                        <ute:Tag text="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_Y}"/>
+                    </utmain:TabBarItem>
+                    <utmain:TabBarItem id="idEmail_yn_rpdsrv_right" design="Invert"
+                        selected="{parts:['oEditEmailNNP>/Mkt'],
+                                   formatter:'._formatEmailMktReverse'}">
+                        <ute:Tag text="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_N}"/>
+                    </utmain:TabBarItem>
+                </utmain:TabBar>
+                <!--<ute:ToggleButton id="idEmail_yn_rpdsrv"
                     class="nrgNnp-Nnp-toggle"
                     design="ToggleDashboard" press="._onMktPrefTogg"
                     leftSelected="{
@@ -70,11 +94,23 @@
                     leftBtnWidth="45px" rightBtnWidth="45px"
                     leftBtnText="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_Y}"
                     rightBtnText="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_N}">
-                </ute:ToggleButton>
+                </ute:ToggleButton>-->
                 <utmain:Label labelFor="idEmail_yn_rpdsrv" text="Reliant Products and Services"/>
             </ute:Tag>
             <ute:Tag class="nrgNnp-Nnp-option">
-                <ute:ToggleButton id="idEmail_yn_thrdpty"
+                <utmain:TabBar design="Invert" select="._onMktPrefTogg" id="idEmail_yn_thrdpty">
+                    <utmain:TabBarItem id="idEmail_yn_thrdpty_left" design="Invert"
+                        selected="{parts:['oEditEmailNNP>/Offer'],
+                                   formatter:'._formatEmailMkt'}">
+                        <ute:Tag text="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_Y}"/>
+                    </utmain:TabBarItem>
+                    <utmain:TabBarItem id="idEmail_yn_thrdpty_right" design="Invert"
+                        selected="{parts:['oEditEmailNNP>/Offer'],
+                                   formatter:'._formatEmailMktReverse'}">
+                        <ute:Tag text="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_N}"/>
+                    </utmain:TabBarItem>
+                </utmain:TabBar>
+                <!--<ute:ToggleButton id="idEmail_yn_thrdpty"
                     class="nrgNnp-Nnp-toggle"
                     design="ToggleDashboard" press="._onMktPrefTogg"
                     leftSelected="{
@@ -83,11 +119,23 @@
                     leftBtnWidth="45px" rightBtnWidth="45px"
                     leftBtnText="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_Y}"
                     rightBtnText="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_N}">
-                </ute:ToggleButton>
+                </ute:ToggleButton>-->
                 <utmain:Label labelFor="idEmail_yn_thrdpty" text="Third Party offers and promototions (e.g. sports/special events)"/>
             </ute:Tag>
             <ute:Tag class="nrgNnp-Nnp-option">
-                <ute:ToggleButton id="idEmail_yn_engeff"
+                <utmain:TabBar design="Invert" select="._onMktPrefTogg" id="idEmail_yn_engeff">
+                    <utmain:TabBarItem id="idEmail_yn_engeff_left" design="Invert"
+                        selected="{parts:['oEditEmailNNP>/Ee'],
+                                   formatter:'._formatEmailMkt'}">
+                        <ute:Tag text="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_Y}"/>
+                    </utmain:TabBarItem>
+                    <utmain:TabBarItem id="idEmail_yn_engeff_right" design="Invert"
+                        selected="{parts:['oEditEmailNNP>/Ee'],
+                                   formatter:'._formatEmailMktReverse'}">
+                        <ute:Tag text="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_N}"/>
+                    </utmain:TabBarItem>
+                </utmain:TabBar>
+                <!--<ute:ToggleButton id="idEmail_yn_engeff"
                     class="nrgNnp-Nnp-toggle"
                     design="ToggleDashboard" press="._onMktPrefTogg"
                     leftSelected="{
@@ -96,7 +144,7 @@
                     leftBtnWidth="45px" rightBtnWidth="45px"
                     leftBtnText="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_Y}"
                     rightBtnText="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_N}">
-                </ute:ToggleButton>
+                </ute:ToggleButton>-->
                 <utmain:Label labelFor="idEmail_yn_engeff" text="Energy Efficiency"/>
             </ute:Tag>
 

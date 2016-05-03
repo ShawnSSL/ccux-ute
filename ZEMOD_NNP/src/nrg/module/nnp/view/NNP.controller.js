@@ -77,11 +77,20 @@ sap.ui.define(
                 oModel.read(sPath, oParameters);
             }
         };
+
         Controller.prototype._formatEmailMkt = function (sIndicator) {
             if (sIndicator === 'y' || sIndicator === 'Y') {
                 return true;
             } else {
                 return false;
+            }
+        };
+
+        Controller.prototype._formatEmailMktReverse = function (sIndicator) {
+            if (sIndicator === 'y' || sIndicator === 'Y') {
+                return false;
+            } else {
+                return true;
             }
         };
 
@@ -379,25 +388,25 @@ sap.ui.define(
             var oNNP = this.getView().getModel('oEditEmailNNP');
 
             if (oEvent.mParameters.id.indexOf('ctaddr') > 0) {
-                if (oEvent.getSource().getLeftSelected()) {
+                if (oEvent.mParameters.selectedItem.sId.indexOf('left') > 0) {
                     oNNP.setProperty('/Ecd', 'Y');
                 } else {
                     oNNP.setProperty('/Ecd', 'N');
                 }
             } else if (oEvent.mParameters.id.indexOf('rpdsrv') > 0) {
-                if (oEvent.getSource().getLeftSelected()) {
+                if (oEvent.mParameters.selectedItem.sId.indexOf('left') > 0) {
                     oNNP.setProperty('/Mkt', 'Y');
                 } else {
                     oNNP.setProperty('/Mkt', 'N');
                 }
             } else if (oEvent.mParameters.id.indexOf('thrdpty') > 0) {
-                if (oEvent.getSource().getLeftSelected()) {
+                if (oEvent.mParameters.selectedItem.sId.indexOf('left') > 0) {
                     oNNP.setProperty('/Offer', 'Y');
                 } else {
                     oNNP.setProperty('/Offer', 'N');
                 }
             } else { //('engeff')
-                if (oEvent.getSource().getLeftSelected()) {
+                if (oEvent.mParameters.selectedItem.sId.indexOf('left') > 0) {
                     oNNP.setProperty('/Ee', 'Y');
                 } else {
                     oNNP.setProperty('/Ee', 'N');
