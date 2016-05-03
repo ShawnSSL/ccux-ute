@@ -178,15 +178,15 @@ sap.ui.define(
         };
 
         Controller.prototype._onLeftTglBarSelected = function (oEvent) {
-/*            this.getView().byId('mailadd_area').setVisible(false);
+            this.getView().byId('mailadd_area').setVisible(false);
             this.getView().byId('serviceadd_area').setVisible(true);
-            this.getView().byId('idContractDropdown').setVisible(true);*/
+            this.getView().byId('idContractDropdown').setVisible(true);
         };
 
         Controller.prototype._onRightTglBarSelected = function (oEvent) {
-/*            this.getView().byId('serviceadd_area').setVisible(false);
+            this.getView().byId('serviceadd_area').setVisible(false);
             this.getView().byId('mailadd_area').setVisible(true);
-            this.getView().byId('idContractDropdown').setVisible(false);*/
+            this.getView().byId('idContractDropdown').setVisible(false);
         };
 
         Controller.prototype._handleUpdate = function () {
