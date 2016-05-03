@@ -445,9 +445,16 @@
                             <utmain:Button  id="email_lbl" design="None"
                                 class="nrgDashboard-cusDataVerify-middle-emailVal"
                                 enabled="{oCfrmStatus>/bEditable}"
+                                visible="{= ${oCfrmStatus>/isREBS} ? false : true }"
                                 text="{parts:['oDtaVrfyBP>/Email'],
                                        formatter:'._formatEmailAddressText'}"
                                 press="._handleEmailEdit"/>
+                            <ute:Textfield fieldType="Underlined"
+                                    class="nrgDashboard-cusDataVerify-middle-extNumVal"
+                                    editable="{oCfrmStatus>/bEditable}"
+                                    visible="{= ${oCfrmStatus>/isREBS} ? true : false }"
+                                    value="{oDtaVrfyBP>/Email}"
+                                    width="25rem"/>
                         </ute:Tag>
                     </ute:Tag>
 
@@ -606,7 +613,14 @@
                                 class="nrgDashboard-cusDataVerify-middle-emailVal"
                                 text="{oDtaVrfyBP>/Email}"
                                 enabled="{oCfrmStatus>/bEditable}"
+                                visible="{= ${oCfrmStatus>/isREBS} ? false : true }"
                                 press="._handleEmailEdit"/>
+                            <ute:Textfield fieldType="Underlined"
+                                    class="nrgDashboard-cusDataVerify-middle-extNumVal"
+                                    editable="{oCfrmStatus>/bEditable}"
+                                    visible="{= ${oCfrmStatus>/isREBS} ? true : false }"
+                                    value="{oDtaVrfyBP>/Email}"
+                                    width="25rem"/>
                         </ute:Tag>
                     </ute:Tag>
                 </ute:Tag>
