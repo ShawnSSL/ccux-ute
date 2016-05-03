@@ -178,7 +178,7 @@ sap.ui.define(
         };*/
 
         Controller.prototype._onLeftTglBarSelected = function (oEvent) {
-            if (typeof (this.getView().byId('mailadd_area')) !== undefined) {
+            if ((typeof (this.getView().byId('mailadd_area')) !== undefined) && (typeof (this.getView().byId('serviceadd_area')) !== undefined) && (typeof (this.getView().byId('idContractDropdown')) !== undefined)) {
                 this.getView().byId('mailadd_area').setVisible(false);
                 this.getView().byId('serviceadd_area').setVisible(true);
                 this.getView().byId('idContractDropdown').setVisible(true);
@@ -186,7 +186,7 @@ sap.ui.define(
         };
 
         Controller.prototype._onRightTglBarSelected = function (oEvent) {
-            if (typeof (this.getView().byId('mailadd_area')) !== undefined) {
+            if ((typeof (this.getView().byId('mailadd_area')) !== undefined) && (typeof (this.getView().byId('serviceadd_area')) !== undefined) && (typeof (this.getView().byId('idContractDropdown')) !== undefined)) {
                 this.getView().byId('serviceadd_area').setVisible(false);
                 this.getView().byId('mailadd_area').setVisible(true);
                 this.getView().byId('idContractDropdown').setVisible(false);
