@@ -165,9 +165,6 @@
                         change="._onBpInfoRegAddrEdit"
                         editable="{oBpInfoConfig>/addrEditable}"
                         value="{oDataBpAddress>/AddressInfo/Street}"/>
-                </ute:Tag>
-                <!-- Apt./Unit & PO Box -->
-                <ute:Tag class="nrgBupa-cusDataBpInfo-contentRow">
                     <!-- (label for residential) -->
                     <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title" visible="{oDataBP>/PsnBP}"
                              text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-APT_UNIT}:" />
@@ -177,6 +174,10 @@
                     <ute:Textfield fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input median middle-space"
                         editable="{oBpInfoConfig>/addrEditable}"
                         value="{oDataBpAddress>/AddressInfo/UnitNo}"/>
+                </ute:Tag>
+                <!-- Apt./Unit & PO Box -->
+                <ute:Tag class="nrgBupa-cusDataBpInfo-contentRow">
+
                     <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title short"
                               text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-POBOX}:" />
                     <ute:Textfield id="idBpInfoPobox_Edit" fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input long"
