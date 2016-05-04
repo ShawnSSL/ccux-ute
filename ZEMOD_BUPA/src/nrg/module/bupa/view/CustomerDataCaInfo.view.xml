@@ -104,14 +104,14 @@
                 </l:MatrixLayout>
                 <l:MatrixLayout
                     class="nrgBupa-cusDataCaInfo-layout"
-                    widths="500px,500px"
-                    columns="2" width="100%">
+                    widths="250px,500px,250px"
+                    columns="3" width="100%">
                     <l:rows>
                         <l:MatrixLayoutRow>
                             <l:cells>
                                 <!--Area Left-->
                                 <l:MatrixLayoutCell class="nrgBupa-cusDataCaInfo-l">
-                                    <l:MatrixLayout widths="25%,75%" columns="2">
+                                    <l:MatrixLayout widths="55%,45%" columns="2">
                                         <l:MatrixLayoutRow>
                                             <l:MatrixLayoutCell>
                                                 <ute:Tag elem="div"
@@ -151,21 +151,9 @@
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
                                 </l:MatrixLayoutCell>
-                            </l:cells>
-                        </l:MatrixLayoutRow>
-                    </l:rows>
-                </l:MatrixLayout>
 
-                <l:MatrixLayout
-                    class="nrgBupa-cusDataCaInfo-layout"
-                    widths="400px,600px"
-                    columns="2" width="100%">
-                    <l:rows>
-                        <l:MatrixLayoutRow>
-                            <l:cells>
-                                <!--Area Left-->
                                 <l:MatrixLayoutCell class="nrgBupa-cusDataCaInfo-l">
-                                    <l:MatrixLayout widths="30%,70%" columns="2">
+                                    <l:MatrixLayout widths="35%,65%" columns="2">
                                         <l:MatrixLayoutRow>
                                             <l:MatrixLayoutCell>
                                                 <ute:Tag elem="div"
@@ -181,10 +169,24 @@
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
                                 </l:MatrixLayoutCell>
+                            </l:cells>
+                        </l:MatrixLayoutRow>
+                    </l:rows>
+                </l:MatrixLayout>
+
+                <l:MatrixLayout
+                    class="nrgBupa-cusDataCaInfo-layout"
+                    widths="800px"
+                    columns="1" width="80%">
+                    <l:rows>
+                        <l:MatrixLayoutRow>
+                            <l:cells>
+                                <!--Area Left-->
+
 
                                 <!--Area right-->
                                 <l:MatrixLayoutCell class="nrgBupa-cusDataCaInfo-l">
-                                    <l:MatrixLayout widths="12%,88%" columns="2">
+                                    <l:MatrixLayout widths="10%,90%" columns="2">
                                         <l:MatrixLayoutRow>
                                             <l:MatrixLayoutCell>
                                                 <ute:Tag elem="div"
