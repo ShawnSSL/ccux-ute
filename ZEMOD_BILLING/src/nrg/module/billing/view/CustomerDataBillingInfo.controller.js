@@ -397,7 +397,7 @@ sap.ui.define(
         };
         CustomController.prototype._formatRightDisplayValue = function (sLeftValue, sRightValue, sDesc) {
             if ((sLeftValue && parseFloat(sLeftValue) !== 0.00) || (sRightValue && parseFloat(sRightValue) !== 0.00)) {
-                if (sLeftValue) {
+                if (sRightValue) {
                     return parseFloat(sRightValue).toFixed(2);
                 } else {
                     return '0.00';
@@ -412,10 +412,10 @@ sap.ui.define(
             if (sIndicator === 'X' || sIndicator === 'x') {
                 return false;
             } else {
-                if (sLeftValue && (parseFloat(sLeftValue) > 0.00)) {
+                if (sLeftValue && (parseFloat(sLeftValue) !== 0.00)) {
                     return true;
                 } else {
-                    if (sRightValue && (parseFloat(sRightValue) > 0.00)) {
+                    if (sRightValue && (parseFloat(sRightValue) !== 0.00)) {
                         return false;
                     } else {
                         return true;
@@ -427,10 +427,10 @@ sap.ui.define(
             if (sIndicator === 'X' || sIndicator === 'x') {
                 return false;
             } else {
-                if (sLeftValue && (parseFloat(sLeftValue) > 0.00)) {
+                if (sLeftValue && (parseFloat(sLeftValue) !== 0.00)) {
                     return false;
                 } else {
-                    if (sRightValue && (parseFloat(sRightValue) > 0.00)) {
+                    if (sRightValue && (parseFloat(sRightValue) !== 0.00)) {
                         return true;
                     } else {
                         return false;
