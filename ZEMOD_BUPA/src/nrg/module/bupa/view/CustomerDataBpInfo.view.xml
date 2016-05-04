@@ -155,23 +155,23 @@
                 <ute:Tag class="nrgBupa-cusDataBpInfo-contentRow">
                     <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title"
                               text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-STREET_NUMBER}:" />
-                    <ute:Textfield id="idBpInfoHouseNo_Edit" fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input veryshort middle-space"
+                    <ute:Textfield id="idBpInfoHouseNo_Edit" fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input shortest middle-space"
                         change="._onBpInfoRegAddrEdit"
                         editable="{oBpInfoConfig>/addrEditable}"
                         value="{oDataBpAddress>/AddressInfo/HouseNo}"/>
                     <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title"
                              text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-STREET_NAME}:" />
-                    <ute:Textfield id="idBpInfoStreet_Edit" fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input verylong"
+                    <ute:Textfield id="idBpInfoStreet_Edit" fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input median middle-space"
                         change="._onBpInfoRegAddrEdit"
                         editable="{oBpInfoConfig>/addrEditable}"
                         value="{oDataBpAddress>/AddressInfo/Street}"/>
                     <!-- (label for residential) -->
-                    <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title" visible="{oDataBP>/PsnBP}"
+                    <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title short" visible="{oDataBP>/PsnBP}"
                              text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-APT_UNIT}:" />
                     <!-- (label for organization) -->
                     <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title" visible="{oDataBP>/OrgBP}"
                              text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-UNIT}:" />
-                    <ute:Textfield fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input median middle-space"
+                    <ute:Textfield fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input shortest"
                         editable="{oBpInfoConfig>/addrEditable}"
                         value="{oDataBpAddress>/AddressInfo/UnitNo}"/>
                 </ute:Tag>
