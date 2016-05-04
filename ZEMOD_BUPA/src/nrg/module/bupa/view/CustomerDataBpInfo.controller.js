@@ -714,7 +714,8 @@ sap.ui.define(
                 oModel = this.getView().getModel('oODataSvc'),
                 sPath,
                 oParameters,
-                bpNumber = this._bpNum;
+                bpNumber = this._bpNum,
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
 
             oConfigModel.setProperty('/contactInfoEditVisible', true);
             oConfigModel.setProperty('/contactInfoSaveVisible', false);
@@ -725,19 +726,34 @@ sap.ui.define(
                 return;
             }
 
+            if (oGlobalDataManager.isREBS()) {
+                this.getView().getModel('oDataBpContact').oData.IsRebs = true;
+            } else {
+                this.getView().getModel('oDataBpContact').oData.IsRebs = false;
+            }
             sPath = '/BpContacts' + '(\'' + bpNumber + '\')';
             oParameters = {
                 merge: false,
                 success : function (oData) {
-                    sap.ui.commons.MessageBox.alert("Contact Info Update Success");
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'Customer data update ',
+                        message: 'Contact Info Update Success'
+                    });
+                    //sap.ui.commons.MessageBox.alert("Contact Info Update Success");
                     this._retrBpContact(bpNumber);
                 }.bind(this),
                 error: function (oError) {
-                    sap.ui.commons.MessageBox.alert("Contact Info Update Failed");
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'Customer data update ',
+                        message: 'Contact Info Update Failed'
+                    });
                 }.bind(this)
             };
 
             if (oModel) {
+                this.getOwnerComponent().getCcuxApp().setOccupied(true);
                 oModel.update(sPath, this.getView().getModel('oDataBpContact').oData, oParameters);
             }
         };
@@ -804,57 +820,6 @@ sap.ui.define(
 
             bpMarkPrefModel.setData(jQuery.extend(true, {}, this.oDataBpMarkPreferSetBak));
         };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         CustomController.prototype._getMessageProcessor = function () {
             if (!this._oControlMessageProcessor) {

@@ -397,13 +397,12 @@
                         class="nrgBupa-cusDataBpInfo-contentRow-input median"
                         text="{parts:['oDataBpContact>/Email'], formatter:'._formatEmailAddressText'}"
                         enabled="{oBpInfoConfig>/contactInfoEditable}"
-                        visible="true"
+                        visible="{= ${oBpInfoConfig>/isREBS} ? false : true }"
                         press="._handleEmailEdit"/>
                     <ute:Textfield fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input long middle-space"
                         editable="{oBpInfoConfig>/contactInfoEditable}"
-                        visible="false"
-                        value="{oDataBpContact>/Email}"
-                        />
+                        visible="{= ${oBpInfoConfig>/isREBS} ? true : false }"
+                        value="{oDataBpContact>/Email}" />
 
                 </ute:Tag>
                 <!-- Day Phone & Evening Phone -->

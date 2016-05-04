@@ -27,7 +27,7 @@
                            design="None">
                     <u:Tag id="idCamCustReqOffer"
                            class="nrgCamOvr-offerBtnTitle"
-                            text="{= ${comp-campaign>InitTab} ? ${comp-i18n-campaign>nrgCmpOvrElg} : ${comp-i18n-campaign>nrgCmpOvrNotElg} }" >
+                            text="{comp-campaign>ButtonText}" >
                     </u:Tag>
                     <u:Tag class="nrgCamOvr-offerBtnDesc"
                            text="CHANGE CAMPAIGN" />

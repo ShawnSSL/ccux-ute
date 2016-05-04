@@ -264,13 +264,12 @@ sap.ui.define(
                     if (oData.results.length) {
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             if (oData.results[i].FilterType === 'M2M' ||
-                                oData.results[i].FilterType === 'SMTP' ||
-                                oData.results[i].FilterType === 'MAIL' ||
-                                oData.results[i].FilterType === 'SMS' ||
-                                oData.results[i].FilterType === 'OAM') {
+                                    oData.results[i].FilterType === 'SMTP' ||
+                                    oData.results[i].FilterType === 'MAIL' ||
+                                    oData.results[i].FilterType === 'SMS' ||
+                                    oData.results[i].FilterType === 'OAM') {
                                 oData.results[i].Design = "Error";
-                            }
-                            else {
+                            } else {
                                 oData.results[i].Design = "Status";
                             }
                         }
@@ -500,11 +499,12 @@ sap.ui.define(
                 success : function (oData) {
                     var oCampaignModel = this.getView().getModel('oFooterCampaign');
                     if (oData.Contract) {
-                        if (oData.InitTab) {
+/*                        if (oData.InitTab) {
                             oCampaignModel.setProperty('/CampaignButtonText', 'Eligible Offers Available');
                         } else {
                             oCampaignModel.setProperty('/CampaignButtonText', 'No Eligible Offers Available');
-                        }
+                        }*/
+                        oCampaignModel.setProperty('/CampaignButtonText', oData.ButtonText);
                         oCampaignModel.setProperty('/CampaignFirstBill', oData.FirstBill);
                         oCampaignModel.setProperty('/CampaignButtonType', oData.InitTab);
                         oCampaignModel.setProperty('/CampaignButtonMoveOut', oData.PendMvo);
