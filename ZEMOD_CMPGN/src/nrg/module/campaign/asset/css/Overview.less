@@ -57,27 +57,30 @@
             margin-top: 2px;
     }
     & > .nrgCamOvr-TabBar {
-            background-color: @nrgColor-blue-pearl;
+            background-color: @nrgColor-blueLink;
             width: 80%;
             margin-left: 20px;
+            border-radius: 5px;
     }
     & > .nrgCamOvr-TabBar > .uteMTabBarItem {
-            width: 50%;
+            width: 49.6%;
     }
     & > .nrgCamOvr-TabBar > .uteMTabBarItem > .uteMTabBarItem-content {
             width:100%;
-            color: @nrgColor-blueLink;
+            color: @nrgColor-white;
+            background-color: transparent;
     }
     & > .nrgCamOvr-TabBar > .uteMTabBarItem > .uteMTabBarItem-int:checked + .uteMTabBarItem-content {
-            color: @nrgColor-white;
+            color: @nrgColor-black;
+            background-color: @nrgColor-blue-lightPale;
     }
     & > .nrgCamOvr-TabBar > .uteMTabBarItem > .uteMTabBarItem-content:hover {
             width:100%;
             color: @nrgColor-white;
     }
     & > .nrgCamOvr-TabBar > .uteMTabBarItem > .uteMTabBarItem-int[disabled="disabled"] + .uteMTabBarItem-content {
-            color: @nrgColor-blueLink;
-            background-color: @nrgColor-blue-pearl;
+            color: @nrgColor-white;
+            background-color: @nrgColor-blueLink;
     }
     &  .nrgCamOvr-infoline {
             overflow-x: hidden;
