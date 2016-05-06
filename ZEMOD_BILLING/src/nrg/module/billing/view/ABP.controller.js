@@ -92,7 +92,6 @@ sap.ui.define(
                 oScrnControl.setProperty('/Note', false);
                 oScrnControl.setProperty('/Correspondence', false);
                 oScrnControl.setProperty('/Trillium', true);
-                this._retrDppComunication();
             }
         };
         /*------------------------------------------------ Retrieve Methods -------------------------------------------------*/
@@ -449,7 +448,7 @@ sap.ui.define(
                         "Contract": this._coNum,
                         "Date": oHistoryModel.oData[oHistoryModel.oData.length - 1].FullPeriod,
                         "IsRetro": this.isRetro,
-                        "AbpAmt" : oHistoryModel.getProperty('/estAmount')
+                        "AbpAmt" : sTotalAmt
                     },
                     success : function (oData, response) {
                         that._OwnerComponent.getCcuxApp().setOccupied(false);
@@ -845,18 +844,27 @@ sap.ui.define(
                             olocalAddress.setProperty('/newAdd', false);
                         }
                         if (oData.Address) {
-                           // olocalAddress.setProperty('/Address', this.getView().getModel('oDppStepThreeCom').getProperty('/Address'));
-                            temp.Address = {};
-                            temp.Address.co = oData.Address.co;
-                            temp.Address.HouseNo = oData.Address.Address.HouseNo;
-                            temp.Address.UnitNo = oData.Address.UnitNo;
-                            temp.Address.City = oData.Address.City;
-                            temp.Address.State = oData.Address.State;
-                            temp.Address.Country = oData.Address.Country;
+                            olocalAddress.setProperty('/Address', {});
+                            //temp.Address = {};
+                            olocalAddress.setProperty('/Address/co', oData.Address.co);
+                            //temp.Address.co = oData.Address.co;
+                            olocalAddress.setProperty('/Address/HouseNo', oData.Address.HouseNo);
+                            //temp.Address.HouseNo = oData.Address.HouseNo;
+                            olocalAddress.setProperty('/Address/UnitNo', oData.Address.UnitNo);
+                            //temp.Address.UnitNo = oData.Address.UnitNo;
+                            olocalAddress.setProperty('/Address/City', oData.Address.City);
+                            //temp.Address.City = oData.Address.City;
+                            olocalAddress.setProperty('/Address/State', oData.Address.State);
+                            //temp.Address.State = oData.Address.State;
+                            olocalAddress.setProperty('/Address/Country', oData.Address.Country);
+                            //temp.Address.Country = oData.Address.Country;
                             //temp.Address.AddrLine = oData.Address.AddrLine;
-                            temp.Address.Street = oData.Address.Street;
-                            temp.Address.PoBox = oData.Address.PoBox;
-                            temp.Address.ZipCode = oData.Address.ZipCode;
+                            olocalAddress.setProperty('/Address/Street', oData.Address.Street);
+                            //temp.Address.Street = oData.Address.Street;
+                            olocalAddress.setProperty('/Address/PoBox', oData.Address.PoBox);
+                            //temp.Address.PoBox = oData.Address.PoBox;
+                            olocalAddress.setProperty('/Address/ZipCode', oData.Address.ZipCode);
+                            //temp.Address.ZipCode = oData.Address.ZipCode;
                         }
                     }
                 }.bind(this),
