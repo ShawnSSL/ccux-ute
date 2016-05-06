@@ -115,6 +115,16 @@
                         editable="{oBpInfoConfig>/titleEditable}"
                         value="{oDataBpName>/DBAName}"/>
                 </ute:Tag>            
+                <!-- Referral ID -->
+                <ute:Tag class="nrgBupa-cusDataBpInfo-contentRow" visible="{oDataBP>/PsnBP}">
+                    <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title"
+                             text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-REFERRAL}:" />
+                    <ute:Textfield id="idBpInfoReferralIdNo_Edit"
+                                   fieldType="Noborder"
+                                   class="nrgBupa-cusDataBpInfo-contentRow-input median middle-space"
+                                   editable="false"
+                                   value="{comp-bupa>Referral}"/>
+                </ute:Tag>
                 <!-- Buttons -->
                 <ute:Tag class="nrgBupa-cusDataBpInfo-btnRow">
                     <ute:Button class="nrgBupa-cusDataBpInfo-btn"
