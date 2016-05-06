@@ -43,9 +43,8 @@
                                 <ute:Tag class="nrgBilling-cusDataBil-invoiceSec">
                                     <ute:Tag text="{comp-i18n-billing>nrgBilling-cusDataPrePD-l-div-INVOCE_NUM}"
                                         class="nrgBilling-cusDataBil-referer-lbl"/>
-                                    <utmain:Button class="nrgBilling-cusDataBil-referer-linkFirst" design="None"
-                                        press="._onInvoiceNumClicked"
-                                        text="{oBillingInvoices>/InvoiceNum}"/>
+                                    <ute:Tag text="{oBillingInvoices>/InvoiceNum}"
+                                             class="nrgBilling-cusDataBil-referer-lbl"/>
                                     <core:Icon src="sap-icon://nrg-icon/calendar"
                                         class="nrgBilling-cusDataBil-invoiceSelect-icon"
                                         press="._onInvoiceSelectClicked"/>
