@@ -40,9 +40,12 @@ sap.ui.define(
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oBpInfo');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEligibility');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oMmDpp');
-
+            var oViewModel = new sap.ui.model.json.JSONModel({
+                    showCYP : false
+                }),
+                oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
+            this.getView().setModel(oViewModel, "localModel");
             // Get the routing info
-            var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
             this._updateRouting(oRouteInfo.parameters.bpNum, oRouteInfo.parameters.caNum, oRouteInfo.parameters.coNum);
             // this code to make sure footer is up only for dashboard screen else close it always
             if ((oRouteInfo.name.indexOf("Verification") > 0) || (oRouteInfo.name.indexOf("Billing") > 0)) {
@@ -58,6 +61,7 @@ sap.ui.define(
                 sap.ui.getCore().getEventBus().subscribe("nrg.module.appFooter", "eUpdateRhs", this.updateFooterRhs, this);
                 sap.ui.getCore().getEventBus().subscribe("nrg.module.appFooter", "eUpdateCampaign", this.updateFooterCampaign, this);
             }
+
         };
 
         Controller.prototype.onAfterRendering = function () {
@@ -486,25 +490,71 @@ sap.ui.define(
                 oModel.read(sPath, oParameters);
             }
         };
-
+       /**
+		 * check CYP whether
+		 *
+		 * @function
+		 *
+         *
+		 * @private
+		 */
+        Controller.prototype._checkCYP = function (fnCallBack) {
+            var oModel = this.getOwnerComponent().getModel('comp-campaign'),
+                oBindingInfo,
+                sPath = "/CYPS('123')",
+                that = this,
+                oViewModel = this.getView().getModel("localModel");
+            oBindingInfo = {
+                success : function (oData) {
+                    if (oData && oData.ShowCYP) {
+                        oViewModel.setProperty("/showCYP", true);
+                    }
+                    fnCallBack();
+                }.bind(this),
+                error: function (oError) {
+                    jQuery.sap.log.info("Odata Error occured");
+                    fnCallBack();
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sPath, oBindingInfo);
+            }
+        };
         Controller.prototype._updateFooterCampaignButton = function (sCoNumber) {
             var sPath = '/ButtonS(\'' + sCoNumber + '\')',
                 oModel = this.getView().getModel('oCompODataSvc'),
-                oParameters;
+                oParameters,
+                oViewModel = this.getView().getModel("localModel"),
+                bShowCYP = false;
 
             // If there's no CO number, then do nothing
             if (!sCoNumber) { return; }
 
             oParameters = {
                 success : function (oData) {
-                    var oCampaignModel = this.getView().getModel('oFooterCampaign');
+                    var oCampaignModel = this.getView().getModel('oFooterCampaign'),
+                        fSetButtonText;
                     if (oData.Contract) {
+                        fSetButtonText = function () {
+                            if (oViewModel && oViewModel.getProperty("/showCYP")) {
+                                bShowCYP = true;
+                            }
+                            if (!bShowCYP) {
+                                if (oData.InitTab) {
+                                    oCampaignModel.setProperty('/CampaignButtonText', 'Eligible Offers Available');
+                                } else {
+                                    oCampaignModel.setProperty('/CampaignButtonText', 'No Eligible Offers Available');
+                                }
+                            } else {
+                                oCampaignModel.setProperty('/CampaignButtonText', oData.ButtonText);
+                            }
+                        };
+                        this._checkCYP(fSetButtonText);
 /*                        if (oData.InitTab) {
                             oCampaignModel.setProperty('/CampaignButtonText', 'Eligible Offers Available');
                         } else {
                             oCampaignModel.setProperty('/CampaignButtonText', 'No Eligible Offers Available');
                         }*/
-                        oCampaignModel.setProperty('/CampaignButtonText', oData.ButtonText);
                         oCampaignModel.setProperty('/CampaignFirstBill', oData.FirstBill);
                         oCampaignModel.setProperty('/CampaignButtonType', oData.InitTab);
                         oCampaignModel.setProperty('/CampaignButtonMoveOut', oData.PendMvo);
@@ -545,6 +595,7 @@ sap.ui.define(
                 oRouter.navTo('campaignhistory', {bpNum: oRouting.oData.BpNumber, caNum: oRouting.oData.CaNumber, coNum: oRouting.oData.CoNumber});
             }
         };
+
 
         Controller.prototype._onCampaignBtnClick = function (oEvent) {
             var oCampaignModel = this.getView().getModel('oFooterCampaign'),
