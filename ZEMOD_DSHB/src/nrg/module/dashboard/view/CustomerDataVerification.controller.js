@@ -95,7 +95,7 @@ sap.ui.define(
             this.getOwnerComponent().getCcuxApp().attachNavLeft(this._dhsbVerificationNavLeftCallBack, this);
 
             // Update Footer
-            this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
+            //this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
 
             // Attach click event to Status
             this.getView().byId("nrgDashBoard-cusDataVerify-Status").attachBrowserEvent("click", this._navToSvcOdr.bind(this));
@@ -722,8 +722,8 @@ sap.ui.define(
             NNPPopupControl.attachEvent("NNPCompleted", function () {
                 // Update Footer
                 this.getOwnerComponent().getCcuxApp().updateFooterNotification(this._bpNum, this._caNum, this._coNum, false);
-                this.getOwnerComponent().getCcuxApp().updateFooterRHS(this._bpNum, this._caNum, this._coNum, false);
-                this.getOwnerComponent().getCcuxApp().updateFooterCampaign(this._bpNum, this._caNum, this._coNum, false);
+                //this.getOwnerComponent().getCcuxApp().updateFooterRHS(this._bpNum, this._caNum, this._coNum, false);
+                //this.getOwnerComponent().getCcuxApp().updateFooterCampaign(this._bpNum, this._caNum, this._coNum, false);
                 this._initDtaVrfRetr();
             }, this);
             this.getView().addDependent(NNPPopupControl);
@@ -1305,7 +1305,7 @@ sap.ui.define(
                     // Inform customer journey
                     eventBus.publish("nrg.module.dashoard", "eAfterConfirmed", {bpNum: sCurrentBp, caNum: sCurrentCa, coNum: sCurrentCo});
                     // Update Footer
-                    oComponent.getCcuxApp().updateFooter(sCurrentBp, sCurrentCa, sCurrentCo);
+                    //oComponent.getCcuxApp().updateFooter(sCurrentBp, sCurrentCa, sCurrentCo);
                 }
             }, 100);
 

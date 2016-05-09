@@ -612,9 +612,20 @@ sap.ui.define(
                                 oData.results[i].bExpand = true;
                                 oData.results[i].bExpand_0 = true;
                             }
-                            oData.results[i].bRegul = true;
-                            oData.results[i].bAlert = false;
-                            oData.results[i].bYellow = false;
+                            if ((oData.results[i].Color) && ((oData.results[i].Color === "R") || (oData.results[i].Color === "r"))) {
+                                oData.results[i].bRegul = false;
+                                oData.results[i].bAlert = true;
+                                oData.results[i].bYellow = false;
+                            } else if ((oData.results[i].Color) && ((oData.results[i].Color === "Y") || (oData.results[i].Color === "y"))) {
+                                oData.results[i].bRegul = false;
+                                oData.results[i].bAlert = false;
+                                oData.results[i].bYellow = true;
+                            } else {
+                                oData.results[i].bRegul = true;
+                                oData.results[i].bAlert = false;
+                                oData.results[i].bYellow = false;
+                            }
+
                         }
 
                         i = i - 1;  //At this moment i is the lengh of oData, need the index of the last element

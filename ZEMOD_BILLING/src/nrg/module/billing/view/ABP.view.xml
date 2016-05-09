@@ -219,7 +219,7 @@
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-incareof}"/>
                                 <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                               fieldType="Underlined" width="12rem" value="{olocalAddress>/co}" editable="{olocalAddress>/editable}"/>
+                                               fieldType="Underlined" width="12rem" value="{olocalAddress>/Address/co}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                         </ute:Tag>
 
@@ -227,12 +227,12 @@
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-stNum}"/>
                                 <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
-                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/HouseNo}" editable="{olocalAddress>/editable}"/>
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/Address/HouseNo}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-stNAme}"/>
                                 <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/Street}" editable="{olocalAddress>/editable}" />
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/Address/Street}" editable="{olocalAddress>/editable}" />
                             </ute:Tag>
                         </ute:Tag>
                         <ute:Tag class="nrgBilling-dlcc-mail-l">
@@ -241,37 +241,37 @@
                                 <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
                                                fieldType="Underlined"
                                                width="15rem"
-                                               value="{olocalAddress>/UnitNo}"
+                                               value="{olocalAddress>/Address/UnitNo}"
                                                editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-poBox}" />
                                 <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/PoBox}" editable="{olocalAddress>/editable}"/>
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/Address/PoBox}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                         </ute:Tag>
                         <ute:Tag class="nrgBilling-dlcc-mail-l">
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-city}"/>
                                 <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
-                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/City}" editable="{olocalAddress>/editable}"/>
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/Address/City}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-state}"/>
                                 <ute:Textfield class="nrgBilling-dlcc-mail-valCol"
-                                               fieldType="Underlined" width="5rem" value="{olocalAddress>/State}" editable="{olocalAddress>/editable}"/>
+                                               fieldType="Underlined" width="5rem" value="{olocalAddress>/Address/State}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-zip}" />
                                 <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/ZipCode}" editable="{olocalAddress>/editable}"/>
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/Address/ZipCode}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                         </ute:Tag>
                        <ute:Tag class="nrgBilling-dlcc-mail-l">
                             <ute:Tag class="nrgBilling-dlcc-mail-row">
                                 <utmain:Label class="nrgBilling-dlcc-mail-lbl" text="{comp-i18n-billing>nrgBilling-dpp-country}"/>
                                 <ute:Textfield class="nrgBilling-dlcc-mail-val"
-                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/Country}" editable="{olocalAddress>/editable}"/>
+                                               fieldType="Underlined" width="15rem" value="{olocalAddress>/Address/Country}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                        </ute:Tag>
                     </ute:Tag>
@@ -295,9 +295,9 @@
 
         <!-----------------------------------------Trillium address check------------------------------------------------------------------------->
 
-        <ute:Tag id="idAddrUpdatePopup" class="nrgBupa-cusDataVerifyEditMail" visible="false">
+        <ute:Tag class="nrgABP-cusDataVerifyEditMail" visible="{oABPScrnControl>/Trillium}">
             <ute:Tag id="idAddrUpdatePopup-HdrLn" visible="{olocalAddress>/updateSent}"
-                class="nrgBupa-cusDataVerifyEditMail-hdr">
+                class="nrgABP-cusDataVerifyEditMail-hdr">
                 <ute:Tag>
                     <core:Icon src="sap-icon://nrg-icon/notification"/>
                     <ute:TextView text="{olocalAddress>/SuggAddrInfo/HeaderText1}"/>
@@ -308,53 +308,53 @@
                 </ute:Tag>
             </ute:Tag>
             <ute:Tag id="idAddrUpdatePopup-l"
-                class="nrgBupa-cusDataVerifyEditMail-l">
+                class="nrgABP-cusDataVerifyEditMail-l">
                 <ute:TextView visible="{olocalAddress>/updateSent}"
-                    class="nrgBupa-cusDataVerifyEditMail-rl-title"
+                    class="nrgABP-cusDataVerifyEditMail-rl-title"
                     text="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_lTitle}"/>
                 <ute:Tag><ute:Textfield id="idEditPoBox" fieldType="Underlined"
                     change="._onPoBoxEdit"
                     label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_PoBox}"
                     editable="{olocalAddress>/updateNotSent}" width="100px"
-                    value="{olocalAddress>/PoBox}"/></ute:Tag>
+                    value="{olocalAddress>/Address/PoBox}"/></ute:Tag>
                 <ute:Tag><ute:Textfield id="idEditHouseNum" fieldType="Underlined"
                     change="._onRegAddrEdit"
                     label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_HuNum}"
                     editable="{olocalAddress>/updateNotSent}" width="100px"
-                    value="{olocalAddress>/HouseNo}"/></ute:Tag>
+                    value="{olocalAddress>/Address/HouseNo}"/></ute:Tag>
                 <ute:Tag><ute:Textfield id="idEditUnitNum" fieldType="Underlined"
                     label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_UniNum}"
                     editable="{olocalAddress>/updateNotSent}" width="100px"
-                    value="{olocalAddress>/UnitNo}"/></ute:Tag>
+                    value="{olocalAddress>/Address/UnitNo}"/></ute:Tag>
                 <ute:Tag><ute:Textfield id="idEditStName" fieldType="Underlined"
                     change="._onRegAddrEdit"
                     label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_StName}"
                     editable="{olocalAddress>/updateNotSent}" width="220px"
-                    value="{olocalAddress>/Street}"/></ute:Tag>
+                    value="{olocalAddress>/Address/Street}"/></ute:Tag>
                 <ute:Tag><ute:Textfield id="idEditCity" fieldType="Underlined"
                     label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_City}"
                     editable="{olocalAddress>/updateNotSent}" width="100px"
-                    value="{olocalAddress>/City}"/></ute:Tag>
+                    value="{olocalAddress>/Address/City}"/></ute:Tag>
                 <ute:Tag><ute:Textfield id="idEditState" fieldType="Underlined"
                     label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_State}"
                     editable="{olocalAddress>/updateNotSent}" width="100px"
-                    value="{olocalAddress>/State}"/></ute:Tag>
+                    value="{olocalAddress>/Address/State}"/></ute:Tag>
                 <ute:Tag><ute:Textfield id="idEditZip" fieldType="Underlined"
                     label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_ZipCode}"
                     editable="{olocalAddress>/updateNotSent}" width="100px"
-                    value="{olocalAddress>/ZipCode}"/></ute:Tag>
+                    value="{olocalAddress>/Address/ZipCode}"/></ute:Tag>
 
                 <ute:Button  id="idEditMailAddr_UpdtBtn"
                     visible="{olocalAddress>/updateNotSent}"
-                    class="nrgBupa-cusDataVerifyEditMailAdd-updtBtn nrgBupa-cusDataVerify-alignCenBtn"
+                    class="nrgABP-cusDataVerifyEditMailAdd-updtBtn nrgABP-cusDataVerify-alignCenBtn"
                     text="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_UpdtBtnText}"
-                    press="._validateInputAddr"/>
+                    press="._TrilliumAddressCheck"/>
             </ute:Tag>
             <ute:Tag id="idAddrUpdatePopup-r"
-                class="nrgBupa-cusDataVerifyEditMail-r"
+                class="nrgABP-cusDataVerifyEditMail-r"
                 visible="{olocalAddress>/updateSent}">
                 <ute:TextView
-                    class="nrgBupa-cusDataVerifyEditMail-rl-title"
+                    class="nrgABP-cusDataVerifyEditMail-rl-title"
                     text="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_rTitle}"/>
                 <ute:Tag><ute:Textfield fieldType="Underlined"
                     label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_PoBox}"
@@ -385,30 +385,30 @@
                     editable="false" width="100px"
                     value="{olocalAddress>/SuggAddrInfo/ZipCode}"/></ute:Tag>
                 <ute:Tag id="idAddrUpdatePopup-FtrLn"
-                    class="nrgBupa-cusDataVerifyEditMail-l-ftr">
+                    class="nrgABP-cusDataVerifyEditMail-l-ftr">
                     <ute:TextView text="{olocalAddress>/SuggAddrInfo/FooterLine1}"/>
                     <ute:TextView text="{olocalAddress>/SuggAddrInfo/FooterLine2}"/>
                     <ute:TextView text="{olocalAddress>/SuggAddrInfo/FooterLine3}"/>
                 </ute:Tag>
 
-                <ute:Tag class="nrgBupa-cusDataVerifyEditMail-r-ChkBx">
+                <ute:Tag class="nrgABP-cusDataVerifyEditMail-r-ChkBx">
                     <utmain:Checkbox id="idSuggCompareCheck" select="._compareSuggChkClicked"/>
-                    <utmain:Label class="nrgBupa-cusDataVerifyEditMail-r-ChkBxlabel"
+                    <utmain:Label class="nrgABP-cusDataVerifyEditMail-r-ChkBxlabel"
                         labelFor="idSuggCompareCheck" text="Compare"/>
                 </ute:Tag>
                 <ute:Button  id="idEditMailAddr_AcptBtn"
                     visible="{olocalAddress>/showVldBtns}"
-                    class="nrgBupa-cusDataVerifyEditMailAdd-valdBtn"
+                    class="nrgABP-cusDataVerifyEditMailAdd-valdBtn"
                     text="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_AcceptBtn}"
                     press="._handleMailingAcceptBtn"/>
                 <ute:Button  id="idEditMailAddr_DclnBtn"
                     visible="{olocalAddress>/showVldBtns}"
-                    class="nrgBupa-cusDataVerifyEditMailAdd-valdBtn"
+                    class="nrgABP-cusDataVerifyEditMailAdd-valdBtn"
                     text="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_DeclineBtn}"
                     press="._handleMailingDeclineBtn"/>
                 <ute:Button  id="idEditMailAddr_EditBtn"
                     visible="{olocalAddress>/showVldBtns}"
-                    class="nrgBupa-cusDataVerifyEditMailAdd-valdBtn"
+                    class="nrgABP-cusDataVerifyEditMailAdd-valdBtn"
                     text="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_EditBtn}"
                     press="._handleMailingEditBtn"/>
             </ute:Tag>

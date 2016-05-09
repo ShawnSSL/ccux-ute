@@ -73,8 +73,9 @@ sap.ui.define(
             oScrnControl.setProperty('/Graph', true);
             oScrnControl.setProperty('/Note', true);
             oScrnControl.setProperty('/Correspondence', false);
+            oScrnControl.setProperty('/Trillium', false);
         };
-        Controller.prototype._selectScrn = function (bCorres) {
+        Controller.prototype._selectScrn = function (bCorres, bTrillium) {
             var oScrnControl = this.getView().getModel('oABPScrnControl');
 
             if (bCorres) {
@@ -82,294 +83,19 @@ sap.ui.define(
                 oScrnControl.setProperty('/Graph', false);
                 oScrnControl.setProperty('/Note', false);
                 oScrnControl.setProperty('/Correspondence', true);
+                oScrnControl.setProperty('/Trillium', false);
                 this._retrDppComunication();
+            }
+            if (bTrillium) {
+                oScrnControl.setProperty('/Table', false);
+                oScrnControl.setProperty('/Graph', false);
+                oScrnControl.setProperty('/Note', false);
+                oScrnControl.setProperty('/Correspondence', false);
+                oScrnControl.setProperty('/Trillium', true);
             }
         };
         /*------------------------------------------------ Retrieve Methods -------------------------------------------------*/
-        Controller.prototype._onComAddrCheck = function (oEvent) {
-            this.getView().getModel('olocalAddress').setProperty('/current', true);
-            this.getView().getModel('olocalAddress').setProperty('/newAdd', false);
-        };
-        Controller.prototype._onCurrentAddCheck = function (oEvent) {
-            this.getView().getModel('olocalAddress').setProperty('/co', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/co'));
-            this.getView().getModel('olocalAddress').setProperty('/HouseNo', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/HouseNo'));
-            this.getView().getModel('olocalAddress').setProperty('/UnitNo', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/UnitNo'));
-            this.getView().getModel('olocalAddress').setProperty('/City', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/City'));
-            this.getView().getModel('olocalAddress').setProperty('/State', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/State'));
-            this.getView().getModel('olocalAddress').setProperty('/Country', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/Country'));
-            this.getView().getModel('olocalAddress').setProperty('/AddrLine', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/AddrLine'));
-            this.getView().getModel('olocalAddress').setProperty('/Street', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/Street'));
-            this.getView().getModel('olocalAddress').setProperty('/PoBox', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/PoBox'));
-            this.getView().getModel('olocalAddress').setProperty('/ZipCode', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/ZipCode'));
-            this.getView().getModel('olocalAddress').setProperty('/NewAddrCheck', false);
-            this.getView().getModel('olocalAddress').setProperty('/NewAddressflag', false);
-            this.getView().getModel('olocalAddress').setProperty('/editable', false);
 
-        };
-        Controller.prototype._onNewAddCheck = function (oEvent) {
-            this.getView().getModel('olocalAddress').setProperty('/co', '');
-            this.getView().getModel('olocalAddress').setProperty('/HouseNo', '');
-            this.getView().getModel('olocalAddress').setProperty('/UnitNo', '');
-            this.getView().getModel('olocalAddress').setProperty('/City', '');
-            this.getView().getModel('olocalAddress').setProperty('/State', '');
-            this.getView().getModel('olocalAddress').setProperty('/Country', '');
-            this.getView().getModel('olocalAddress').setProperty('/AddrLine', '');
-            this.getView().getModel('olocalAddress').setProperty('/Street', '');
-            this.getView().getModel('olocalAddress').setProperty('/PoBox', '');
-            this.getView().getModel('olocalAddress').setProperty('/ZipCode', '');
-            this.getView().getModel('olocalAddress').setProperty('/NewAddrCheck', true);
-            this.getView().getModel('olocalAddress').setProperty('/NewAddressflag', true);
-            this.getView().getModel('olocalAddress').setProperty('/editable', true);
-        };
-        Controller.prototype._postDPPCommunication = function () {
-            var oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
-                oData = oDPPComunication.oData,
-                olocalAddress = this.getView().getModel('olocalAddress');
-            if (oData.eMailCheck) {
-                if (!oData.eMail) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'AVERAGE BILLING',
-                        message: 'Email field is empty'
-                    });
-                    return true;
-                }
-            }
-            if (oData.FaxCheck) {
-                if (!(oData.Fax)) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'AVERAGE BILLING',
-                        message: 'Please enter Fax Number'
-                    });
-                    return true;
-                }
-                if (!(oData.FaxTo)) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'AVERAGE BILLING',
-                        message: 'Please enter Fax To'
-                    });
-                    return true;
-                }
-            }
-            if (oData.AddrCheck) {
-                if (olocalAddress.getProperty('/newAdd')) {
-                    if (!(((olocalAddress.getProperty('/HouseNo')) && (olocalAddress.getProperty('/Street'))) || (olocalAddress.getProperty('/PoBox')))) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'AVERAGE BILLING',
-                            message: 'Please enter street no & street name or PO Box'
-                        });
-                        return true;
-                    }
-                    if (!(olocalAddress.getProperty('/City'))) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'AVERAGE BILLING',
-                            message: 'Please enter city'
-                        });
-                        return true;
-                    }
-                    if (!(olocalAddress.getProperty('/State'))) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'AVERAGE BILLING',
-                            message: 'Please enter state'
-                        });
-                        return true;
-                    }
-                    if (!(olocalAddress.getProperty('/ZipCode'))) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'AVERAGE BILLING',
-                            message: 'Please enter zip Code'
-                        });
-                        return true;
-                    }
-                    if (!(olocalAddress.getProperty('/Country'))) {
-                        ute.ui.main.Popup.Alert({
-                            title: 'AVERAGE BILLING',
-                            message: 'Please enter country'
-                        });
-                        return true;
-                    }
-
-                    //this._TrilliumAddressCheck();
-                    //return true;
-                }
-            }
-            this._sendDppComunication();
-            return true;
-
-        };
-        Controller.prototype._TrilliumAddressCheck = function () {
-            var olocalAddress = this.getView().getModel('olocalAddress'),
-                oModel = this.getOwnerComponent().getModel('comp-bupa'),
-                sPath,
-                oParameters,
-                aFilters = this._createAddrValidateFilters(),
-                oMailEdit = this.getView().getModel('oDtaAddrEdit');
-            olocalAddress.setProperty('/updateSent', true);
-            olocalAddress.setProperty('/showVldBtns', true);
-            olocalAddress.setProperty('/updateNotSent', false);
-            sPath = '/BuagAddrDetails';
-
-            oParameters = {
-                filters: aFilters,
-                success: function (oData) {
-                    if (oData.results[0].AddrChkValid === 'X') {
-                        //Validate success, update the address directly
-                        this._oMailEditPopup.close();
-                        this._updateMailingAddr();
-                    } else {
-                        oMailEdit.setProperty('/SuggAddrInfo', oData.results[0].TriCheck);
-                        this._showSuggestedAddr();
-                        //this._oMailEditPopup.open();
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    sap.ui.commons.MessageBox.alert('Validatation Call Failed');
-                }.bind(this)
-            };
-
-
-            //oMailEdit.setProperty('/SuggAddrInfo', oMailEdit.getProperty('/AddrInfo'));
-            if (oModel) {
-                oModel.read(sPath, oParameters);
-            }
-        };
-        Controller.prototype._createAddrValidateFilters = function () {
-            var aFilters = [],
-                oFilterTemplate,
-                sBpNum = this.getView().getModel('oDataBuagAddrDetails').getProperty('/PartnerID'),
-                oMailEdit = this.getView().getModel('oDtaAddrEdit'),
-                oMailEditAddrInfo = oMailEdit.getProperty('/AddrInfo'),
-                key,
-                bFixAddr = oMailEdit.getProperty('/bFixAddr'),
-                tempPath;
-
-            if (bFixAddr) {
-                oFilterTemplate = new Filter({ path: 'FixUpd', operator: FilterOperator.EQ, value1: 'X'});
-                aFilters.push(oFilterTemplate);
-            } else {
-                oFilterTemplate = new Filter({ path: 'TempUpd', operator: FilterOperator.EQ, value1: 'X'});
-                aFilters.push(oFilterTemplate);
-            }
-
-            oFilterTemplate = new Filter({ path: 'PartnerID', operator: FilterOperator.EQ, value1: sBpNum});
-            aFilters.push(oFilterTemplate);
-
-            oFilterTemplate = new Filter({ path: 'ChkAddr', operator: FilterOperator.EQ, value1: 'X'});
-            aFilters.push(oFilterTemplate);
-
-            for (key in oMailEditAddrInfo) {
-                if (oMailEditAddrInfo.hasOwnProperty(key)) {
-                    if (!(key === '__metadata' || key === 'StandardFlag' || key === 'ShortForm' || key === 'ValidFrom' || key === 'ValidTo' || key === 'Supplement')) {
-                        if (bFixAddr) {
-                            tempPath = 'FixAddrInfo/' + key;
-                            oFilterTemplate = new Filter({ path: tempPath, operator: FilterOperator.EQ, value1: oMailEditAddrInfo[key]});
-                            aFilters.push(oFilterTemplate);
-                        } else {
-                            tempPath = 'TempAddrInfo/' + key;
-                            oFilterTemplate = new Filter({ path: tempPath, operator: FilterOperator.EQ, value1: oMailEditAddrInfo[key]});
-                            aFilters.push(oFilterTemplate);
-                        }
-                    }
-                }
-            }
-            return aFilters;
-        };
-        Controller.prototype._sendDppComunication = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
-                oData = oDPPComunication.oData,
-                olocalAddress = this.getView().getModel('olocalAddress');
-            sPath = '/DPPCorresps';
-
-            oParameters = {
-                merge: false,
-                success : function (oData) {
-                    if (oData.Error) {
-                        if (oData.Message) {
-                            ute.ui.main.Popup.Alert({
-                                title: 'AVERAGE BILLING',
-                                message: oData.Message
-                            });
-                        } else {
-                            ute.ui.main.Popup.Alert({
-                                title: 'AVERAGE BILLING',
-                                message: 'Correspondence Failed'
-                            });
-                        }
-                    } else {
-                        ute.ui.main.Popup.Alert({
-                            title: 'AVERAGE BILLING',
-                            message: 'Correspondence Successfully Sent.'
-                        });
-                    }
-                    this._ABPPopupControl.close();
-                }.bind(this),
-                error: function (oError) {
-                    ute.ui.main.Popup.Alert({
-                        title: 'AVERAGE BILLING',
-                        message: 'Correspondence Failed'
-                    });
-                }.bind(this)
-            };
-            if (oODataSvc) {
-                oDPPComunication.oData.Process = 'ABP';
-                if (olocalAddress.getProperty('/newAdd')) {
-                    oData.Address.co = olocalAddress.getProperty('/co');
-                    oData.Address.HouseNo = olocalAddress.getProperty('/HouseNo');
-                    oData.Address.UnitNo = olocalAddress.getProperty('/UnitNo');
-                    oData.Address.City = olocalAddress.getProperty('/City');
-                    oData.Address.State = olocalAddress.getProperty('/State');
-                    oData.Address.Country = olocalAddress.getProperty('/Country');
-                    oData.Address.AddrLine = olocalAddress.getProperty('/AddrLine');
-                    oData.Address.Street = olocalAddress.getProperty('/Street');
-                    oData.Address.PoBox = olocalAddress.getProperty('/PoBox');
-                    oData.Address.ZipCode = olocalAddress.getProperty('/ZipCode');
-                    oData.NewAddr = olocalAddress.getProperty('/NewAddrCheck');
-                }
-                oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
-            }
-        };
-        Controller.prototype._retrDppComunication = function () {
-            var oODataSvc = this.getView().getModel('oDataSvc'),
-                oParameters,
-                sPath,
-                sProcess = 'ABP',
-                olocalAddress = this.getView().getModel('olocalAddress');
-
-            sPath = '/DPPCorresps(CA=\'' + this._caNum + '\',Contract=\'' + this._coNum + '\',BP=\'' + this._bpNum + '\',Process=\'' + sProcess + '\')';
-
-            oParameters = {
-                success : function (oData) {
-                    if (oData) {
-                        this.getView().getModel('oDppStepThreeCom').setData(oData);
-                        if (oData.AddrCheck) {
-                            olocalAddress.setProperty('/current', true);
-                            olocalAddress.setProperty('/newAdd', false);
-                        }
-                        if (oData.Address) {
-                            olocalAddress.setProperty('/co', oData.Address.co);
-                            olocalAddress.setProperty('/HouseNo', oData.Address.HouseNo);
-                            olocalAddress.setProperty('/UnitNo', oData.Address.UnitNo);
-                            olocalAddress.setProperty('/City', oData.Address.City);
-                            olocalAddress.setProperty('/State', oData.Address.State);
-                            olocalAddress.setProperty('/Country', oData.Address.Country);
-                            olocalAddress.setProperty('/AddrLine', oData.Address.AddrLine);
-                            olocalAddress.setProperty('/Street', oData.Address.Street);
-                            olocalAddress.setProperty('/PoBox', oData.Address.PoBox);
-                            olocalAddress.setProperty('/ZipCode', oData.Address.ZipCode);
-                        }
-                    }
-                }.bind(this),
-                error: function (oError) {
-                    //Need to put error message
-                }.bind(this)
-            };
-
-            if (oODataSvc) {
-                oODataSvc.read(sPath, oParameters);
-            }
-        };
         Controller.prototype._retrieveTableInfo = function (sCoNumber, fnCallback) {
             var sPath = '/AvgAddS',
                 aFilters = [],
@@ -475,7 +201,7 @@ sap.ui.define(
             oParameters = {
                 success : function (oData) {
                     oEligibilityModel.setData(oData);
-                    if (oData.ABPAct === "Y") {
+                    if (oData.ABPAct) {
                         oEligibilityModel.setProperty('/Activated', true);
                         oEligibilityModel.setProperty('/NonActivated', false);
                     } else {
@@ -487,7 +213,7 @@ sap.ui.define(
                     }
                 }.bind(this),
                 error: function (oError) {
-                    oEligibilityModel.setProperty('/ABPElig', 'N');
+                    oEligibilityModel.setProperty('/ABPElig', false);
                     if (fnCallback) {
                         fnCallback();
                     }
@@ -522,67 +248,58 @@ sap.ui.define(
                         // Display the loading indicator
                         this._OwnerComponent.getCcuxApp().setOccupied(true);
                         // Check if the customer is eligible for ABP.
-                        if (oEligibilityModel.oData.ABPElig === "Y") {
-                            // Check if the customer is on ABP now
-                            if (oEligibilityModel.oData.ABPAct === "Y") {
-                                // Check if there is billing history
-                                if (oEligibilityModel.oData.NoBillHistory === "X" || oEligibilityModel.oData.NoBillHistory === "x") {
-                                    // Show the confirmation pop up
-                                    ute.ui.main.Popup.Confirm({
-                                        title: 'No Billing History',
-                                        message: 'Customer has no billing history to display. Do you wish to deactivate Average Billing Plan?',
-                                        callback: function (sAction) {
-                                            if (sAction === 'Yes') {
-                                                oWebUiManager.notifyWebUi('openIndex', {
-                                                    LINK_ID: "Z_AVGBIL_D"
-                                                });
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    oWebUiManager.notifyWebUi('openIndex', {
-                                        LINK_ID: "Z_AVGBIL_D"
-                                    });
-                                }
-                                // Dismiss the loading indicator
-                                this._OwnerComponent.getCcuxApp().setOccupied(false);
-                                // Stop the error message timeout
-                                clearTimeout(retrTimeout);
-                                // Close the ABP popup
-                                this._ABPPopupControl.close();
-                            } else {
-                                // Retrieve the data for table
-                                this._retrieveTableInfo(this._coNum, function () {bDoneRetrTable = true; });
-                                // Retrieve the data for graph
-                                this._retrieveGraphInfo(this._coNum, function () {bDoneRetrGraph = true; });
-                                // Check all graph control checkboxes
-                                for (i = 0; i < this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent().length; i = i + 1) {
-                                    graphControlBtn = this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent()[i];
-                                    graphControlBtn.getContent()[0].setChecked(true);
-                                }
-
-                                checkRetrTableGraphComplete = setInterval(function () {
-                                    if (bDoneRetrTable && bDoneRetrGraph) {
-                                        // Dismiss the loading indicator
-                                        this._OwnerComponent.getCcuxApp().setOccupied(false);
-                                        // Upon successfully retrieving the data, stop checking the completion of retrieving data
-                                        clearInterval(checkRetrTableGraphComplete);
-                                        // Upon successfully retrieving the data, stop the error message timeout
-                                        clearTimeout(retrTimeout);
-                                        // Create graph control
-                                        if (!this.graphControl) {
-                                            var graphContainer = this.getView().byId('nrgBilling-avgBillingPopup-usage-graph');
-                                            this.graphControl = new AverageBillDetailsChart("chart", {width: 700, height: 250, usageTickSize: 200});
-                                            this.graphControl.placeAt(graphContainer);
-                                            this._ABPPopupControl.$().offset({top: (jQuery(window).height() - this._ABPPopupControl.getDomRef().offsetHeight - 250) / 2 });
-                                        }
-                                        this.graphControl.setDataModel(this.getView().getModel('oUsageGraph'));
-
-                                        // Render the graph crontrol buttons
-                                        this._renderGraphCrontrolBtn();
-                                    }
-                                }.bind(this), 100);
+                        if (oEligibilityModel.oData.ABPAct) {
+                            oWebUiManager.notifyWebUi('openIndex', {
+                                LINK_ID: "Z_AVGBIL_D"
+                            });
+                        } else if (oEligibilityModel.oData.ABPElig) {
+                            // Check if there is billing history
+                            if (oEligibilityModel.oData.NoBillHistory) {
+                                // Show the confirmation pop up
+                                ute.ui.main.Popup.Alert({
+                                    title: 'ABP',
+                                    message: 'Customer has no Billing History'
+                                });
+                                return;
                             }
+                            // Dismiss the loading indicator
+                            this._OwnerComponent.getCcuxApp().setOccupied(false);
+                            // Stop the error message timeout
+                            clearTimeout(retrTimeout);
+                            // Close the ABP popup
+                            this._ABPPopupControl.close();
+                            // Retrieve the data for table
+                            this._retrieveTableInfo(this._coNum, function () {bDoneRetrTable = true; });
+                            // Retrieve the data for graph
+                            this._retrieveGraphInfo(this._coNum, function () {bDoneRetrGraph = true; });
+                            // Check all graph control checkboxes
+                            for (i = 0; i < this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent().length; i = i + 1) {
+                                graphControlBtn = this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent()[i];
+                                graphControlBtn.getContent()[0].setChecked(true);
+                            }
+
+                            checkRetrTableGraphComplete = setInterval(function () {
+                                if (bDoneRetrTable && bDoneRetrGraph) {
+                                    // Dismiss the loading indicator
+                                    this._OwnerComponent.getCcuxApp().setOccupied(false);
+                                    // Upon successfully retrieving the data, stop checking the completion of retrieving data
+                                    clearInterval(checkRetrTableGraphComplete);
+                                    // Upon successfully retrieving the data, stop the error message timeout
+                                    clearTimeout(retrTimeout);
+                                    // Create graph control
+                                    if (!this.graphControl) {
+                                        var graphContainer = this.getView().byId('nrgBilling-avgBillingPopup-usage-graph');
+                                        this.graphControl = new AverageBillDetailsChart("chart", {width: 700, height: 250, usageTickSize: 200});
+                                        this.graphControl.placeAt(graphContainer);
+                                        this._ABPPopupControl.$().offset({top: (jQuery(window).height() - this._ABPPopupControl.getDomRef().offsetHeight - 250) / 2 });
+                                    }
+                                    this.graphControl.setDataModel(this.getView().getModel('oUsageGraph'));
+
+                                    // Render the graph crontrol buttons
+                                    this._renderGraphCrontrolBtn();
+                                }
+                            }.bind(this), 100);
+
                         } else {
                             ute.ui.main.Popup.Alert({
                                 title: 'Not Eligible',
@@ -709,7 +426,11 @@ sap.ui.define(
             var oModel = this.getView().getModel('oDataAvgSvc'),
                 oHistoryModel = this.getView().getModel('oAmountHistory'),
                 mParameters,
-                that = this;
+                that = this,
+                sTotalAmt = oHistoryModel.getProperty('/estAmount');
+            if (sTotalAmt) {
+                sTotalAmt = sTotalAmt.replace('$', '');
+            }
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             if (oModel) {
                 mParameters = {
@@ -717,7 +438,8 @@ sap.ui.define(
                     urlParameters : {
                         "Contract": this._coNum,
                         "Date": oHistoryModel.oData[oHistoryModel.oData.length - 1].FullPeriod,
-                        "IsRetro": this.isRetro
+                        "IsRetro": this.isRetro,
+                        "AbpAmt" : sTotalAmt
                     },
                     success : function (oData, response) {
                         that._OwnerComponent.getCcuxApp().setOccupied(false);
@@ -834,6 +556,335 @@ sap.ui.define(
             var olocalAddress = this.getView().getModel('olocalAddress');
             olocalAddress.setProperty('/HouseNo', '');
             olocalAddress.setProperty('/Street', '');
+        };
+
+        /********************************************************************************/
+        /**Edit Mailing Addr functions*/
+        Controller.prototype._onComAddrCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/current', true);
+            this.getView().getModel('olocalAddress').setProperty('/newAdd', false);
+        };
+        Controller.prototype._onCurrentAddCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/Address/co', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/co'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/HouseNo', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/HouseNo'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/UnitNo', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/UnitNo'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/City', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/City'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/State', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/State'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/Country', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/Country'));
+            //this.getView().getModel('olocalAddress').setProperty('/Address/AddrLine', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/AddrLine'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/Street', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/Street'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/PoBox', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/PoBox'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/ZipCode', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/ZipCode'));
+            this.getView().getModel('olocalAddress').setProperty('/NewAddrCheck', false);
+            this.getView().getModel('olocalAddress').setProperty('/NewAddressflag', false);
+            this.getView().getModel('olocalAddress').setProperty('/editable', false);
+
+        };
+        Controller.prototype._onNewAddCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/Address/co', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/HouseNo', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/UnitNo', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/City', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/State', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/Country', '');
+            //this.getView().getModel('olocalAddress').setProperty('/Address/AddrLine', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/Street', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/PoBox', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/ZipCode', '');
+            this.getView().getModel('olocalAddress').setProperty('/NewAddrCheck', true);
+            this.getView().getModel('olocalAddress').setProperty('/NewAddressflag', true);
+            this.getView().getModel('olocalAddress').setProperty('/editable', true);
+        };
+        Controller.prototype._postDPPCommunication = function () {
+            var oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
+                oData = oDPPComunication.oData,
+                olocalAddress = this.getView().getModel('olocalAddress');
+            if (oData.eMailCheck) {
+                if (!oData.eMail) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'AVERAGE BILLING',
+                        message: 'Email field is empty'
+                    });
+                    return true;
+                }
+            }
+            if (oData.FaxCheck) {
+                if (!(oData.Fax)) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'AVERAGE BILLING',
+                        message: 'Please enter Fax Number'
+                    });
+                    return true;
+                }
+                if (!(oData.FaxTo)) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'AVERAGE BILLING',
+                        message: 'Please enter Fax To'
+                    });
+                    return true;
+                }
+            }
+            if (oData.AddrCheck) {
+                if (olocalAddress.getProperty('/newAdd')) {
+                    if (!(((olocalAddress.getProperty('/Address/HouseNo')) && (olocalAddress.getProperty('/Address/Street'))) || (olocalAddress.getProperty('/Address/PoBox')))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter street no & street name or PO Box'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/Address/City'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter city'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/Address/State'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter state'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/Address/ZipCode'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter zip Code'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/Address/Country'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Please enter country'
+                        });
+                        return true;
+                    }
+
+                    this._TrilliumAddressCheck();
+                    return true;
+                } else {
+                    this._sendDppComunication();
+                    return true;
+                }
+            }
+            this._sendDppComunication();
+            return true;
+
+        };
+        Controller.prototype._compareSuggChkClicked = function (oEvent) {
+            //this.getView().byId('idAddrUpdatePopup-l').getContent()[2].getContent()[0].getValue()
+            var oLeftInputArea = this.getView().byId('idAddrUpdatePopup-l').getContent(),
+                oRightSuggArea = this.getView().byId('idAddrUpdatePopup-r').getContent(),
+                i;
+
+            if (oEvent.mParameters.checked) {
+                for (i = 1; i < 8; i = i + 1) {
+                    if (oLeftInputArea[i].getContent()[0].getValue() !== oRightSuggArea[i].getContent()[0].getValue()) {
+                        oLeftInputArea[i].getContent()[0].addStyleClass('nrgABP-cusDataVerifyEditMail-lHighlight');
+                        oRightSuggArea[i].getContent()[0].addStyleClass('nrgABP-cusDataVerifyEditMail-rHighlight');
+                    }
+                }
+            } else {
+                for (i = 1; i < 8; i = i + 1) {
+                    if (oLeftInputArea[i].getContent()[0].getValue() !== oRightSuggArea[i].getContent()[0].getValue()) {
+                        oLeftInputArea[i].getContent()[0].removeStyleClass('nrgABP-cusDataVerifyEditMail-lHighlight');
+                        oRightSuggArea[i].getContent()[0].removeStyleClass('nrgABP-cusDataVerifyEditMail-rHighlight');
+                    }
+                }
+            }
+        };
+        Controller.prototype._TrilliumAddressCheck = function () {
+            var olocalAddress = this.getView().getModel('olocalAddress'),
+                oModel = this._OwnerComponent.getModel('comp-bupa'),
+                sPath,
+                oParameters,
+                aFilters = this._createAddrValidateFilters();
+            olocalAddress.setProperty('/updateSent', true);
+            olocalAddress.setProperty('/showVldBtns', true);
+            olocalAddress.setProperty('/updateNotSent', false);
+            sPath = '/BuagAddrDetails';
+
+            oParameters = {
+                filters: aFilters,
+                success: function (oData) {
+                    if (oData.results[0].AddrChkValid === 'X') {
+                        this._sendDppComunication();
+                    } else {
+                        olocalAddress.setProperty('/SuggAddrInfo', oData.results[0].TriCheck);
+                        this._showSuggestedAddr();
+                        this._selectScrn(false, true);//show trillium comparision
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    sap.ui.commons.MessageBox.alert('Validatation Call Failed');
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sPath, oParameters);
+            }
+        };
+        Controller.prototype._showSuggestedAddr = function () {
+            //Address validation error there was. Show system suggested address values we need to.
+            var olocalAddress = this.getView().getModel('olocalAddress');
+            olocalAddress.setProperty('/updateSent', true);
+            olocalAddress.setProperty('/showVldBtns', true);
+            olocalAddress.setProperty('/updateNotSent', false);
+        };
+        Controller.prototype._createAddrValidateFilters = function () {
+            var aFilters = [],
+                oFilterTemplate,
+                oMailEdit = this.getView().getModel('olocalAddress'),
+                oMailEditAddrInfo = oMailEdit.getProperty("/Address"),
+                key,
+                tempPath;
+
+            oFilterTemplate = new Filter({ path: 'FixUpd', operator: FilterOperator.EQ, value1: 'X'});
+            aFilters.push(oFilterTemplate);
+            oFilterTemplate = new Filter({ path: 'PartnerID', operator: FilterOperator.EQ, value1: this._bpNum});
+            aFilters.push(oFilterTemplate);
+
+            oFilterTemplate = new Filter({ path: 'ChkAddr', operator: FilterOperator.EQ, value1: 'X'});
+            aFilters.push(oFilterTemplate);
+
+            for (key in oMailEditAddrInfo) {
+                if (oMailEditAddrInfo.hasOwnProperty(key)) {
+                    if (!(key === '__metadata' || key === 'StandardFlag' || key === 'ShortForm' || key === 'ValidFrom' || key === 'ValidTo' || key === 'Supplement')) {
+                        tempPath = 'FixAddrInfo/' + key;
+                        oFilterTemplate = new Filter({ path: tempPath, operator: FilterOperator.EQ, value1: oMailEditAddrInfo[key]});
+                        aFilters.push(oFilterTemplate);
+                    }
+                }
+            }
+            return aFilters;
+        };
+        Controller.prototype._sendDppComunication = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                oDPPComunication = this.getView().getModel('oDppStepThreeCom'),
+                oData = oDPPComunication.oData,
+                olocalAddress = this.getView().getModel('olocalAddress');
+            sPath = '/DPPCorresps';
+
+            oParameters = {
+                merge: false,
+                success : function (oData) {
+                    if (oData.Error) {
+                        if (oData.Message) {
+                            ute.ui.main.Popup.Alert({
+                                title: 'AVERAGE BILLING',
+                                message: oData.Message
+                            });
+                        } else {
+                            ute.ui.main.Popup.Alert({
+                                title: 'AVERAGE BILLING',
+                                message: 'Correspondence Failed'
+                            });
+                        }
+                    } else {
+                        ute.ui.main.Popup.Alert({
+                            title: 'AVERAGE BILLING',
+                            message: 'Correspondence Successfully Sent.'
+                        });
+                    }
+                    this._ABPPopupControl.close();
+                }.bind(this),
+                error: function (oError) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'AVERAGE BILLING',
+                        message: 'Correspondence Failed'
+                    });
+                }.bind(this)
+            };
+            if (oODataSvc) {
+                oDPPComunication.oData.Process = 'ABP';
+                if (olocalAddress.getProperty('/newAdd')) {
+                    //oData.Address.co = olocalAddress.getProperty('/Address/co');
+                    oData.Address.HouseNo = olocalAddress.getProperty('/Address/HouseNo');
+                    oData.Address.UnitNo = olocalAddress.getProperty('/Address/UnitNo');
+                    oData.Address.City = olocalAddress.getProperty('/Address/City');
+                    oData.Address.State = olocalAddress.getProperty('/Address/State');
+                    oData.Address.Country = olocalAddress.getProperty('/Address/Country');
+                    oData.Address.AddrLine = olocalAddress.getProperty('/Address/AddrLine');
+                    oData.Address.Street = olocalAddress.getProperty('/Address/Street');
+                    oData.Address.PoBox = olocalAddress.getProperty('/Address/PoBox');
+                    oData.Address.ZipCode = olocalAddress.getProperty('/Address/ZipCode');
+                    oData.NewAddr = olocalAddress.getProperty('/NewAddrCheck');
+                }
+                oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
+            }
+        };
+        Controller.prototype._retrDppComunication = function () {
+            var oODataSvc = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath,
+                sProcess = 'ABP',
+                olocalAddress = this.getView().getModel('olocalAddress');
+
+            sPath = '/DPPCorresps(CA=\'' + this._caNum + '\',Contract=\'' + this._coNum + '\',BP=\'' + this._bpNum + '\',Process=\'' + sProcess + '\')';
+
+            oParameters = {
+                success : function (oData) {
+                    var temp = olocalAddress.oData;
+                    if (oData) {
+                        this.getView().getModel('oDppStepThreeCom').setData(oData);
+                        if (oData.AddrCheck) {
+                            olocalAddress.setProperty('/current', true);
+                            olocalAddress.setProperty('/newAdd', false);
+                        }
+                        if (oData.Address) {
+                            olocalAddress.setProperty('/Address', {});
+                            //temp.Address = {};
+                            olocalAddress.setProperty('/Address/co', oData.Address.co);
+                            //temp.Address.co = oData.Address.co;
+                            olocalAddress.setProperty('/Address/HouseNo', oData.Address.HouseNo);
+                            //temp.Address.HouseNo = oData.Address.HouseNo;
+                            olocalAddress.setProperty('/Address/UnitNo', oData.Address.UnitNo);
+                            //temp.Address.UnitNo = oData.Address.UnitNo;
+                            olocalAddress.setProperty('/Address/City', oData.Address.City);
+                            //temp.Address.City = oData.Address.City;
+                            olocalAddress.setProperty('/Address/State', oData.Address.State);
+                            //temp.Address.State = oData.Address.State;
+                            olocalAddress.setProperty('/Address/Country', oData.Address.Country);
+                            //temp.Address.Country = oData.Address.Country;
+                            //temp.Address.AddrLine = oData.Address.AddrLine;
+                            olocalAddress.setProperty('/Address/Street', oData.Address.Street);
+                            //temp.Address.Street = oData.Address.Street;
+                            olocalAddress.setProperty('/Address/PoBox', oData.Address.PoBox);
+                            //temp.Address.PoBox = oData.Address.PoBox;
+                            olocalAddress.setProperty('/Address/ZipCode', oData.Address.ZipCode);
+                            //temp.Address.ZipCode = oData.Address.ZipCode;
+                        }
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                }.bind(this)
+            };
+
+            if (oODataSvc) {
+                oODataSvc.read(sPath, oParameters);
+            }
+        };
+        Controller.prototype._handleMailingAcceptBtn = function (oEvent) {
+            var olocalAddress = this.getView().getModel('olocalAddress'),
+                oOriginalInput = olocalAddress.Address,
+                oSuggestedInput = olocalAddress.Address;
+            oOriginalInput = oSuggestedInput;
+
+            this._sendDppComunication();
+        };
+        Controller.prototype._handleMailingDeclineBtn = function (oEvent) {
+            this._sendDppComunication();
+        };
+        Controller.prototype._handleMailingEditBtn = function (oEvent) {
+            var oEditMail = this.getView().getModel('olocalAddress');
+
+            oEditMail.setProperty('/updateSent', false);
+            oEditMail.setProperty('/showVldBtns', false);
+            oEditMail.setProperty('/updateNotSent', true);
         };
         return Controller;
     }
