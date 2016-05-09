@@ -126,18 +126,20 @@ sap.ui.define(
         //Handler functions
         /********************************************************************************************************************************/
         Controller.prototype._onPendingTabClicked = function () {
+            var iSelectedCoInd = this.getView().byId('idESIDDropdown').getProperty('selectedKey');
             this.getView().getModel('oSelectedTabs').setProperty('/pendingSelected', true);
             this.getView().getModel('oSelectedTabs').setProperty('/completeSelected', false);
             if (this.getView().getModel('oESIDDropdown').oData.results) {
-                this._retrEnrollHolds(this.getView().getModel('oESIDDropdown').oData.results[0].ESID, this.getView().getModel('oESIDDropdown').oData.results[0].Contract);
+                this._retrEnrollHolds(this.getView().getModel('oESIDDropdown').oData.results[iSelectedCoInd].ESID, this.getView().getModel('oESIDDropdown').oData.results[0].Contract);
             }
         };
 
         Controller.prototype._onCompleteTabClicked = function () {
+            var iSelectedCoInd = this.getView().byId('idESIDDropdown').getProperty('selectedKey');
             this.getView().getModel('oSelectedTabs').setProperty('/pendingSelected', false);
             this.getView().getModel('oSelectedTabs').setProperty('/completeSelected', true);
             if (this.getView().getModel('oESIDDropdown').oData.results) {
-                this._retrCompleteOrds(this._bpNum, this._caNum, this.getView().getModel('oESIDDropdown').oData.results[0].ESID);
+                this._retrCompleteOrds(this._bpNum, this._caNum, this.getView().getModel('oESIDDropdown').oData.results[iSelectedCoInd].ESID);
             }
         };
 
