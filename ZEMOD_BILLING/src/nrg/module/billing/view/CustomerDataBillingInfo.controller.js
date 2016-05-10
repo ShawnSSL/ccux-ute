@@ -289,7 +289,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oChbkOData) {
+            if (oChbkOData && sInvNum) {
                 oChbkOData.read(sPath, oParameters);
             }
         };
@@ -319,7 +319,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oChbkOData) {
+            if (oChbkOData && sInvNum) {
                 oChbkOData.read(sPath, oParameters);
             }
         };
@@ -342,7 +342,7 @@ sap.ui.define(
                 }.bind(this)
             };
 
-            if (oChbkOData) {
+            if (oChbkOData && sInvNum) {
                 oChbkOData.read(sPath, oParameters);
             }
         };
@@ -364,17 +364,7 @@ sap.ui.define(
             }
         };
         /*************************************************************************************************************************/
-        //Formatter Functions
-        CustomController.prototype._formatDate = function (oDate) {
-            var sFormattedDate;
 
-            if (!oDate) {
-                return null;
-            } else {
-                sFormattedDate = (oDate.getMonth() + 1).toString() + '/' + oDate.getDate().toString() + '/' + oDate.getFullYear().toString();
-                return sFormattedDate;
-            }
-        };
         CustomController.prototype._formatBoolCurChrg = function (sIndicator) {
             if (sIndicator === 'X' || sIndicator === 'x') {
                 return true;
