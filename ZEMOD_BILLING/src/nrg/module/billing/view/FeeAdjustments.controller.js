@@ -27,8 +27,7 @@ sap.ui.define(
                     reasonDD: false,
                     ok: false,
                     feeSelected : false,
-                    textArea : "",
-                    textAreaValue : false
+                    textArea : ""
 			    }),
                 oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
                 oCADropDown = this.getView().byId("idnrgFeeAdj-DropDownCA"),
@@ -446,20 +445,7 @@ sap.ui.define(
             var oViewModel = this.getView().getModel("view-feeAdj");
             oViewModel.setProperty("/ok", true);
         };
-        /**
-		 * formatting function to enable button or not based on the other field selections.
-		 *
-		 * @function
-         * @param {sap.ui.base.Event} oEvent pattern match event
-		 */
-        Controller.prototype._enableButton = function (sTextArea, bOkFlag) {
-            if ((sTextArea) && (bOkFlag)) {
-                return true;
-            } else {
-                return false;
-            }
 
-        };
         /**
 		 * Clicked on Cancel Button
 		 *
@@ -477,16 +463,6 @@ sap.ui.define(
 		 */
         Controller.prototype.Popupclose = function (oEvent) {
             this._AlertDialog.close();
-        };
-        /**
-		 * Clicked on Cancel Button
-		 *
-		 * @function
-         * @param {sap.ui.base.Event} oEvent pattern match event
-		 */
-        Controller.prototype._onTextAreaValue = function (oEvent) {
-            var oViewModel = this.getView().getModel("view-feeAdj");
-            oViewModel.setProperty("/textAreaValue", true);
         };
 
         return Controller;
