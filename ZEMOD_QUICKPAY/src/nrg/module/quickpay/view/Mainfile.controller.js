@@ -1545,11 +1545,18 @@ sap.ui.define(
                 success : function (oData, oResponse) {
                     if (oData.ContactLogID !== "") {
                         that.onPopupClose();
+                    } else {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Information',
+                            message: 'Contact log not created successfully.'
+                        });
+                        that.onPopupClose();
                     }
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
                 },
                 error : function (oError) {
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
+                    that.onPopupClose();
                 }
             });
         };
