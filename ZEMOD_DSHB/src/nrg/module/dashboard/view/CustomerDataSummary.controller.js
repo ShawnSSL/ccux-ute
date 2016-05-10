@@ -101,8 +101,8 @@ sap.ui.define(
             var oCoBadgesModel = this.getView().getModel('oSmryCoBadges');
             oCoBadgesModel.setData(data.coInfo.COBadges);
             this.allCoBadges = data.coInfo.COBadges;
-        };
 
+        };
         /*-------------------------------------------------- Retrieve Info --------------------------------------------------*/
 
         Controller.prototype._initRetrBpInf = function () {
