@@ -277,12 +277,6 @@ sap.ui.define(
                                 this._ABPPopupControl.close();
                                 return;
                             }
-                            // Dismiss the loading indicator
-                            this._OwnerComponent.getCcuxApp().setOccupied(false);
-                            // Stop the error message timeout
-                            clearTimeout(retrTimeout);
-                            // Close the ABP popup
-                            this._ABPPopupControl.close();
                             // Retrieve the data for table
                             this._retrieveTableInfo(this._coNum, function () {bDoneRetrTable = true; });
                             // Retrieve the data for graph
