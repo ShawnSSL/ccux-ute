@@ -139,7 +139,7 @@ sap.ui.define(
             this.getView().getModel('oSelectedTabs').setProperty('/pendingSelected', false);
             this.getView().getModel('oSelectedTabs').setProperty('/completeSelected', true);
             if (this.getView().getModel('oESIDDropdown').oData.results) {
-                this._retrCompleteOrds(this._bpNum, this._caNum, this.getView().getModel('oESIDDropdown').oData.results[iSelectedCoInd].ESID);
+                this._retrCompleteOrds(this._bpNum, this._caNum, this._coNum, this.getView().getModel('oESIDDropdown').oData.results[iSelectedCoInd].ESID);
             }
         };
 
@@ -150,7 +150,7 @@ sap.ui.define(
                 }
             } else {
                 if (this.getView().getModel('oESIDDropdown').oData.results) {
-                    this._retrCompleteOrds(this._bpNum, this._caNum, this.getView().getModel('oESIDDropdown').oData.results[oEvent.mParameters.selectedKey].ESID);
+                    this._retrCompleteOrds(this._bpNum, this._caNum, this._coNum, this.getView().getModel('oESIDDropdown').oData.results[oEvent.mParameters.selectedKey].ESID);
                 }
             }
         };
@@ -354,7 +354,7 @@ sap.ui.define(
             }
         };
 
-        Controller.prototype._retrCompleteOrds = function (sBpNum, sCaNum, sESID) {
+        Controller.prototype._retrCompleteOrds = function (sBpNum, sCaNum, sCoNum, sESID) {
             var sPath,
                 aFilters = [],
                 oParameters,
@@ -362,6 +362,7 @@ sap.ui.define(
 
             aFilters.push(new Filter({ path: 'BP', operator: FilterOperator.EQ, value1: sBpNum}));
             aFilters.push(new Filter({ path: 'CA', operator: FilterOperator.EQ, value1: sCaNum}));
+            aFilters.push(new Filter({ path: 'Contract', operator: FilterOperator.EQ, value1: sCoNum}));
             aFilters.push(new Filter({ path: 'ESID', operator: FilterOperator.EQ, value1: sESID}));
 
             sPath = '/ComplOrdS';
