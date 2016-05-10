@@ -246,12 +246,21 @@ sap.ui.define(
 
                     if (bDoneRetrEligibility) {
                         // Display the loading indicator
+                        clearInterval(checkDoneRetrEligibility);
                         this._OwnerComponent.getCcuxApp().setOccupied(true);
                         // Check if the customer is eligible for ABP.
                         if (oEligibilityModel.oData.ABPAct) {
+
                             oWebUiManager.notifyWebUi('openIndex', {
                                 LINK_ID: "Z_AVGBIL_D"
                             });
+                            // Dismiss the loading indicator
+                            this._OwnerComponent.getCcuxApp().setOccupied(false);
+                            // Upon successfully retrieving the data, stop the error message timeout
+                            clearTimeout(retrTimeout);
+                            // Close the ABP popup
+                            this._ABPPopupControl.close();
+                            return;
                         } else if (oEligibilityModel.oData.ABPElig) {
                             // Check if there is billing history
                             if (oEligibilityModel.oData.NoBillHistory) {
@@ -260,6 +269,12 @@ sap.ui.define(
                                     title: 'ABP',
                                     message: 'Customer has no Billing History'
                                 });
+                                // Dismiss the loading indicator
+                                this._OwnerComponent.getCcuxApp().setOccupied(false);
+                                // Upon successfully retrieving the data, stop the error message timeout
+                                clearTimeout(retrTimeout);
+                                // Close the ABP popup
+                                this._ABPPopupControl.close();
                                 return;
                             }
                             // Dismiss the loading indicator
@@ -313,7 +328,7 @@ sap.ui.define(
                             this._ABPPopupControl.close();
                         }
 
-                        clearInterval(checkDoneRetrEligibility);
+
                     }
                 }.bind(this), 100);
 
@@ -330,11 +345,12 @@ sap.ui.define(
                 }.bind(this), 30000);
 
             } else {
+                this._ABPPopupControl.close();
                 ute.ui.main.Popup.Alert({
                     title: 'Contract Not Found',
                     message: 'Customer is not eligible.'
                 });
-                this._ABPPopupControl.close();
+                return;
                 // Close the ABP popup
             }
         };

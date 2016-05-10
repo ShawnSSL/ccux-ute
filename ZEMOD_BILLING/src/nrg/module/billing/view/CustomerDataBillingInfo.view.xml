@@ -94,8 +94,7 @@
                                                  text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-l-div-BILLING_DATE}" />
                                         <ute:Tag elem="div"
                                                  class="nrgBilling-cusDataBil-date-block-value"
-                                                 text="{ parts:['oBillingInvoices>/BillDate'],
-                                                         formatter:'._formatDate'}"/>
+                                                 text="{path: 'oBillingInvoices>/BillDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                                     </ute:Tag>
                                     <ute:Tag class="nrgBilling-cusDataBil-date-block">
                                         <ute:Tag elem="div"
@@ -103,8 +102,7 @@
                                                  text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-l-div-DUE_DATE}" />
                                         <ute:Tag elem="div"
                                                  class="nrgBilling-cusDataBil-date-block-value"
-                                                 text="{ parts:['oBillingInvoices>/DueDate'],
-                                                         formatter:'._formatDate'}"/>
+                                                 text="{path: 'oBillingInvoices>/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                                     </ute:Tag>
                                 </ute:Tag>
 
