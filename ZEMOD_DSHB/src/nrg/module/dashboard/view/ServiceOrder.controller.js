@@ -180,7 +180,7 @@ sap.ui.define(
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             oData.results[i].iInd = i;
                             // Select the CO passed from dashboard
-                            if (oData.results[i].Contract.replace(/^0+/, '') === this._coNum) {
+                            if (parseInt(oData.results[i].Contract, 10) === parseInt(this._coNum, 10)) {
                                 defaultContractItem = oData.results[i].iInd;
                             }
                         }
