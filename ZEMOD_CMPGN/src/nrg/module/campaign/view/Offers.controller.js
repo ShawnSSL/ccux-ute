@@ -1304,6 +1304,11 @@ sap.ui.define(
                     error: function (oError) {
                         that.getOwnerComponent().getCcuxApp().setOccupied(false);
                         //jQuery.sap.log.info("Eligibility Error occured");
+                        ute.ui.main.Popup.Alert({
+                            title: 'Change Campaign',
+                            message: 'Not able to retrieve comparision data'
+                        });
+                        return;
                     }.bind(this)
                 };
                 if (oModel) {
