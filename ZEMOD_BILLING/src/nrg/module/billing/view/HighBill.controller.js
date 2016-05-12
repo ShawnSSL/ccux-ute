@@ -74,6 +74,7 @@ sap.ui.define(
                     title: 'High Bill',
                     message: 'No Service Address Found'
                 });
+                that.getOwnerComponent().getCcuxApp().setOccupied(false);
             }
 
             sCurrentPath = "/NotificationS";
