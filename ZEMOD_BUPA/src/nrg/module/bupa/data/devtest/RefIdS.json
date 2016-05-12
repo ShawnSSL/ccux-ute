@@ -1,0 +1,15 @@
+{
+    "d":{
+        "results":[
+           {
+                "__metadata" : {
+                  "id" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/RefIdS('000003040103')",
+                  "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/RefIdS('000003040103')",
+                  "type" : "ZE_CCUX_SRV.RefId"
+                },
+                "CA" : "000003040103",
+                "Referral" : "WEBTST2"
+              }
+            ]
+    }
+}
