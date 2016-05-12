@@ -88,8 +88,9 @@ sap.ui.define(
             });
 
             this.setProperty('selectedKey', sKey);
-            this._syncHeaderContent();
-
+            if (sKey !== "") {
+                this._syncHeaderContent();
+            }
             return this;
         };
 
@@ -135,6 +136,7 @@ sap.ui.define(
             if (this.getAggregation("_headerContent")) {
                 this.setAggregation('_headerContent', null); // Null is the only way to remove singular Aggregation(or 0..1 Aggregation).
             }
+            this.setSelectedKey("");
             return Control.prototype.bindAggregation.apply(this, arguments);
         };
 
