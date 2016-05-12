@@ -249,7 +249,11 @@ sap.ui.define(
                     if (oData) {
                         this.getView().getModel('oBillingInvoices').setData(oData);
                         this._curInvNum = oData.InvoiceNum;
-                        this._initRetrInvoiceDetail(this._curInvNum);
+                        if (oData.InvoiceNum) {
+                            this._initRetrInvoiceDetail(this._curInvNum);
+                        } else {
+                            this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                        }
                     }
                 }.bind(this),
                 error: function (oError) {

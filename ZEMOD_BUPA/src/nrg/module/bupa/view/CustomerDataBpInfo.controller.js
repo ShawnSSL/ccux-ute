@@ -148,6 +148,7 @@ sap.ui.define(
             this._retrBpAddress(this._bpNum);
             // Personal Section & DNP Section (for organization type)
             // Do this._retrBpPersonal() in the callback to keep the data alignment
+            this._retrReferralId();
             this._retrBpLegalForm();
             // Contact Section
             this._retrBpContact(this._bpNum);
@@ -362,6 +363,15 @@ sap.ui.define(
             if (oModel) {
                 oModel.read(sPath, oParameters);
             }
+        };
+
+        Controller.prototype._retrReferralId = function () {
+            var sPath = "/RefIdS('" + this._caNum + "')",
+                oParameters = {
+                    model : 'comp-bupa',
+                    path : sPath
+                };
+            this.getView().byId('idBpInfoReferralIdNo_Edit').bindElement(oParameters);
         };
 
         /*--------------------- Contact Section -------------------*/
