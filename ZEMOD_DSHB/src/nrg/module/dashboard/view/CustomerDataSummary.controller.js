@@ -50,6 +50,8 @@ sap.ui.define(
             //Model to Keep Account Access Authorizations
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oSmryAccessAuth');
 
+            //Model to weather Information
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oSumm-Weather');
             // Retrieve routing parameters
             var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
 
@@ -101,10 +103,92 @@ sap.ui.define(
             var oCoBadgesModel = this.getView().getModel('oSmryCoBadges');
             oCoBadgesModel.setData(data.coInfo.COBadges);
             this.allCoBadges = data.coInfo.COBadges;
+            this._UpdateWeather(data);
 
         };
         /*-------------------------------------------------- Retrieve Info --------------------------------------------------*/
+        Controller.prototype._UpdateWeather = function (data) {
+            var oWeather = this.getView().getModel('oSumm-Weather');
+            if (data.coInfo && data.coInfo.CurrTemp) {
+                oWeather.setProperty("/temp", data.coInfo.CurrTemp + " F");
+            } else {
+                oWeather.setProperty("/temp", "");
+            }
+            if (data.coInfo && data.coInfo.City1 && data.coInfo.Region) {
+                oWeather.setProperty("/Address", data.coInfo.City1 + ", " + data.coInfo.Region);
+            } else {
+                oWeather.setProperty("/Address", "");
+            }
+            if (data.coInfo.WthrIcon) {
+                oWeather.setProperty("/Icon", this._onSelectIcon(data.coInfo.WthrIcon));
+            } else {
+                oWeather.setProperty("/Icon", "sap-icon://nrg-icon/");
+            }
 
+
+        };
+        /**
+		 * Mapping Icons with backend Data
+		 *
+		 * @function
+         * @param {string} sChanneltype from backend
+         * @return {string} sChannelIcon for backend sChanneltype
+		 */
+        Controller.prototype._onSelectIcon = function (sChanneltype) {
+            var sChannelIcon = 'sap-icon://nrg-icon/weather-13';
+            switch (sChanneltype) {
+            case "1d":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-sunny';
+                break;
+            case "1n":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-1n';
+                break;
+            case "2d":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-clouds';
+                break;
+            case "2n":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-2n';
+                break;
+            case "3d":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-3d';
+                break;
+            case "3n":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-3n';
+                break;
+            case "4d":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-4';
+                break;
+            case "4n":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-4';
+                break;
+            case "9d":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-rain';
+                break;
+            case "9n":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-rain';
+                break;
+            case "10d":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-rain-sun';
+                break;
+            case "10n":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-10n';
+                break;
+            case "11d":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-11';
+                break;
+            case "11n":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-11';
+                break;
+            case "13d":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-13';
+                break;
+            case "13n":
+                sChannelIcon = 'sap-icon://nrg-icon/weather-13';
+                break;
+
+            }
+            return sChannelIcon;
+        };
         Controller.prototype._initRetrBpInf = function () {
             var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
                 //sBpNum,
