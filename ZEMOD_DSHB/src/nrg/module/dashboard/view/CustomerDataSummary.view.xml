@@ -177,12 +177,12 @@
                             <l:MatrixLayoutCell>
                                 <core:Icon
                                     class="nrgDashboard-cusDataSum-weatherLeft"
-                                    src="sap-icon://nrg-icon/weather-cloud"/>
+                                    src="{oSumm-Weather>/Icon}"/>
                             </l:MatrixLayoutCell>
                             <l:MatrixLayoutCell>
-                                <ute:TextView text="Houston, TX"
+                                <ute:TextView text="{oSumm-Weather>/Address}"
                                     class="nrgDashboard-cusDataSum-localRight"/>
-                                <ute:TextView text="72 F"
+                                <ute:TextView text="{oSumm-Weather>/temp}"
                                     class="nrgDashboard-cusDataSum-localRight"/>
                             </l:MatrixLayoutCell>
                         </l:cells>
