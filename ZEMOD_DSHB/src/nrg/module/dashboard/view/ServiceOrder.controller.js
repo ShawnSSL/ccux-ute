@@ -126,18 +126,20 @@ sap.ui.define(
         //Handler functions
         /********************************************************************************************************************************/
         Controller.prototype._onPendingTabClicked = function () {
+            var iSelectedCoInd = this.getView().byId('idESIDDropdown').getProperty('selectedKey');
             this.getView().getModel('oSelectedTabs').setProperty('/pendingSelected', true);
             this.getView().getModel('oSelectedTabs').setProperty('/completeSelected', false);
             if (this.getView().getModel('oESIDDropdown').oData.results) {
-                this._retrEnrollHolds(this.getView().getModel('oESIDDropdown').oData.results[0].ESID, this.getView().getModel('oESIDDropdown').oData.results[0].Contract);
+                this._retrEnrollHolds(this.getView().getModel('oESIDDropdown').oData.results[iSelectedCoInd].ESID, this.getView().getModel('oESIDDropdown').oData.results[0].Contract);
             }
         };
 
         Controller.prototype._onCompleteTabClicked = function () {
+            var iSelectedCoInd = this.getView().byId('idESIDDropdown').getProperty('selectedKey');
             this.getView().getModel('oSelectedTabs').setProperty('/pendingSelected', false);
             this.getView().getModel('oSelectedTabs').setProperty('/completeSelected', true);
             if (this.getView().getModel('oESIDDropdown').oData.results) {
-                this._retrCompleteOrds(this._bpNum, this._caNum, this.getView().getModel('oESIDDropdown').oData.results[0].ESID);
+                this._retrCompleteOrds(this._bpNum, this._caNum, this._coNum, this.getView().getModel('oESIDDropdown').oData.results[iSelectedCoInd].ESID);
             }
         };
 
@@ -148,7 +150,7 @@ sap.ui.define(
                 }
             } else {
                 if (this.getView().getModel('oESIDDropdown').oData.results) {
-                    this._retrCompleteOrds(this._bpNum, this._caNum, this.getView().getModel('oESIDDropdown').oData.results[oEvent.mParameters.selectedKey].ESID);
+                    this._retrCompleteOrds(this._bpNum, this._caNum, this._coNum, this.getView().getModel('oESIDDropdown').oData.results[oEvent.mParameters.selectedKey].ESID);
                 }
             }
         };
@@ -178,7 +180,7 @@ sap.ui.define(
                         for (i = 0; i < oData.results.length; i = i + 1) {
                             oData.results[i].iInd = i;
                             // Select the CO passed from dashboard
-                            if (oData.results[i].Contract.replace(/^0+/, '') === this._coNum) {
+                            if (parseInt(oData.results[i].Contract, 10) === parseInt(this._coNum, 10)) {
                                 defaultContractItem = oData.results[i].iInd;
                             }
                         }
@@ -352,7 +354,7 @@ sap.ui.define(
             }
         };
 
-        Controller.prototype._retrCompleteOrds = function (sBpNum, sCaNum, sESID) {
+        Controller.prototype._retrCompleteOrds = function (sBpNum, sCaNum, sCoNum, sESID) {
             var sPath,
                 aFilters = [],
                 oParameters,
@@ -360,6 +362,7 @@ sap.ui.define(
 
             aFilters.push(new Filter({ path: 'BP', operator: FilterOperator.EQ, value1: sBpNum}));
             aFilters.push(new Filter({ path: 'CA', operator: FilterOperator.EQ, value1: sCaNum}));
+            aFilters.push(new Filter({ path: 'Contract', operator: FilterOperator.EQ, value1: sCoNum}));
             aFilters.push(new Filter({ path: 'ESID', operator: FilterOperator.EQ, value1: sESID}));
 
             sPath = '/ComplOrdS';

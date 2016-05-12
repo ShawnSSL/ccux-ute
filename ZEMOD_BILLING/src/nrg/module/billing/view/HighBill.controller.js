@@ -1,4 +1,4 @@
-/*globals sap*/
+/*globals sap, ute*/
 /*jslint nomen:true*/
 
 sap.ui.define(
@@ -67,7 +67,15 @@ sap.ui.define(
                 parameters : {expand : "CustDrv,NonCustDrv"},
                 events: {dataReceived : fnRecievedHandler}
             };
-            oDropDownList.bindAggregation("content", mParameters);
+            if (this._coNum) {
+                oDropDownList.bindAggregation("content", mParameters);
+            } else {
+                ute.ui.main.Popup.Alert({
+                    title: 'High Bill',
+                    message: 'No Service Address Found'
+                });
+            }
+
             sCurrentPath = "/NotificationS";
             mParameters = {
                 model : "comp-highbill",

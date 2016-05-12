@@ -246,70 +246,72 @@ sap.ui.define(
 
                     if (bDoneRetrEligibility) {
                         // Display the loading indicator
+                        clearInterval(checkDoneRetrEligibility);
                         this._OwnerComponent.getCcuxApp().setOccupied(true);
                         // Check if the customer is eligible for ABP.
-                        if (oEligibilityModel.oData.ABPElig) {
-                            // Check if the customer is on ABP now
-                            if (oEligibilityModel.oData.ABPAct) {
-                                // Check if there is billing history
-                                if (oEligibilityModel.oData.NoBillHistory) {
-                                    // Show the confirmation pop up
-                                    ute.ui.main.Popup.Confirm({
-                                        title: 'No Billing History',
-                                        message: 'Customer has no billing history to display. Do you wish to deactivate Average Billing Plan?',
-                                        callback: function (sAction) {
-                                            if (sAction === 'Yes') {
-                                                oWebUiManager.notifyWebUi('openIndex', {
-                                                    LINK_ID: "Z_AVGBIL_D"
-                                                });
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    oWebUiManager.notifyWebUi('openIndex', {
-                                        LINK_ID: "Z_AVGBIL_D"
-                                    });
-                                }
+                        if (oEligibilityModel.oData.ABPAct) {
+                            this._ABPPopupControl.close();
+                            oWebUiManager.notifyWebUi('openIndex', {
+                                LINK_ID: "Z_AVGBIL_D"
+                            });
+                            // Dismiss the loading indicator
+                            this._OwnerComponent.getCcuxApp().setOccupied(false);
+                            // Upon successfully retrieving the data, stop the error message timeout
+                            clearTimeout(retrTimeout);
+                            // Close the ABP popup
+
+                            return;
+                        } else if (oEligibilityModel.oData.ABPElig) {
+                            // Check if there is billing history
+                            if (oEligibilityModel.oData.NoBillHistory) {
+                                // Show the confirmation pop up
+                                this._ABPPopupControl.close();
+                                ute.ui.main.Popup.Alert({
+                                    title: 'ABP',
+                                    message: 'Customer has no Billing History'
+                                });
                                 // Dismiss the loading indicator
                                 this._OwnerComponent.getCcuxApp().setOccupied(false);
-                                // Stop the error message timeout
+                                // Upon successfully retrieving the data, stop the error message timeout
                                 clearTimeout(retrTimeout);
                                 // Close the ABP popup
-                                this._ABPPopupControl.close();
-                            } else {
-                                // Retrieve the data for table
-                                this._retrieveTableInfo(this._coNum, function () {bDoneRetrTable = true; });
-                                // Retrieve the data for graph
-                                this._retrieveGraphInfo(this._coNum, function () {bDoneRetrGraph = true; });
-                                // Check all graph control checkboxes
-                                for (i = 0; i < this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent().length; i = i + 1) {
-                                    graphControlBtn = this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent()[i];
-                                    graphControlBtn.getContent()[0].setChecked(true);
-                                }
 
-                                checkRetrTableGraphComplete = setInterval(function () {
-                                    if (bDoneRetrTable && bDoneRetrGraph) {
-                                        // Dismiss the loading indicator
-                                        this._OwnerComponent.getCcuxApp().setOccupied(false);
-                                        // Upon successfully retrieving the data, stop checking the completion of retrieving data
-                                        clearInterval(checkRetrTableGraphComplete);
-                                        // Upon successfully retrieving the data, stop the error message timeout
-                                        clearTimeout(retrTimeout);
-                                        // Create graph control
-                                        if (!this.graphControl) {
-                                            var graphContainer = this.getView().byId('nrgBilling-avgBillingPopup-usage-graph');
-                                            this.graphControl = new AverageBillDetailsChart("chart", {width: 700, height: 250, usageTickSize: 200});
-                                            this.graphControl.placeAt(graphContainer);
-                                            this._ABPPopupControl.$().offset({top: (jQuery(window).height() - this._ABPPopupControl.getDomRef().offsetHeight - 250) / 2 });
-                                        }
-                                        this.graphControl.setDataModel(this.getView().getModel('oUsageGraph'));
-
-                                        // Render the graph crontrol buttons
-                                        this._renderGraphCrontrolBtn();
-                                    }
-                                }.bind(this), 100);
+                                return;
                             }
+                            // Retrieve the data for table
+                            this._retrieveTableInfo(this._coNum, function () {bDoneRetrTable = true; });
+                            // Retrieve the data for graph
+                            this._retrieveGraphInfo(this._coNum, function () {bDoneRetrGraph = true; });
+                            // Check all graph control checkboxes
+                            for (i = 0; i < this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent().length; i = i + 1) {
+                                graphControlBtn = this.getView().byId('nrgBilling-avgBillingPopup-usage-control').getContent()[i];
+                                graphControlBtn.getContent()[0].setChecked(true);
+                            }
+
+                            checkRetrTableGraphComplete = setInterval(function () {
+                                if (bDoneRetrTable && bDoneRetrGraph) {
+                                    // Dismiss the loading indicator
+                                    this._OwnerComponent.getCcuxApp().setOccupied(false);
+                                    // Upon successfully retrieving the data, stop checking the completion of retrieving data
+                                    clearInterval(checkRetrTableGraphComplete);
+                                    // Upon successfully retrieving the data, stop the error message timeout
+                                    clearTimeout(retrTimeout);
+                                    // Create graph control
+                                    if (!this.graphControl) {
+                                        var graphContainer = this.getView().byId('nrgBilling-avgBillingPopup-usage-graph');
+                                        this.graphControl = new AverageBillDetailsChart("chart", {width: 700, height: 250, usageTickSize: 200});
+                                        this.graphControl.placeAt(graphContainer);
+                                        this._ABPPopupControl.$().offset({top: (jQuery(window).height() - this._ABPPopupControl.getDomRef().offsetHeight - 250) / 2 });
+                                    }
+                                    this.graphControl.setDataModel(this.getView().getModel('oUsageGraph'));
+
+                                    // Render the graph crontrol buttons
+                                    this._renderGraphCrontrolBtn();
+                                }
+                            }.bind(this), 100);
+
                         } else {
+                            this._ABPPopupControl.close();
                             ute.ui.main.Popup.Alert({
                                 title: 'Not Eligible',
                                 message: 'You are not eligible for Average Billing Plan.'
@@ -319,10 +321,7 @@ sap.ui.define(
                             // Upon successfully retrieving the data, stop the error message timeout
                             clearTimeout(retrTimeout);
                             // Close the ABP popup
-                            this._ABPPopupControl.close();
                         }
-
-                        clearInterval(checkDoneRetrEligibility);
                     }
                 }.bind(this), 100);
 
@@ -339,11 +338,12 @@ sap.ui.define(
                 }.bind(this), 30000);
 
             } else {
+                this._ABPPopupControl.close();
                 ute.ui.main.Popup.Alert({
                     title: 'Contract Not Found',
                     message: 'Customer is not eligible.'
                 });
-                this._ABPPopupControl.close();
+                return;
                 // Close the ABP popup
             }
         };

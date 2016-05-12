@@ -30,6 +30,7 @@
                                  class="nrgCamOffCons"
                                  enterKeyPress="onEnterKeyPress"
                                  value="{comp-campaign>CurrCons}"
+                                 valueType="I"
                                  id="idnrgCamOffCons"
                                  placeholder="kWh"/>
                     <um:Button press=".updateConsCmp"

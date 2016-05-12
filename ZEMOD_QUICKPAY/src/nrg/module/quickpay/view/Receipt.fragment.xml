@@ -36,6 +36,7 @@
                                  fieldType="Regular"
                                  class="nrgQPCC-input"
                                  width="10rem"
+                                 maxLength="17"
                                  valueType="I"
                                  id="idnrgQPRC-RNum">
                     </u:Textfield>
