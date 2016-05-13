@@ -1244,6 +1244,12 @@ sap.ui.define(
                 oPage = oPageModel.getProperty('/paging'),
                 i;
 
+            if (aReturnedCo.length === 0) {
+                oPageModel.setProperty('/oCoPageModel', false);
+            } else {
+                oPageModel.setProperty('/oCoPageModel', true);
+            }
+
             for (i = 0; i < iPageNumber; i = i + 1) {
                 aReturnedCo[i].iIndex = i.toString();
                 if (i < 3) {
