@@ -150,7 +150,12 @@ sap.ui.define(
          * @return {string} sChannelIcon for backend sChanneltype
 		 */
         Controller.prototype._onSelectIcon = function (sChanneltype) {
-            var sChannelIcon = 'sap-icon://nrg-icon/weather-13';
+            var sChannelIcon = 'sap-icon://nrg-icon/weather-sunny';
+            if (sChanneltype) {
+                sChanneltype = sChanneltype.replace(/^[0]+/g, "");
+            } else {
+                return sChannelIcon;
+            }
             switch (sChanneltype) {
             case "1d":
                 sChannelIcon = 'sap-icon://nrg-icon/weather-sunny';
