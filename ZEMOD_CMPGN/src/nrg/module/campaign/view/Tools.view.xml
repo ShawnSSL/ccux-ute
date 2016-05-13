@@ -24,6 +24,13 @@
                     class="nrgCamTls-top nrgCamTls-btn"
                     press=".onCancelPress">
                 </u:Button>
+                <u:Button
+                    buttonType="SpecialNav"
+                    width="220px"
+                    text="{comp-i18n-campaign>nrgCmpTlsBtnUsg}"
+                    class="nrgCamTls-top nrgCamTls-btn"
+                    press=".onUsageHistory">
+                </u:Button>
             </u:Tag>
         </u:Tag>
     </u:Tag>

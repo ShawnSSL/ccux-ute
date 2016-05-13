@@ -153,7 +153,6 @@ sap.ui.define(
             if (this._oCancelDialog === undefined) {
                 this._oCancelDialog = new ute.ui.main.Popup.create({
                     title: 'Change Campaign - Cancel',
-                    close: this._handleDialogClosed,
                     content: this._oDialogFragment
                 });
             }
@@ -184,15 +183,67 @@ sap.ui.define(
             oPendingSwapsTable.bindRows(mParameters);
 
         };
-
         /**
-		 * Handler Function for the History Popup close
+		 * Display Quick Usage History
 		 *
 		 * @function
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
-        Controller.prototype._handleDialogClosed = function (oControlEvent) {
-
+        Controller.prototype.onUsageHistory = function (oEvent) {
+            var oModel = this.getOwnerComponent().getModel('comp-usage'),
+                sPath,
+                mParameters,
+                oHistoryView,
+                oUsageTable,
+                oScrollTemplate,
+                aFilters,
+                aFilterIds,
+                aFilterValues,
+                oUsageTemplate,
+                fnRecievedHandler,
+                that = this;
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            aFilterIds = ["Contract"];
+            aFilterValues = [this._sContract];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            if (!this._oUsageFragment) {
+                this._oUsageFragment = sap.ui.xmlfragment("QuickUsage", "nrg.module.campaign.view.QuickUsage", this);
+            }
+            if (this._oUsageDialog === undefined) {
+                this._oUsageDialog = new ute.ui.main.Popup.create({
+                    title: 'Usage History',
+                    content: this._oUsageFragment
+                });
+            }
+            sPath = "/QuickUsageS";
+            oUsageTable = sap.ui.core.Fragment.byId("QuickUsage", "idnrgUsageTable");
+            oUsageTemplate = sap.ui.core.Fragment.byId("QuickUsage", "idnrgUsageTable-Row");
+            // Function received handler is used to update the view with first History campaign.---start
+            fnRecievedHandler = function () {
+                var oTableBinding = oUsageTable.getBinding("rows");
+                if ((oUsageTable.getRows()) && (oUsageTable.getRows().length > 0)) {
+                    that._oUsageDialog.open();
+                } else {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Usage History',
+                        message: 'No Usage History found'
+                    });
+                }
+                that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                if (oTableBinding) {
+                    oTableBinding.detachDataReceived(fnRecievedHandler);
+                }
+            };
+            oUsageTable.setModel(oModel, 'comp-usage');
+            mParameters = {
+                model : "comp-usage",
+                path : sPath,
+                filters : aFilters,
+                template : oUsageTemplate,
+                events: {dataReceived : fnRecievedHandler}
+            };
+            this._oUsageDialog.addStyleClass("nrgCamHis-dialog");
+            oUsageTable.bindRows(mParameters);
         };
 
         /**
@@ -241,6 +292,15 @@ sap.ui.define(
             if (oEvent.getSource().getChecked()) {
                 this._oDialogFragment.getModel("localModel").setProperty("/ReqNumber", "");// No Phone checkbox selected
             }
+        };
+        /**
+		 * Handle when user clicked on close button
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onUsageClose = function (oEvent) {
+            this._oUsageDialog.close();
         };
         /**
 		 * Handle when user clicked on Cancelling of Pending Swaps
