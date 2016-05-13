@@ -131,7 +131,7 @@ sap.ui.define(
             if (data.coInfo.WthrIcon) {
                 oWeather.setProperty("/Icon", this._onSelectIcon(data.coInfo.WthrIcon));
             } else {
-                oWeather.setProperty("/Icon", "sap-icon://nrg-icon/weather-sunny");
+                oWeather.setProperty("/Icon", "");
             }
             if (bCoChanged) {
                 oData.coInfo = {};
