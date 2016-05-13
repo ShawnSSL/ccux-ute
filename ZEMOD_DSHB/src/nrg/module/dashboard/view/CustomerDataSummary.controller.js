@@ -53,7 +53,12 @@ sap.ui.define(
             //Model to weather Information
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oSumm-Weather');
             // Retrieve routing parameters
-            var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
+            var oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
+
+            if (oGlobalDataManager.getGDCProperty("/weather")) {
+                this._UpdateWeather(oGlobalDataManager.getGDCProperty("/weather"), false);
+            }
 
             this._bpNum = oRouteInfo.parameters.bpNum;
             this._caNum = oRouteInfo.parameters.caNum;
@@ -64,6 +69,7 @@ sap.ui.define(
 
             // Check if Account Access Authorization has been labeled
             this._checkThirdPartyAuth(this._caNum);
+
         };
 
         Controller.prototype.onAfterRendering = function () {
@@ -103,14 +109,17 @@ sap.ui.define(
             var oCoBadgesModel = this.getView().getModel('oSmryCoBadges');
             oCoBadgesModel.setData(data.coInfo.COBadges);
             this.allCoBadges = data.coInfo.COBadges;
-            this._UpdateWeather(data);
+            this._UpdateWeather(data, true);
 
         };
         /*-------------------------------------------------- Retrieve Info --------------------------------------------------*/
-        Controller.prototype._UpdateWeather = function (data) {
-            var oWeather = this.getView().getModel('oSumm-Weather');
+        Controller.prototype._UpdateWeather = function (data, bCoChanged) {
+            var oWeather = this.getView().getModel('oSumm-Weather'),
+                oData = {},
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
             if (data.coInfo && data.coInfo.CurrTemp) {
                 oWeather.setProperty("/temp", data.coInfo.CurrTemp + " F");
+
             } else {
                 oWeather.setProperty("/temp", "");
             }
@@ -124,8 +133,14 @@ sap.ui.define(
             } else {
                 oWeather.setProperty("/Icon", "sap-icon://nrg-icon/");
             }
-
-
+            if (bCoChanged) {
+                oData.coInfo = {};
+                oData.coInfo.CurrTemp = data.coInfo.CurrTemp;
+                oData.coInfo.City1 = data.coInfo.City1;
+                oData.coInfo.Region = data.coInfo.Region;
+                oData.coInfo.WthrIcon = data.coInfo.WthrIcon;
+                oGlobalDataManager.setGDCProperty("/weather", oData);
+            }
         };
         /**
 		 * Mapping Icons with backend Data
