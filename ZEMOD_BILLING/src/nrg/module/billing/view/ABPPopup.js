@@ -35,21 +35,20 @@ sap.ui.define(
 
         /*----------------------------------------------------- Methods -----------------------------------------------------*/
 
-        ABPPopup.prototype.prepareABP = function () {
+        ABPPopup.prototype.prepareABP = function (bisRetro) {
             if (!this._oABPPopup.getContent().length) {
                 var oABPView = sap.ui.view({
                     type: sap.ui.core.mvc.ViewType.XML,
                     viewName: "nrg.module.billing.view.ABP"
                 });
                 // Set a variable to flag if it's retro or not
-                oABPView.getController().isRetro = this.getIsRetro();
+                oABPView.getController().isRetro = bisRetro;
                 if (this._oABPPopup.isOpen()) { return this; }
                 this._oABPPopup.addContent(oABPView);
             }
             this._oABPPopup.open();
             return this;
         };
-
         ABPPopup.prototype._onPopupClosed = function (oEvent) {
             this.getParent().fireEvent("ABPCompleted");
         };
