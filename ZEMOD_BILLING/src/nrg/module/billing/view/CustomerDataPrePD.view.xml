@@ -19,6 +19,9 @@
                 <utmain:Button class="nrgBilling-cusDataBil-btn" design="Default"
                    text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-Alerts}"
                    press="._onAlertInformation"/>
+                <utmain:Button class="nrgBilling-cusDataBil-btn" design="Default"
+                   text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-Reconnect}"
+                   press="._onReconnect"/>
         </ute:Tag>
 
 

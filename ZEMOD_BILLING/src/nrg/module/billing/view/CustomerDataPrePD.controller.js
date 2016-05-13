@@ -8,10 +8,11 @@ sap.ui.define(
         'sap/ui/model/json/JSONModel',
         'nrg/module/quickpay/view/QuickPayPopup',
         'sap/ui/model/Filter',
-        'sap/ui/model/FilterOperator'
+        'sap/ui/model/FilterOperator',
+        'nrg/module/dashboard/view/ReconnectPopup'
     ],
 
-    function (jQuery, Controller, JSONModel, QuickPayControl, Filter, FilterOperator) {
+    function (jQuery, Controller, JSONModel, QuickPayControl, Filter, FilterOperator, ReconnectPopup) {
         'use strict';
 
         var CustomController = Controller.extend('nrg.module.billing.view.CustomerDataPrePD');
@@ -202,6 +203,24 @@ sap.ui.define(
                 oModel.read(sPath, oBindingInfo);
             }
         };
+        /**
+		 * Show a popup when Reconection button clicked.
+		 *
+		 * @function
+		 *
+         *
+		 * @private
+		 */
+        CustomController.prototype._onReconnect = function () {
+            if (!this.ReconnectPopupControl) {
+                this.ReconnectPopupControl = new ReconnectPopup({ isRetro: true });
+
+                this.ReconnectPopupControl.attachEvent("ReConnectCompleted", function () {}, this);
+                this.getView().addDependent(this.ReconnectPopupControl);
+            }
+            this.ReconnectPopupControl.open();
+        };
+
        /**
 		 * Show a popup when Communication preferences button clicked.
 		 *
