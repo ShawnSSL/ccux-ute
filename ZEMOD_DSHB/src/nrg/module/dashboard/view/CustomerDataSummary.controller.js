@@ -131,7 +131,7 @@ sap.ui.define(
             if (data.coInfo.WthrIcon) {
                 oWeather.setProperty("/Icon", this._onSelectIcon(data.coInfo.WthrIcon));
             } else {
-                oWeather.setProperty("/Icon", "sap-icon://nrg-icon/");
+                oWeather.setProperty("/Icon", "sap-icon://nrg-icon/weather-sunny");
             }
             if (bCoChanged) {
                 oData.coInfo = {};
@@ -150,7 +150,12 @@ sap.ui.define(
          * @return {string} sChannelIcon for backend sChanneltype
 		 */
         Controller.prototype._onSelectIcon = function (sChanneltype) {
-            var sChannelIcon = 'sap-icon://nrg-icon/weather-13';
+            var sChannelIcon = 'sap-icon://nrg-icon/weather-sunny';
+            if (sChanneltype) {
+                sChanneltype = sChanneltype.replace(/^[0]+/g, "");
+            } else {
+                return sChannelIcon;
+            }
             switch (sChanneltype) {
             case "1d":
                 sChannelIcon = 'sap-icon://nrg-icon/weather-sunny';
@@ -159,7 +164,7 @@ sap.ui.define(
                 sChannelIcon = 'sap-icon://nrg-icon/weather-1n';
                 break;
             case "2d":
-                sChannelIcon = 'sap-icon://nrg-icon/weather-clouds';
+                sChannelIcon = 'sap-icon://nrg-icon/weather-cloud';
                 break;
             case "2n":
                 sChannelIcon = 'sap-icon://nrg-icon/weather-2n';
@@ -195,10 +200,10 @@ sap.ui.define(
                 sChannelIcon = 'sap-icon://nrg-icon/weather-11';
                 break;
             case "13d":
-                sChannelIcon = 'sap-icon://nrg-icon/weather-13';
+                sChannelIcon = 'sap-icon://nrg-icon/weather-snow';
                 break;
             case "13n":
-                sChannelIcon = 'sap-icon://nrg-icon/weather-13';
+                sChannelIcon = 'sap-icon://nrg-icon/weather-snow';
                 break;
 
             }
