@@ -211,7 +211,7 @@ sap.ui.define(
             }
             if (this._oUsageDialog === undefined) {
                 this._oUsageDialog = new ute.ui.main.Popup.create({
-                    title: 'Usage History',
+                    title: 'Quick Usage',
                     content: this._oUsageFragment
                 });
             }
