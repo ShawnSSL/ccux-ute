@@ -57,6 +57,8 @@ sap.ui.define(
                 this.ABPPopupCustomControl = new ABPPopup({ isRetro: false });
                 this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
                 this.getView().addDependent(this.ABPPopupCustomControl);
+            } else {
+                this.ABPPopupCustomControl._oABPPopup.setTitle('AVERAGE BILLING PLAN');
             }
             this.ABPPopupCustomControl.prepareABP();
         };
@@ -78,12 +80,14 @@ sap.ui.define(
             if (!this.ABPPopupCustomControl) {
                 this.ABPPopupCustomControl = new ABPPopup({ isRetro: true });
 
-                this.ABPPopupCustomControl._oABPPopup.setTitle('RETRO AVERAGE BILLING PLAN: ACTIVATE');
+
 
                 //this.ABPPopupCustomControl._oABPPopup.setTitle('The title you want to change to.');
 
                 this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
                 this.getView().addDependent(this.ABPPopupCustomControl);
+            } else {
+                this.ABPPopupCustomControl._oABPPopup.setTitle('RETRO AVERAGE BILLING PLAN: ACTIVATE');
             }
             this.ABPPopupCustomControl.prepareABP();
         };
