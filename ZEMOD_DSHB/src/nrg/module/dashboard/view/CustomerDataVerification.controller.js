@@ -1194,14 +1194,23 @@ sap.ui.define(
                                 //oAllContractModel.setProperty('/selectedKey', '0');
                                 sSelectedItem = '0';
                             }
+
+                            // Reset the CO pagination
+                            this._initCoPageModel();
+                            // Set up the CO pagination
+                            this._setUpCoPageModel(oData.results.length, oData.results);
                         } else {
+                            // Reset the CO pagination
+                            this._initCoPageModel();
+                            // Set up the CO pagination
+                            this._setUpCoPageModel(oData.results.length, oData.results);
                             that._onCoSelected(-1);
                         }
                         this._onCOValidations();
-                        // Reset the CO pagination
+                        /*// Reset the CO pagination
                         this._initCoPageModel();
                         // Set up the CO pagination
-                        this._setUpCoPageModel(oData.results.length, oData.results);
+                        this._setUpCoPageModel(oData.results.length, oData.results);*/
                         // Refresh the CO dropdown
                         oAllContractModel.setData(oData.results);
                         oAllContractModel.setProperty('/selectedKey', sSelectedItem);
@@ -1243,6 +1252,12 @@ sap.ui.define(
             var oPageModel = this.getView().getModel('oCoPageModel'),
                 oPage = oPageModel.getProperty('/paging'),
                 i;
+
+            if (aReturnedCo.length === 0) {
+                oPageModel.setProperty('/isShowPagination', false);
+            } else {
+                oPageModel.setProperty('/isShowPagination', true);
+            }
 
             for (i = 0; i < iPageNumber; i = i + 1) {
                 aReturnedCo[i].iIndex = i.toString();

@@ -282,7 +282,8 @@
                                 </ute:Tag>
                             </ute:Tag>
                             <!-- Pagination for Multiple COs -->
-                            <ute:Tag class="nrgDashboard-cusDataVerify-middle-pagiSection">
+                            <ute:Tag class="nrgDashboard-cusDataVerify-middle-pagiSection"
+                                     visible="{oCoPageModel>/isShowPagination}">
                                 <utmain:Button design="None"
                                     visible="{oCoPageModel>/threeLarger}"
                                     class="nrgDashboard-cusDataVerify-middle-pageBtn navigate"
