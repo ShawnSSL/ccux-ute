@@ -1245,9 +1245,9 @@ sap.ui.define(
                 i;
 
             if (aReturnedCo.length === 0) {
-                oPageModel.setProperty('/oCoPageModel', false);
+                oPageModel.setProperty('/isShowPagination', false);
             } else {
-                oPageModel.setProperty('/oCoPageModel', true);
+                oPageModel.setProperty('/isShowPagination', true);
             }
 
             for (i = 0; i < iPageNumber; i = i + 1) {
