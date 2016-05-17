@@ -16,15 +16,14 @@ sap.ui.define(
 
         var Controller = CoreController.extend('nrg.module.quickpay.view.Mainfile');
 
-
-		/* =========================================================== */
-		/* lifecycle method- Init                                      */
-		/* =========================================================== */
-        Controller.prototype.onInit = function () {
-        };
         /* =========================================================== */
-		/* lifecycle method- Before Rendering                          */
-		/* =========================================================== */
+        /* lifecycle method- Init                                      */
+        /* =========================================================== */
+        /*Controller.prototype.onInit = function () {
+        };*/
+        /* =========================================================== */
+        /* lifecycle method- Before Rendering                          */
+        /* =========================================================== */
         Controller.prototype.onBeforeRendering = function () {
             var oModel = this.getView().getModel('comp-quickpay'),
                 mParameters,
@@ -79,11 +78,11 @@ sap.ui.define(
         };
 
         /**
-		 * Central function to toggle between screens.
-		 *
-		 * @function onQuickPay
-         * @param {sScreenView} sScreenView string which screen need to be on.
-		 */
+        * Central function to toggle between screens.
+        *
+        * @function onQuickPay
+        * @param {sScreenView} sScreenView string which screen need to be on.
+        */
         Controller.prototype._onToggleViews = function (sScreenView) {
             var oViewModel = this.getView().getModel("appView");
             oViewModel.setProperty("/CC", false);
@@ -100,13 +99,14 @@ sap.ui.define(
             sScreenView = "/" + sScreenView;
             oViewModel.setProperty(sScreenView, true);
         };
-/********************************  Credit card Related functionality Start ***********************************/
+        /********************************  Credit card Related functionality Start
+        ***********************************/
         /**
-		 * Show Stop Voice Log Recording msg
-		 *
-		 * @function onQuickPay
-         * @param {sap.ui.base.Event} oEvent pattern match event
-		 */
+        * Show Stop Voice Log Recording msg
+        *
+        * @function onQuickPay
+        * @param {sap.ui.base.Event} oEvent pattern match event
+        */
         Controller.prototype.onCreditCard = function (oEvent) {
             var fnRecievedHandler,
                 oCreditCardDropDown = this.getView().byId("idnrgQPCC-DDL"),
@@ -187,12 +187,38 @@ sap.ui.define(
             };
             oWaiveReasonDropDown.bindAggregation("items", oBindingInfo);
         };
+
         /**
-		 * When Credit Card is Accepted
-		 *
-		 * @function onQuickPay
+        * Check date function
+        *
+        *@function _checkDateFormate
+        *@param {String, String} sDate, sMsg
+
+        Controller.prototype._checkDateFormat = function (sDate, sMsg) {
+            var oDatePattern,
+                bValidDateFormat;
+
+            //foo.match(new RegExp(':\\d\\d'));
+
+            bValidDateFormat = sDate.match(new RegExp('^((0?[13578]|10|12)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[01]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1}))|(0?[2469]|11)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[0]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1})))$)');
+
+            if ((parseInt(sDate.substring(0, 2), 10) === 2) && (parseInt(sDate.substring(3,5), 10) > 29)) {
+                this.getView().getModel("appView").setProperty("/message", "Febuary can only have date smaller than or equal to 29");
+                return false;
+            }
+
+            if (!bValidDateFormat) {
+                this.getView().getModel("appView").setProperty("/message", sMsg);
+                return false;
+            }
+            return true;
+        };*/
+        /**
+        * When Credit Card is Accepted
+         *
+         * @function onQuickPay
          * @param {sap.ui.base.Event} oEvent pattern match event
-		 */
+         */
         Controller.prototype.onAcceptCredit = function (oEvent) {
             var oModel = this.getView().getModel('comp-quickpay'),
                 mParameters,
@@ -236,7 +262,14 @@ sap.ui.define(
             }
 
             sCurrentPath = "/CreditCardPost";
+            /*if (!this._checkDateFormat(oCreditCardDate.getValue(), "Please Enter Date as form mm/dd/yyyy")) {
+                return false;
+            }*/
             oCreditCardDateValue = new Date(oCreditCardDate.getValue());
+            if (isNaN(oCreditCardDateValue)) {
+                this.getView().getModel("appView").setProperty("/message", "Please Enter Date as Form of MM/DD/YYYY");
+                return false;
+            }
             oInvoiceDate = oCreditCardModel.getProperty("/InvoiceDate");
             if (oCreditCardDateValue) {
                 oCreditCardDateValue.setHours("00");
