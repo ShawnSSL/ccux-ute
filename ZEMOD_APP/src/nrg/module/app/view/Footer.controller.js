@@ -415,7 +415,15 @@ sap.ui.define(
         Controller.prototype._onRHS = function (oControlEvent) {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
             oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "ZVASOPTSLN"
+                LINK_ID: "ZVASOPTSLN",
+                REF_ID: 'ENROLL'
+            });
+        };
+        Controller.prototype._onRHSStatus = function (oControlEvent) {
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            oWebUiManager.notifyWebUi('openIndex', {
+                LINK_ID: "ZVASOPTSLN",
+                REF_ID: 'CANCEL'
             });
         };
 

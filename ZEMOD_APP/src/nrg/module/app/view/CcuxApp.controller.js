@@ -1,5 +1,6 @@
 /*global sap, ute*/
 /*jslint nomen:true*/
+/*jslint browser: true*/
 
 sap.ui.define(
     [
@@ -18,9 +19,14 @@ sap.ui.define(
         var CustomController = Controller.extend('nrg.module.app.view.CcuxApp');
 
         CustomController.prototype.onBeforeRendering = function () {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
+                fResetChecking;
             if (oWebUiManager.isAvailable()) {
                 oWebUiManager.notifyWebUi('getBusinessRole', {}, this._onBusinessRoleCallback, this);
+                this._fResetChecking = setInterval(function () {
+                    oWebUiManager.notifyWebUi('resetTimeOut', {}, this._onResetTimeCallback, this);
+                }.bind(this), 60000);
+
             } else {
                 this._onEsidToolPressCallback();
             }
@@ -30,6 +36,35 @@ sap.ui.define(
             oWebUiManager.attachEvent("clearAccount2", jQuery.proxy(this._onClearAccPressCallback, this));
             oWebUiManager.attachEvent("dashboardgo", jQuery.proxy(this._onGoDashBoardCallback, this));
             oWebUiManager.attachEvent("ToggleBusy", jQuery.proxy(this._onToggleBusy, this));
+        };
+        CustomController.prototype._onResetTimeCallback = function (oEvent) {
+            if ((oEvent.mParameters) && (oEvent.mParameters.failed)) {
+                clearInterval(this._fResetChecking);
+                ute.ui.main.Popup.Alert({
+                    title: 'Timeout',
+                    message: 'Due to inactivity, your session is expired.',
+                    callback: jQuery.proxy(this._popupCallback, this)
+                });
+            }
+        };
+        CustomController.prototype._popupCallback = function (sAction) {
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
+                AlertDialog,
+                oTag = new ute.ui.commons.Tag();
+            switch (sAction) {
+            case ute.ui.main.Popup.Action.Ok:
+                oTag.addContent(new ute.ui.main.Label({
+                    text: "Due to inactivity, your session is expired."
+                }));
+                AlertDialog = new ute.ui.main.Popup.create({
+                    title: "Timeout",
+                    content: oTag
+                });
+                AlertDialog.setShowCloseButton(false);
+                AlertDialog.open();
+                oWebUiManager.notifyWebUi('logout', {}, this._onLogoffPressCallback, this);
+                break;
+            }
         };
         CustomController.prototype._onBusinessRoleCallback = function (oEvent) {
             var oClearAccount = this.getView().byId('appHMItemClearAcc');
@@ -43,7 +78,6 @@ sap.ui.define(
             } else {
                 this._oApp.setOccupied(false);
             }
-
         };
         CustomController.prototype.onInit = function () {
             this._oApp = new App(this);
@@ -188,7 +222,8 @@ sap.ui.define(
         CustomController.prototype._onQLRHSClick = function (oControlEvent) {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
             oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "ZVASOPTSLN"
+                LINK_ID: "ZVASOPTSLN",
+                REF_ID : 'ENROLL'
             });
         };
         CustomController.prototype._onQLHistoryClick = function (oControlEvent) {
@@ -489,13 +524,24 @@ sap.ui.define(
         };
 
         CustomController.prototype._onIndexLinkPress = function (oControlEvent) {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
+                oPayLoad = {},
+                sLinkId,
+                oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
 
             this._oApp.setHeaderMenuItemSelected(false, App.HMItemId.Index);
+            sLinkId = oControlEvent.getSource().getRefId();
+            oPayLoad.LINK_ID = sLinkId;
 
-            oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: oControlEvent.getSource().getRefId()
-            });
+            if (sLinkId === "ZVASOPTSLN") {
+                oPayLoad.REF_ID = 'ENROLL';
+            }
+            if (sLinkId === "Z_CLFULLVW") {
+                if (oRouteInfo.parameters.coNum) {
+                    oPayLoad.REF_ID = oRouteInfo.parameters.coNum;
+                }
+            }
+            oWebUiManager.notifyWebUi('openIndex', oPayLoad);
         };
 
         return CustomController;

@@ -82,7 +82,7 @@
                                 <!-- Current Item -->
                                 <ute:Tag id="nrgAppFtrDetails-rhs-currentItem" class="nrgAppFtrDetails-rhs-item">
                                     <utmain:Button
-                                        class="nrgAppFtrDetails-rhs-itemTitle-btn" design="None" press="_onRHS">
+                                        class="nrgAppFtrDetails-rhs-itemTitle-btn" design="None" press="_onRHSStatus">
                                         <ute:Tag
                                             class="nrgAppFtrDetails-rhs-currentTitle nrgAppFtrDetails-rhs-itemTitle"
                                             text="{comp-i18n-app>nrgAppFtrDetails-rhs-CURRENT_TITLE}" />
