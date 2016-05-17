@@ -1,0 +1,28 @@
+{
+  "d" : {
+    "results":[
+        {
+            "__metadata" : {
+              "id" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/BillInvoices('9019633')",
+              "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/BillInvoices('9019633')",
+              "type" : "ZE_CCUX_CHKBOOK_SRV.BillInvoice"
+            },
+            "ContractAccountNumber" : "9019633",
+            "InvoiceNum" : "",
+            "AmountDue" : "-30.0000",
+            "BillDate" : null,
+            "DueDate" : null,
+            "InvUrl" : "",
+            "UnBilled" : "-27.9600",
+            "TotalAR" : "-27.9600",
+            "InvAmount" : "0.0000",
+            "CustDueDate" : "Net due 16 Days",
+            "ConfBuag" : {
+              "__deferred" : {
+                "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/BillInvoices('9019633')/ConfBuag"
+              }
+            }
+        }
+    ]
+  }
+}
