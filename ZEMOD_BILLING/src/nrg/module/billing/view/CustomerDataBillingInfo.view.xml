@@ -105,7 +105,8 @@
                                                  text="{path: 'oBillingInvoices>/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
                                     </ute:Tag>
                                 </ute:Tag>
-
+                                <ute:Tag class="nrgBilling-cusDataBil-date"
+                                         text="{oBillingInvoices>/CustDueDate}" />
                             </ute:Tag>
                         </l:MatrixLayoutCell>
 
