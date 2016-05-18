@@ -763,6 +763,9 @@ sap.ui.define(
             if (!this._ValidateValue(oBankDraftAmount.getValue(), "Enter Amount to be posted")) {
                 return false;
             }
+            if (!this._ValidateValue(oBankDraftDate.getValue(), "Enter Bank Draft Date")){
+                return false;
+            }   //Added to check empty date situation(will cause 400 bad request) 05/18/2016
             if (!this._ValidateValue(oBankAccountDropDown.getSelectedKey(), "Select Bank Account")) {
                 return false;
             }
