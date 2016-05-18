@@ -206,6 +206,7 @@
                               text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-STATE}:" />
                     <ute:Textfield fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input supershort middle-space"
                         editable="{oBpInfoConfig>/addrEditable}"
+                        maxLength="2"
                         value="{oDataBpAddress>/AddressInfo/State}"/>
                     <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title short"
                               text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-ZIP_CODE}:" />
