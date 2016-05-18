@@ -413,18 +413,28 @@ sap.ui.define(
         };
 
         Controller.prototype._onRHS = function (oControlEvent) {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
-            oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "ZVASOPTSLN",
-                REF_ID: 'ENROLL'
-            });
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
+                oPayload = {},
+                oRouting = this.getView().getModel('oFooterRouting');
+
+            oPayload.LINK_ID = "ZVASOPTSLN";
+            oPayload.REF_ID = 'ENROLL';
+            if (oRouting.getProperty('/CoNumber')) {
+                oPayload.CONTRACT_ID = oRouting.getProperty('/CoNumber');
+            }
+            oWebUiManager.notifyWebUi('openIndex', oPayload);
         };
         Controller.prototype._onRHSStatus = function (oControlEvent) {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
-            oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "ZVASOPTSLN",
-                REF_ID: 'CANCEL'
-            });
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
+                oPayload = {},
+                oRouting = this.getView().getModel('oFooterRouting');
+
+            oPayload.LINK_ID = "ZVASOPTSLN";
+            oPayload.REF_ID = 'CANCEL';
+            if (oRouting.getProperty('/CoNumber')) {
+                oPayload.CONTRACT_ID = oRouting.getProperty('/CoNumber');
+            }
+            oWebUiManager.notifyWebUi('openIndex', oPayload);
         };
 
         /*----------------------------- Campaign -----------------------------*/
