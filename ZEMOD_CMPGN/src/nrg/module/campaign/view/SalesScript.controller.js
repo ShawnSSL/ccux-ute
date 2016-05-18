@@ -610,7 +610,8 @@ sap.ui.define(
                         oWebUiManager = that.getOwnerComponent().getCcuxWebUiManager();
                         oWebUiManager.notifyWebUi('openIndex', {
                             LINK_ID: "ZVASOPTSLN",
-                            REF_ID: 'ENROLL'
+                            REF_ID: 'ENROLL',
+                            CONTRACT_ID : sContract
                         });
                         this.navTo("campaign", {bpNum: that._sBP, caNum: that._sCA, coNum : that._sContract, typeV : "P"});
                         return;

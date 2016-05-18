@@ -115,13 +115,6 @@ sap.ui.define(
             this._oApp._getFooter().onCampaignItemClick(oControlEvent);
         };
 
-        CustomController.prototype._onRHS = function (oControlEvent) {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
-            oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "ZVASOPTSLN"
-            });
-        };
-
         /*------------------------------ Footer ----------------------------*/
 
         CustomController.prototype._onQuickLinkClick = function (oControlEvent) {
@@ -220,11 +213,16 @@ sap.ui.define(
             }
         };
         CustomController.prototype._onQLRHSClick = function (oControlEvent) {
-            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
-            oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "ZVASOPTSLN",
-                REF_ID : 'ENROLL'
-            });
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
+                oPayload = {},
+                oContext = this.getOwnerComponent().getCcuxContextManager().getContext().getData();
+
+            oPayload.LINK_ID = "ZVASOPTSLN";
+            oPayload.REF_ID = 'ENROLL';
+            if (oContext.coNum) {
+                oPayload.CONTRACT_ID = oContext.coNum;
+            }
+            oWebUiManager.notifyWebUi('openIndex', oPayload);
         };
         CustomController.prototype._onQLHistoryClick = function (oControlEvent) {
             var oContext, oRouter;
@@ -535,6 +533,9 @@ sap.ui.define(
 
             if (sLinkId === "ZVASOPTSLN") {
                 oPayLoad.REF_ID = 'ENROLL';
+                if (oRouteInfo.parameters.coNum) {
+                    oPayLoad.CONTRACT_ID = oRouteInfo.parameters.coNum;
+                }
             }
             if (sLinkId === "Z_CLFULLVW") {
                 if (oRouteInfo.parameters.coNum) {
