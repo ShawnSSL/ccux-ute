@@ -51,6 +51,7 @@
             <ute:Tag><ute:Textfield id="idEditState" fieldType="Underlined"
                 label="{comp-i18n-dashboard>nrgDashboardCusDatVrf_Pup_State}"
                 editable="{oDtaAddrEdit>/updateNotSent}" width="100px"
+                maxLength="2"
                 value="{oDtaAddrEdit>/AddrInfo/State}"/></ute:Tag>
             <ute:Tag><ute:Textfield id="idEditZip" fieldType="Underlined"
                 label="{comp-i18n-dashboard>nrgDashboardCusDatVrf_Pup_ZipCode}"
