@@ -248,6 +248,7 @@
                                                 <ute:Textfield fieldType="Noborder"
                                                                class="nrgBupa-cusDataCaInfo-cnt"
                                                                editable="{oCaInfoConfig>/mailAddrEditable}"
+                                                               maxLength="2"
                                                                value="{oDataBuagAddrDetails>/FixAddrInfo/State}"/>
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>

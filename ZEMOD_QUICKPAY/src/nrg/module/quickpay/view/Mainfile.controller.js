@@ -266,10 +266,10 @@ sap.ui.define(
                 return false;
             }*/
             oCreditCardDateValue = new Date(oCreditCardDate.getValue());
-            if (isNaN(oCreditCardDateValue)) {
+            /*if (isNaN(oCreditCardDateValue)) {
                 this.getView().getModel("appView").setProperty("/message", "Please Enter Date as Form of MM/DD/YYYY");
                 return false;
-            }
+            }*/
             oInvoiceDate = oCreditCardModel.getProperty("/InvoiceDate");
             if (oCreditCardDateValue) {
                 oCreditCardDateValue.setHours("00");
