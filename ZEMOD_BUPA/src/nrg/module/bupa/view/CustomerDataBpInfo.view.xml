@@ -204,10 +204,18 @@
                         value="{oDataBpAddress>/AddressInfo/City}"/>
                     <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title short"
                               text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-STATE}:" />
-                    <ute:Textfield fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input supershort middle-space"
+                    <!--ute:Textfield fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input supershort middle-space"
                         editable="{oBpInfoConfig>/addrEditable}"
                         maxLength="2"
-                        value="{oDataBpAddress>/AddressInfo/State}"/>
+                        value="{oDataBpAddress>/AddressInfo/State}"/-->
+                    <utmain:Dropdown design="Default" class="nrgBupa-cusDataBpInfo-dropdown middle-space nrgBupa-cusDataBpInfo-dropdown-state"
+                        content="{oUSStateList>/US_State}"
+                        selectedKey="{oDataBpAddress>/AddressInfo/State}"
+                        enabled="{oBpInfoConfig>/addrEditable}">
+                        <utmain:DropdownItem key="{oUSStateList>sAbvName}">
+                            <ute:Tag text="{oUSStateList>sFullName}" class="nrgBupa-cusDataBpInfo-cnt_Dropdown"/>
+                        </utmain:DropdownItem>
+                    </utmain:Dropdown>
                     <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title short"
                               text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-ZIP_CODE}:" />
                     <ute:Textfield fieldType="Noborder" class="nrgBupa-cusDataBpInfo-contentRow-input supershort"
