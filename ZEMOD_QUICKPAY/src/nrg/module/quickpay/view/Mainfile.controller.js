@@ -49,7 +49,8 @@ sap.ui.define(
                     CLI : false,
                     SR: false,
                     showCloseButton : true,
-                    showContactLog : true
+                    showContactLog : true,
+                    PendingRefresh : false
                 }),
                 oContactModel,
                 fnRecievedHandler,
@@ -60,20 +61,27 @@ sap.ui.define(
             this.getView().getModel('comp-quickpay').oData = {};
             //this.getView().getModel('comp-quickpay').refresh(true, true);//If set to true then the model data will be removed/cleared.
             this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
-            this._OwnerComponent.getCcuxApp().setOccupied(true);
+
             oContactModel = new sap.ui.model.json.JSONModel();
             this.getView().setModel(oContactModel, "quickpay-cl");
             this.getView().setModel(oViewModel, "appView");
-            sCurrentPath = "/PayAvailFlagsSet" + "(BP='" + this._sBP + "',CA='" + this._sCA + "')";
-            fnRecievedHandler = function (oEvent) {
-                jQuery.sap.log.info("Date Received Succesfully");
-                that._OwnerComponent.getCcuxApp().setOccupied(false);
-            };
-            this.getView().bindElement({
-                model : "comp-quickpay",
-                path : sCurrentPath,
-                events: {dataReceived : fnRecievedHandler}
-            });
+            if (this._Process === 'PCC') {
+                this.onPendingCreditCard();
+            } else if (this._Process === 'PBD') {
+                this.onPendingBankDraft();
+            } else {
+                this._OwnerComponent.getCcuxApp().setOccupied(true);
+                sCurrentPath = "/PayAvailFlagsSet" + "(BP='" + this._sBP + "',CA='" + this._sCA + "')";
+                fnRecievedHandler = function (oEvent) {
+                    jQuery.sap.log.info("Date Received Succesfully");
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                };
+                this.getView().bindElement({
+                    model : "comp-quickpay",
+                    path : sCurrentPath,
+                    events: {dataReceived : fnRecievedHandler}
+                });
+            }
             oMsgArea.addStyleClass("nrgQPPay-hide");
         };
 
@@ -444,7 +452,10 @@ sap.ui.define(
             var oModel = this.getView().getModel('comp-quickpay'),
                 oPCCModel = this.getView().getModel('QP-quickpay'),
                 mParameters,
-                that = this;
+                that = this,
+                oContactModel = this.getView().getModel("quickpay-cl"),
+                oMsgArea = this.getView().byId("idnrgQPPay-msgArea"),
+                oViewModel = this.getView().getModel("appView");
             that._OwnerComponent.getCcuxApp().setOccupied(true);
             if ((this._aPendingSelPaths) && (this._aPendingSelPaths.length > 0)) {
                 this._aPendingSelPaths.forEach(function (sCurrentPath) {
@@ -453,7 +464,7 @@ sap.ui.define(
                     sPath = "/CreditCardPPSet(BP='" + this._sBP + "',CA='" + this._sCA + "')";
                     mParameters = {
                         success : function (oData, oResponse) {
-                            var aFilterIds = ["BP", "CA"],
+/*                            var aFilterIds = ["BP", "CA"],
                                 aFilterValues = [this._sBP, this._sCA],
                                 aFilters,
                                 oBindingInfo,
@@ -481,12 +492,23 @@ sap.ui.define(
                                         message: 'Update failed'
                                     });
                                 }.bind(this)
-                            };
-                            if (oModel) {
-                                oModel.read(sPath, oBindingInfo);
+                               };
+                                if (oModel) {
+                                    oModel.read(sPath, oBindingInfo);
+                                }
+                                that._OwnerComponent.getCcuxApp().setOccupied(false);
+                                jQuery.sap.log.info("Odata Read Successfully:::");
+                                */
+                            if (oData.Error === "") {
+                                oContactModel.setData(oData);
+                                that.onPaymentSuccess();
+                                oMsgArea.addStyleClass("nrgQPPay-hide");
+                                oViewModel.setProperty("/PendingRefresh", true);
+                                that.attachEventOnce("ContactLogSaved", that.onPendingCreditCard);
+                            } else {
+                                that.getView().getModel("appView").setProperty("/message", oData.Message);
                             }
                             that._OwnerComponent.getCcuxApp().setOccupied(false);
-                            jQuery.sap.log.info("Odata Read Successfully:::");
                         }.bind(this),
                         error: function (oError) {
                             that._OwnerComponent.getCcuxApp().setOccupied(false);
@@ -1011,7 +1033,11 @@ sap.ui.define(
             var oModel = this.getView().getModel('comp-quickpay'),
                 oPCCModel = this.getView().getModel('QP-quickpay'),
                 mParameters,
-                that = this;
+                that = this,
+                oMsgArea = this.getView().byId("idnrgQPPay-msgArea"),
+                oContactModel = this.getView().getModel("quickpay-cl"),
+                oViewModel = this.getView().getModel("appView");
+
 
             that._OwnerComponent.getCcuxApp().setOccupied(true);
             if ((this._aPendingSelPaths) && (this._aPendingSelPaths.length > 0)) {
@@ -1036,7 +1062,7 @@ sap.ui.define(
                                          "CA" : oContext.getProperty("CA"),
                                          "CurrentStatus" : oContext.getProperty("CurrentStatus")},
                         success : function (oData, oResponse) {
-                            jQuery.sap.log.info("Odata Read Successfully:::");
+/*                            jQuery.sap.log.info("Odata Read Successfully:::");
                             aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
                             oBindingInfo = {
                                 filters : aFilters,
@@ -1061,7 +1087,17 @@ sap.ui.define(
                             };
                             if (oModel) {
                                 oModel.read(sPath, oBindingInfo);
+                            }*/
+                            if (oData.Error === "") {
+                                oContactModel.setData(oData);
+                                that.onPaymentSuccess();
+                                oViewModel.setProperty("/PendingRefresh", true);
+                                that.attachEventOnce("ContactLogSaved", that.onPendingBankDraft);
+                                oMsgArea.addStyleClass("nrgQPPay-hide");
+                            } else {
+                                that.getView().getModel("appView").setProperty("/message", oData.Message);
                             }
+                            that._OwnerComponent.getCcuxApp().setOccupied(false);
                         }.bind(this),
                         error: function (oError) {
                             jQuery.sap.log.info("Error occured");
@@ -1081,8 +1117,6 @@ sap.ui.define(
                     message: 'No Record Selected'
                 });
             }
-
-
         };
         /**
          * Handler for Adding new Bank draft
@@ -1565,7 +1599,8 @@ sap.ui.define(
             var oContactLogModel = this.getView().getModel("quickpay-cl"),
                 oModel = this.getView().getModel('comp-quickpay'),
                 sCurrentPath = "/ContactLogSet",
-                that = this;
+                that = this,
+                oViewModel = this.getView().getModel("appView");
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             oModel.create(sCurrentPath, {
                 "ContractID" : "",
@@ -1586,10 +1621,19 @@ sap.ui.define(
                         that.onPopupClose();
                     }
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
+
                 },
                 error : function (oError) {
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
-                    that.onPopupClose();
+                    ute.ui.main.Popup.Alert({
+                        title: 'Information',
+                        message: 'Contact log not created successfully.'
+                    });
+                    if (!oContactLogModel.getProperty("/PendingRefresh")) {
+                        that.onPopupClose();
+                    } else {
+                        this.fireEvent("ContactLogSaved");
+                    }
                 }
             });
         };
