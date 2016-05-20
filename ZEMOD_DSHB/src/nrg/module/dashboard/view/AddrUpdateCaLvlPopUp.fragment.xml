@@ -48,11 +48,19 @@
                 label="{comp-i18n-dashboard>nrgDashboardCusDatVrf_Pup_City}"
                 editable="{oDtaAddrEdit>/updateNotSent}" width="100px"
                 value="{oDtaAddrEdit>/AddrInfo/City}"/></ute:Tag>
-            <ute:Tag><ute:Textfield id="idEditState" fieldType="Underlined"
+            <!--ute:Tag><ute:Textfield id="idEditState" fieldType="Underlined"
                 label="{comp-i18n-dashboard>nrgDashboardCusDatVrf_Pup_State}"
                 editable="{oDtaAddrEdit>/updateNotSent}" width="100px"
                 maxLength="2"
-                value="{oDtaAddrEdit>/AddrInfo/State}"/></ute:Tag>
+                value="{oDtaAddrEdit>/AddrInfo/State}"/></ute:Tag-->
+            <ute:Tag></ute:Tag><utmain:Dropdown class="nrgBupa-cusDataCaInfo-statedropdown"
+                content="{oUSStateList>/US_State}"
+                selectedKey="{oDtaAddrEdit>/AddrInfo/State}"
+                enabled="{oDtaAddrEdit>/updateNotSent}">
+                <utmain:DropdownItem key="{oUSStateList>sAbvName}">
+                    <ute:Tag elem="span" text="{oUSStateList>sFullName}"/>
+                </utmain:DropdownItem>
+            </utmain:Dropdown></ute:Tag>
             <ute:Tag><ute:Textfield id="idEditZip" fieldType="Underlined"
                 label="{comp-i18n-dashboard>nrgDashboardCusDatVrf_Pup_ZipCode}"
                 editable="{oDtaAddrEdit>/updateNotSent}" width="100px"

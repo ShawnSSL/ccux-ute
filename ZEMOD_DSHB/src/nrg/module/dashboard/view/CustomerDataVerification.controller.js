@@ -24,10 +24,13 @@ sap.ui.define(
 
         Controller.prototype.onBeforeRendering = function () {
 
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
             this.getOwnerComponent().getCcuxApp().setTitle('CUSTOMER DATA');
             this.getOwnerComponent().getModel('comp-dashboard').setSizeLimit(1500);
             this.getView().setModel(this.getOwnerComponent().getModel('comp-dashboard'), 'oODataSvc');
+
+            //050192016 US State List Model for Address
+            this.getView().setModel(this.getOwnerComponent().getModel('oStateListModel'), 'oUSStateList');
 
             //Model to hold BP info
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDtaVrfyBP');
@@ -105,7 +108,7 @@ sap.ui.define(
         Controller.prototype._dhsbVerificationNavLeftCallBack = function () {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
 
-            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            ////this.getOwnerComponent().getCcuxApp().setOccupied(true);
 
 /*            if (true) {*/
             oWebUiManager.notifyWebUi('clearAccount', {}, this._navLeftClearAccCallBack, this);
@@ -231,7 +234,7 @@ sap.ui.define(
                 if (oDataBPVrfy.hasOwnProperty("PsnBP")) {
                     delete oDataBPVrfy.PsnBP;
                 }
-                this.getOwnerComponent().getCcuxApp().setOccupied(true);
+                //this.getOwnerComponent().getCcuxApp().setOccupied(true);
                 oModel.update(sPath, oDataBPVrfy, oParameters);
             }
         };
@@ -415,7 +418,7 @@ sap.ui.define(
         };
 
         Controller.prototype._updateMailingAddr = function () {
-            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            ////this.getOwnerComponent().getCcuxApp().setOccupied(true);
 
             var oModel = this.getView().getModel('oODataSvc'),
                 sPath,
@@ -455,7 +458,7 @@ sap.ui.define(
         };
 
         Controller.prototype._validateInputAddr = function () {
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
             
             //this._showSuggestedAddr();
             var oModel = this.getView().getModel('oODataSvc'),
@@ -737,7 +740,7 @@ sap.ui.define(
                 sPath,
                 sEmailAddr,
                 oEditEmailNNP = this.getView().getModel('oEditEmailNNP');
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
             oEditEmailNNP.refresh(true);
             sEmailAddr = oEditEmailNNP.getProperty('/Email');
 
@@ -776,7 +779,7 @@ sap.ui.define(
                 sBpEmailConsum = this.getView().getModel('oEditEmailNNP').getProperty('/EmailConsum'),
                 oNNP = this.getView().getModel('oEditEmailNNP'),
                 bEmailChanged = true;
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
             if (sBpEmail === this.getView().getModel('oDtaVrfyBP').getProperty('/Email')) {
                 bEmailChanged = false;
             } else {
@@ -832,7 +835,7 @@ sap.ui.define(
                 //sBpEmailConsum = this.getView().getModel('oDtaVrfyBP').getProperty('/EmailConsum');
                 oNNP = this.getView().getModel('oEditEmailNNP');
 
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
             //oNNP.setProperty('/Email', '');
             sPath = '/EmailNNPs' + '(' + 'PartnerID=\'' + sBpNum + '\'' + ',Email=\'\'' + ',EmailConsum=\'\')';
 
@@ -944,7 +947,7 @@ sap.ui.define(
                 sBpNum = this.getView().getModel('oDtaVrfyBP').getProperty('/PartnerID'),
                 sBpEmail = this.getView().getModel('oDtaVrfyBP').getProperty('/Email'),
                 sBpEmailConsum = this.getView().getModel('oDtaVrfyBP').getProperty('/EmailConsum');
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
             //Start loading NNP logics and settings
             sPath = '/EmailNNPs' + '(' + 'PartnerID=\'' + sBpNum + '\'' + ',Email=\'' + sBpEmail + '\'' + ',EmailConsum=\'' + sBpEmailConsum + '\')';
             oParameters = {
@@ -1748,7 +1751,7 @@ sap.ui.define(
                 that = this,
                 oContractsModel,
                 oSearchText;
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            //this.getOwnerComponent().getCcuxApp().setOccupied(true);
             aFilterIds = ["BP"];
             oContractsModel = new sap.ui.model.json.JSONModel();
             oContractsModel.setSizeLimit(1500);
