@@ -53,7 +53,7 @@ sap.ui.define(
                 oTag = new ute.ui.commons.Tag();
             switch (sAction) {
             case ute.ui.main.Popup.Action.Ok:
-                oTag.addContent(new ute.ui.main.Label({
+/*                oTag.addContent(new ute.ui.main.Label({
                     text: "Due to inactivity, your session is expired."
                 }));
                 AlertDialog = new ute.ui.main.Popup.create({
@@ -62,7 +62,9 @@ sap.ui.define(
                 });
                 AlertDialog.setShowCloseButton(false);
                 AlertDialog.open();
-                oWebUiManager.notifyWebUi('logout', {}, this._onLogoffPressCallback, this);
+                oWebUiManager.notifyWebUi('logout', {}, this._onLogoffPressCallback, this);*/
+                document.domain = "retail.nrgenergy.com";
+                window.top.location.reload();
                 break;
             }
         };
