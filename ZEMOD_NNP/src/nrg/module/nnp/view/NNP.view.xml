@@ -149,7 +149,7 @@
             </ute:Tag>
 
             <ute:Tag id="idEditEmail_Save_Invalid"
-                    class="nrgNnp-Nnp-inputArea-nresult"
+                    class="nrgNnp-Nnp-inValidEmail"
                     visible="false">
                     <core:Icon src="sap-icon://nrg-icon/notification"/>
                     <ute:TextView text="Please Validate Email Input"/>
