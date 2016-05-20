@@ -35,7 +35,7 @@ sap.ui.define(
         Manager.prototype._setupStateListModel = function () {
             this._oComponent.setModel(new sap.ui.model.json.JSONModel(), 'oStateListModel');
 
-            this._oComponent.getModel('oStateListModel').loadData('/ZEBASE/build/nrg/base/component/json/States.json',{},false,'GET',false,false,{});
+            this._oComponent.getModel('oStateListModel').loadData('../../../../../ZEBASE/build/nrg/base/component/json/States.json',{},false,'GET',false,false,{});
         };
 
         Manager.prototype._getUserInfo = function () {

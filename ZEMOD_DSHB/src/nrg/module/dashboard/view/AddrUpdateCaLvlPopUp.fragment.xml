@@ -53,7 +53,7 @@
                 editable="{oDtaAddrEdit>/updateNotSent}" width="100px"
                 maxLength="2"
                 value="{oDtaAddrEdit>/AddrInfo/State}"/></ute:Tag-->
-            <ute:Tag></ute:Tag><utmain:Dropdown class="nrgBupa-cusDataCaInfo-statedropdown"
+            <ute:Tag></ute:Tag><utmain:Dropdown id="idEditState" class="nrgBupa-cusDataCaInfo-statedropdown"
                 content="{oUSStateList>/US_State}"
                 selectedKey="{oDtaAddrEdit>/AddrInfo/State}"
                 enabled="{oDtaAddrEdit>/updateNotSent}">
