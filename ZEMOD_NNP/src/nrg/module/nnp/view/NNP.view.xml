@@ -148,6 +148,12 @@
                 <utmain:Label labelFor="idEmail_yn_engeff" text="Energy Efficiency"/>
             </ute:Tag>
 
+            <ute:Tag id="idEditEmail_Save_Invalid"
+                    class="nrgNnp-Nnp-inputArea-nresult"
+                    visible="false">
+                    <core:Icon src="sap-icon://nrg-icon/notification"/>
+                    <ute:TextView text="Please Validate Email Input"/>
+            </ute:Tag>
             <utmain:Button  id="idEditEmail_SaveBtn" class="nrgNnp-Nnp-actBtn nrgDashboard-cusDataVerify-alignCenBtn"
                 text="{comp-i18n-nnp>nrgNnpCusDatVrf_EmlPup_SAVE}"
                 press="._onEditEmailSave"/>

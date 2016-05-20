@@ -183,6 +183,14 @@ sap.ui.define(
             }
         };
 
+        Controller.prototype._invalidEmail = function (sEmail) {
+            if (sEmail.indexOf(' ') > 0 || sEmail.indexOf(',') > 0){
+                return true;
+            } else {
+                return false;
+            }
+        };
+
         Controller.prototype._onEditEmailSave = function (oEvent) {
             var oModel = this.getView().getModel('comp-dashboard'),
                 sPath,
@@ -197,6 +205,13 @@ sap.ui.define(
                     that.getView().getParent().close();
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
                 };
+
+            if (this._invalidEmail(sBpEmail)) {
+                this.getView().byId('idEditEmail_Save_Invalid').setVisible(true);
+                return false;
+            }
+
+
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             if (sBpEmail === this._sEmail) {
                 bEmailChanged = false;
