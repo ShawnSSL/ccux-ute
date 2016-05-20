@@ -26,6 +26,9 @@ sap.ui.define(
 
             this.getView().setModel(this.getOwnerComponent().getModel('comp-bupa'), 'oODataSvc');
 
+            //050192016 US State List Model for Address
+            this.getView().setModel(this.getOwnerComponent().getModel('oStateListModel'), 'oUSStateList');
+
                 //Model to track page edit/save status
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oCaInfoConfig');
 

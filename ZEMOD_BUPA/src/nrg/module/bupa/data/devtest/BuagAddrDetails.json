@@ -3,8 +3,8 @@
         "results":[
             {
                 "__metadata":{
-                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/BuagAddrDetails(PartnerID='64041',ContractAccountID='100738',FixedAddressID='0001361245')",
-                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/BuagAddrDetails(PartnerID='64041',ContractAccountID='100738',FixedAddressID='0001361245')",
+                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/BuagAddrDetails(PartnerID='64041',ContractAccountID='100738',FixedAddressID='1361245')",
+                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV/BuagAddrDetails(PartnerID='64041',ContractAccountID='100738',FixedAddressID='1361245')",
                     "type":"ZE_CCUX_SRV.BuagAddrDetail"
                 },
                 "FixAddrInfo":{
@@ -68,7 +68,7 @@
                 },
                 "PartnerID":"64041",
                 "ContractAccountID":"100738",
-                "FixedAddressID":"0001361245",
+                "FixedAddressID":"1361245",
                 "TempAddressID":"",
                 "TempAddrYes":"",
                 "TempAddrNo":"X",
