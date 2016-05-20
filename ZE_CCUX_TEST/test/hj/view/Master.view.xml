@@ -7,6 +7,10 @@
     xmlns:n="nrg.asset.img.icon"
     xmlns:t="sap.ui.table">
     <u:Tag>
+        <u:DatePicker class="uteDatePicIcon" id="testtesttest"
+                      defaultDate="5-21-2017"></u:DatePicker>
+    </u:Tag>
+    <!--u:Tag>
         <u:Tag
             text="Buttons">
         </u:Tag>
@@ -124,7 +128,7 @@
                     </u:TableRow>
                 </u:rows>
             </u:Table>
-        </u:Tag>
+        </u:Tag>-->
 
         <!--u:Tag>
             <t:Table
@@ -268,7 +272,7 @@
         >
     </u:RadioButton>
 -->
-    </u:Tag>
+
 
 
 </core:View>

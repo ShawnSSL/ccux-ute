@@ -211,7 +211,7 @@
 
                 <l:MatrixLayout
                     class="nrgBupa-cusDataCaInfo-layout"
-                    widths="400px,200px,400px"
+                    widths="360px,240px,400px"
                     columns="3" width="100%">
                     <l:rows>
                         <l:MatrixLayoutRow>
@@ -234,7 +234,6 @@
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
                                 </l:MatrixLayoutCell>
-
                                 <!--Area middle-->
                                 <l:MatrixLayoutCell class="nrgBupa-cusDataCaInfo-l">
                                     <l:MatrixLayout widths="30%,70%" columns="2">
@@ -245,11 +244,19 @@
                                                          text="{comp-i18n-bupa>nrgBupa-cusDataCaInfo-STATE}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Textfield fieldType="Noborder"
+                                                <utmain:Dropdown class="nrgBupa-cusDataCaInfo-statedropdown"
+                                                    content="{oUSStateList>/US_State}"
+                                                    selectedKey="{oDataBuagAddrDetails>/FixAddrInfo/State}"
+                                                    enabled="{oCaInfoConfig>/mailAddrEditable}">
+                                                    <utmain:DropdownItem key="{oUSStateList>sAbvName}">
+                                                        <ute:Tag elem="span" text="{oUSStateList>sFullName}"/>
+                                                    </utmain:DropdownItem>
+                                                </utmain:Dropdown>
+                                                <!--ute:Textfield fieldType="Noborder"
                                                                class="nrgBupa-cusDataCaInfo-cnt"
                                                                editable="{oCaInfoConfig>/mailAddrEditable}"
                                                                maxLength="2"
-                                                               value="{oDataBuagAddrDetails>/FixAddrInfo/State}"/>
+                                                               value="{oDataBuagAddrDetails>/FixAddrInfo/State}"/-->
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
@@ -469,7 +476,7 @@
 
                 <l:MatrixLayout
                     class="nrgBupa-cusDataCaInfo-layout"
-                    widths="400px,200px,400px" columns="3" width="100%">
+                    widths="360px,240px,400px" columns="3" width="100%">
                     <l:rows>
                         <l:MatrixLayoutRow>
                             <l:cells>
@@ -502,10 +509,18 @@
                                                          text="{comp-i18n-bupa>nrgBupa-cusDataCaInfo-STATE}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Textfield fieldType="Noborder"
+                                                <utmain:Dropdown class="nrgBupa-cusDataCaInfo-statedropdown"
+                                                    content="{oUSStateList>/US_State}"
+                                                    selectedKey="{oDataBuagAddrDetails>/TempAddrInfo/State}"
+                                                    enabled="{oCaInfoConfig>/tempAddrEditable}">
+                                                    <utmain:DropdownItem key="{oUSStateList>sAbvName}">
+                                                        <ute:Tag elem="span" text="{oUSStateList>sFullName}"/>
+                                                    </utmain:DropdownItem>
+                                                </utmain:Dropdown>
+                                                <!--ute:Textfield fieldType="Noborder"
                                                                class="nrgBupa-cusDataCaInfo-cnt"
                                                                editable="{oCaInfoConfig>/tempAddrEditable}"
-                                                               value="{oDataBuagAddrDetails>/TempAddrInfo/State}"/>
+                                                               value="{oDataBuagAddrDetails>/TempAddrInfo/State}"/-->
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>

@@ -27,6 +27,15 @@ sap.ui.define(
 
         Manager.prototype.init = function () {
             this._getUserInfo();
+
+            //05192016 add State model for address dropdown
+            this._setupStateListModel();
+        };
+
+        Manager.prototype._setupStateListModel = function () {
+            this._oComponent.setModel(new sap.ui.model.json.JSONModel(), 'oStateListModel');
+
+            this._oComponent.getModel('oStateListModel').loadData('../../../../../ZEBASE/build/nrg/base/component/json/States.json',{},false,'GET',false,false,{});
         };
 
         Manager.prototype._getUserInfo = function () {

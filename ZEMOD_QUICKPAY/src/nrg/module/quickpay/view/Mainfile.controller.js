@@ -259,6 +259,9 @@ sap.ui.define(
             if (!this._ValidateValue(oCreditCardAmount.getValue(), "Enter Amount to be posted")) {
                 return false;
             }
+            if (!this._ValidateValue(oCreditCardDate.getValue(), "Enter Credit Card Date")){
+                return false;
+            }   //Added to check empty date situation(will cause 400 bad request) 05/18/2016
             if (!this._ValidateValue(oCreditCardDropDown.getSelectedKey(), "Select Credit Card")) {
                 return false;
             }
@@ -270,14 +273,7 @@ sap.ui.define(
             }
 
             sCurrentPath = "/CreditCardPost";
-            /*if (!this._checkDateFormat(oCreditCardDate.getValue(), "Please Enter Date as form mm/dd/yyyy")) {
-                return false;
-            }*/
             oCreditCardDateValue = new Date(oCreditCardDate.getValue());
-            /*if (isNaN(oCreditCardDateValue)) {
-                this.getView().getModel("appView").setProperty("/message", "Please Enter Date as Form of MM/DD/YYYY");
-                return false;
-            }*/
             oInvoiceDate = oCreditCardModel.getProperty("/InvoiceDate");
             if (oCreditCardDateValue) {
                 oCreditCardDateValue.setHours("00");
@@ -789,6 +785,9 @@ sap.ui.define(
             if (!this._ValidateValue(oBankDraftAmount.getValue(), "Enter Amount to be posted")) {
                 return false;
             }
+            if (!this._ValidateValue(oBankDraftDate.getValue(), "Enter Bank Draft Date")){
+                return false;
+            }   //Added to check empty date situation(will cause 400 bad request) 05/18/2016
             if (!this._ValidateValue(oBankAccountDropDown.getSelectedKey(), "Select Bank Account")) {
                 return false;
             }

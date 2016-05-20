@@ -32,6 +32,9 @@ sap.ui.define(
             this.getView().setModel(this.getOwnerComponent().getModel('comp-bupa'), 'oODataSvc');
             this.getView().setModel(this.getOwnerComponent().getModel('comp-dropdown'), 'oODataDropdownSvc');
 
+            //050192016 US State List Model for Address
+            this.getView().setModel(this.getOwnerComponent().getModel('oStateListModel'), 'oUSStateList');
+
             // Model to track page edit/save status
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oBpInfoConfig');
 
@@ -613,7 +616,7 @@ sap.ui.define(
             oConfigModel.setProperty('/addrSaveVisible', false);
             oConfigModel.setProperty('/addrEditable', false);
             // Roll back to previous value
-            oBPAddrModel.setData(jQuery.extend(true, {}, this.oDataBpAddressBak));
+            oBPAddrModel.setData(jQuery.extend(true, {}, this.oDataBpAddressBak.results[0]));
         };
 
         /*-------------------- Personal Section -------------------*/
