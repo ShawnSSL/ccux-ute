@@ -55,16 +55,19 @@
                 value="{oDtaAddrEdit>/AddrInfo/State}"/></ute:Tag-->
             <ute:Tag>
                 <utmain:Label labelFor="idEditState"
-                            text="{comp-i18n-dashboard>nrgDashboardCusDatVrf_Pup_State}">
+                    class="nrgDashboard-cusDataVerifyEditMail-l-stateLable"
+                    text="{comp-i18n-dashboard>nrgDashboardCusDatVrf_Pup_State}:">
                 </utmain:Label>
-                <utmain:Dropdown id="idEditState" class="nrgBupa-cusDataCaInfo-statedropdown"
-                content="{oUSStateList>/US_State}"
-                selectedKey="{oDtaAddrEdit>/AddrInfo/State}"
-                enabled="{oDtaAddrEdit>/updateNotSent}">
-                <utmain:DropdownItem key="{oUSStateList>sAbvName}">
-                    <ute:Tag elem="span" text="{oUSStateList>sFullName}"/>
-                </utmain:DropdownItem>
-            </utmain:Dropdown></ute:Tag>
+                <utmain:Dropdown id="idEditState"
+                    class="nrgDashboard-cusDataVerifyEditMail-l-stateDropdown"
+                    content="{oUSStateList>/US_State}"
+                    selectedKey="{oDtaAddrEdit>/AddrInfo/State}"
+                    enabled="{oDtaAddrEdit>/updateNotSent}">
+                    <utmain:DropdownItem key="{oUSStateList>sAbvName}">
+                        <ute:Tag elem="span" text="{oUSStateList>sFullName}"/>
+                    </utmain:DropdownItem>
+                </utmain:Dropdown>
+            </ute:Tag>
             <ute:Tag><ute:Textfield id="idEditZip" fieldType="Underlined"
                 label="{comp-i18n-dashboard>nrgDashboardCusDatVrf_Pup_ZipCode}"
                 editable="{oDtaAddrEdit>/updateNotSent}" width="100px"
