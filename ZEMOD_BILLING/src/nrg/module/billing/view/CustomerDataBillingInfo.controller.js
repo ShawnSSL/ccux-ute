@@ -895,34 +895,60 @@ sap.ui.define(
                 oDunningLocksTable,
                 oDunningLocksTemplate,
                 fnRecievedHandler,
-                that = this;
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
-            if (!this._oDialogFragment) {
-                this._oDialogFragment = sap.ui.xmlfragment("DunnlingLocks", "nrg.module.billing.view.DunningPopup", this);
+                that = this,
+                QuickControl;
+            if ((oEvent) && (oEvent.getSource) && (oEvent.getSource().getBindingContext) && (oEvent.getSource().getBindingContext("comp-billing")) && (oEvent.getSource().getBindingContext("comp-billing").getProperty("DunningReason").indexOf('OTBD') >= 0)) {
+                QuickControl = new QuickPayControl();
+                this._sContract = this._coNum;
+                this._sBP = this._bpNum;
+                this._sCA = this._caNum;
+                this.getView().addDependent(QuickControl);
+                QuickControl.openQuickPay(this._sContract, this._sBP, this._sCA, 'PBD');
+                QuickControl.attachEvent("PaymentCompleted", function () {
+                    that._initRetrBillInvoices();
+                    that._initPostInvoice();
+                }, this);
+            } else if (oEvent.getSource().getBindingContext("comp-billing").getProperty("DunningReason").indexOf('OTCC') >= 0) {
+                QuickControl = new QuickPayControl();
+                this._sContract = this._coNum;
+                this._sBP = this._bpNum;
+                this._sCA = this._caNum;
+                this.getView().addDependent(QuickControl);
+                QuickControl.openQuickPay(this._sContract, this._sBP, this._sCA, 'PCC');
+                QuickControl.attachEvent("PaymentCompleted", function () {
+                    that._initRetrBillInvoices();
+                    that._initPostInvoice();
+                }, this);
+            } else {
+                this.getOwnerComponent().getCcuxApp().setOccupied(true);
+                if (!this._oDialogFragment) {
+                    this._oDialogFragment = sap.ui.xmlfragment("DunnlingLocks", "nrg.module.billing.view.DunningPopup", this);
+                }
+                if (this._oDunningDialog === undefined) {
+                    this._oDunningDialog = new ute.ui.main.Popup.create({
+                        title: 'Dunning',
+                        content: this._oDialogFragment
+                    });
+                }
+                sPath = oEvent.getSource().getBindingContext("comp-billing").getPath() + "/DunningLocksSet";
+                oDunningLocksTable = sap.ui.core.Fragment.byId("DunnlingLocks", "idnrgBillDn-Table");
+                oDunningLocksTemplate = sap.ui.core.Fragment.byId("DunnlingLocks", "idnrgBillDn-Row");
+                fnRecievedHandler = function () {
+                    that.getOwnerComponent().getCcuxApp().setOccupied(false);
+                };
+                oBindingInfo = {
+                    model : "comp-billing",
+                    path : sPath,
+                    template : oDunningLocksTemplate,
+                    events: {dataReceived : fnRecievedHandler}
+                };
+                this.getView().addDependent(this._oDunningDialog);
+                //to get access to the global model
+                this._oDunningDialog.addStyleClass("nrgCamHis-dialog");
+                oDunningLocksTable.bindRows(oBindingInfo);
+                this._oDunningDialog.open();
             }
-            if (this._oDunningDialog === undefined) {
-                this._oDunningDialog = new ute.ui.main.Popup.create({
-                    title: 'Dunning',
-                    content: this._oDialogFragment
-                });
-            }
-            sPath = oEvent.getSource().getBindingContext("comp-billing").getPath() + "/DunningLocksSet";
-            oDunningLocksTable = sap.ui.core.Fragment.byId("DunnlingLocks", "idnrgBillDn-Table");
-            oDunningLocksTemplate = sap.ui.core.Fragment.byId("DunnlingLocks", "idnrgBillDn-Row");
-            fnRecievedHandler = function () {
-                that.getOwnerComponent().getCcuxApp().setOccupied(false);
-            };
-            oBindingInfo = {
-                model : "comp-billing",
-                path : sPath,
-                template : oDunningLocksTemplate,
-                events: {dataReceived : fnRecievedHandler}
-            };
-            this.getView().addDependent(this._oDunningDialog);
-            //to get access to the global model
-            this._oDunningDialog.addStyleClass("nrgCamHis-dialog");
-            oDunningLocksTable.bindRows(oBindingInfo);
-            this._oDunningDialog.open();
+
         };
         /**
 		 * Handler function for clicking on Unbilled Amount
