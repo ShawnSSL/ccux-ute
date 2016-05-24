@@ -225,7 +225,7 @@ sap.ui.define(
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
                 oRouting = this.getView().getModel('oFooterRouting');
             oWebUiManager.notifyWebUi('openIndex', {
-                LINK_ID: "Z_CLOG_INQ",
+                LINK_ID: "ZUXINQ2",
                 REF_ID: oRouting.getProperty('/CoNumber')
             });
         };

@@ -457,7 +457,7 @@ sap.ui.define(
                 this._aPendingSelPaths.forEach(function (sCurrentPath) {
                     var oContext = oPCCModel.getContext(sCurrentPath),
                         sPath = "/CreditCardPPSet";
-                    sPath = "/CreditCardPPSet(BP='" + this._sBP + "',CA='" + this._sCA + "')";
+                    sPath = "/CreditCardPPSet(BP='" + that._sBP + "',CA='" + that._sCA + "')";
                     mParameters = {
                         success : function (oData, oResponse) {
 /*                            var aFilterIds = ["BP", "CA"],

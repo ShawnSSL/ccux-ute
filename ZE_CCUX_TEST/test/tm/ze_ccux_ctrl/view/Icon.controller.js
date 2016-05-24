@@ -59,7 +59,15 @@ sap.ui.define(
                     { key: 'sap-icon://nrg-icon/trashcan', value: 'sap-icon://nrg-icon/trashcan' },
                     { key: 'sap-icon://nrg-icon/search', value: 'sap-icon://nrg-icon/search' },
                     { key: 'sap-icon://nrg-icon/not-verified', value: 'sap-icon://nrg-icon/not-verified' },
-                    { key: 'sap-icon://nrg-icon/handset', value: 'sap-icon://nrg-icon/handset' }
+                    { key: 'sap-icon://nrg-icon/handset', value: 'sap-icon://nrg-icon/handset' },
+                    { key: 'sap-icon://nrg-icon/weather-1n', value: 'sap-icon://nrg-icon/weather-1n' },
+                    { key: 'sap-icon://nrg-icon/weather-2n', value: 'sap-icon://nrg-icon/weather-2n' },
+                    { key: 'sap-icon://nrg-icon/weather-3d', value: 'sap-icon://nrg-icon/weather-3d' },
+                    { key: 'sap-icon://nrg-icon/weather-3n', value: 'sap-icon://nrg-icon/weather-3n' },
+                    { key: 'sap-icon://nrg-icon/weather-4', value: 'sap-icon://nrg-icon/weather-4' },
+                    { key: 'sap-icon://nrg-icon/weather-10n', value: 'sap-icon://nrg-icon/weather-10n' },
+                    { key: 'sap-icon://nrg-icon/weather-11', value: 'sap-icon://nrg-icon/weather-11' },
+                    { key: 'sap-icon://nrg-icon/weather-13', value: 'sap-icon://nrg-icon/weather-13' }
                 ]
             });
 

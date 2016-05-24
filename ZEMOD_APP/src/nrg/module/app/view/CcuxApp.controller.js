@@ -527,7 +527,7 @@ sap.ui.define(
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager(),
                 oPayLoad = {},
                 sLinkId,
-                oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo();
+                oContext = this.getOwnerComponent().getCcuxContextManager().getContext().getData();
 
             this._oApp.setHeaderMenuItemSelected(false, App.HMItemId.Index);
             sLinkId = oControlEvent.getSource().getRefId();
@@ -535,13 +535,18 @@ sap.ui.define(
 
             if (sLinkId === "ZVASOPTSLN") {
                 oPayLoad.REF_ID = 'ENROLL';
-                if (oRouteInfo.parameters.coNum) {
-                    oPayLoad.CONTRACT_ID = oRouteInfo.parameters.coNum;
+                if (oContext.coNum) {
+                    oPayLoad.CONTRACT_ID = oContext.coNum;
                 }
             }
             if (sLinkId === "Z_CLFULLVW") {
-                if (oRouteInfo.parameters.coNum) {
-                    oPayLoad.REF_ID = oRouteInfo.parameters.coNum;
+                if (oContext.coNum) {
+                    oPayLoad.REF_ID = oContext.coNum;
+                }
+            }
+            if (sLinkId === "ZUXINQ2") {
+                if (oContext.coNum) {
+                    oPayLoad.REF_ID = oContext.coNum;
                 }
             }
             oWebUiManager.notifyWebUi('openIndex', oPayLoad);

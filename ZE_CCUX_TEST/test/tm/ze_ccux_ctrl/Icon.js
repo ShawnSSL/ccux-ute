@@ -232,6 +232,45 @@ sap.ui.define(
                 fontFamily: 'nrg-icon',
                 content: 'e627'
             });
+            IconPool.addIcon('weather-1n', 'nrg-icon', {
+                fontFamily: 'nrg-icon',
+                content: 'e630'
+            });
+
+            IconPool.addIcon('weather-2n', 'nrg-icon', {
+                fontFamily: 'nrg-icon',
+                content: 'e631'
+            });
+
+            IconPool.addIcon('weather-3d', 'nrg-icon', {
+                fontFamily: 'nrg-icon',
+                content: 'e632'
+            });
+
+            IconPool.addIcon('weather-3n', 'nrg-icon', {
+                fontFamily: 'nrg-icon',
+                content: 'e633'
+            });
+
+            IconPool.addIcon('weather-4', 'nrg-icon', {
+                fontFamily: 'nrg-icon',
+                content: 'e634'
+            });
+
+            IconPool.addIcon('weather-10n', 'nrg-icon', {
+                fontFamily: 'nrg-icon',
+                content: 'e635'
+            });
+
+            IconPool.addIcon('weather-11', 'nrg-icon', {
+                fontFamily: 'nrg-icon',
+                content: 'e636'
+            });
+
+            IconPool.addIcon('weather-13', 'nrg-icon', {
+                fontFamily: 'nrg-icon',
+                content: 'e637'
+            });
         };
 
         return Icon;
