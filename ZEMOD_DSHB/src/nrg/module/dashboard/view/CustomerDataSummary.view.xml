@@ -170,7 +170,7 @@
             <ute:HorizontalDivider class="nrgDashboard-cusDataSum-horiLine"/>
 
             <l:MatrixLayout class="nrgDashboard-cusDataSum-weather"
-                widths="20%,80%" columns="2" width="100%">
+                widths="25%,75%" columns="2" width="100%">
                 <l:rows>
                     <l:MatrixLayoutRow>
                         <l:cells>
