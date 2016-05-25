@@ -446,7 +446,7 @@ sap.ui.define(
                     method : "POST",
                     urlParameters : {
                         "Contract": this._coNum,
-                        "Date": oHistoryModel.oData[oHistoryModel.oData.length - 1].FullPeriod,
+                        "Date": oHistoryModel.oData[0].FullPeriod,
                         "IsRetro": this.isRetro,
                         "AbpAmt" : sTotalAmt
                     },
