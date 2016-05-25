@@ -77,8 +77,8 @@ sap.ui.define(
             oContext = oModel.getContext(sCurrentPath);
             this._bindView(sCurrentPath);
             sCurrentPath = sCurrentPath + "/Scripts";
-            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName'];
-            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND'];
+            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName', 'AvailDate'];
+            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND', oContext.getProperty('AvailDate')];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oDropDownList = this.getView().byId("idnrgCamSSDdL");
             oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();
