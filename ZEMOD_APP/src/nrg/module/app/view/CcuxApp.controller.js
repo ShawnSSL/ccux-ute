@@ -150,6 +150,12 @@ sap.ui.define(
             case App.QuickLinkId.Referral:
                 this._onQLReferralClick(oControlEvent);
                 break;
+            case App.QuickLinkId.BusinessEnrollment:
+                this._onQLBiZEnrollClick(oControlEvent);
+                break;
+            case App.QuickLinkId.ResidentialEnrollment:
+                this._onQLResEnrollClick(oControlEvent);
+                break;
             case App.QuickLinkId.ServiceOrder:
                 this._onQLServiceOrderClick(oControlEvent);
                 break;
@@ -182,6 +188,18 @@ sap.ui.define(
                     coNum: oContext.coNum
                 });
             }
+        };
+        CustomController.prototype._onQLBiZEnrollClick = function (oControlEvent) {
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            oWebUiManager.notifyWebUi('openIndex', {
+                LINK_ID: "ZENROLLBS"
+            });
+        };
+        CustomController.prototype._onQLResEnrollClick = function (oControlEvent) {
+            var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
+            oWebUiManager.notifyWebUi('openIndex', {
+                LINK_ID: "ZENROLL"
+            });
         };
         CustomController.prototype._onQLReferralClick = function (oControlEvent) {
             var oWebUiManager = this.getOwnerComponent().getCcuxWebUiManager();
