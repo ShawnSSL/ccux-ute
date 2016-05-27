@@ -36,8 +36,9 @@ sap.ui.define(
         /*----------------------------------------------------- Methods -----------------------------------------------------*/
 
         ABPPopup.prototype.prepareABP = function (bisRetro) {
+            var oABPView;
             if (!this._oABPPopup.getContent().length) {
-                var oABPView = sap.ui.view({
+                oABPView = sap.ui.view({
                     type: sap.ui.core.mvc.ViewType.XML,
                     viewName: "nrg.module.billing.view.ABP"
                 });
@@ -45,6 +46,10 @@ sap.ui.define(
                 oABPView.getController().isRetro = bisRetro;
                 if (this._oABPPopup.isOpen()) { return this; }
                 this._oABPPopup.addContent(oABPView);
+            } else {
+                if ((this._oABPPopup.getContent()) && (this._oABPPopup.getContent().length > 0)) {
+                    this._oABPPopup.getContent()[0].getController().isRetro = bisRetro;
+                }
             }
             this._oABPPopup.open();
             return this;
@@ -52,7 +57,6 @@ sap.ui.define(
         ABPPopup.prototype._onPopupClosed = function (oEvent) {
             this.getParent().fireEvent("ABPCompleted");
         };
-
         return ABPPopup;
     },
 
