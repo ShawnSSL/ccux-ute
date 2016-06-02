@@ -1,0 +1,81 @@
+<core:FragmentDefinition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ute="ute.ui.commons"
+    xmlns:utmain="ute.ui.main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:sm="sap.m"
+    xmlns:c="sap.ui.commons"
+    xmlns:l="sap.ui.commons.layout"
+    xmlns:core="sap.ui.core">
+
+    <ute:Tag class="nrgBilling-prepayAdj-ctnt">
+        <ute:Tag class="nrgBilling-prepayAdj-ctnt-top">
+            <ute:Tag class="nrgBilling-prepayAdj-ctnt-top-field">
+                <ute:Tag elem="label" for="idAdjInfoInvNum" text="Invoice Number:"/>
+                <ute:Tag id="idAdjInfoInvNum" text="17023423423"/>
+            </ute:Tag>
+            <ute:Tag class="nrgBilling-prepayAdj-ctnt-top-field">
+                <ute:Tag elem="label" for="idInvoDateTo" text="Invoice Date To:"/>
+                <ute:Tag id="idInvoDateTo" text="07/24/2015"/>
+            </ute:Tag>
+            <ute:Tag class="nrgBilling-prepayAdj-ctnt-top-field">
+                <ute:Tag elem="label" for="idAdjInfoInvNum2" text="Invoice Date From:"/>
+                <ute:Tag id="idInvoDateFrom" text="06/25/2015"/>
+            </ute:Tag>
+        </ute:Tag>
+        <ute:Tag class="nrgBilling-prepayAdj-ctnt-mid">
+            <ute:Table class="nrgBilling-prepayAdj-ctnt-mid-tbl"
+                       tableType="DppTable" width="92%">
+                <ute:columns>
+                    <ute:TableColumn>
+                        <c:Label text="Item Text"/>
+                    </ute:TableColumn>
+                    <ute:TableColumn>
+                        <c:Label text="SmartStart Daily Charges"/>
+                    </ute:TableColumn>
+                    <ute:TableColumn>
+                        <c:Label text="Invoice Value"/>
+                    </ute:TableColumn>
+                    <ute:TableColumn>
+                        <c:Label text="Difference"/>
+                    </ute:TableColumn>
+                </ute:columns>
+                <ute:rows>
+                    <ute:TableRow>
+                        <c:Label text="Consumption"/>
+                        <c:Label text="625.00"/>
+                        <c:Label text="618.00"/>
+                        <c:Label text="7.00" />
+                    </ute:TableRow>
+                    <ute:TableRow>
+                        <c:Label text="Energy Charges"/>
+                        <c:Label text="61.88"/>
+                        <c:Label text="61.99"/>
+                        <c:Label text="0.69" />
+                    </ute:TableRow>
+                </ute:rows>
+            </ute:Table>
+
+        </ute:Tag>
+        <ute:Tag class="nrgBilling-prepayAdj-ctnt-btm">
+            <ute:Table class="nrgBilling-prepayAdj-ctnt-btm-tbl"
+                       tableType="DppTable" width="92%">
+                <ute:columns>
+                    <ute:TableColumn>
+                        <c:Label text="Item Text"/>
+                    </ute:TableColumn>
+                    <ute:TableColumn>
+                        <c:Label text="SmartStart Daily Charges"/>
+                    </ute:TableColumn>
+                </ute:columns>
+                <ute:rows>
+                    <ute:TableRow>
+                        <c:Label text="Consumption"/>
+                        <c:Label text="625.00"/>
+                    </ute:TableRow>
+                </ute:rows>
+            </ute:Table>
+        </ute:Tag>
+    </ute:Tag>
+
+</core:FragmentDefinition>

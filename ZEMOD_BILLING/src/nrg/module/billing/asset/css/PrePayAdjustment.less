@@ -1,0 +1,99 @@
+.nrgBilling-prepayAdj {
+	width: 1000px;
+    font-family: @nrgFontFamily;
+
+    // Header
+    & .sapUiDlgHdr {
+        height: 60px;
+        margin: 0;
+        padding: 20px 30px 0 30px;
+        display: flex;
+        display: flex;
+        justify-content: space-between;
+
+        & .sapUiDlgHdrLeft {
+
+            & .sapUiDlgLabel {
+                font-size: @nrgFontSize-large;
+            }
+        }
+
+        & .sapUiDlgHdrBtns {
+            position: relative;
+            margin-right: 0;
+
+            & .sapUiDlgCloseBtn {
+                &::before {
+                    height: 20px;
+                    width: 2px;
+                    transform: translate(6px,0) rotate(45deg);
+                }
+                &::after {
+                    height: 20px;
+                    width: 2px;
+                }
+            }
+
+        }
+    }
+
+    & .sapUiDlgHdrSep{
+        display: none;
+    }
+
+    & .sapUiDlgCont{
+        background-color: @nrgColor-blue-pearl;
+        margin: 0px;
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    & .nrgBilling-prepayAdj-ctnt{
+        margin-bottom: 16px;
+    }
+
+    & .nrgBilling-prepayAdj-ctnt .nrgBilling-prepayAdj-ctnt-top{
+        margin-left: 40px;
+        margin-right: 40px;
+        padding-bottom: 8px;
+        border-bottom: 2px @nrgColor-blue-link solid;
+    }
+
+    & .nrgBilling-prepayAdj-ctnt > .nrgBilling-prepayAdj-ctnt-top > .nrgBilling-prepayAdj-ctnt-top-field{
+        display: flex;
+        width: 40%;
+        font-size: @nrgFontSize-base;
+        margin-bottom: 2px;
+    }
+
+    & .nrgBilling-prepayAdj-ctnt > .nrgBilling-prepayAdj-ctnt-top > .nrgBilling-prepayAdj-ctnt-top-field label{
+        flex: 2;
+        text-align: right;
+    }
+
+    & .nrgBilling-prepayAdj-ctnt > .nrgBilling-prepayAdj-ctnt-top > .nrgBilling-prepayAdj-ctnt-top-field div{
+        flex: 3;
+        text-align: left;
+        margin-left: 10px;
+    }
+
+    & .nrgBilling-prepayAdj-ctnt .nrgBilling-prepayAdj-ctnt-mid{
+        margin-top: 10px;
+    }
+
+    & .nrgBilling-prepayAdj-ctnt .nrgBilling-prepayAdj-ctnt-mid > .nrgBilling-prepayAdj-ctnt-mid-tbl{
+        width: 92%;
+        margin-left: 40px;
+        margin-top: 26px;
+    }
+
+    & .nrgBilling-prepayAdj-ctnt .nrgBilling-prepayAdj-ctnt-btm{
+        margin-top: 10px;
+    }
+
+    & .nrgBilling-prepayAdj-ctnt .nrgBilling-prepayAdj-ctnt-btm > .nrgBilling-prepayAdj-ctnt-btm-tbl{
+        width: 92%;
+        margin-left: 40px;
+        margin-top: 26px;
+    }
+}

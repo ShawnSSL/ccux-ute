@@ -101,7 +101,19 @@ sap.ui.define(
         /**********************************************************************************************************************************************************/
         CustomController.prototype._onAdjustmentClicked = function (oEvent) {
             //Start Info Popuo
-            var sBindingPath = oEvent.getSource().mBindingInfos.text.binding.oContext.sPath;
+            //var sBindingPath = oEvent.getSource().mBindingInfos.text.binding.oContext.sPath;
+
+            if (!this._oPpAdjustmentInfoPopup) {
+                this._oPpAdjustmentInfoPopup = ute.ui.main.Popup.create({
+                    content: sap.ui.xmlfragment(this.getView().sId, "nrg.module.billing.view.PrePayAdjustment", this),
+                    title: 'Adjustment Info'
+                });
+                this.getView().addDependent(this._oPpAdjustmentInfoPopup);
+                this._oPpAdjustmentInfoPopup.addStyleClass('nrgBilling-prepayAdj');
+            }
+
+            this._oPpAdjustmentInfoPopup.open();
+
             return;
         };
 
