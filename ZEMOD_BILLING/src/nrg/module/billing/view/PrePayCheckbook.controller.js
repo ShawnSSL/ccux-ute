@@ -43,17 +43,31 @@ sap.ui.define(
             this._caNum = oRouteInfo.parameters.caNum;
             this._coNum = oRouteInfo.parameters.coNum;
         };
-        CustomController.prototype.onAfterRendering = function () {
+        /*CustomController.prototype.onAfterRendering = function () {
 
             // Update Footer
            // this.getOwnerComponent().getCcuxApp().updateFooter(this._bpNum, this._caNum, this._coNum);
 
             // Retrieve Notification
 
-        };
+        };*/
         /**********************************************************************************************************************************************************/
         //Formatters
         /**********************************************************************************************************************************************************/
+        CustomController.prototype._formatBoolIsAdjustment = function (sTransaction) {
+            if (sTransaction === 'Adjustment' || sTransaction === 'adjustment' || sTransaction === 'ADJUSTMENT') {
+                return true;
+            }
+            return false;
+        };
+
+        CustomController.prototype._formatBoolIsNotAdjustment = function (sTransaction) {
+            if (sTransaction === 'Adjustment' || sTransaction === 'adjustment' || sTransaction === 'ADJUSTMENT') {
+                return false;
+            }
+            return true;
+        };
+
         CustomController.prototype._formatDate = function (oDate) {
             var sFormattedDate;
 
@@ -85,6 +99,12 @@ sap.ui.define(
         /**********************************************************************************************************************************************************/
         //Handlers
         /**********************************************************************************************************************************************************/
+        CustomController.prototype._onAdjustmentClicked = function (oEvent) {
+            //Start Info Popuo
+            var sBindingPath = oEvent.getSource().mBindingInfos.text.binding.oContext.sPath;
+            return;
+        };
+
         CustomController.prototype._onPpPmtHdrClicked = function (oEvent) {
             var sBindingPath,
                 oPpPmtHdr = this.getView().getModel('oPpPmtHdr');
@@ -142,8 +162,8 @@ sap.ui.define(
         CustomController.prototype._initPpPmtHdr = function () {
             var sPath;
 
-            sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
-            //sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')';
+            //sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
+            sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
 
 
             this._retrPpPmtHdr(sPath);

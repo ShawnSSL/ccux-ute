@@ -141,7 +141,16 @@
                         <utmain:content>
                             <ute:Tag content="{oPpPmtHdr>PpPmtItmes/results}">
                                 <ute:Tag class="nrgBilling-ppChkBk-lftDiv-scrllArea-lnItm-ctnt">
-                                    <ute:Tag class="nrgBilling-ppChkBk-lftDiv-scrllArea-lnItm-ctnt-cell" text="{oPpPmtHdr>TransactionText}"/>
+                                    <ute:Tag visible="{parts:['oPpPmtHdr>TransactionText'], formatter:'._formatBoolIsNotAdjustment'}"
+                                             class="nrgBilling-ppChkBk-lftDiv-scrllArea-lnItm-ctnt-cell"
+                                             text="{oPpPmtHdr>TransactionText}"/>
+                                    <!--If it's Adjutment make it a link-->
+                                    <ute:Tag visible="{parts:['oPpPmtHdr>TransactionText'], formatter:'._formatBoolIsAdjustment'}"
+                                             class="nrgBilling-ppChkBk-lftDiv-scrllArea-lnItm-ctnt-cell nrgBilling-ppChkBk-lftDiv-scrllArea-lnItm-ctnt-cell-adj">
+                                        <utmain:Button text="{oPpPmtHdr>TransactionText}"
+                                                       design="None"
+                                                       press="._onAdjustmentClicked"/>
+                                    </ute:Tag>
                                     <ute:Tag class="nrgBilling-ppChkBk-lftDiv-scrllArea-lnItm-ctnt-cell" text="{parts:['oPpPmtHdr>PostDate'], formatter:'._formatDate'}"/>
                                     <ute:Tag class="nrgBilling-ppChkBk-lftDiv-scrllArea-lnItm-ctnt-cell"
                                              text="{path: 'oPpPmtHdr>CreditAmt',
