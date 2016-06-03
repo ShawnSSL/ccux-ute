@@ -193,11 +193,11 @@ sap.ui.define(
         };
 
         Controller.prototype._retrieveABPEligibility = function (sCoNumber, fnCallback) {
-            var sPath = '/EligibilityS' + '(\'' + sCoNumber + '\')',
+            var sPath,
                 oModel = this.getView().getModel('oDataAvgSvc'),
                 oEligibilityModel = this.getView().getModel('oEligibility'),
                 oParameters;
-
+            sPath = "/EligibilityS(Contract='" + sCoNumber + "',IsRetro=" + this.isRetro + ")";
             oParameters = {
                 success : function (oData) {
                     oEligibilityModel.setData(oData);
