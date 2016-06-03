@@ -62,16 +62,16 @@
                        tableType="DppTable" width="92%">
                 <ute:columns>
                     <ute:TableColumn>
-                        <c:Label text="Item Text"/>
+                        <c:Label text="TDSP Non Recurring Charge Detail on Invoice"/>
                     </ute:TableColumn>
                     <ute:TableColumn>
-                        <c:Label text="SmartStart Daily Charges"/>
+                        <c:Label text="Amount"/>
                     </ute:TableColumn>
                 </ute:columns>
                 <ute:rows>
                     <ute:TableRow>
-                        <c:Label text="Consumption"/>
-                        <c:Label text="625.00"/>
+                        <c:Label text="Subtotal"/>
+                        <c:Label text="0.94"/>
                     </ute:TableRow>
                 </ute:rows>
             </ute:Table>
