@@ -7,10 +7,12 @@ sap.ui.define(
         'nrg/base/view/BaseController',
         'nrg/base/type/Price',
         'nrg/module/quickpay/view/QuickPayPopup',
-        'nrg/module/billing/view/EligPopup'
+        'nrg/module/billing/view/EligPopup',
+        'sap/ui/model/Filter',
+        'sap/ui/model/FilterOperator'
     ],
 
-    function (jQuery, Controller, Type_Price, QuickPayControl, EligPopup) {
+    function (jQuery, Controller, Type_Price, QuickPayControl, EligPopup, Filter, FilterOperator) {
         'use strict';
 
         var CustomController = Controller.extend('nrg.module.billing.view.PrePayCheckbook');
@@ -133,12 +135,19 @@ sap.ui.define(
         CustomController.prototype._loadAdjustmentInfo = function (sActKey, sSortKey) {
             var oChbkOData = this.getView().getModel('oDataSvc'),
                 oParameters,
-                sPath;
+                sPath,
+                aFilterIds,
+                aFilterValues,
+                aFilters;
 
-            sPath = '/PrePayInvDetails(CA=\'' + this._caNum + '\',ActKey=\'' + sActKey + '\',SortKey=\'' + sSortKey + '\',InvNo=\'\')';
+            sPath = '/PrePayInvDetails';//(CA=\'' + this._caNum + '\',ActKey=\'' + sActKey + '\',SortKey=\'' + sSortKey + '\',InvNo=\'\')';
+            aFilterIds = ['CA', 'ActKey', 'SortKey'];
+            aFilterValues = [this._caNum, sActKey, sSortKey];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
 
 
             oParameters = {
+                filters : aFilters,
                 success : function (oData) {
                     if (oData) {
                         this.getView().getModel('oAdjustmentInfo').setData(oData);
@@ -155,6 +164,16 @@ sap.ui.define(
                 this.getOwnerComponent().getCcuxApp().setOccupied(true);
                 oChbkOData.read(sPath, oParameters);
             }
+        };
+
+        CustomController.prototype._createSearchFilterObject = function (aFilterIds, aFilterValues) {
+            var aFilters = [],
+                iCount;
+
+            for (iCount = 0; iCount < aFilterIds.length; iCount = iCount + 1) {
+                aFilters.push(new Filter(aFilterIds[iCount], FilterOperator.EQ, aFilterValues[iCount], ""));
+            }
+            return aFilters;
         };
 
         CustomController.prototype._onPpPmtHdrClicked = function (oEvent) {
@@ -214,8 +233,8 @@ sap.ui.define(
         CustomController.prototype._initPpPmtHdr = function () {
             var sPath;
 
-            sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
-            //sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
+            //sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
+            sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
 
 
             this._retrPpPmtHdr(sPath);
