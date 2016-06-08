@@ -135,7 +135,7 @@ sap.ui.define(
                 oParameters,
                 sPath;
 
-            sPath = '/PrePayInvDetailSet(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'' + sActKey + '\',SortKey=\'' + sSortKey + '\')';
+            sPath = '/PrePayInvDetails(CA=\'' + this._caNum + '\',ActKey=\'' + sActKey + '\',SortKey=\'' + sSortKey + '\',InvNo=\'\')';
 
 
             oParameters = {
