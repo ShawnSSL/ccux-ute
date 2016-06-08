@@ -501,6 +501,7 @@ sap.ui.define(
             QuickControl.attachEvent("PaymentCompleted", function () {
                 that._initRetrBillInvoices();
                 that._initPostInvoice();
+                that._initBillingMsgs();
             }, this);
         };
 
@@ -907,6 +908,7 @@ sap.ui.define(
                 QuickControl.attachEvent("PaymentCompleted", function () {
                     that._initRetrBillInvoices();
                     that._initPostInvoice();
+                    that._initBillingMsgs();
                 }, this);
             } else if (oEvent.getSource().getBindingContext("comp-billing").getProperty("DunningReason").indexOf('OTCC') >= 0) {
                 QuickControl = new QuickPayControl();
@@ -918,6 +920,7 @@ sap.ui.define(
                 QuickControl.attachEvent("PaymentCompleted", function () {
                     that._initRetrBillInvoices();
                     that._initPostInvoice();
+                    that._initBillingMsgs();
                 }, this);
             } else {
                 this.getOwnerComponent().getCcuxApp().setOccupied(true);
