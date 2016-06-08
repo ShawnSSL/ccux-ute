@@ -16,11 +16,13 @@
             </ute:Tag>
             <ute:Tag class="nrgBilling-prepayAdj-ctnt-top-field">
                 <ute:Tag elem="label" for="idInvoDateTo" text="Invoice Date To:"/>
-                <ute:Tag id="idInvoDateTo" text="{oAdjustmentInfo>/results/0/InvDtTo}"/>
+                <ute:Tag id="idInvoDateTo"
+                         text="{path: 'oAdjustmentInfo>/results/0/InvDtTo', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
             </ute:Tag>
             <ute:Tag class="nrgBilling-prepayAdj-ctnt-top-field">
                 <ute:Tag elem="label" for="idAdjInfoInvNum2" text="Invoice Date From:"/>
-                <ute:Tag id="idInvoDateFrom" text="{oAdjustmentInfo>/results/0/InvDtFr}"/>
+                <ute:Tag id="idInvoDateFrom"
+                         text="{path: 'oAdjustmentInfo>/results/0/InvDtFr', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
             </ute:Tag>
         </ute:Tag>
         <ute:Tag class="nrgBilling-prepayAdj-ctnt-mid">
@@ -66,7 +68,7 @@
                 <ute:rows>
                     <ute:TableRow>
                         <c:Label text="Subtotal"/>
-                        <c:Label text="{oAdjustmentInfo>/results/0/Subtot}"/>
+                        <c:Label text="{oAdjustmentInfo>/results/subTotal}"/>
                     </ute:TableRow>
                 </ute:rows>
             </ute:Table>

@@ -153,6 +153,7 @@ sap.ui.define(
                 filters : aFilters,
                 success : function (oData) {
                     if (oData) {
+                        oData.results.subTotal = oData.results[oData.results.length-1].Subtot;
                         this.getView().getModel('oAdjustmentInfo').setData(oData);
                     }
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
