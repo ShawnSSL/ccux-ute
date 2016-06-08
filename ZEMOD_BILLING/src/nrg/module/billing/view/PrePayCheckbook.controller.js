@@ -236,8 +236,8 @@ sap.ui.define(
         CustomController.prototype._initPpPmtHdr = function () {
             var sPath;
 
-            //sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
-            sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
+            sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
+            //sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
 
 
             this._retrPpPmtHdr(sPath);
