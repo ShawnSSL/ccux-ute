@@ -93,6 +93,11 @@ sap.ui.define(
             this._retrieveNotification();
         };
         CustomController.prototype.onAfterRendering = function () {
+            //2016/06/08 add sbscribe ABP complete event to refresh checkbook
+            var oEventBus = sap.ui.getCore().getEventBus();
+
+            // Subscribe ABP change events
+            oEventBus.subscribe("nrg.module.billing", "ABPCompleted", this._handleABPComplete, this);
 
             // Update Footer
             //this.getOwnerComponent().getCcuxApp().updateFooterNotification(this._bpNum, this._caNum, this._coNum, true);
@@ -104,6 +109,11 @@ sap.ui.define(
         };
 
         CustomController.prototype.onExit = function () {
+        };
+
+        //2016/06/08 add sbscribe ABP complete event to refresh checkbook
+        CustomController.prototype._handleABPComplete = function () {
+            this.PostPaidAccounts();
         };
 
 
