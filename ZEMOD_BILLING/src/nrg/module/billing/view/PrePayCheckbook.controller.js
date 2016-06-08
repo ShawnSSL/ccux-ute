@@ -28,6 +28,10 @@ sap.ui.define(
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oPpPmtHdr');
             // Model for eligibility alerts
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEligibility');
+
+            //Model for Adjustment Popup
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oAdjustmentInfo');
+
             this._initRoutingInfo();
             this._initPpChkbookHdr();
             this._initPpPmtHdr();
@@ -102,6 +106,14 @@ sap.ui.define(
         CustomController.prototype._onAdjustmentClicked = function (oEvent) {
             //Start Info Popuo
             //var sBindingPath = oEvent.getSource().mBindingInfos.text.binding.oContext.sPath;
+            var sActKey,
+                sSortKey,
+                oPpPmt = this.getView().getModel('oPpPmtHdr'),
+                sBindingPath = oEvent.getSource().mBindingInfos.text.binding.oContext.sPath;
+
+            sActKey = oPpPmt.oData.results[sBindingPath.substring(9,10)].PpPmtItmes.results[sBindingPath.substring(30,31)].ActKey;
+            sSortKey = oPpPmt.oData.results[sBindingPath.substring(9,10)].PpPmtItmes.results[sBindingPath.substring(30,31)].SortKey;
+
 
             if (!this._oPpAdjustmentInfoPopup) {
                 this._oPpAdjustmentInfoPopup = ute.ui.main.Popup.create({
@@ -113,8 +125,36 @@ sap.ui.define(
             }
 
             this._oPpAdjustmentInfoPopup.open();
+            this._loadAdjustmentInfo(sActKey, sSortKey);
 
             return;
+        };
+
+        CustomController.prototype._loadAdjustmentInfo = function (sActKey, sSortKey) {
+            var oChbkOData = this.getView().getModel('oDataSvc'),
+                oParameters,
+                sPath;
+
+            sPath = '/PrePayInvDetailSet(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'' + sActKey + '\',SortKey=\'' + sSortKey + '\')';
+
+
+            oParameters = {
+                success : function (oData) {
+                    if (oData) {
+                        this.getView().getModel('oAdjustmentInfo').setData(oData);
+                    }
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                }.bind(this)
+            };
+
+            if (oChbkOData) {
+                this.getOwnerComponent().getCcuxApp().setOccupied(true);
+                oChbkOData.read(sPath, oParameters);
+            }
         };
 
         CustomController.prototype._onPpPmtHdrClicked = function (oEvent) {
@@ -174,8 +214,8 @@ sap.ui.define(
         CustomController.prototype._initPpPmtHdr = function () {
             var sPath;
 
-            //sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
-            sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
+            sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
+            //sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
 
 
             this._retrPpPmtHdr(sPath);

@@ -12,20 +12,21 @@
         <ute:Tag class="nrgBilling-prepayAdj-ctnt-top">
             <ute:Tag class="nrgBilling-prepayAdj-ctnt-top-field">
                 <ute:Tag elem="label" for="idAdjInfoInvNum" text="Invoice Number:"/>
-                <ute:Tag id="idAdjInfoInvNum" text="17023423423"/>
+                <ute:Tag id="idAdjInfoInvNum" text="{oAdjustmentInfo>/results/0/InvNo}"/>
             </ute:Tag>
             <ute:Tag class="nrgBilling-prepayAdj-ctnt-top-field">
                 <ute:Tag elem="label" for="idInvoDateTo" text="Invoice Date To:"/>
-                <ute:Tag id="idInvoDateTo" text="07/24/2015"/>
+                <ute:Tag id="idInvoDateTo" text="{oAdjustmentInfo>/results/0/InvDtTo}"/>
             </ute:Tag>
             <ute:Tag class="nrgBilling-prepayAdj-ctnt-top-field">
                 <ute:Tag elem="label" for="idAdjInfoInvNum2" text="Invoice Date From:"/>
-                <ute:Tag id="idInvoDateFrom" text="06/25/2015"/>
+                <ute:Tag id="idInvoDateFrom" text="{oAdjustmentInfo>/results/0/InvDtFr}"/>
             </ute:Tag>
         </ute:Tag>
         <ute:Tag class="nrgBilling-prepayAdj-ctnt-mid">
             <ute:Table class="nrgBilling-prepayAdj-ctnt-mid-tbl"
-                       tableType="DppTable" width="92%">
+                       tableType="DppTable" width="92%"
+                       rows="{oAdjustmentInfo>/results}">
                 <ute:columns>
                     <ute:TableColumn>
                         <c:Label text="Item Text"/>
@@ -42,16 +43,10 @@
                 </ute:columns>
                 <ute:rows>
                     <ute:TableRow>
-                        <c:Label text="Consumption"/>
-                        <c:Label text="625.00"/>
-                        <c:Label text="618.00"/>
-                        <c:Label text="7.00" />
-                    </ute:TableRow>
-                    <ute:TableRow>
-                        <c:Label text="Energy Charges"/>
-                        <c:Label text="61.88"/>
-                        <c:Label text="61.99"/>
-                        <c:Label text="0.69" />
+                        <c:Label text="{oAdjustmentInfo>ItmTxt}"/>
+                        <c:Label text="{oAdjustmentInfo>SimVal}"/>
+                        <c:Label text="{oAdjustmentInfo>InvVal}"/>
+                        <c:Label text="{oAdjustmentInfo>DiffVal}" />
                     </ute:TableRow>
                 </ute:rows>
             </ute:Table>
@@ -71,7 +66,7 @@
                 <ute:rows>
                     <ute:TableRow>
                         <c:Label text="Subtotal"/>
-                        <c:Label text="0.94"/>
+                        <c:Label text="{oAdjustmentInfo>/results/0/Subtot}"/>
                     </ute:TableRow>
                 </ute:rows>
             </ute:Table>
