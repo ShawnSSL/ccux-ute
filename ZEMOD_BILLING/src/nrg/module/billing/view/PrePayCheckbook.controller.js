@@ -111,10 +111,13 @@ sap.ui.define(
             var sActKey,
                 sSortKey,
                 oPpPmt = this.getView().getModel('oPpPmtHdr'),
-                sBindingPath = oEvent.getSource().mBindingInfos.text.binding.oContext.sPath;
+                sBindingPath = oEvent.getSource().mBindingInfos.text.binding.oContext.sPath,
+                aPath = [];
 
-            sActKey = oPpPmt.oData.results[sBindingPath.substring(9,10)].PpPmtItmes.results[sBindingPath.substring(30,31)].ActKey;
-            sSortKey = oPpPmt.oData.results[sBindingPath.substring(9,10)].PpPmtItmes.results[sBindingPath.substring(30,31)].SortKey;
+            aPath = sBindingPath.split('/');
+
+            sActKey = oPpPmt.oData.results[aPath[2]].PpPmtItmes.results[aPath[5]].ActKey;
+            sSortKey = oPpPmt.oData.results[aPath[2]].PpPmtItmes.results[aPath[5]].SortKey;
 
 
             if (!this._oPpAdjustmentInfoPopup) {
@@ -233,8 +236,8 @@ sap.ui.define(
         CustomController.prototype._initPpPmtHdr = function () {
             var sPath;
 
-            sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
-            //sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
+            //sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
+            sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
 
 
             this._retrPpPmtHdr(sPath);

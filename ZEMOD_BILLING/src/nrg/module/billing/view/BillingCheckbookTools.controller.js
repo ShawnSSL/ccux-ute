@@ -55,12 +55,18 @@ sap.ui.define(
         Controller.prototype._onAvgBillBtnClicked = function () {
             if (!this.ABPPopupCustomControl) {
                 this.ABPPopupCustomControl = new ABPPopup({ isRetro: false });
-                this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
+                this.ABPPopupCustomControl.attachEvent("ABPCompleted", this._onABPCompletedReloadChkBk , this);
                 this.getView().addDependent(this.ABPPopupCustomControl);
             } else {
                 this.ABPPopupCustomControl._oABPPopup.setTitle('AVERAGE BILLING PLAN');
             }
             this.ABPPopupCustomControl.prepareABP(false);
+        };
+
+        Controller.prototype._onABPCompletedReloadChkBk = function () {
+            var eventBus = sap.ui.getCore().getEventBus();
+
+            eventBus.publish("nrg.module.billing", "eABPCompleted", {});
         };
         /**
 		 * Handler for Balance Bill Re-Average Detail.
@@ -82,7 +88,7 @@ sap.ui.define(
                 this.ABPPopupCustomControl._oABPPopup.setTitle('RETRO AVERAGE BILLING PLAN: ACTIVATE');
                //this.ABPPopupCustomControl._oABPPopup.setTitle('The title you want to change to.');
 
-                this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
+                this.ABPPopupCustomControl.attachEvent("ABPCompleted", this._onABPCompletedReloadChkBk, this);
                 this.getView().addDependent(this.ABPPopupCustomControl);
             } else {
                 this.ABPPopupCustomControl._oABPPopup.setTitle('RETRO AVERAGE BILLING PLAN: ACTIVATE');
