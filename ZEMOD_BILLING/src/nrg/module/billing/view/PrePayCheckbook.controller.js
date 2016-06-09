@@ -141,7 +141,8 @@ sap.ui.define(
                 sPath,
                 aFilterIds,
                 aFilterValues,
-                aFilters;
+                aFilters,
+                i;
 
             sPath = '/PrePayInvDetails';//(CA=\'' + this._caNum + '\',ActKey=\'' + sActKey + '\',SortKey=\'' + sSortKey + '\',InvNo=\'\')';
             aFilterIds = ['CA', 'ActKey', 'SortKey'];
@@ -153,7 +154,11 @@ sap.ui.define(
                 filters : aFilters,
                 success : function (oData) {
                     if (oData) {
-                        oData.results.subTotal = oData.results[oData.results.length-1].Subtot;
+                        for( i = 0 ; i < oData.results.length ; i = i + 1) {
+                            if(oData.results[i].ItmTxt.indexOf('TDSP Non-Recurring Charge') > -1){
+                                oData.results.subTotal = oData.results[i].Subtot;
+                            }
+                        }
                         this.getView().getModel('oAdjustmentInfo').setData(oData);
                     }
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
@@ -237,8 +242,8 @@ sap.ui.define(
         CustomController.prototype._initPpPmtHdr = function () {
             var sPath;
 
-            //sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
-            sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
+            sPath = '/ConfBuags(\'' + this._caNum + '\')/PrePayPmtHdrs';
+            //sPath = '/PrePayPmtHdrs(ContractAccountNumber=\'' + this._caNum + '\',ActKey=\'000001\')'; //Temp for Testing HJL 2016/06/01 need swap back to last line
 
 
             this._retrPpPmtHdr(sPath);
