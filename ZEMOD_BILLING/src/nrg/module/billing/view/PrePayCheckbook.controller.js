@@ -154,8 +154,8 @@ sap.ui.define(
                 filters : aFilters,
                 success : function (oData) {
                     if (oData) {
-                        for( i = 0 ; i < oData.results.length ; i = i + 1) {
-                            if(oData.results[i].ItmTxt.indexOf('TDSP Non-Recurring Charge') > -1){
+                        for (i = 0; i < oData.results.length; i = i + 1) {
+                            if (oData.results[i].ItmTxt.indexOf('TDSP Non-Recurring Charge') > -1) {
                                 oData.results.subTotal = oData.results[i].Subtot;
                             }
                         }
