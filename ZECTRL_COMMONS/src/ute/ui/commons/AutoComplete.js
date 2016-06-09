@@ -4,7 +4,7 @@
 
 
 
-sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/commons/Textfield', 'sap/m/List', 'sap/m/Popover', 'sap/m/StandardListItem'],
+sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/commons/Textfield', 'sap/ui/commons/ListBox', 'sap/m/Popover', 'sap/ui/core/ListItem'],
 	function (jQuery, library, Control, Textfield, List, Popover, StandardListItem) {
         "use strict";
 
@@ -23,7 +23,12 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
                  * Minimum length of the entered text in input before suggest event is fired. The default value is 1 which means the suggest event is fired after user types in input. When it's set to 0, suggest event is fired when input with no text gets focus.
                  * @since 1.21.2
                  */
-                startSuggestion : {type : "int", group : "Behavior", defaultValue : 1}
+                startSuggestion : {type : "int", group : "Behavior", defaultValue : 1},
+                /**
+                 *  ABAP Field Name.
+                 *
+                 */
+                fieldName : {type : "string", group : "Behavior", defaultValue : ''}
             },
             defaultAggregation : "suggestionItems",
             aggregations : {
@@ -116,18 +121,14 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
 			}
 		};
 
-        AutoComplete.prototype.onfocusin = function (oEvent) {
+/*        AutoComplete.prototype.onfocusin = function (oEvent) {
+            Textfield.prototype.onfocusin.apply(this, arguments);
             this.$().addClass("sapMInputFocused");
             // fires suggest event when startSuggestion is set to 0 and input has no text
-            if (!this.getValue()) {
+            if (!this.getStartSuggestion() && !this.getValue()) {
                 this._triggerSuggest(this.getValue());
             }
-        };
-        AutoComplete.prototype.ontouchstart = function (oEvent) {
-
-            // mark the event for components that needs to know if the event was handled
-            oEvent.setMarked();
-        };
+        };*/
         AutoComplete.prototype._triggerSuggest = function (sValue) {
 
             this.cancelPendingSuggest();
@@ -187,14 +188,6 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
             this._sPopupResizeHandler = sap.ui.core.ResizeHandler.register(this.getDomRef(), function () {
                 that._resizePopup();
             });
-
-        // click event has to be used in order to focus on the input in dialog
-            // do not open suggestion dialog by click over the value help icon
-            this.$().on("click", jQuery.proxy(function (oEvent) {
-                if (this.getShowSuggestion() && this._oSuggestionPopup) {
-                    this._oSuggestionPopup.open();
-                }
-            }, this));
         };
         AutoComplete.prototype._deregisterEvents = function () {
             if (this._sPopupResizeHandler) {
@@ -337,11 +330,11 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
 			}
             oInput._oList = new List(oInput.getId() + "-popup-list", {
                 width : "100%",
-                showNoData : false,
-                mode : sap.m.ListMode.SingleSelectMaster,
-                rememberSelections : false,
-                selectionChange : function (oEvent) {
-                    var oListItem = oEvent.getParameter("listItem"),
+                //showNoData : false,
+                //mode : sap.m.ListMode.SingleSelectMaster,
+                //rememberSelections : false,
+                select : function (oEvent) {
+                    var oListItem = oEvent.getParameter("selectedItem"),
                         iCount = oInput._iSetCount,
                         sNewValue;
 
@@ -351,13 +344,14 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
                     });*/
 
                     // otherwise use title
-                    sNewValue = oListItem.getTitle();
+                    sNewValue = oListItem.getText();
+                    oInput._$input.val(sNewValue);
                     oInput.onChange(oEvent);
                     oInput._iPopupListSelectedIndex = -1;
                     oInput._closeSuggestionPopup();
                     oInput._doSelect();
                 }
-            });
+            }).addStyleClass("uteTextfield-floatList");
 			if (oInput._oSuggestionPopup) {
 				oInput._oSuggestionPopup.addContent(oInput._oList);
             }
@@ -407,7 +401,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
                 bListItem;
 			oInput._iPopupListSelectedIndex = -1;
 
-			if (!(bShowSuggestion && oInput.getDomRef() && (oInput.$().hasClass("sapMInputFocused")))) {
+			if (!(bShowSuggestion && oInput.getDomRef())) {
 				return false;
 			}
 			// only destroy items in simple suggestion mode
@@ -420,8 +414,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
                 oItem = aItems[i];
                 if (!bFilter || oInput._fnFilter(sTypedChars, oItem)) {
                     oListItem = new StandardListItem(oItem.getId() + "-sli");
-                    oListItem.setTitle(oItem.getText());
-                    oListItem.setType(oItem.getEnabled() ? sap.m.ListType.Active : sap.m.ListType.Inactive);
+                    oListItem.setText(oItem.getText());
+                    //oListItem.setType(oItem.getEnabled() ? sap.m.ListType.Active : sap.m.ListType.Inactive);
                     oListItem._oItem = oItem;
                     aHitItems.push(oListItem);
                 }
@@ -569,7 +563,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
             // CSN# 1390866/2014: The default for ListItemBase type is "Inactive", therefore disabled entries are only supported for single and two-value suggestions
             // for tabular suggestions: only check visible
             // for two-value and single suggestions: check also if item is not inactive
-            return oItem.getVisible() && (oItem.getType() !== sap.m.ListType.Inactive);
+            //return oItem.getVisible() && (oItem.getType() !== sap.m.ListType.Inactive);
+            return true;
         };
         AutoComplete.prototype._onsaparrowkey = function (oEvent, sDir, iItems) {
             if (!this.getEnabled() || !this.getEditable()) {
@@ -615,7 +610,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
                 } else if (sDir === "up" && iSelectedIndex - iItems < 0) {
                     sDir = "down";
                     iItems = 1;
-                    aListItems[iSelectedIndex].setSelected(false);
+                    //aListItems[iSelectedIndex].setSelected(false);
                     iStopIndex = iSelectedIndex;
                     iSelectedIndex = 0;
                     bFirst = true;
@@ -637,7 +632,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
 
             if (sDir === "down") {
                 while (iSelectedIndex < aListItems.length - 1 && (!bFirst || !this._isSuggestionItemSelectable(aListItems[iSelectedIndex]))) {
-                    aListItems[iSelectedIndex].setSelected(false);
+                    //aListItems[iSelectedIndex].setSelected(false);
                     iSelectedIndex = iSelectedIndex + iItems;
                     bFirst = true;
                     iItems = 1; // if wanted item is not selectable just search the next one
@@ -657,25 +652,25 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
                 }
             }
 
-            if (!this._isSuggestionItemSelectable(aListItems[iSelectedIndex])) {
+            //if (!this._isSuggestionItemSelectable(aListItems[iSelectedIndex])) {
                 // if no further visible item can be found -> do nothing (e.g. set the old item as selected again)
-                if (iOldIndex >= 0) {
+                //if (iOldIndex >= 0) {
                     //aListItems[iOldIndex].setSelected(true).updateAccessibilityState();
-                    aListItems[iOldIndex].setSelected(true);
+                    //aListItems[iOldIndex].setSelected(true);
                     //this.$("inner").attr("aria-activedescendant", aListItems[iOldIndex].getId());
-                }
-                return;
-            } else {
+               // }
+              //  return;
+            //} else {
                 //aListItems[iSelectedIndex].setSelected(true).updateAccessibilityState();
-                aListItems[iSelectedIndex].setSelected(true);
+               // aListItems[iSelectedIndex].setSelected(true);
                 //this.$("inner").attr("aria-activedescendant", aListItems[iSelectedIndex].getId());
-            }
+           // }
 
             if (sap.ui.Device.system.desktop) {
                 this._scrollToItem(iSelectedIndex, sDir);
             }
 
-            sNewValue = aListItems[iSelectedIndex].getTitle();
+            sNewValue = aListItems[iSelectedIndex].getText();
 
             // setValue isn't used because here is too early to modify the lastValue of input
             this._$input.val(sNewValue);
