@@ -57,6 +57,34 @@ sap.ui.define(
             this.getView().getModel('oBpSearchCount').setProperty('/searchCountOver100', false);
             this.getView().getModel('oBpSearchCount').setProperty('/searchCountBelow100', false);
         };
+        Controller.prototype.onSuggest = function (oEvent) {
+            var aFilterIds,
+                aFilterValues,
+                aFilters;
+            aFilterIds = ["Name", "Value"];
+            aFilterValues = [oEvent.getSource().getFieldName(), oEvent.getParameter("suggestValue")];
+            aFilters = this._createSearchFilter(aFilterIds, aFilterValues);
+            oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
+        };
+       /**
+		 * Assign the filter objects based on the input selection
+		 *
+		 * @function
+		 * @param {Array} aFilterIds to be used as sPath for Filters
+         * @param {Array} aFilterValues for each sPath
+		 * @private
+		 */
+        Controller.prototype._createSearchFilter = function (aFilterIds, aFilterValues) {
+            var aFilters = [],
+                iCount;
+
+            for (iCount = 0; iCount < aFilterIds.length; iCount = iCount + 1) {
+                if (aFilterIds[iCount] && aFilterValues[iCount]) {
+                    aFilters.push(new Filter(aFilterIds[iCount], FilterOperator.EQ, aFilterValues[iCount], ""));
+                }
+            }
+            return aFilters;
+        };
 
         Controller.prototype._initSearchFilterModel = function () {
             var oFilters = {

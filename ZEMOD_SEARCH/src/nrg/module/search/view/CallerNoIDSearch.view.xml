@@ -4,6 +4,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:l="sap.ui.commons.layout"
     xmlns:c="sap.ui.commons"
+    xmlns:um="ute.ui.main"
     xmlns:core="sap.ui.core"
     controllerName="nrg.module.search.view.CallerNoIDSearch"
     displayBlock="true">
@@ -118,7 +119,7 @@
                     width="48%">
                 </ute:Textfield>
 
-                <ute:Textfield
+<!--                <ute:Textfield
                     value="{
                         path:'oSearchFilters>/searchTextFields/sFiName'}"
                     id="idSearchFiName"
@@ -128,9 +129,63 @@
                     enterKeyPress="onEnterKeyPress"
                     fieldType="Float"
                     width="48%">
-                </ute:Textfield>
-
-                <ute:Textfield
+                </ute:Textfield>-->
+<!--                <um:Dropdown
+                    id="idSearchFiName"
+                    type="Text"
+                    placeholder="Enter Product ..."
+                    showSuggestion="true"
+                    suggestionItems="{ path:'comp-search>/LiveSearchSet', sorter:{ path:'comp-search>Value', descending: 'false'}}"
+                    suggest="onFirstNameSuggest">
+                    <um:DropdownItem>
+                        <core:Item text="{comp-search>Value}" />
+                    </um:DropdownItem>
+                </um:Dropdown>-->
+<!--                <c:AutoComplete
+                    value="{
+                        path:'oSearchFilters>/searchTextFields/sFiName'}"
+                    id="idSearchFiName"
+                    class="nrgSearch-calrNoIDSearch-textfield-input"
+                    placeholder="{comp-i18n-search>nrgSearchClrNid_FiName}"
+                    path
+                    width="48%">
+                    <c:items>
+                        <core:ListItem text="{comp-search>Value}"/>
+                    </c:items>
+                </c:AutoComplete>-->
+                <ute:AutoComplete
+                    id="idSearchFiName"
+                    value="{
+                        path:'oSearchFilters>/searchTextFields/sFiName'}"
+                    placeholder="{comp-i18n-search>nrgSearchClrNid_FiName}"
+                    showSuggestion="true"
+                    suggest="onSuggest"
+                    fieldName="FirstName"
+                    enterKeyPress="onEnterKeyPress"
+                    fieldType="Float"
+                    width="48%"
+                    suggestionItems="{ path:'comp-search>/LiveSearchSet', sorter:{ path:'comp-search>Value', descending: 'false'}}" >
+                    <ute:suggestionItems>
+                        <core:Item text="{comp-search>Value}" />
+                    </ute:suggestionItems>
+                </ute:AutoComplete>
+                <ute:AutoComplete
+                    id="idSearchLaName"
+                    value="{
+                        path:'oSearchFilters>/searchTextFields/sLaName'}"
+                    placeholder="{comp-i18n-search>nrgSearchClrNid_LaName}"
+                    showSuggestion="true"
+                    fieldName="LastName"
+                    suggest="onSuggest"
+                    fieldType="Float"
+                    enterKeyPress="onEnterKeyPress"
+                    width="48%"
+                   suggestionItems="{ path:'comp-search>/LiveSearchSet', sorter:{ path:'comp-search>Value', descending: 'false'}}" >
+                    <ute:suggestionItems>
+                        <core:Item text="{comp-search>Value}" />
+                    </ute:suggestionItems>
+                </ute:AutoComplete>
+<!--                <ute:Textfield
                     value="{
                         path:'oSearchFilters>/searchTextFields/sLaName'}"
                     id="idSearchLaName"
@@ -140,7 +195,7 @@
                     enterKeyPress="onEnterKeyPress"
                     fieldType="Float"
                     width="48%">
-                </ute:Textfield>
+                </ute:Textfield>-->
 
                 <ute:Textfield
                     value="{
@@ -167,7 +222,22 @@
                     fieldType="Float"
                     width="48%">
                 </ute:Textfield>
-                <ute:Textfield
+                <ute:AutoComplete
+                    value="{
+                        path:'oSearchFilters>/searchTextFields/sStreetNum'}"
+                    placeholder="{comp-i18n-search>nrgSearchClrNid_Street}"
+                    showSuggestion="true"
+                    fieldName="Street"
+                    suggest="onSuggest"
+                    fieldType="Float"
+                    enterKeyPress="onEnterKeyPress"
+                    width="48%"
+                    suggestionItems="{ path:'comp-search>/LiveSearchSet', sorter:{ path:'comp-search>Value', descending: 'false'}}" >
+                    <ute:suggestionItems>
+                        <core:Item text="{comp-search>Value}" />
+                    </ute:suggestionItems>
+                </ute:AutoComplete>
+<!--                <ute:Textfield
                     value="{
                         path:'oSearchFilters>/searchTextFields/sStreetNum'}"
                     class="nrgSearch-calrNoIDSearch-textfield-input"
@@ -177,7 +247,7 @@
                     label="Title"
                     fieldType="Float"
                     width="48%">
-                </ute:Textfield>
+                </ute:Textfield>-->
                 <ute:Textfield
                     value="{
                         path:'oSearchFilters>/searchTextFields/sUnitNum'}"
@@ -189,7 +259,22 @@
                     label="Title"
                     width="48%">
                 </ute:Textfield>
-                <ute:Textfield
+                <ute:AutoComplete
+                    value="{
+                        path:'oSearchFilters>/searchTextFields/sCityNum'}"
+                    placeholder="{comp-i18n-search>nrgSearchClrNid_City}"
+                    showSuggestion="true"
+                    fieldName="City"
+                    suggest="onSuggest"
+                    fieldType="Float"
+                    enterKeyPress="onEnterKeyPress"
+                    width="48%"
+                    suggestionItems="{ path:'comp-search>/LiveSearchSet', sorter:{ path:'comp-search>Value', descending: 'false'}}" >
+                    <ute:suggestionItems>
+                        <core:Item text="{comp-search>Value}" />
+                    </ute:suggestionItems>
+                </ute:AutoComplete>
+<!--                <ute:Textfield
                     value="{
                         path:'oSearchFilters>/searchTextFields/sCityNum'}"
                     class="nrgSearch-calrNoIDSearch-textfield-input"
@@ -199,7 +284,7 @@
                     label="Title"
                     fieldType="Float"
                     width="48%">
-                </ute:Textfield>
+                </ute:Textfield>-->
                 <ute:Textfield
                     value="{
                         path:'oSearchFilters>/searchTextFields/sStateNum'}"
