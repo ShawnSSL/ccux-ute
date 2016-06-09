@@ -97,7 +97,7 @@ sap.ui.define(
             var oEventBus = sap.ui.getCore().getEventBus();
 
             // Subscribe ABP change events
-            oEventBus.subscribe("nrg.module.billing", "ABPCompleted", this._handleABPComplete, this);
+            oEventBus.subscribe("nrg.module.billing", "eABPCompleted", this._handleABPComplete, this);
 
             // Update Footer
             //this.getOwnerComponent().getCcuxApp().updateFooterNotification(this._bpNum, this._caNum, this._coNum, true);

@@ -111,10 +111,13 @@ sap.ui.define(
             var sActKey,
                 sSortKey,
                 oPpPmt = this.getView().getModel('oPpPmtHdr'),
-                sBindingPath = oEvent.getSource().mBindingInfos.text.binding.oContext.sPath;
+                sBindingPath = oEvent.getSource().mBindingInfos.text.binding.oContext.sPath,
+                aPath = [];
 
-            sActKey = oPpPmt.oData.results[sBindingPath.substring(9,10)].PpPmtItmes.results[sBindingPath.substring(30,31)].ActKey;
-            sSortKey = oPpPmt.oData.results[sBindingPath.substring(9,10)].PpPmtItmes.results[sBindingPath.substring(30,31)].SortKey;
+            aPath = sBindingPath.split('/');
+
+            sActKey = oPpPmt.oData.results[aPath[2]].PpPmtItmes.results[aPath[5]].ActKey;
+            sSortKey = oPpPmt.oData.results[aPath[2]].PpPmtItmes.results[aPath[5]].SortKey;
 
 
             if (!this._oPpAdjustmentInfoPopup) {
@@ -138,7 +141,8 @@ sap.ui.define(
                 sPath,
                 aFilterIds,
                 aFilterValues,
-                aFilters;
+                aFilters,
+                i;
 
             sPath = '/PrePayInvDetails';//(CA=\'' + this._caNum + '\',ActKey=\'' + sActKey + '\',SortKey=\'' + sSortKey + '\',InvNo=\'\')';
             aFilterIds = ['CA', 'ActKey', 'SortKey'];
@@ -150,6 +154,11 @@ sap.ui.define(
                 filters : aFilters,
                 success : function (oData) {
                     if (oData) {
+                        for (i = 0; i < oData.results.length; i = i + 1) {
+                            if (oData.results[i].ItmTxt.indexOf('TDSP Non-Recurring Charge') > -1) {
+                                oData.results.subTotal = oData.results[i].Subtot;
+                            }
+                        }
                         this.getView().getModel('oAdjustmentInfo').setData(oData);
                     }
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
