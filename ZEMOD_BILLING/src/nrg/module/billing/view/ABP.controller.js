@@ -17,7 +17,16 @@ sap.ui.define(
 
         var Controller = CoreController.extend('nrg.module.billing.view.ABP');
 
-        Controller.prototype.onAfterRendering = function () {
+        Controller.prototype.onInit = function() {
+            var oEventBus = sap.ui.getCore().getEventBus();
+
+            // Subscribe ABP change events
+            oEventBus.subscribe("nrg.module.billing", "eOpenABPPopup", this._handleOpenABPPopup, this);
+        };
+
+        Controller.prototype._handleOpenABPPopup = function() {
+            //this._ABPPopupControl = this.getView().getParent();
+            //this._ABPPopupControl.open();
             // Get the OwenerComponent from the mother controller
             this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
 
@@ -67,6 +76,59 @@ sap.ui.define(
 
             this._initialCheck();
         };
+
+        /*
+        Controller.prototype.onAfterRendering = function () {
+            // Get the OwenerComponent from the mother controller
+            this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
+
+            // Get the ABP popup control
+            this._ABPPopupControl = this.getView().getParent();
+
+            // Set up global variables
+            this._aYearList = [];
+            this._aGraphClors = ['blue', 'gray', 'yellow'];
+
+            // Set up models
+            this.getView().setModel(this._OwnerComponent.getModel('comp-billing-avgplan'), 'oDataAvgSvc');
+            this.getView().setModel(this._OwnerComponent.getModel('comp-dppext'), 'oDataSvc');
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEligibility');
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oUsageGraph');
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oAmountBtn');
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oAmountHistory');
+            this.getView().setModel(new sap.ui.model.json.JSONModel({
+                current : false,
+                newAdd : false,
+                co : '',
+                HouseNo : '',
+                UnitNo : '',
+                City : '',
+                State: '',
+                Country : '',
+                AddrLine : '',
+                Street : '',
+                PoBox: '',
+                ZipCode : '',
+                NewAddrCheck : false,
+                NewAddressflag : false,
+                editable : false
+            }), 'olocalAddress');
+                        //Model for DppComunication (DPPIII)
+            this.getView().setModel(new JSONModel(), 'oDppStepThreeCom');
+
+            //Model for screen control
+            this.getView().setModel(new JSONModel(), 'oABPScrnControl');
+            this._initScrnControl();
+            // Retrieve routing parameters
+            var oRouteInfo = this._OwnerComponent.getCcuxRouteManager().getCurrentRouteInfo();
+
+            this._bpNum = oRouteInfo.parameters.bpNum;
+            this._caNum = oRouteInfo.parameters.caNum;
+            this._coNum = oRouteInfo.parameters.coNum;
+
+            this._initialCheck();
+        };*/
+
         Controller.prototype._initScrnControl = function () {
             var oScrnControl = this.getView().getModel('oABPScrnControl');
             oScrnControl.setProperty('/Table', true);
@@ -278,6 +340,8 @@ sap.ui.define(
 
                                 return;
                             }
+                            // 20160610 HJ Added: Trigger open after making sure it's eligible
+                            this._ABPPopupControl.open();
                             // Retrieve the data for table
                             this._retrieveTableInfo(this._coNum, function () {bDoneRetrTable = true; });
                             // Retrieve the data for graph
