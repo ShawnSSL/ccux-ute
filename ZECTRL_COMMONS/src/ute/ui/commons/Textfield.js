@@ -69,25 +69,46 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
             }
         }
             });
+        /**
+         * Handles the change event.
+         *
+         * @protected
+         * @param {object} oEvent
+         * @returns {true|undefined} true when change event is fired
+         */
+        Textfield.prototype.onChange = function (oEvent) {
+            this._checkChange(oEvent);
 
+            oEvent.preventDefault();
+            if (oEvent.stopPropagation) {
+                oEvent.stopPropagation();
+            }
+
+        };
         Textfield.prototype.onsapfocusleave = function (oEvent) {
 
             this._checkChange(oEvent);
 
             oEvent.preventDefault();
-            oEvent.stopPropagation();
+            if (oEvent.stopPropagation) {
+                oEvent.stopPropagation();
+            }
         };
 
         Textfield.prototype.onfocusin = function (oEvent) {
             oEvent.preventDefault();
-            oEvent.stopPropagation();
+            if (oEvent.stopPropagation) {
+                oEvent.stopPropagation();
+            }
 
             this.fireFocusIn(oEvent);
         };
 
         Textfield.prototype.onsapenter = function (oEvent) {
             oEvent.preventDefault();
-            oEvent.stopPropagation();
+            if (oEvent.stopPropagation) {
+                oEvent.stopPropagation();
+            }
 
             this._checkChange(oEvent);
             this.fireEnterKeyPress(oEvent);
