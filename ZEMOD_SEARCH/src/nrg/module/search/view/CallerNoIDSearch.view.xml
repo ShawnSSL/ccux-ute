@@ -285,7 +285,7 @@
                     fieldType="Float"
                     width="48%">
                 </ute:Textfield>-->
-                <ute:Textfield
+<!--                <ute:Textfield
                     value="{
                         path:'oSearchFilters>/searchTextFields/sStateNum'}"
                     class="nrgSearch-calrNoIDSearch-textfield-input"
@@ -295,7 +295,22 @@
                     label="Title"
                     fieldType="Float"
                     width="48%">
-                </ute:Textfield>
+                </ute:Textfield>-->
+                <ute:AutoComplete
+                    value="{
+                        path:'oSearchFilters>/searchTextFields/sStateNum'}"
+                    placeholder="{comp-i18n-search>nrgSearchClrNid_State}"
+                    showSuggestion="true"
+                    suggest="onStateSuggest"
+                    label="Title"
+                    enterKeyPress="onEnterKeyPress"
+                    fieldType="Float"
+                    width="48%"
+                    suggestionItems="{ path:'oStateListModel>/US_State', sorter:{ path:'oStateListModel>sAbvName', descending: 'false'}}" >
+                    <ute:suggestionItems>
+                        <core:Item text="{oStateListModel>sAbvName}" />
+                    </ute:suggestionItems>
+                </ute:AutoComplete>
                 <ute:Textfield
                     value="{
                         path:'oSearchFilters>/searchTextFields/sZipNum'}"

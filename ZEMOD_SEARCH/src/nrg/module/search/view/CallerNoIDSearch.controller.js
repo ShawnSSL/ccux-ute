@@ -66,6 +66,15 @@ sap.ui.define(
             aFilters = this._createSearchFilter(aFilterIds, aFilterValues);
             oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
         };
+        Controller.prototype.onStateSuggest = function (oEvent) {
+            var aFilterIds,
+                aFilterValues,
+                aFilters;
+            aFilterIds = ["sAbvName"];
+            aFilterValues = [oEvent.getParameter("suggestValue") ? oEvent.getParameter("suggestValue").toUpperCase() : ""];
+            aFilters = this._createSearchFilter(aFilterIds, aFilterValues, FilterOperator.Contains);
+            oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
+        };
        /**
 		 * Assign the filter objects based on the input selection
 		 *
@@ -74,13 +83,13 @@ sap.ui.define(
          * @param {Array} aFilterValues for each sPath
 		 * @private
 		 */
-        Controller.prototype._createSearchFilter = function (aFilterIds, aFilterValues) {
+        Controller.prototype._createSearchFilter = function (aFilterIds, aFilterValues, sOperator) {
             var aFilters = [],
                 iCount;
 
             for (iCount = 0; iCount < aFilterIds.length; iCount = iCount + 1) {
                 if (aFilterIds[iCount] && aFilterValues[iCount]) {
-                    aFilters.push(new Filter(aFilterIds[iCount], FilterOperator.EQ, aFilterValues[iCount], ""));
+                    aFilters.push(new Filter(aFilterIds[iCount], sOperator || FilterOperator.EQ, aFilterValues[iCount], ""));
                 }
             }
             return aFilters;
