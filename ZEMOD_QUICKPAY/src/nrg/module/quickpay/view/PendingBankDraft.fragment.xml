@@ -48,8 +48,13 @@
                            class="nrgQPCC-btn"
                            design="Default">
                 </um:button>
-                <um:Button press=".onPopupClose"
+                <um:Button press=".onPBDCancel"
                            text="{comp-i18n-quickpay>nrgQPCancel}"
+                           class="nrgQPCC-btn"
+                           design="Default">
+                </um:button>
+                <um:Button press=".onPopupClose"
+                           text="{comp-i18n-quickpay>nrgQPClose}"
                            class="nrgQPCC-btn"
                            design="Default">
                 </um:button>
