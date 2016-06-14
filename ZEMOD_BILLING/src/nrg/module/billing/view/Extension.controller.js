@@ -51,6 +51,7 @@ sap.ui.define(
             this._initScrnControl();
             this._isExtElgble();
             this._retrieveNotification();
+            this._aSelOpenItems = [];
 
         };
         /* =========================================================== */
@@ -165,7 +166,27 @@ sap.ui.define(
             }
         };
 
-
+        /**
+		 * Handler when Pending payment record is selected, make fields editable
+		 *
+		 * @function
+		 * @param {sap.ui.base.Event} oEvent pattern match event
+         *
+		 *
+		 */
+        Controller.prototype.onSelectionItems = function (oEvent) {
+            var iIndex,
+                sTemp,
+                sItemNumber;
+            sItemNumber = oEvent.getSource().getBindingContext("oExtExtensions").getProperty("OpenItems/ItemNumber");
+            if (oEvent.getSource().getChecked()) {
+                iIndex = this._aSelOpenItems.indexOf(sItemNumber);
+                sTemp = iIndex < 0 && this._aSelOpenItems.push(sItemNumber);
+            } else {
+                iIndex = this._aSelOpenItems.indexOf(sItemNumber);
+                sTemp = iIndex > -1 && this._aSelOpenItems.splice(iIndex, 1);
+            }
+        };
         /****************************************************************************************************************/
         //Handler
         /****************************************************************************************************************/
@@ -547,7 +568,8 @@ sap.ui.define(
                 that = this,
                 sContactLogArea,
                 sNewDateSelected,
-                oLocalModel = this.getView().getModel('oLocalModel');
+                oLocalModel = this.getView().getModel('oLocalModel'),
+                sSelectedOpenItems = "";
 
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').getValue();
@@ -584,6 +606,14 @@ sap.ui.define(
                 oDataObject.ExtReason = oReason.getSelectedKey();
             }
             oDataObject.ExtActive = false;
+            this._aSelOpenItems.forEach(function (sCurrentItem, index) {
+                if (index) {
+                    sSelectedOpenItems += sCurrentItem;
+                } else {
+                    sSelectedOpenItems += "~" + sCurrentItem;
+                }
+            });
+            oDataObject.CurrItems = sSelectedOpenItems;
             sPath = '/ExtConfs';
 
             oParameters = {
