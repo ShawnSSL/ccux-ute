@@ -343,7 +343,7 @@ sap.ui.define(
                                 return;
                             }
                             // 20160610 HJ Added: Trigger open after making sure it's eligible
-                            this._ABPPopupControl.open();
+                            //this._ABPPopupControl.open();
                             // Retrieve the data for table
                             this._retrieveTableInfo(this._coNum, function () {bDoneRetrTable = true; });
                             // Retrieve the data for graph
