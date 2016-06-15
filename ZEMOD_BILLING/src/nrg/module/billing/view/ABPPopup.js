@@ -3,11 +3,10 @@
 
 sap.ui.define(
     [
-        'sap/ui/core/Control',
-        'sap/ui/core/Popup'
+        'sap/ui/core/Control'
     ],
 
-    function (Control, Popup) {
+    function (Control) {
         'use strict';
 
         /*------------------------------------- Control for Average Billing Plan Popup --------------------------------------*/
@@ -36,8 +35,8 @@ sap.ui.define(
         /*----------------------------------------------------- Methods -----------------------------------------------------*/
 
         ABPPopup.prototype.prepareABP = function (bisRetro) {
-            var oABPView;
-            //var eventBus = sap.ui.getCore().getEventBus();
+            var oABPView,
+                eventBus = sap.ui.getCore().getEventBus();
 
 
             if (!this._oABPPopup.getContent().length) {
@@ -54,11 +53,11 @@ sap.ui.define(
                     this._oABPPopup.getContent()[0].getController().isRetro = bisRetro;
                 }
             }
-            //eventBus.publish("nrg.module.billing", "eOpenABPPopup", {}); //20160615 Revert to allow other changes first
-            this._oABPPopup.open();
+            eventBus.publish("nrg.module.billing", "eOpenABPPopup", {}); //20160615 Revert to allow other changes first
+            //this._oABPPopup.open();
             return this;
         };
-        ABPPopup.prototype._onPopupClosed = function (oEvent) {
+        ABPPopup.prototype._onPopupClosed = function () {
             this.getParent().fireEvent("ABPCompleted");
         };
         return ABPPopup;
