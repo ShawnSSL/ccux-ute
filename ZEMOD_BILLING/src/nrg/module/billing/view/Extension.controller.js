@@ -352,10 +352,11 @@ sap.ui.define(
                 aFilterIds,
                 that = this,
                 oLocalModel = this.getView().getModel('oLocalModel'),
-                sDwnPayValue;
+                sDwnPayValue,
+                oEligble = this.getView().getModel('oExtEligible');
 
-            aFilterIds = ["Contract"];
-            aFilterValues = [this._coNum];
+            aFilterIds = ["Contract", 'ExtActive'];
+            aFilterValues = [this._coNum, oEligble.getProperty('/ExtActive')];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             this.getOwnerComponent().getCcuxApp().setOccupied(true);
             sPath = '/Extensions';//(ContractAccountNumber=\'' + this._caNum + '\',ExtActive=false)/ExtensionSet';
@@ -607,7 +608,7 @@ sap.ui.define(
             }
             oDataObject.ExtActive = false;
             this._aSelOpenItems.forEach(function (sCurrentItem, index) {
-                if (index) {
+                if (index === 0) {
                     sSelectedOpenItems += sCurrentItem;
                 } else {
                     sSelectedOpenItems += "~" + sCurrentItem;
