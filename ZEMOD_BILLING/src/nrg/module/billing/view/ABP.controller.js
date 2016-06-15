@@ -17,8 +17,8 @@ sap.ui.define(
 
         var Controller = CoreController.extend('nrg.module.billing.view.ABP');
 
-        /*   //20160615 Revert to allow other changes first
-        Controller.prototype.onInit = function() {
+           //20160615 Revert to allow other changes first
+        Controller.prototype.onInit = function () {
             var oEventBus = sap.ui.getCore().getEventBus();
 
             // Subscribe ABP change events
@@ -26,7 +26,7 @@ sap.ui.define(
         };
 
 
-        Controller.prototype._handleOpenABPPopup = function() {
+        Controller.prototype._handleOpenABPPopup = function () {
             //this._ABPPopupControl = this.getView().getParent();
             //this._ABPPopupControl.open();
             // Get the OwenerComponent from the mother controller
@@ -77,9 +77,10 @@ sap.ui.define(
             this._coNum = oRouteInfo.parameters.coNum;
 
             this._initialCheck();
-        };*/
+        };
 
 
+        /*
         Controller.prototype.onAfterRendering = function () {
             // Get the OwenerComponent from the mother controller
             this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
@@ -129,7 +130,7 @@ sap.ui.define(
             this._coNum = oRouteInfo.parameters.coNum;
 
             this._initialCheck();
-        };
+        };*/
 
         Controller.prototype._initScrnControl = function () {
             var oScrnControl = this.getView().getModel('oABPScrnControl');
@@ -209,7 +210,7 @@ sap.ui.define(
 
                 }.bind(this),
                 error: function (oError) {
-
+                    //oError
                 }.bind(this)
             };
 
@@ -303,7 +304,11 @@ sap.ui.define(
 
             if (this._coNum) {
                 // Retrieve the eligibility for ABP
-                this._retrieveABPEligibility(this._coNum, function () {bDoneRetrEligibility = true; });
+                this._OwnerComponent.getCcuxApp().setOccupied(true);
+                this._retrieveABPEligibility(this._coNum, function () {
+                    bDoneRetrEligibility = true;
+                    this._OwnerComponent.getCcuxApp().setOccupied(false);
+                }.bind(this));
 
                 checkDoneRetrEligibility = setInterval(function () {
                     var i, graphControlBtn;
@@ -343,7 +348,7 @@ sap.ui.define(
                                 return;
                             }
                             // 20160610 HJ Added: Trigger open after making sure it's eligible
-                            //this._ABPPopupControl.open();
+                            this._ABPPopupControl.open();
                             // Retrieve the data for table
                             this._retrieveTableInfo(this._coNum, function () {bDoneRetrTable = true; });
                             // Retrieve the data for graph
