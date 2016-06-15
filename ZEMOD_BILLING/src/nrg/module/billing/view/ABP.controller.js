@@ -17,12 +17,14 @@ sap.ui.define(
 
         var Controller = CoreController.extend('nrg.module.billing.view.ABP');
 
+        /*   //20160615 Revert to allow other changes first
         Controller.prototype.onInit = function() {
             var oEventBus = sap.ui.getCore().getEventBus();
 
             // Subscribe ABP change events
             oEventBus.subscribe("nrg.module.billing", "eOpenABPPopup", this._handleOpenABPPopup, this);
         };
+
 
         Controller.prototype._handleOpenABPPopup = function() {
             //this._ABPPopupControl = this.getView().getParent();
@@ -75,9 +77,9 @@ sap.ui.define(
             this._coNum = oRouteInfo.parameters.coNum;
 
             this._initialCheck();
-        };
+        };*/
 
-        /*
+
         Controller.prototype.onAfterRendering = function () {
             // Get the OwenerComponent from the mother controller
             this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
@@ -127,7 +129,7 @@ sap.ui.define(
             this._coNum = oRouteInfo.parameters.coNum;
 
             this._initialCheck();
-        };*/
+        };
 
         Controller.prototype._initScrnControl = function () {
             var oScrnControl = this.getView().getModel('oABPScrnControl');
