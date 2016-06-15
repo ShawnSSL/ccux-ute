@@ -40,6 +40,7 @@
                                     formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
                 </ute:Tag>
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-hdr">
+                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k1" text=""/>
                     <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k2" text="{comp-i18n-billing>nrgBilling-dpp-Description}"/>
                     <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k3" text="{comp-i18n-billing>nrgBilling-dpp-Amt}"/>
                     <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k4" text="{comp-i18n-billing>nrgBilling-dpp-DueDte}"/>
@@ -49,6 +50,7 @@
                     <ute:Tag>
                         <ute:Tag class="nrgBilling-dlct-odd"
                                  visible="{parts:['oExtExtensions>OpenItems/ItemNumber'], formatter:'._isOdd'}">
+                            <utmain:Checkbox select=".onSelectionItems" class="nrgBilling-dlc-cell nrgBilling-dlch-k1" enabled="{= ${oExtExtensions>OpenItems/PastDue} ? true : false }" visible="{oExtEligible>/ExtOverride}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k2" text="{oExtExtensions>OpenItems/Description}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k3" text="{path: 'oExtExtensions>OpenItems/Amount', type: 'nrg.base.type.Price',
                                             formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
@@ -57,6 +59,7 @@
                         </ute:Tag>
                         <ute:Tag class="nrgBilling-dlct-evn"
                                  visible="{parts:['oExtExtensions>OpenItems/ItemNumber'], formatter:'._isEven'}">
+                            <utmain:Checkbox select=".onSelectionItems" class="nrgBilling-dlc-cell nrgBilling-dlch-k1" enabled="{= ${oExtExtensions>OpenItems/PastDue} ? true : false }" visible="{oExtEligible>/ExtOverride}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k2" text="{oExtExtensions>OpenItems/Description}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k3" text="{path: 'oExtExtensions>OpenItems/Amount', type: 'nrg.base.type.Price',
                                             formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
@@ -132,6 +135,7 @@
                                     formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
                 </ute:Tag>
                 <ute:Tag class="nrgBilling-dPmtPln-lftArea-ctnt-hdr">
+                    <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k1" text=""/>
                     <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k2" text="{comp-i18n-billing>nrgBilling-dpp-Description}"/>
                     <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k3" text="{comp-i18n-billing>nrgBilling-dpp-Amt}"/>
                     <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k4" text="{comp-i18n-billing>nrgBilling-dpp-DueDte}"/>
@@ -141,6 +145,7 @@
                     <ute:Tag>
                         <ute:Tag class="nrgBilling-dlct-odd"
                                  visible="{parts:['oExtExtensions>OpenItems/ItemNumber'], formatter:'._isOdd'}">
+                            <utmain:Checkbox select=".onSelectionItems" class="nrgBilling-dlc-cell nrgBilling-dlch-k1" enabled="{= ${oExtExtensions>OpenItems/PastDue} ? true : false }" visible="{oExtEligible>/ExtOverride}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k2" text="{oExtExtensions>OpenItems/Description}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k3" text="{path: 'oExtExtensions>OpenItems/Amount', type: 'nrg.base.type.Price',
                                             formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>
@@ -149,6 +154,7 @@
                         </ute:Tag>
                         <ute:Tag class="nrgBilling-dlct-evn"
                                  visible="{parts:['oExtExtensions>OpenItems/ItemNumber'], formatter:'._isEven'}">
+                            <utmain:Checkbox select=".onSelectionItems" class="nrgBilling-dlc-cell nrgBilling-dlch-k1" enabled="{= ${oExtExtensions>OpenItems/PastDue} ? true : false }" visible="{oExtEligible>/ExtOverride}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k2" text="{oExtExtensions>OpenItems/Description}"/>
                             <ute:Tag class="nrgBilling-dlc-cell nrgBilling-dlch-k3" text="{path: 'oExtExtensions>OpenItems/Amount', type: 'nrg.base.type.Price',
                                             formatOptions: { currencySymbol: '$' , currencyAlignment: 'LHS' }}"/>

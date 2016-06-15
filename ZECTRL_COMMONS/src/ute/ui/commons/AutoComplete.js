@@ -376,7 +376,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
          * @private
          */
         AutoComplete.prototype._doSelect = function (iStart, iEnd) {
-/*            var oDomRef = this._$input[0],
+            var oDomRef = this._$input[0],
                 $Ref;
             if (oDomRef) {
                 // if no Dom-Ref - no selection (Maybe popup closed)
@@ -384,7 +384,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
                 oDomRef.focus();
                 $Ref.selectText((iStart || 0), (iEnd || $Ref.val().length));
             }
-            return this;*/
+            return this;
         };
         AutoComplete.prototype.refreshListItems = function (oInput) {
 			var bShowSuggestion = oInput.getShowSuggestion(),
@@ -726,6 +726,16 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
                     this._iPopupListSelectedIndex = -1;
                 }
                 this._closeSuggestionPopup();
+            }
+
+        };
+        AutoComplete.prototype.onsapfocusleave = function (oEvent) {
+            var oPopup = this._oSuggestionPopup;
+
+            if (oPopup instanceof Popover) {
+                if (oEvent.relatedControlId && jQuery.sap.containsOrEquals(oPopup.getDomRef(), sap.ui.getCore().byId(oEvent.relatedControlId).getFocusDomRef())) {
+                    this.focus();
+                }
             }
 
         };

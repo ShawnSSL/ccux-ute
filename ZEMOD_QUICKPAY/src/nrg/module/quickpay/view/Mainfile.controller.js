@@ -456,7 +456,7 @@ sap.ui.define(
             if ((this._aPendingSelPaths) && (this._aPendingSelPaths.length > 0)) {
                 this._aPendingSelPaths.forEach(function (sCurrentPath) {
                     var oContext = oPCCModel.getContext(sCurrentPath),
-                        sPath = "/CreditCardPPSet(BP='" + that._sBP + "',CA='" + that._sCA + "')";
+                        sPath = "/CreditCardPPSet(BP='" + that._sBP + "',CA='" + that._sCA + "',CardID='" + oContext.getProperty("CardID") + "')";
                     mParameters = {
                         method : "POST",
                         urlParameters : {"CardID" : oContext.getProperty("CardID"),
@@ -572,6 +572,112 @@ sap.ui.define(
                 iSelected = 0;
                 this.getView().getModel("appView").setProperty("/selected", iSelected);
                 oRow.removeStyleClass("nrgQPTable-RowsSelected");
+            }
+        };
+        /**
+		 * Handler when Pending payment record is selected, make fields editable
+		 *
+		 * @function
+		 * @param {sap.ui.base.Event} oEvent pattern match event
+         *
+		 *
+		 */
+        Controller.prototype.onPCCCancel = function (oEvent) {
+            var oPCCModel = this.getView().getModel('QP-quickpay'),
+                oModel = this.getView().getModel('comp-quickpay'),
+                that,
+                oPayAvailFlags = "/PayAvailFlagsSet" + "(BP='" + parseInt(this._sBP, 10) + "',CA='" +  parseInt(this._sCA, 10) + "')",
+                oContext = oModel.getContext(oPayAvailFlags),
+                sCAName =  oContext.getProperty("CaName");
+
+            if ((this._aPendingSelPaths) && (this._aPendingSelPaths.length > 0)) {
+                this._aPendingSelPaths.forEach(function (sCurrentPath) {
+                    var oContext = oPCCModel.getContext(sCurrentPath),
+                        sPath,
+                        oFirstConfirmCallBack,
+                        oCallFunctionHandler,
+                        mParameters,
+                        fSecondConfirmHandler,
+                        fSecondConfirmCallback;
+                    sPath = "/CreditCardPPSet(BP='" + oContext.getProperty("BP") + "',CA='" + oContext.getProperty("CA") + "',CardID='" + oContext.getProperty("CardID") + "')";
+                    oContext = oModel.getContext(sPath);
+                    mParameters = {
+                        method : "POST",
+                        urlParameters : {
+                            "CardID" : oContext.getProperty("CardID"),
+                            "BP" : oContext.getProperty("BP"),
+                            "CA" : oContext.getProperty("CA")
+                        },
+                        success : function (oData, oResponse) {
+                            ute.ui.main.Popup.Alert({
+                                title: 'Information',
+                                message: 'Scheduled Payment succesfully cancelled'
+                            });
+                            that.onPopupClose();
+                        }.bind(this),
+                        error: function (oError) {
+                            ute.ui.main.Popup.Alert({
+                                title: 'Information',
+                                message: 'Scheduled Payment Failed to cancel'
+                            });
+                        }.bind(this)
+                    };
+                    oCallFunctionHandler = function (bForward) {
+                        sPath = "/CreditCardCanc";
+                        oModel.callFunction(sPath, mParameters);
+                    };
+                    fSecondConfirmHandler = function (bForward) {
+                        if (!bForward) {
+                            return;
+                        }
+                        var sMessage,
+                            oOkButton,
+                            oCancelButton,
+                            oText,
+                            oTag = new ute.ui.commons.Tag(),
+                            AlertDialog;
+                        sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'> <div>" + sCAName  + 'has requested to cancel the One Time Scheduled Credit Card Payment below:' + "</div><div style='margin:10px;'> Scheduled Authorization Date :: " + oContext.getProperty("ScheduledDate") + "</div> <div style='margin:10px;'> Contract Account Number:: ";
+                        sMessage = sMessage + oContext.getProperty("CA");
+                        sMessage = sMessage + "</div><div style='margin:10px;'> Payment Amount:: ";
+                        sMessage = sMessage + oContext.getProperty("Amount");
+                        sMessage = sMessage + "</div><div style='margin:10px;'> Do you wish to continue? ";
+                        oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {AlertDialog.close(); oCallFunctionHandler(true); } });
+                        oCancelButton = new ute.ui.main.Button({text: 'CANCEL', press: function () {AlertDialog.close(); }});
+                        oOkButton.addStyleClass("nrgQPCC-btn");
+                        oCancelButton.addStyleClass("nrgQPCC-btn");
+                        oText = new sap.ui.core.HTML({content: sMessage});
+                        oTag.addContent(oText);
+                        oTag.addContent(oOkButton);
+                        oTag.addContent(oCancelButton);
+                        AlertDialog = new ute.ui.main.Popup.create({
+                            title: "Validate",
+                            content: oTag
+                        });
+                        AlertDialog.open();
+                    };
+                    oFirstConfirmCallBack = function (sAction) {
+                        switch (sAction) {
+                        case ute.ui.main.Popup.Action.Yes:
+                            fSecondConfirmHandler(true);
+                            break;
+                        case ute.ui.main.Popup.Action.No:
+                            fSecondConfirmHandler(false);
+                            break;
+                        }
+                    };
+                    ute.ui.main.Popup.Confirm({
+                        title: 'Validate',
+                        message: 'If Scheduled Credit Card Payment is cancelled you may be subject to applicablelate fees and/or disconnection, unless other payment is received by the due date. Are you sure you want to cancel?',
+                        callback: oFirstConfirmCallBack
+                    });
+
+                });
+
+            } else {
+                ute.ui.main.Popup.Alert({
+                    title: 'Information',
+                    message: 'No Record Selected'
+                });
             }
         };
         /**
@@ -1027,6 +1133,125 @@ sap.ui.define(
             }
         };
         /**
+		 * Pending Bank Draft cancel option
+		 *
+		 * @function
+		 * @param {sap.ui.base.Event} oEvent pattern match event
+         *
+		 *
+		 */
+        Controller.prototype.onPBDCancel = function (oEvent) {
+            var oPCCModel = this.getView().getModel('QP-quickpay'),
+                oModel = this.getView().getModel('comp-quickpay'),
+                oPayAvailFlags = "/PayAvailFlagsSet" + "(BP='" + parseInt(this._sBP, 10) + "',CA='" +  parseInt(this._sCA, 10) + "')",
+                oContext = oModel.getContext(oPayAvailFlags),
+                sCAName =  oContext.getProperty("CaName"),
+                that = this;
+            if ((this._aPendingSelPaths) && (this._aPendingSelPaths.length > 0)) {
+                this._aPendingSelPaths.forEach(function (sCurrentPath) {
+                    var oContext = oPCCModel.getContext(sCurrentPath),
+                        sPath,
+                        oFirstConfirmCallBack,
+                        oCallFunctionHandler,
+                        mParameters,
+                        fSecondConfirmHandler,
+                        fSecondConfirmCallback;
+                    sPath = "/BankDraftPPSet(BP='" + oContext.getProperty("BP") + "',CA='" + oContext.getProperty("CA") + "',TrackingID='" + oContext.getProperty("TrackingID") + "')";
+                    oContext = oModel.getContext(sPath);
+                    if (oContext.getProperty("Editable")) {
+                        mParameters = {
+                            method : "POST",
+                            urlParameters : {
+                                "TrackingID" : oContext.getProperty("TrackingID"),
+                                "BP" : oContext.getProperty("BP"),
+                                "CA" : oContext.getProperty("CA")
+                            },
+                            success : function (oData, oResponse) {
+                                ute.ui.main.Popup.Alert({
+                                    title: 'Information',
+                                    message: 'Bank Draft scheduled Payment successfully cancelled'
+                                });
+                                that.onPopupClose();
+                            }.bind(this),
+                            error: function (oError) {
+                                ute.ui.main.Popup.Alert({
+                                    title: 'Information',
+                                    message: 'Bank Draft scheduled Payment cancellation failed'
+                                });
+                            }.bind(this)
+                        };
+                        oCallFunctionHandler = function (bForward) {
+                            if (!bForward) {
+                                return;
+                            }
+                            sPath = "/BankDraftCanc";
+                            oModel.callFunction(sPath, mParameters);
+                        };
+                        fSecondConfirmHandler = function (bForward) {
+                            if (!bForward) {
+                                return;
+                            }
+                            var sMessage,
+                                oOkButton,
+                                oCancelButton,
+                                oText,
+                                oTag = new ute.ui.commons.Tag(),
+                                AlertDialog,
+                                sDate = oContext.getProperty("ScheduledDate"),
+                                oFormatmmddyy = DateFormat.getInstance({pattern: "MM-dd-yyyy"});
+                            sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'> <div>" + sCAName  + ' has requested to cancel the One Time Scheduled Credit Card Payment below:' + "</div><div style='margin:10px;'> Debt Authorization Date :: " + oFormatmmddyy.format(sDate) + "</div> <div style='margin:10px;'> Contract Account Number:: ";
+                            sMessage = sMessage + oContext.getProperty("CA");
+                            sMessage = sMessage + "</div><div style='margin:10px;'> Payment Amount:: ";
+                            sMessage = sMessage + oContext.getProperty("PaymentAmount");
+                            sMessage = sMessage + "<div style='margin:10px;'> Payment Date Requested :: " + oFormatmmddyy.format(sDate) + "</div>";
+                            sMessage = sMessage + "</div><div style='margin:10px;'> Do you wish to continue? </div>";
+                            oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {AlertDialog.close(); oCallFunctionHandler(true); } });
+                            oCancelButton = new ute.ui.main.Button({text: 'CANCEL', press: function () {AlertDialog.close(); }});
+                            oOkButton.addStyleClass("nrgQPCC-btn");
+                            oCancelButton.addStyleClass("nrgQPCC-btn");
+                            oText = new sap.ui.core.HTML({content: sMessage});
+                            oTag.addContent(oText);
+                            oTag.addContent(oOkButton);
+                            oTag.addContent(oCancelButton);
+                            AlertDialog = new ute.ui.main.Popup.create({
+                                title: "Validate",
+                                content: oTag
+                            });
+                            AlertDialog.open();
+                        };
+                        oFirstConfirmCallBack = function (sAction) {
+                            switch (sAction) {
+                            case ute.ui.main.Popup.Action.Yes:
+                                fSecondConfirmHandler(true);
+                                break;
+                            case ute.ui.main.Popup.Action.No:
+                                fSecondConfirmHandler(false);
+                                break;
+                            }
+                        };
+                        ute.ui.main.Popup.Confirm({
+                            title: 'Validate',
+                            message: 'If Scheduled Credit Card Payment is cancelled you may be subject to applicablelate fees and/or disconnection, unless other payment is received by the due date. Are you sure you want to cancel?',
+                            callback: oFirstConfirmCallBack
+                        });
+                    } else {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Information',
+                            message: 'Cannot cancel since it is pass the deadline for same day cancels(5:00pm).'
+                        });
+                    }
+
+
+                });
+
+            } else {
+                ute.ui.main.Popup.Alert({
+                    title: 'Information',
+                    message: 'No Record Selected'
+                });
+            }
+        };
+        /**
 		 * Pending Credit Card Process initialization
 		 *
 		 * @function onQuickPay
@@ -1065,32 +1290,6 @@ sap.ui.define(
                                          "CA" : oContext.getProperty("CA"),
                                          "CurrentStatus" : oContext.getProperty("CurrentStatus")},
                         success : function (oData, oResponse) {
-/*                            jQuery.sap.log.info("Odata Read Successfully:::");
-                            aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
-                            oBindingInfo = {
-                                filters : aFilters,
-                                success : function (oData) {
-                                    oPCCModel.setData(oData);
-                                    oTableRow.setModel(oPCCModel);
-                                    jQuery.sap.log.info("Odata Read Successfully:::");
-                                    that._OwnerComponent.getCcuxApp().setOccupied(false);
-                                    ute.ui.main.Popup.Alert({
-                                        title: 'Information',
-                                        message: 'Update Successfull'
-                                    });
-                                }.bind(this),
-                                error: function (oError) {
-                                    jQuery.sap.log.info("Error occured");
-                                    that._OwnerComponent.getCcuxApp().setOccupied(false);
-                                    ute.ui.main.Popup.Alert({
-                                        title: 'Information',
-                                        message: 'Update Successfull'
-                                    });
-                                }.bind(this)
-                            };
-                            if (oModel) {
-                                oModel.read(sPath, oBindingInfo);
-                            }*/
                             if (oData.Error === "") {
                                 oContactModel.setData(oData);
                                 that.onPaymentSuccess();
