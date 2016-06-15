@@ -197,31 +197,6 @@ sap.ui.define(
         };
 
         /**
-        * Check date function
-        *
-        *@function _checkDateFormate
-        *@param {String, String} sDate, sMsg
-
-        Controller.prototype._checkDateFormat = function (sDate, sMsg) {
-            var oDatePattern,
-                bValidDateFormat;
-
-            //foo.match(new RegExp(':\\d\\d'));
-
-            bValidDateFormat = sDate.match(new RegExp('^((0?[13578]|10|12)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[01]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1}))|(0?[2469]|11)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[0]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1})))$)');
-
-            if ((parseInt(sDate.substring(0, 2), 10) === 2) && (parseInt(sDate.substring(3,5), 10) > 29)) {
-                this.getView().getModel("appView").setProperty("/message", "Febuary can only have date smaller than or equal to 29");
-                return false;
-            }
-
-            if (!bValidDateFormat) {
-                this.getView().getModel("appView").setProperty("/message", sMsg);
-                return false;
-            }
-            return true;
-        };*/
-        /**
         * When Credit Card is Accepted
          *
          * @function onQuickPay
@@ -256,7 +231,7 @@ sap.ui.define(
             that.getView().getModel("appView").setProperty("/message", "");
             oMsgArea.removeStyleClass("nrgQPPay-hide");
             oMsgArea.addStyleClass("nrgQPPay-black");
-            if (!this._ValidateValue(oCreditCardAmount.getValue(), "Enter Amount to be posted")) {
+            if (!this._ValidateValue(oCreditCardAmount.getValue(), "Enter Amount to be posted", true)) {
                 return false;
             }
             if (!this._ValidateValue(oCreditCardDate.getValue(), "Enter Credit Card Date")) {
@@ -585,7 +560,7 @@ sap.ui.define(
         Controller.prototype.onPCCCancel = function (oEvent) {
             var oPCCModel = this.getView().getModel('QP-quickpay'),
                 oModel = this.getView().getModel('comp-quickpay'),
-                that,
+                that = this,
                 oPayAvailFlags = "/PayAvailFlagsSet" + "(BP='" + parseInt(this._sBP, 10) + "',CA='" +  parseInt(this._sCA, 10) + "')",
                 oContext = oModel.getContext(oPayAvailFlags),
                 sCAName =  oContext.getProperty("CaName");
@@ -892,7 +867,7 @@ sap.ui.define(
             oContext = oModel.getContext(oPayAvailFlags);
             oMsgArea.removeStyleClass("nrgQPPay-hide");
             oMsgArea.addStyleClass("nrgQPPay-black");
-            if (!this._ValidateValue(oBankDraftAmount.getValue(), "Enter Amount to be posted")) {
+            if (!this._ValidateValue(oBankDraftAmount.getValue(), "Enter Amount to be posted", true)) {
                 return false;
             }
             if (!this._ValidateValue(oBankDraftDate.getValue(), "Enter Bank Draft Date")) {
@@ -1598,7 +1573,7 @@ sap.ui.define(
             if (!this._ValidateValue(oReceiptNum.getValue(), "Enter Receipt Number")) {
                 return false;
             }
-            if (!this._ValidateValue(oReceiptAmount.getValue(), "Enter Amount")) {
+            if (!this._ValidateValue(oReceiptAmount.getValue(), "Enter Amount", true)) {
                 return false;
             }
             this._OwnerComponent.getCcuxApp().setOccupied(true);
@@ -1667,13 +1642,23 @@ sap.ui.define(
          * @param {String} sMsg to display when blank/null/undefined
 		 *
 		 */
-        Controller.prototype._ValidateValue = function (sValue, sMsg) {
-            if ((sValue === undefined) || (sValue === null) || (sValue === "")) {
-                this.getView().getModel("appView").setProperty("/message", sMsg);
-                return false;
+        Controller.prototype._ValidateValue = function (sValue, sMsg, bInt) {
+            if (bInt) {
+                if ((!sValue) || (sValue <= 0)) {
+                    this.getView().getModel("appView").setProperty("/message", sMsg);
+                    return false;
+                } else {
+                    return true;
+                }
             } else {
-                return true;
+                if ((sValue === undefined) || (sValue === null) || (sValue === "")) {
+                    this.getView().getModel("appView").setProperty("/message", sMsg);
+                    return false;
+                } else {
+                    return true;
+                }
             }
+
 
         };
         /**
