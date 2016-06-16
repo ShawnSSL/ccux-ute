@@ -56,7 +56,8 @@ sap.ui.define(
                 fnRecievedHandler,
                 that = this;
             this._oFormatYyyymmdd = DateFormat.getInstance({
-                pattern: 'MM/dd/yyyy'
+                pattern: 'MM/dd/yyyy',
+                calendarType: sap.ui.core.CalendarType.Gregorian
             });
             this.getView().getModel('comp-quickpay').oData = {};
             //this.getView().getModel('comp-quickpay').refresh(true, true);//If set to true then the model data will be removed/cleared.
@@ -67,8 +68,10 @@ sap.ui.define(
             this.getView().setModel(oViewModel, "appView");
             if (this._Process === 'PCC') {
                 this.onPendingCreditCard();
+                this._onPayFlagsRead();
             } else if (this._Process === 'PBD') {
                 this.onPendingBankDraft();
+                this._onPayFlagsRead();
             } else {
                 this._OwnerComponent.getCcuxApp().setOccupied(true);
                 sCurrentPath = "/PayAvailFlagsSet" + "(BP='" + this._sBP + "',CA='" + this._sCA + "')";
@@ -84,7 +87,27 @@ sap.ui.define(
             }
             oMsgArea.addStyleClass("nrgQPPay-hide");
         };
-
+        /**
+        * To Read pay flags data in case OTBD and OTCC is clicked
+        *
+        * @function _onPayFlagsRead
+        *
+        */
+        Controller.prototype._onPayFlagsRead = function () {
+            var oModel = this.getView().getModel('comp-quickpay'),
+                sPath = "/PayAvailFlagsSet" + "(BP='" + this._sBP + "',CA='" + this._sCA + "')",
+                oBindingInfo = {
+                    success : function (oData) {
+                        jQuery.sap.log.info("Odata Read Successfully:::");
+                    }.bind(this),
+                    error: function (oError) {
+                        jQuery.sap.log.info("Odata Error occured");
+                    }.bind(this)
+                };
+            if (oModel) {
+                oModel.read(sPath, oBindingInfo);
+            }
+        };
         /**
         * Central function to toggle between screens.
         *
@@ -133,7 +156,7 @@ sap.ui.define(
             this._bCreditCard = true;
             this._onToggleViews("SR");
             this.onRecordingPause();
-            oCreditCardDate.setDefaultDate(this._oFormatYyyymmdd.format(new Date(), true));
+            oCreditCardDate.setDefaultDate(this._oFormatYyyymmdd.format(new Date(), false));
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             //oCreditCardDate.setMinDate(new Date());
             this.setShowCloseButton(false);
@@ -613,10 +636,10 @@ sap.ui.define(
                             AlertDialog,
                             sDate = oContext.getProperty("ScheduledDate"),
                             oFormatmmddyy = DateFormat.getInstance({pattern: "MM-dd-yyyy"});
-                        sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'> <div>" + sCAName  + 'has requested to cancel the One Time Scheduled Credit Card Payment below:' + "</div><div style='margin:10px;'> Scheduled Authorization Date :: " + oFormatmmddyy.format(sDate) + "</div> <div style='margin:10px;'> Contract Account Number:: ";
+                        sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'> <div>" + sCAName  + ' has requested to cancel the One Time Scheduled Credit Card Payment below:' + "</div><div style='margin:10px;'> Scheduled Authorization Date :: " + oFormatmmddyy.format(sDate) + "</div> <div style='margin:10px;'> Contract Account Number:: ";
                         sMessage = sMessage + oContext.getProperty("CA");
                         sMessage = sMessage + "</div><div style='margin:10px;'> Payment Amount:: ";
-                        sMessage = sMessage + oContext.getProperty("Amount");
+                        sMessage = sMessage + parseFloat(oContext.getProperty("Amount")).toFixed(2);
                         sMessage = sMessage + "</div><div style='margin:10px;'> Do you wish to continue? ";
                         oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {AlertDialog.close(); oCallFunctionHandler(true); } });
                         oCancelButton = new ute.ui.main.Button({text: 'CANCEL', press: function () {AlertDialog.close(); }});
@@ -763,7 +786,7 @@ sap.ui.define(
                 oModel = this.getView().getModel('comp-quickpay'),
                 oMsgArea = this.getView().byId("idnrgQPPay-msgArea"),
                 oAppViewModel = this.getView().getModel("appView");
-            oBankDraftDate.setDefaultDate(this._oFormatYyyymmdd.format(new Date(), true));
+            oBankDraftDate.setDefaultDate(this._oFormatYyyymmdd.format(new Date(), false));
             //oBankDraftDate.setMinDate(new Date());
             this.setShowCloseButton(false);
             oPopup.removeStyleClass("nrgQPPay-Popup");
@@ -1176,10 +1199,10 @@ sap.ui.define(
                                 AlertDialog,
                                 sDate = oContext.getProperty("ScheduledDate"),
                                 oFormatmmddyy = DateFormat.getInstance({pattern: "MM-dd-yyyy"});
-                            sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'> <div>" + sCAName  + ' has requested to cancel the One Time Scheduled Credit Card Payment below:' + "</div><div style='margin:10px;'> Debt Authorization Date :: " + oFormatmmddyy.format(sDate) + "</div> <div style='margin:10px;'> Contract Account Number:: ";
+                            sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'> <div>" + sCAName  + ' has requested to cancel the One Time Bank Draft below:' + "</div><div style='margin:10px;'> Debt Authorization Date :: " + oFormatmmddyy.format(sDate) + "</div> <div style='margin:10px;'> Contract Account Number:: ";
                             sMessage = sMessage + oContext.getProperty("CA");
                             sMessage = sMessage + "</div><div style='margin:10px;'> Payment Amount:: ";
-                            sMessage = sMessage + oContext.getProperty("PaymentAmount");
+                            sMessage = sMessage + parseFloat(oContext.getProperty("PaymentAmount")).toFixed(2);
                             sMessage = sMessage + "</div><div style='margin:10px;'> Payment Date Requested :: " + oFormatmmddyy.format(sDate) + "</div>";
                             sMessage = sMessage + "<div style='margin:10px;'> Do you wish to continue? </div></div>";
                             oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {AlertDialog.close(); oCallFunctionHandler(true); } });
@@ -1372,7 +1395,7 @@ sap.ui.define(
             oReliantRedeem.addStyleClass("nrgQPPay-hide");
             this._onToggleViews("RED");
             this.setShowCloseButton(false);
-            oReliantDate.setValue(this._oFormatYyyymmdd.format(new Date(), true));
+            oReliantDate.setValue(this._oFormatYyyymmdd.format(new Date(), false));
             oReliantDate.setEditable(false);
         };
 
@@ -1528,7 +1551,7 @@ sap.ui.define(
                 that = this;
             //this._OwnerComponent.getCcuxApp().setOccupied(true);
             this.setShowCloseButton(false);
-            oReceiptDate.setValue(this._oFormatYyyymmdd.format(new Date(), true));
+            oReceiptDate.setValue(this._oFormatYyyymmdd.format(new Date(), false));
             oPopup.removeStyleClass("nrgQPPay-Popup");
             oPopup.addStyleClass("nrgQPPay-PopupWhite");
             oCloseButton.addStyleClass("nrgQPPayBt-closeBG");
