@@ -47,7 +47,8 @@ sap.ui.define(
          */
         Calendar.prototype.init = function () {
             this._oFormatYyyymmdd = DateFormat.getInstance({
-                pattern: 'MM/dd/yyyy'
+                pattern: 'MM/dd/yyyy',
+                calendarType: sap.ui.core.CalendarType.Gregorian
             });
         };
 
