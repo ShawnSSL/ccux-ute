@@ -437,6 +437,8 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
                         oInput._resizePopup();
                         oInput._sOpenTimer = null;
                         oPopup.open();
+                        //oInput.focus();
+                        oInput._$input.blur().focus().val(oInput._$input.val());
                     }, 0);
                 }
 
