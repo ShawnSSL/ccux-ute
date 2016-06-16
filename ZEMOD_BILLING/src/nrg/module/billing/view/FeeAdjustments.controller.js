@@ -453,7 +453,17 @@ sap.ui.define(
          * @param {sap.ui.base.Event} oEvent pattern match event
 		 */
         Controller.prototype.onCancel = function (oEvent) {
-            this.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
+            var oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
+
+            if (oGlobalDataManager.isPrepay()) {
+                if (this._sCO) {
+                    this.navTo('billing.PrePayCheckBook', {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
+                } else {
+                    this.navTo('billing.PrePayCheckBookNoCo', {bpNum: this._sBP, caNum: this._sCA});
+                }
+            } else {
+                this.navTo("billing.CheckBook", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sCO});
+            }
         };
          /**
 		 * Clicked on Cancel Button
