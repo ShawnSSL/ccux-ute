@@ -610,8 +610,10 @@ sap.ui.define(
                             oCancelButton,
                             oText,
                             oTag = new ute.ui.commons.Tag(),
-                            AlertDialog;
-                        sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'> <div>" + sCAName  + 'has requested to cancel the One Time Scheduled Credit Card Payment below:' + "</div><div style='margin:10px;'> Scheduled Authorization Date :: " + oContext.getProperty("ScheduledDate") + "</div> <div style='margin:10px;'> Contract Account Number:: ";
+                            AlertDialog,
+                            sDate = oContext.getProperty("ScheduledDate"),
+                            oFormatmmddyy = DateFormat.getInstance({pattern: "MM-dd-yyyy"});
+                        sMessage = "<div style='margin:10px; max-height: 200rem; overflow-y:auto'> <div>" + sCAName  + 'has requested to cancel the One Time Scheduled Credit Card Payment below:' + "</div><div style='margin:10px;'> Scheduled Authorization Date :: " + oFormatmmddyy.format(sDate) + "</div> <div style='margin:10px;'> Contract Account Number:: ";
                         sMessage = sMessage + oContext.getProperty("CA");
                         sMessage = sMessage + "</div><div style='margin:10px;'> Payment Amount:: ";
                         sMessage = sMessage + oContext.getProperty("Amount");
@@ -642,7 +644,7 @@ sap.ui.define(
                     };
                     ute.ui.main.Popup.Confirm({
                         title: 'Validate',
-                        message: 'If Scheduled Credit Card Payment is cancelled you may be subject to applicablelate fees and/or disconnection, unless other payment is received by the due date. Are you sure you want to cancel?',
+                        message: 'If Scheduled Credit Card Payment is cancelled you may be subject to applicable late fees and/or disconnection, unless other payment is received by the due date. Are you sure you want to cancel?',
                         callback: oFirstConfirmCallBack
                     });
 
@@ -1178,8 +1180,8 @@ sap.ui.define(
                             sMessage = sMessage + oContext.getProperty("CA");
                             sMessage = sMessage + "</div><div style='margin:10px;'> Payment Amount:: ";
                             sMessage = sMessage + oContext.getProperty("PaymentAmount");
-                            sMessage = sMessage + "<div style='margin:10px;'> Payment Date Requested :: " + oFormatmmddyy.format(sDate) + "</div>";
-                            sMessage = sMessage + "</div><div style='margin:10px;'> Do you wish to continue? </div>";
+                            sMessage = sMessage + "</div><div style='margin:10px;'> Payment Date Requested :: " + oFormatmmddyy.format(sDate) + "</div>";
+                            sMessage = sMessage + "<div style='margin:10px;'> Do you wish to continue? </div></div>";
                             oOkButton = new ute.ui.main.Button({text: 'OK', press: function () {AlertDialog.close(); oCallFunctionHandler(true); } });
                             oCancelButton = new ute.ui.main.Button({text: 'CANCEL', press: function () {AlertDialog.close(); }});
                             oOkButton.addStyleClass("nrgQPCC-btn");
@@ -1206,7 +1208,7 @@ sap.ui.define(
                         };
                         ute.ui.main.Popup.Confirm({
                             title: 'Validate',
-                            message: 'If bank draft request is cancelled you may be subject to applicablelate fees and/or disconnection, unless other payment is received by the due date. Are you sure you want to cancel?',
+                            message: 'If bank draft request is cancelled you may be subject to applicable late fees and/or disconnection, unless other payment is received by the due date. Are you sure you want to cancel?',
                             callback: oFirstConfirmCallBack
                         });
                     } else {
