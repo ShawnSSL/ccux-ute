@@ -1206,7 +1206,7 @@ sap.ui.define(
                         };
                         ute.ui.main.Popup.Confirm({
                             title: 'Validate',
-                            message: 'If Scheduled Credit Card Payment is cancelled you may be subject to applicablelate fees and/or disconnection, unless other payment is received by the due date. Are you sure you want to cancel?',
+                            message: 'If bank draft request is cancelled you may be subject to applicablelate fees and/or disconnection, unless other payment is received by the due date. Are you sure you want to cancel?',
                             callback: oFirstConfirmCallBack
                         });
                     } else {
