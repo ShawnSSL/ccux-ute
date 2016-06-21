@@ -9,7 +9,6 @@ sap.ui.define(
         'nrg/base/view/BaseController',
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
-        'sap/ui/core/routing/HashChanger',
         'sap/ui/core/format/DateFormat',
         'sap/ui/core/message/Message',
         'sap/ui/core/message/ControlMessageProcessor',
@@ -21,7 +20,7 @@ sap.ui.define(
         'nrg/base/type/ZipCode'
     ],
 
-    function (jQuery, Controller, Filter, FilterOperator, HashChanger, DateFormat, CoreMessage, CoreControlMessageProcessor, NNPPopup) {
+    function (jQuery, Controller, Filter, FilterOperator, DateFormat, CoreMessage, CoreControlMessageProcessor, NNPPopup) {
         'use strict';
 
         var CustomController = Controller.extend('nrg.module.bupa.view.CustomerDataBpInfo');
@@ -928,13 +927,14 @@ sap.ui.define(
                     }
                 }*/
 
-        Controller.prototype._retrUrlHash = function () {
+        //20160621 take out code not in use by HJL
+        /*Controller.prototype._retrUrlHash = function () {
             //Get the hash to retrieve bp #
             var oHashChanger = new HashChanger(),
                 sUrlHash = oHashChanger.getHash();
 
             return sUrlHash;
-        };
+        };*/
 
         Controller.prototype._initPhnTypes = function () {
             var oDayPhnType = this.getView().getModel('oDayPhoneType'),
