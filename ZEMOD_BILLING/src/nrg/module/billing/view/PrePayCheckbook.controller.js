@@ -142,23 +142,28 @@ sap.ui.define(
                 aFilterIds,
                 aFilterValues,
                 aFilters,
-                i;
+                oSubTot;
 
             sPath = '/PrePayInvDetails';//(CA=\'' + this._caNum + '\',ActKey=\'' + sActKey + '\',SortKey=\'' + sSortKey + '\',InvNo=\'\')';
             aFilterIds = ['CA', 'ActKey', 'SortKey'];
             aFilterValues = [this._caNum, sActKey, sSortKey];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
 
+            /*oSubTot = JSON.parse('[{"desc":"Subtotal", "val":"0.58"},{"desc":"Recon at Mtr Out Reg HRS NonHo", "val":"2.47"}]');
+            oData.subTotal = oSubTot;
+            this.getView().getModel('oAdjustmentInfo').setData(oData);*/
 
             oParameters = {
                 filters : aFilters,
                 success : function (oData) {
                     if (oData) {
-                        for (i = 0; i < oData.results.length; i = i + 1) {
+                        /*for (i = 0; i < oData.results.length; i = i + 1) {
                             if (oData.results[i].ItmTxt.indexOf('TDSP Non-Recurring Charge') > -1) {
                                 oData.results.subTotal = oData.results[i].Subtot;
                             }
-                        }
+                        }*/
+                        oSubTot = JSON.parse(oData.results[0].Subtot);
+                        oData.results.subTotal = oSubTot;
                         this.getView().getModel('oAdjustmentInfo').setData(oData);
                     }
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
