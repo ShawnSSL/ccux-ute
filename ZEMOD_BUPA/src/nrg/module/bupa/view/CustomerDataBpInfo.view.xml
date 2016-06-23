@@ -123,7 +123,7 @@
                                    fieldType="Noborder"
                                    class="nrgBupa-cusDataBpInfo-contentRow-input median middle-space"
                                    editable="false"
-                                   value="{comp-bupa>Referral}"/>
+                                   value="{'oRefId>/Referral}"/>
                     <!--visible="{= ${/rating}.toUpperCase() === 'VIP' || ${/orderAmount} > 10000 }"-->
                 </ute:Tag>
                 <!-- Buttons -->
