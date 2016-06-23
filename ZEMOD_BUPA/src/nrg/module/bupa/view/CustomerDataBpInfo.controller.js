@@ -380,7 +380,7 @@ sap.ui.define(
             oParameters = {
                 success : function (oData) {
                     if (oData) {
-                        this.getView().getModel('oRefId').setData(oData.results);
+                        this.getView().getModel('oRefId').setData(oData);
                     }
                 }.bind(this),
                 error: function (oError) {
