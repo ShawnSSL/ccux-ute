@@ -70,6 +70,10 @@ sap.ui.define(
             //Model to hold all phone types
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDayPhoneType');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEvnPhoneType');
+
+            //Model to hold Refferal ID
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oRefId');
+
             this._initPhnTypes();
 
             // Disable backspace key on this page
@@ -368,12 +372,32 @@ sap.ui.define(
         };
 
         Controller.prototype._retrReferralId = function () {
-            var sPath = "/RefIdS('" + this._caNum + "')",
+            var oModel = this.getView().getModel('oODataSvc'),
+                sPath = '/RefIdS' + '(\'' + this._caNum + '\')',
+                oParameters,
+                that = this;
+
+            oParameters = {
+                success : function (oData) {
+                    if (oData) {
+                        this.getView().getModel('oRefId').setData(oData.results);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    // Need to put error message
+                }.bind(this)
+            };
+
+            if (oModel) {
+                oModel.read(sPath, oParameters);
+            }
+
+            /*var sPath = "/RefIdS('" + this._caNum + "')",
                 oParameters = {
                     model : 'comp-bupa',
                     path : sPath
                 };
-            this.getView().byId('idBpInfoReferralIdNo_Edit').bindElement(oParameters);
+            this.getView().byId('idBpInfoReferralIdNo_Edit').bindElement(oParameters);*/
         };
 
         /*--------------------- Contact Section -------------------*/
