@@ -116,7 +116,7 @@
                         value="{oDataBpName>/DBAName}"/>
                 </ute:Tag>            
                 <!-- Referral ID -->
-                <ute:Tag class="nrgBupa-cusDataBpInfo-contentRow" visible="{= ${oBpInfoConfig>/isREBS} || ${oDataBP>/PsnBP}}">
+                <ute:Tag class="nrgBupa-cusDataBpInfo-contentRow" visible="true">
                     <ute:Tag elem="div" class="nrgBupa-cusDataBpInfo-contentRow-title"
                              text="{comp-i18n-bupa>nrgBupa-cusDataBpInfo-REFERRAL}:" />
                     <ute:Textfield id="idBpInfoReferralIdNo_Edit"
