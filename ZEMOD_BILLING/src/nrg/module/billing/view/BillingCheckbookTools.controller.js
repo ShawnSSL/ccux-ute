@@ -55,7 +55,7 @@ sap.ui.define(
         Controller.prototype._onAvgBillBtnClicked = function () {
             if (!this.ABPPopupCustomControl) {
                 this.ABPPopupCustomControl = new ABPPopup({ isRetro: false });
-                this.ABPPopupCustomControl.attachEvent("ABPCompleted", this._onABPCompletedReloadChkBk , this);
+                this.ABPPopupCustomControl.attachEvent("ABPCompleted", this._onABPCompletedReloadChkBk, this);
                 this.getView().addDependent(this.ABPPopupCustomControl);
             } else {
                 this.ABPPopupCustomControl._oABPPopup.setTitle('AVERAGE BILLING PLAN');

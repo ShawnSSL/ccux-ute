@@ -852,8 +852,10 @@ sap.ui.define(
                 this.ABPPopupCustomControl = new ABPPopup({ isRetro: false });
                 this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
                 this.getView().addDependent(this.ABPPopupCustomControl);
+            } else {
+                this.ABPPopupCustomControl._oABPPopup.setTitle('AVERAGE BILLING PLAN');
             }
-            this.ABPPopupCustomControl.prepareABP();
+            this.ABPPopupCustomControl.prepareABP(false);
         };
         /**
 		 * Handler for EXT Active press
@@ -880,8 +882,10 @@ sap.ui.define(
 
                 this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
                 this.getView().addDependent(this.ABPPopupCustomControl);
+            } else {
+                this.ABPPopupCustomControl._oABPPopup.setTitle('RETRO AVERAGE BILLING PLAN: ACTIVATE');
             }
-            this.ABPPopupCustomControl.prepareABP();
+            this.ABPPopupCustomControl.prepareABP(true);
         };
 
         /**
