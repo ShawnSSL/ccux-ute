@@ -17,7 +17,7 @@ If you think using the command prompt for Git is cumbersome, you can also instal
 ## Node.js
 You will need to use Node.js to build your development. You can also use it as a web server to test your development locally. You can get a copy of Node.js from the following link:
 
-> [https://nodejs.org/download/](https://nodejs.org/download/)
+> [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 
 ***
 ## Editor

@@ -56,7 +56,8 @@
         </ute:Tag>
         <ute:Tag class="nrgBilling-prepayAdj-ctnt-btm">
             <ute:Table class="nrgBilling-prepayAdj-ctnt-btm-tbl"
-                       tableType="DppTable" width="92%">
+                       tableType="DppTable" width="92%"
+                       rows="{oAdjustmentInfo>/results/subTotal}">
                 <ute:columns>
                     <ute:TableColumn>
                         <c:Label text="TDSP Non Recurring Charge Detail on Invoice"/>
@@ -67,8 +68,8 @@
                 </ute:columns>
                 <ute:rows>
                     <ute:TableRow>
-                        <c:Label text="Subtotal"/>
-                        <c:Label text="{oAdjustmentInfo>/results/subTotal}"/>
+                        <c:Label text="{oAdjustmentInfo>desc}"/>
+                        <c:Label text="{oAdjustmentInfo>val}"/>
                     </ute:TableRow>
                 </ute:rows>
             </ute:Table>

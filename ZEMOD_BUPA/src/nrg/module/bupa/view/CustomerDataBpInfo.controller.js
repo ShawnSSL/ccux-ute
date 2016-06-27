@@ -9,7 +9,6 @@ sap.ui.define(
         'nrg/base/view/BaseController',
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
-        'sap/ui/core/routing/HashChanger',
         'sap/ui/core/format/DateFormat',
         'sap/ui/core/message/Message',
         'sap/ui/core/message/ControlMessageProcessor',
@@ -21,7 +20,7 @@ sap.ui.define(
         'nrg/base/type/ZipCode'
     ],
 
-    function (jQuery, Controller, Filter, FilterOperator, HashChanger, DateFormat, CoreMessage, CoreControlMessageProcessor, NNPPopup) {
+    function (jQuery, Controller, Filter, FilterOperator, DateFormat, CoreMessage, CoreControlMessageProcessor, NNPPopup) {
         'use strict';
 
         var CustomController = Controller.extend('nrg.module.bupa.view.CustomerDataBpInfo');
@@ -71,6 +70,10 @@ sap.ui.define(
             //Model to hold all phone types
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDayPhoneType');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEvnPhoneType');
+
+            //Model to hold Refferal ID
+            this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oRefId');
+
             this._initPhnTypes();
 
             // Disable backspace key on this page
@@ -369,12 +372,32 @@ sap.ui.define(
         };
 
         Controller.prototype._retrReferralId = function () {
-            var sPath = "/RefIdS('" + this._caNum + "')",
+            var oModel = this.getView().getModel('oODataSvc'),
+                sPath = '/RefIdS' + '(\'' + this._caNum + '\')',
+                oParameters,
+                that = this;
+
+            oParameters = {
+                success : function (oData) {
+                    if (oData) {
+                        this.getView().getModel('oRefId').setData(oData);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    // Need to put error message
+                }.bind(this)
+            };
+
+            if (oModel) {
+                oModel.read(sPath, oParameters);
+            }
+
+            /*var sPath = "/RefIdS('" + this._caNum + "')",
                 oParameters = {
                     model : 'comp-bupa',
                     path : sPath
                 };
-            this.getView().byId('idBpInfoReferralIdNo_Edit').bindElement(oParameters);
+            this.getView().byId('idBpInfoReferralIdNo_Edit').bindElement(oParameters);*/
         };
 
         /*--------------------- Contact Section -------------------*/
@@ -928,13 +951,14 @@ sap.ui.define(
                     }
                 }*/
 
-        Controller.prototype._retrUrlHash = function () {
+        //20160621 take out code not in use by HJL
+        /*Controller.prototype._retrUrlHash = function () {
             //Get the hash to retrieve bp #
             var oHashChanger = new HashChanger(),
                 sUrlHash = oHashChanger.getHash();
 
             return sUrlHash;
-        };
+        };*/
 
         Controller.prototype._initPhnTypes = function () {
             var oDayPhnType = this.getView().getModel('oDayPhoneType'),
