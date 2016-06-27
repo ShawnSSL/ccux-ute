@@ -184,7 +184,7 @@ sap.ui.define(
         };
 
         Controller.prototype._invalidEmail = function (sEmail) {
-            if (sEmail.indexOf(' ') > 0 || sEmail.indexOf(',') > 0){
+            if (sEmail.indexOf(' ') > 0 || sEmail.indexOf(',') > 0) {
                 return true;
             } else {
                 return false;
