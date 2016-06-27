@@ -52,6 +52,7 @@ sap.ui.define(
                     oRouteInfo = this.getOwnerComponent().getCcuxRouteManager().getCurrentRouteInfo(),
                     i18NModel,
                     oSelectedButton,
+                    dSendTime,
                     oSorter = new sap.ui.model.Sorter("Type", false),
                     factoryFuntion,
                     oViewModel = new JSONModel({
@@ -107,7 +108,10 @@ sap.ui.define(
                 fnRecievedHandler = function (oEvent) {
                     var aContent = oTileContainer.getContent(),
                         oBinding = oTileContainer.getBinding("content"),
-                        iBindCount = 0;
+                        iBindCount = 0,
+                        dReceivedTime = new Date();
+                    // Call Backend to Record time first
+                    //oModel.create();
                     if ((aContent !== undefined) && (aContent.length > 0)) {
                         oNoDataTag.addStyleClass("nrgCamOff-hide");
                         oTileContainer.removeStyleClass("nrgCamOff-hide");
@@ -157,9 +161,10 @@ sap.ui.define(
                     factory : factoryFuntion,
                     filters : aFilters,
                     sorter: oSorter,
-                    parameters : {expand: "EFLs"},
+                    parameters : {expand: "EFLs", batchGroupId : "1"},
                     events: {dataReceived : fnRecievedHandler}
                 };
+                dSendTime = new Date();
                 oTileContainer.bindAggregation("content", mParameters);
                 sCurrentPath = "/CustMsgS";
                 mParameters = {
@@ -738,7 +743,7 @@ sap.ui.define(
                     template : oTileTemplate,
                     filters : aFilters,
                     sorter: oSorter,
-                    parameters : {expand: "EFLs", operationMode : "Server"},
+                    parameters : {expand: "EFLs", operationMode : "Server", batchGroupId : "1"},
                     events: {dataReceived : fnRecievedHandler}
                 };
                 oTileContainer.bindAggregation("content", mParameters);

@@ -78,7 +78,9 @@ sap.ui.define(
             this._bindView(sCurrentPath);
             sCurrentPath = sCurrentPath + "/Scripts";
             aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName', 'AvailDate'];
-            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND', oContext.getProperty('AvailDate')];
+            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), "OVW"];
+     /*       aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), new Date("12/31/9999"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND', oContext.getProperty('AvailDate')];*/
+
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oDropDownList = this.getView().byId("idnrgCamSSDdL");
             oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();
@@ -100,7 +102,7 @@ sap.ui.define(
                 path : sCurrentPath,
                 template : oDropDownListItemTemplate,
                 filters : aFilters,
-               // parameters : {expand : "Scripts"},
+                parameters : {batchGroupId : "1"},
                 events: {dataReceived : fnRecievedHandler}
             };
             oDropDownList.bindAggregation("content", mParameters);
@@ -363,6 +365,7 @@ sap.ui.define(
             oContext = oModel.getContext(sCurrentPath);
             aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName'];
             aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), "OVW"];
+            //aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), new Date("12/31/9999"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), "OVW"];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             sCurrentPath = sCurrentPath + "/Scripts";
             this._oOverviewDialog.setWidth("750px");
@@ -394,6 +397,7 @@ sap.ui.define(
                 path : sCurrentPath,
                 template : oDropDownListItemTemplate,
                 filters : aFilters,
+                parameters : {batchGroupId : "1"},
                 events: {dataReceived : fnRecievedHandler}
             };
             oDropDownList.bindAggregation("content", mParameters);
