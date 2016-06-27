@@ -77,8 +77,10 @@ sap.ui.define(
             oContext = oModel.getContext(sCurrentPath);
             this._bindView(sCurrentPath);
             sCurrentPath = sCurrentPath + "/Scripts";
-            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName', 'AvailDate'];
-            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND', oContext.getProperty('AvailDate')];
+            /*aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName', 'AvailDate'];
+            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND', oContext.getProperty('AvailDate')];*/   //20160627 Canel CYP changes first
+            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName'];
+            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND'];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oDropDownList = this.getView().byId("idnrgCamSSDdL");
             oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();
@@ -556,7 +558,7 @@ sap.ui.define(
             sPromoRank = oContext.getProperty("PromoRank");
             sBrand = oContext.getProperty("Brand");
             sType = oContext.getProperty("Type");
-            oAvailDate = oContext.getProperty('AvailDate');
+            //oAvailDate = oContext.getProperty('AvailDate');  //20160627 Temp taking off CYP changes
             oLocalModel = this.getOwnerComponent().getModel('comp-campLocal'); // Model set in Offers Controller page after checking loyality code
             sLpCode = oLocalModel.getProperty("/LPCode");
             sLpFirstName = oLocalModel.getProperty("/firstName");
@@ -598,8 +600,8 @@ sap.ui.define(
                     "PrepayAltPay" : this._PrepayAltPay || false,//boolean
                     "PromoCode" : sPromo,
                     "PromoRank" : sPromoRank,//Int16
-                    "Type": sType,
-                    "AvailDate": oAvailDate
+                    "Type": sType//,  //20160627 Temp taking off CYP changes
+                    //"AvailDate": oAvailDate
                 },
                 success : function (oData) {
                     var oWebUiManager;
