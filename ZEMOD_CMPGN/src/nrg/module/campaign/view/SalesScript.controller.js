@@ -52,7 +52,8 @@ sap.ui.define(
                 i18NModel,
                 oRejectRsns = that.getView().byId('idnrgRejectRsnsMD'),
                 oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl'),
-                oContext;
+                oContext,
+                dSendTime;
             // To Avoid reloading after NNP opens up
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEditEmailNNP');
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oEditEmailValidate');
@@ -93,6 +94,20 @@ sap.ui.define(
             oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();
             oMandDiscloureTV = this.getView().byId("idCamSSMdTv");
             fnRecievedHandler = function (oEvent) {
+                // Call Backend to Record time first
+                oModel.create("/HttpLogS", {
+                    "Contract": that._sContract,
+                    "Send": dSendTime,
+                    "Receive": new Date(),
+                    "Text" : "MAND"
+                }, {
+                    success : function (oData, oResponse) {
+                        jQuery.sap.log.info("Time logged succeefully");
+                    },
+                    error : function (oError) {
+                        jQuery.sap.log.info("Time logged failed");
+                    }
+                });
                 aContent = oDropDownList.getContent();
                 if ((aContent !== undefined) && (aContent.length > 0)) {
                     sPath = aContent[0].getBindingContext("comp-campaign").getPath();
@@ -112,6 +127,7 @@ sap.ui.define(
                 parameters : {batchGroupId : "1"},
                 events: {dataReceived : fnRecievedHandler}
             };
+            dSendTime = new Date();
             oDropDownList.bindAggregation("content", mParameters);
             sCurrentPath = "/RejectRsnS";
             mParameters = {
@@ -354,7 +370,8 @@ sap.ui.define(
                 oContext,
                 dStartDate,
                 oRejectRsns,
-                oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl');
+                oRejectsRsnsTemp = that.getView().byId('idnrgRejectRsnsTempl'),
+                dSendTime;
 
             if (!this._oDialogFragment) {
                 this._oDialogFragment = sap.ui.xmlfragment("OverViewScripts", "nrg.module.campaign.view.OverviewScript", this);
@@ -385,6 +402,20 @@ sap.ui.define(
             aContent = oDropDownList.getContent();
             oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtItOv").clone();
             fnRecievedHandler = function () {
+                // Call Backend to Record time first
+                oModel.create("/HttpLogS", {
+                    "Contract": that._sContract,
+                    "Send": dSendTime,
+                    "Receive": new Date(),
+                    "Text" : "OVW"
+                }, {
+                    success : function (oData, oResponse) {
+                        jQuery.sap.log.info("Time logged succeefully");
+                    },
+                    error : function (oError) {
+                        jQuery.sap.log.info("Time logged failed");
+                    }
+                });
                 aContent = oDropDownList.getContent();
                 if ((aContent !== undefined) && (aContent.length > 0)) {
                     sPath = aContent[0].getBindingContext("view-campaign").getPath();
@@ -407,6 +438,7 @@ sap.ui.define(
                 parameters : {batchGroupId : "1"},
                 events: {dataReceived : fnRecievedHandler}
             };
+            dSendTime = new Date();
             oDropDownList.bindAggregation("content", mParameters);
             obinding = oDropDownList.getBinding("content");
             //this.getView().addDependent(this._oOverviewDialog);

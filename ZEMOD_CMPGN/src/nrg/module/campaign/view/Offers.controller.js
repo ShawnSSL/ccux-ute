@@ -108,10 +108,21 @@ sap.ui.define(
                 fnRecievedHandler = function (oEvent) {
                     var aContent = oTileContainer.getContent(),
                         oBinding = oTileContainer.getBinding("content"),
-                        iBindCount = 0,
-                        dReceivedTime = new Date();
+                        iBindCount = 0;
                     // Call Backend to Record time first
-                    //oModel.create();
+                    oModel.create("/HttpLogS", {
+                        "Contract": that._sContract,
+                        "Send": dSendTime,
+                        "Receive": new Date(),
+                        "Text" : "offers"
+                    }, {
+                        success : function (oData, oResponse) {
+                            jQuery.sap.log.info("Time logged succeefully");
+                        },
+                        error : function (oError) {
+                            jQuery.sap.log.info("Time logged failed");
+                        }
+                    });
                     if ((aContent !== undefined) && (aContent.length > 0)) {
                         oNoDataTag.addStyleClass("nrgCamOff-hide");
                         oTileContainer.removeStyleClass("nrgCamOff-hide");
