@@ -599,7 +599,7 @@ sap.ui.define(
             sPromoRank = oContext.getProperty("PromoRank");
             sBrand = oContext.getProperty("Brand");
             sType = oContext.getProperty("Type");
-            //oAvailDate = oContext.getProperty('AvailDate');  //20160627 Temp taking off CYP changes
+            oAvailDate = oContext.getProperty('AvailDate');  //20160627 Temp taking off CYP changes
             oLocalModel = this.getOwnerComponent().getModel('comp-campLocal'); // Model set in Offers Controller page after checking loyality code
             sLpCode = oLocalModel.getProperty("/LPCode");
             sLpFirstName = oLocalModel.getProperty("/firstName");
@@ -641,8 +641,8 @@ sap.ui.define(
                     "PrepayAltPay" : this._PrepayAltPay || false,//boolean
                     "PromoCode" : sPromo,
                     "PromoRank" : sPromoRank,//Int16
-                    "Type": sType//,  //20160627 Temp taking off CYP changes
-                    //"AvailDate": oAvailDate
+                    "Type": sType,
+                    "AvailDate": oAvailDate || new Date()
                 },
                 success : function (oData) {
                     var oWebUiManager;
