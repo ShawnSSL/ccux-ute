@@ -55,11 +55,11 @@
                 <ute:Tag class="nrgDashboard-reconnectionPopup-cri-title" text="{comp-i18n-dashboard>nrgDashboard-reconnect-requestorDetail}"/>
                 <ute:Tag>
                     <ute:Tag class="nrgDashboard-reconnectionPopup-cri-label" text="{comp-i18n-dashboard>nrgDashboard-reconnect-requestorName}"/>
-                    <ute:Textfield class="nrgDashboard-reconnectionPopup-cri-value" width="280px" value="{oReconnectInfo>/ReqName}"/>
+                    <ute:Textfield class="nrgDashboard-reconnectionPopup-cri-value" width="280px" value="{oReconnectInfo>/ReqName}" maxLength="35"/>
                 </ute:Tag>
                 <ute:Tag>
                     <ute:Tag class="nrgDashboard-reconnectionPopup-cri-label" text="{comp-i18n-dashboard>nrgDashboard-reconnect-requestorNumber}"/>
-                    <ute:Textfield class="nrgDashboard-reconnectionPopup-cri-value" width="280px" value="{oReconnectInfo>/ReqNumber}"/>
+                    <ute:Textfield class="nrgDashboard-reconnectionPopup-cri-value" width="280px" value="{oReconnectInfo>/ReqNumber}" maxLength="14"/>
                 </ute:Tag>
                 <!--Disconnection/Reconnection Fee Expectations-->
                 <ute:Tag class="nrgDashboard-reconnectionPopup-cri-title nrgDashboard-reconnectionPopup-cri-title-second" text="{comp-i18n-dashboard>nrgDashboard-reconnect-disreconnectFee}"/>
@@ -94,7 +94,7 @@
                 <ute:Tag>
                     <ute:Tag class="nrgDashboard-reconnectionPopup-cri-wide-label" text="{comp-i18n-dashboard>nrgDashboard-reconnect-comments}"/>
                     <c:TextArea id="nrgDashboard-cri-acc-cmnt"
-                             class="nrgDashboard-reconnectionPopup-cri-cmnt" value="{oReconnectInfo>/AccComment}"/>
+                             class="nrgDashboard-reconnectionPopup-cri-cmnt" value="{oReconnectInfo>/AccComment}" maxLength="80"/>
                 </ute:Tag>
                 <ute:Tag class="nrgDashboard-reconnectionPopup-cri-btn">
                     <utmain:Button text="Reconnect" press="._onReconnectClicked"></utmain:Button>
