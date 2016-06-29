@@ -97,7 +97,7 @@ sap.ui.define(
                 oModel = this.getOwnerComponent().getModel('comp-cj'),
                 that = this;
             // to Avoid reloading with same information.
-            if ((data.bpNum) && (this._sBP) && (parseInt(this._sBP, 10) === parseInt(data.bpNum, 10))) {
+            if ((data.bpNum) && (this._sBP) && (this._sBP === data.bpNum)) {
                 if ((data.caNum) && (this._sCA) && (parseInt(this._sCA, 10) === parseInt(data.caNum, 10))) {
                     return;
                 }

@@ -37,6 +37,14 @@ sap.ui.define(
                     emailExist : true
 			    });
             sPath = "/EmailNNPs(PartnerID='" + this._sPartnerID + "',Email='" + this._sEmail + "',EmailConsum='" + this._sEmailConsum + "')";
+            if (!this._sPartnerID) {
+                ute.ui.main.Popup.Alert({
+                    title: 'NNP',
+                    message: 'Not able to update Email'
+                });
+                this.onPopupClose();
+                return;
+            }
             this._OwnerComponent = this.getView().getParent().getParent().getParent().getController().getOwnerComponent();
             //Start loading NNP logics and settings
             this.getView().setModel(oEditEmailNNP, 'oEditEmailNNP');
