@@ -78,17 +78,11 @@ sap.ui.define(
             oContext = oModel.getContext(sCurrentPath);
             this._bindView(sCurrentPath);
             sCurrentPath = sCurrentPath + "/Scripts";
-
 //            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName', 'AvailDate'];
 //            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), "OVW"];
      /*       aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), new Date("12/31/9999"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND', oContext.getProperty('AvailDate')];*/
-
-
-            /*aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName', 'AvailDate'];
-            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND', oContext.getProperty('AvailDate')];*/   //20160627 Canel CYP changes first
-            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName'];
-            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND'];
-
+            aFilterIds = ['BP', 'EffectiveDate', 'EndDate', 'CurrOffer', 'CampaignCode', 'TxtName', 'AvailDate'];
+            aFilterValues = [this._sBP, oContext.getProperty("EffectDate"), oContext.getProperty("EndDate"), oContext.getProperty("CurrOffer"), oContext.getProperty("Campaign"), 'MAND', oContext.getProperty('AvailDate')];
             aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
             oDropDownList = this.getView().byId("idnrgCamSSDdL");
             oDropDownListItemTemplate = this.getView().byId("idnrgCamSSLngLtIt").clone();
