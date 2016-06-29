@@ -256,8 +256,10 @@ sap.ui.define(
 
                 this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
                 this.getView().addDependent(this.ABPPopupCustomControl);
+            } else {
+                this.ABPPopupCustomControl._oABPPopup.setTitle('RETRO AVERAGE BILLING PLAN: ACTIVATE');
             }
-            this.ABPPopupCustomControl.prepareABP();
+            this.ABPPopupCustomControl.prepareABP(true);
         };
 
         CustomController.prototype._onAverageBillingClick = function () {
@@ -270,9 +272,10 @@ sap.ui.define(
 
                 this.ABPPopupCustomControl.attachEvent("ABPCompleted", function () {}, this);
                 this.getView().addDependent(this.ABPPopupCustomControl);
+            } else {
+                this.ABPPopupCustomControl._oABPPopup.setTitle('AVERAGE BILLING PLAN: ACTIVATE');
             }
-            this.ABPPopupCustomControl.prepareABP();
-
+            this.ABPPopupCustomControl.prepareABP(false);
         };
 
         return CustomController;
