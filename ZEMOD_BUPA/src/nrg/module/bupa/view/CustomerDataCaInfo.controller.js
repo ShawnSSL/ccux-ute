@@ -21,6 +21,8 @@ sap.ui.define(
         Controller.prototype.onBeforeRendering = function () {
             //if (!this._beforeOpenEditAddrDialogue) {
             //var oModel;
+            //06302016 US State List Model for Address
+            this.getView().setModel(this.getOwnerComponent().getModel('oStateListModel'), 'oUSStateList');
 
             this.getOwnerComponent().getCcuxApp().setTitle('BUSINESS PARTNER');
 

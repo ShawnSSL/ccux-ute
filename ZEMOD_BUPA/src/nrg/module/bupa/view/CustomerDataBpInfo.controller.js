@@ -26,6 +26,9 @@ sap.ui.define(
         var CustomController = Controller.extend('nrg.module.bupa.view.CustomerDataBpInfo');
 
         Controller.prototype.onBeforeRendering = function () {
+            //06302016 US State List Model for Address
+            this.getView().setModel(this.getOwnerComponent().getModel('oStateListModel'), 'oUSStateList');
+
             this.getOwnerComponent().getCcuxApp().setTitle('BUSINESS PARTNER');
 
             this.getView().setModel(this.getOwnerComponent().getModel('comp-bupa'), 'oODataSvc');

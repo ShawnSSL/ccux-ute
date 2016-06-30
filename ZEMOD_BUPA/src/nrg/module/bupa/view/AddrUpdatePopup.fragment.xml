@@ -50,10 +50,25 @@
                 label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_City}"
                 editable="{oDataAddrEdit>/updateNotSent}" width="100px"
                 value="{oDataAddrEdit>/AddressInfo/City}"/></ute:Tag>
-            <ute:Tag><ute:Textfield id="idEditState" fieldType="Underlined"
+            <!--<ute:Tag><ute:Textfield id="idEditState" fieldType="Underlined"
                 label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_State}"
                 editable="{oDataAddrEdit>/updateNotSent}" width="100px"
-                value="{oDataAddrEdit>/AddressInfo/State}"/></ute:Tag>
+                value="{oDataAddrEdit>/AddressInfo/State}"/></ute:Tag>-->
+            <ute:Tag>
+                <utmain:Label labelFor="idEditState"
+                    class="nrgBupa-cusDataVerifyEditMail-l-stateLable"
+                    text="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_State}:">
+                </utmain:Label>
+                <utmain:Dropdown id="idEditState"
+                    class="nrgBupa-cusDataVerifyEditMail-l-stateDropDown"
+                    content="{oUSStateList>/US_State}"
+                    selectedKey="{oDataAddrEdit>/AddressInfo/State}"
+                    enabled="{oDataAddrEdit>/updateNotSent}">
+                    <utmain:DropdownItem key="{oUSStateList>sAbvName}">
+                        <ute:Tag elem="span" text="{oUSStateList>sFullName}"/>
+                    </utmain:DropdownItem>
+                </utmain:Dropdown>
+            </ute:Tag>
             <ute:Tag><ute:Textfield id="idEditZip" fieldType="Underlined"
                 label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_ZipCode}"
                 editable="{oDataAddrEdit>/updateNotSent}" width="100px"
