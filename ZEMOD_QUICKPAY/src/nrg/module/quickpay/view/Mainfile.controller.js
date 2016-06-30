@@ -467,7 +467,13 @@ sap.ui.define(
                                          "ExpiryDate" : oContext.getProperty("ExpiryDate")},
                         success : function (oData, oResponse) {
                             if (oData.Error === "") {
-                                var aFilterIds = ["BP", "CA"],
+                                that._OwnerComponent.getCcuxApp().setOccupied(false);
+                                ute.ui.main.Popup.Alert({
+                                    title: 'Information',
+                                    message: 'Update Successful'
+                                });
+                                that.onPopupClose();
+/*                                var aFilterIds = ["BP", "CA"],
                                     aFilterValues = [oContext.getProperty("BP"), oContext.getProperty("CA")],
                                     aFilters,
                                     oBindingInfo,
@@ -481,7 +487,7 @@ sap.ui.define(
                                         that._OwnerComponent.getCcuxApp().setOccupied(false);
                                         ute.ui.main.Popup.Alert({
                                             title: 'Information',
-                                            message: 'Update Successfull'
+                                            message: 'Update Successful'
                                         });
                                         oPendingPaymentsModel.setData(oData);
                                         oTableRow.setModel(oPendingPaymentsModel);
@@ -501,7 +507,7 @@ sap.ui.define(
                                     oModel.read(sPath, oBindingInfo);
                                 }
                                 that._OwnerComponent.getCcuxApp().setOccupied(false);
-                                jQuery.sap.log.info("Odata Read Successfully:::");
+                                jQuery.sap.log.info("Odata Read Successfully:::");*/
                             } else {
                                 that.getView().getModel("appView").setProperty("/message", oData.Message);
                             }
@@ -509,7 +515,11 @@ sap.ui.define(
                         }.bind(this),
                         error: function (oError) {
                             that._OwnerComponent.getCcuxApp().setOccupied(false);
-                            jQuery.sap.log.info("Odata Error occured");
+                            ute.ui.main.Popup.Alert({
+                                title: 'Information',
+                                message: 'Update failed'
+                            });
+                            that.onPopupClose();
                         }.bind(this)
                     };
 /*                    oModel.update(sPath, {"CardID" : oContext.getProperty("CardID"),
