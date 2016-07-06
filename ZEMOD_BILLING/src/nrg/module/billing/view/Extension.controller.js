@@ -433,6 +433,17 @@ sap.ui.define(
             if (this.getView().getModel('oDppScrnControl').getProperty("/EXTGrant")) {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').getValue();
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueCreateDate-id').getValue();
+
+                /*Check if the above two dates are empty*/
+                if (!sDwnPayDate) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'Extension',
+                        message: 'Please select a down payment date.'
+                    });
+                    return;
+                }
+
                 sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').getValue();
                 if (!sDwnPayValue) {
                     this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').setValue("0");

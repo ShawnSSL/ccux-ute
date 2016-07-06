@@ -1,0 +1,26 @@
+{
+  "d":{
+    "results":[
+      {
+        "__metadata":{
+          "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_DPP_EXT_SRV/ExtElgbles('')",
+          "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_DPP_EXT_SRV/ExtElgbles('')",
+          "type":"ZE_CCUX_DPP_EXT_SRV.ExtElgble"
+        },
+        "Contract":"34910949",
+        "EligibleYes":true,
+        "ExtReason":"",
+        "ReasonCode":"",
+        "ExtActive":false,
+        "ExtReasonYes":false,
+        "ExtOverride":true,
+        "ExtPending":false,
+        "EP_DPAmount":"10.00",
+        "EP_DPDueDt":"02/18/2016",
+        "EP_PymntPost":"1.11",
+        "EP_PymntRemain":"8.89",
+        "EP_ExtDate":"03/18/2016"
+      }
+    ]
+  }
+}
