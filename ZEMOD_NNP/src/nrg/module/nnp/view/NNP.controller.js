@@ -158,7 +158,9 @@ sap.ui.define(
                 sPath,
                 sEmailAddr,
                 oEditEmailNNP = this.getView().getModel('oEditEmailNNP'),
-                that = this;
+                that = this,
+                atpos,
+                dotpos;
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             oEditEmailNNP.refresh(true);
             sEmailAddr = oEditEmailNNP.getProperty('/Email');
@@ -168,6 +170,16 @@ sap.ui.define(
                     message: 'Please enter an email address'
                 });
                 return;
+            } else {
+                atpos = sEmailAddr.indexOf("@");
+                dotpos = sEmailAddr.lastIndexOf(".");
+                if ((atpos < 1) || (dotpos < atpos + 2) || (dotpos + 2 >= sEmailAddr.length)) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Email address validation',
+                        message: 'Please enter an email address'
+                    });
+                    return false;
+                }
             }
             sPath = '/EmailVerifys' + '(\'' + sEmailAddr + '\')';
             oParameters = {
@@ -339,7 +351,9 @@ sap.ui.define(
                 oDelEmailBox = this.getView().byId("idnrgDB-DelEmailBox"),
                 oNNP = this.getView().getModel('oEditEmailNNP'),
                 sEmailAddr = oNNP.getProperty('/Email'),
-                olocalModel = this.getView().getModel('oLocalModel');
+                olocalModel = this.getView().getModel('oLocalModel'),
+                atpos,
+                dotpos;
             if ((sEmailAddr === undefined) || (sEmailAddr === "") || (sEmailAddr === null)) {
                 if (!olocalModel.getProperty("/emailExist")) {
                     ute.ui.main.Popup.Alert({
@@ -347,6 +361,16 @@ sap.ui.define(
                         message: 'No Email to delete'
                     });
                     return;
+                }
+            } else {
+                atpos = sEmailAddr.indexOf("@");
+                dotpos = sEmailAddr.lastIndexOf(".");
+                if ((atpos < 1) || (dotpos < atpos + 2) || (dotpos + 2 >= sEmailAddr.length)) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Email address validation',
+                        message: 'Please enter an email address'
+                    });
+                    return false;
                 }
             }
             if ((oNNP.getProperty('/Ecd') === 'Y') || (oNNP.getProperty('/Mkt') === 'Y') || (oNNP.getProperty('/Offer') === 'Y') || (oNNP.getProperty('/Ee') === 'Y')) {
