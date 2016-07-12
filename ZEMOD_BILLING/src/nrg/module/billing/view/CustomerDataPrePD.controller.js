@@ -25,6 +25,9 @@ sap.ui.define(
             this.getOwnerComponent().getCcuxApp().setTitle('BILLING');
             this._initRouting();
             this._loadPrepayData();
+
+            //Added 20160711
+            this._initBillingMsgs();
         };
         CustomController.prototype._loadPrepayData = function () {
             var oModel = this.getOwnerComponent().getModel('comp-feeAdjs'),
@@ -365,6 +368,43 @@ sap.ui.define(
                 }
             }.bind(this), 100);
 
+        };
+
+
+        //Added 20160711
+        CustomController.prototype._initBillingMsgs = function () {
+            var aFilterIds,
+                aFilterValues,
+                aFilters,
+                oBindingInfo1,
+                oBindingInfo2,
+                oBillingMsgTag = this.getView().byId("idnrgBillingMsgs"),
+                oBillingMsgTagTemplate = this.getView().byId("idnrgBillingMsgsTemp"),
+                oDunningMsgTag = this.getView().byId("idnrgBilDunMsgs"),
+                oDunningMsgTagTemplate = this.getView().byId("idnrgBilDunMsgsTemp"),
+                sPath = "/AlertsSet";
+            oBillingMsgTag.unbindAggregation("content", false);
+            oDunningMsgTag.unbindAggregation("content", false);
+            aFilterIds = ["BP", "CA", "Identifier"];
+            aFilterValues = [this._bpNum, this._caNum, "BILLING"];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            oBindingInfo1 = {
+                model : "comp-billing",
+                path : sPath,
+                template : oBillingMsgTagTemplate,
+                filters : aFilters
+            };
+            oBillingMsgTag.bindAggregation("content", oBindingInfo1);
+            aFilterIds = ["BP", "CA", "Identifier"];
+            aFilterValues = [this._bpNum, this._caNum, "DUNNING"];
+            aFilters = this._createSearchFilterObject(aFilterIds, aFilterValues);
+            oBindingInfo2 = {
+                model : "comp-billing",
+                path : sPath,
+                template : oDunningMsgTagTemplate,
+                filters : aFilters
+            };
+            oDunningMsgTag.bindAggregation("content", oBindingInfo2);
         };
 
 

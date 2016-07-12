@@ -50,23 +50,38 @@
     & > .nrgBilling-cusDataPrePD-layout > tbody > tr > .nrgBilling-cusDataPrePD-l > .nrgBilling-cusDataPrePD-l-div > .nrgBilling-cusDataBil-PayBalBtn{
         height: 86px;
         width: 215px;
-        border-style: solid;
+        border-style: dashed;
         border-width: 1px;
-        border-color: #5092CD;
+        border-color: @nrgColor-grey-dark;
+        background-color: @nrgColor-blue-pearl;
         margin-top: 17px;
     }
 
     & > .nrgBilling-cusDataPrePD-layout > tbody > tr > .nrgBilling-cusDataPrePD-l > .nrgBilling-cusDataPrePD-l-div > .nrgBilling-cusDataBil-PayBalBtn > .nrgBilling-cusDataBil-PayBalBtn-amount{
-        font: @nrgFontWeight-semiBold @nrgFontSize-veryJumbo @nrgFontFamily;
-        color: @nrgColor-grey-dark;
+        font: @nrgFontWeight-semiBold @nrgFontSize-larger @nrgFontFamily;
+        color: @nrgColor-green-credit;
         text-align: center;
+        margin-top: 4px;
     }
+
+    & > .nrgBilling-cusDataPrePD-layout > tbody > tr > .nrgBilling-cusDataPrePD-l > .nrgBilling-cusDataPrePD-l-div > .nrgBilling-cusDataBil-PayBalBtn > .nrgBilling-cusDataBil-PayBalBtn-credit{
+        text-align: center;
+        font: @nrgFontWeight-semiBold @nrgFontSize-base @nrgFontFamily;
+        color: @nrgColor-green-credit;
+    }
+
+    & > .nrgBilling-cusDataPrePD-layout > tbody > tr > .nrgBilling-cusDataPrePD-l > .nrgBilling-cusDataPrePD-l-div > .nrgBilling-cusDataBil-PayBalBtn > .nrgBilling-cusDataBil-PayBalBtn-debit{
+        text-align: center;
+        font: @nrgFontWeight-semiBold @nrgFontSize-base @nrgFontFamily;
+        color: @nrgColor-red-alert;
+    }
+
     & > .nrgBilling-cusDataPrePD-layout > tbody > tr > .nrgBilling-cusDataPrePD-l > .nrgBilling-cusDataPrePD-l-div > .nrgBilling-cusDataBil-PayBalBtn > .nrgBilling-cusDataBil-PayBalBtn-amount[data-mydata="false"]{
         color: @nrgColor-red-alert;
     }
     & > .nrgBilling-cusDataPrePD-layout > tbody > tr > .nrgBilling-cusDataPrePD-l > .nrgBilling-cusDataPrePD-l-div > .nrgBilling-cusDataBil-PayBalBtn > .nrgBilling-cusDataBil-PayBalBtn-text{
-        font: @nrgFontWeight-bold @nrgFontSize-base @nrgFontFamily;
-        color: @nrgColor-blue-link;
+        font: @nrgFontWeight-bold @nrgFontSize-small @nrgFontFamily;
+        color: @nrgColor-grey-dark;
         text-align: center;
     }
 
@@ -149,6 +164,15 @@
         margin:0;
         height: 346px;
         margin-left: 22px;
+        width: 480px;
+        display: inline-block;
+    }
+
+    & > .nrgBilling-cusDataPrePD-layout > tbody > tr > .nrgBilling-cusDataPrePD-r > .nrgBilling-cusDataPrePD-r-div-right{
+        padding-top: 20px;
+        height: 346px;
+        width: 260px;
+        display: inline-flex;
     }
 
 
