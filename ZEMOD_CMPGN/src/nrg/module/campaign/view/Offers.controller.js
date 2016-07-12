@@ -131,7 +131,9 @@ sap.ui.define(
                         aFilterValues = ["C", that._sType];
                         aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
                         oBinding.sOperationMode = "Client";
+                        oBinding.bClientOperation = true;
                         oBinding.aAllKeys = oEvent.getSource().aKeys;
+                        //oBinding.filter(aFilters, "Application");
                         oBinding.filter(aFilters, "Application");
                         if ((oTileContainer.getContent()) && (oTileContainer.getContent().length > 0)) {
                             oTileContainer.getContent().forEach(function (item) {
@@ -151,7 +153,6 @@ sap.ui.define(
                                     }
                                 }
                             });
-
                         }
                     } else {
                         oNoDataTag.removeStyleClass("nrgCamOff-hide");
@@ -1124,7 +1125,7 @@ sap.ui.define(
             if (oTableTag) {
                 oTableTag.removeContent(0);
             }
-            this.getOwnerComponent().getModel('comp-campaign').updateBindings(true);
+            //this.getOwnerComponent().getModel('comp-campaign').updateBindings(true);
             oProactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oReactiveButton.removeStyleClass("nrgCamOff-btn-selected");
             oSaveButton.removeStyleClass("nrgCamOff-btn-selected");

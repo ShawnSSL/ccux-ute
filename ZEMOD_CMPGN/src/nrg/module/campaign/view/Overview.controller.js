@@ -167,7 +167,7 @@ sap.ui.define(
                         model : "comp-campaign",
                         path : sEligibilityPath
                     });
-                    oModel.updateBindings(false);
+                    //oModel.updateBindings(false);
                     jQuery.sap.log.info("Odata Read Successfully:::");
                     that.getOwnerComponent().getCcuxApp().setOccupied(false);
                 }.bind(this),
