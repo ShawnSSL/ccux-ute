@@ -83,6 +83,7 @@ sap.ui.define(
             this._oRealDataManager.addODataModels();
             this._oMockDataManager.startMockServers();
             this._oMockDataManager.addMockODataModels();
+
             this._oResourceBundleManager.addResourceModels();
             this._oStylesheetManager.addStylesheets();
             this._oIconManager.addIcons();
@@ -131,6 +132,9 @@ sap.ui.define(
             }
 
             Component.prototype.destroy.apply(this, arguments);
+        };
+        CustomComponent.prototype.onAfterRendering = function () {
+
         };
 
         return CustomComponent;

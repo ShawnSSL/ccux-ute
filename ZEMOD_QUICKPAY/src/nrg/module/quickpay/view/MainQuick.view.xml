@@ -1,5 +1,5 @@
 <!-- This is deprecated -->
-   <mvc:View
+      <mvc:View
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:u="ute.ui.commons"
     xmlns:um="ute.ui.main"
