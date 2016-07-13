@@ -173,6 +173,7 @@
         height: 346px;
         width: 260px;
         display: inline-flex;
+        vertical-align: top;
     }
 
 
@@ -239,6 +240,7 @@
         padding: 0;
         margin-top: 63px;
         border-color: @nrgColor-grey-light;
+        margin-left: 0;
     }
 
     & > .nrgBilling-cusDataPrePD-layout > tbody > tr > .nrgBilling-cusDataPrePD-r > .nrgBilling-cusDataPrePD-r-content > .nrgBilling-cusDataBil-CommBtn > .nrgBilling-cusDataBil-PayBalBtn-text{
@@ -251,7 +253,7 @@
     }
 
     & > .nrgBilling-cusDataPrePD-layout > tbody > tr > .nrgBilling-cusDataPrePD-r .nrgBilling-cusDataPrePD-btm-label2{
-        margin-left: 38px;
+        margin-left: 0;
         font: @nrgFontWeight-regular @nrgFontSize-small @nrgFontFamily;
         color: @nrgColor-grey-dark;
     }
@@ -266,6 +268,32 @@
         margin-left: 10px;
         font: @nrgFontWeight-bold @nrgFontSize-small @nrgFontFamily;
         color: @nrgColor-grey-dark;
+    }
+
+    & > .nrgBilling-cusDataPrePD-layout > tbody > tr .nrgBilling-cusDataBil-r-div-dunningmsgs {
+            margin-top: 10px;
+            min-height: 10rem;
+            max-height: 10rem;
+            width: 100%;
+            overflow-x: auto;
+
+    }
+    & > .nrgBilling-cusDataPrePD-layout > tbody > tr .nrgBilling-cusDataBil-r-div-dunningmsgs > .nrgBilling-cusDataBil-r-div-dunningmsgs-msg {
+            display: block;
+    }
+    & > .nrgBilling-cusDataPrePD-layout > tbody > tr .nrgBilling-cusDataBil-r-div-dunningmsgs > .nrgBilling-cusDataBil-r-div-dunningmsgs-msg > .nrgBilling-cusDataBil-r-div-dunningmsgs-msg-label {
+            color: @nrgColor-blue-link;
+            display: inline-block;
+    }
+    & > .nrgBilling-cusDataPrePD-layout > tbody > tr .nrgBilling-cusDataBil-r-div-dunningmsgs > .nrgBilling-cusDataBil-r-div-dunningmsgs-msg > .nrgBilling-cusDataBil-r-div-dunningmsgs-msg-div {
+            display: inline-block;
+            color: @nrgColor-blue-link;
+            max-width: 16rem;
+	        margin-left: 1.5rem;
+	        overflow: hidden;
+    }
+    & > .nrgBilling-cusDataPrePD-layout > tbody > tr .nrgBilling-cusDataBil-r-div-dunningmsgs > .nrgBilling-cusDataBil-r-div-dunningmsgs-msg[data-disabled="true"] > .nrgBilling-cusDataBil-r-div-dunningmsgs-msg-label{
+           color: @nrgColor-grey-light;
     }
 }
 // Dialog CSS for customer preferences.
