@@ -23,7 +23,7 @@
             </u:Tag>
             <u:Tag class="nrgCamOff-mtx nrgCamOff-top">
                 <u:Tag class="nrgCamOff-mtxRow">
-                    <u:Tag text="{comp-campaign>BillMonth} Invoice" class="nrgCamOff-mtxFstCell"/>
+                    <u:Tag text="{comp-campaign>BillMonth} Invoice (${comp-campaign>AvgPrice})" class="nrgCamOff-mtxFstCell"/>
                     <u:Tag text="$ {comp-campaign>CurrInvAmt}"
                            class="nrgCamOff-mtxSndCell"/>
                 </u:Tag>
