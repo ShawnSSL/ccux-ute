@@ -736,6 +736,7 @@ sap.ui.define(
                         aFilterValues = ["C", "SE"];
                         aFilters = that._createSearchFilterObject(aFilterIds, aFilterValues);
                         oBinding.sOperationMode = "Client";
+                        oBinding.bClientOperation = true;
                         oBinding.aAllKeys = oEvent.getSource().aKeys;
                         oBinding.filter(aFilters, "Application");
                         that.getOwnerComponent().getCcuxApp().setOccupied(false);
