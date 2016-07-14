@@ -28,10 +28,7 @@ sap.ui.define(
 
             this.getView().setModel(this.getOwnerComponent().getModel('comp-bupa'), 'oODataSvc');
 
-            //050192016 US State List Model for Address
-            this.getView().setModel(this.getOwnerComponent().getModel('oStateListModel'), 'oUSStateList');
-
-                //Model to track page edit/save status
+            //Model to track page edit/save status
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oCaInfoConfig');
 
             //Model to hold BuagAddrDetail
@@ -47,6 +44,7 @@ sap.ui.define(
             //Model for Edit Popup Screen (Use the model to show on edit screen)
             this.getView().setModel(new sap.ui.model.json.JSONModel(), 'oDtaAddrEdit');
 
+            this.getView().getModel('oDataBuagAddrDetails').setDefaultBindingMode(sap.ui.model.BindingMode.TwoWay);
 
             this._initCaInfoConfigModel();
             this._initDataModel();
@@ -451,7 +449,7 @@ sap.ui.define(
 
             if (!(((oBuagAddressDetails.getProperty('/FixAddrInfo/HouseNo')) && (oBuagAddressDetails.getProperty('/FixAddrInfo/Street'))) || (oBuagAddressDetails.getProperty('/FixAddrInfo/PoBox')))) {
                 ute.ui.main.Popup.Alert({
-                    title: 'AVERAGE BILLING',
+                    title: 'EDIT MAILING ADDRESS',
                     message: 'Please enter street no & street name or PO Box'
                 });
                 return true;
