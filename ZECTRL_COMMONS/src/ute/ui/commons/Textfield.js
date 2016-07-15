@@ -85,6 +85,17 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'sap/ui/
             }
 
         };
+
+        //0714206 Add this event listener for 1.3X UI5 version update
+        Textfield.prototype.onfocusout = function (oEvent) {
+            this._checkChange(oEvent);
+
+            oEvent.preventDefault();
+            if (oEvent.stopPropagation) {
+                oEvent.stopPropagation();
+            }
+        };
+
         Textfield.prototype.onsapfocusleave = function (oEvent) {
 
             this._checkChange(oEvent);
