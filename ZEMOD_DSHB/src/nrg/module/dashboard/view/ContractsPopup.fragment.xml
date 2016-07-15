@@ -63,6 +63,9 @@
                 <u:TableColumn class="nrgdashCo-th">
                     <c:Label text="Zip"/>
                 </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+                    <c:Label text="Eligible Offers"/>
+                </u:TableColumn>
             </u:columns>
             <u:rows>
                 <u:TableRow>
@@ -80,6 +83,7 @@
                     <c:Label text="{view-dashboard>City}"/>
                     <c:Label text="{view-dashboard>State}"/>
                     <c:Label text="{view-dashboard>ZIP}"/>
+                    <c:Label text="{view-dashboard>EligOffer}"/>
                 </u:TableRow>
             </u:rows>
         </u:Table>
