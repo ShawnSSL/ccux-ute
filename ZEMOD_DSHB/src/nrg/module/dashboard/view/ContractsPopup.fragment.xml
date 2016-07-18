@@ -63,7 +63,7 @@
                 <u:TableColumn class="nrgdashCo-th">
                     <c:Label text="Zip"/>
                 </u:TableColumn>
-                <u:TableColumn class="nrgdashCo-th">
+                <u:TableColumn class="nrgdashCo-th" sortProperty: "EligOffer" >
                     <c:Label text="Eligible Offers"/>
                 </u:TableColumn>
             </u:columns>
