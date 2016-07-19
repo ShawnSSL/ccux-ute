@@ -435,6 +435,16 @@ sap.ui.define(
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueCreateDate-id').getValue();
 
                 /*Check if the above two dates are empty*/
+                /*Check if the above two dates are empty*/
+                if (!sNewDateSelected) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'Extension',
+                        message: 'Please select an extended date.'
+                    });
+                    return;
+                }
+
                 if (!sDwnPayDate) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
