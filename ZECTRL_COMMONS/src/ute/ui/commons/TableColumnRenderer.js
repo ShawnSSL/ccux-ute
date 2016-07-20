@@ -21,7 +21,7 @@ sap.ui.define(['jquery.sap.global'],
                 oRm.writeStyles();
                 oRm.writeClasses();
                 oRm.write('>');
-                oCell.setWidth('');
+                //oCell.setWidth('');
                 oRm.renderControl(oCell);
                 oRm.write('</th>');
             });

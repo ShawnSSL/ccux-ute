@@ -1,0 +1,25 @@
+.sapMBusyDialog.sapMDialog.nrgBusyDialog {
+    background: transparent;
+	border: none;
+	border-radius: 0px;
+	box-shadow: none;
+    min-width: 1.75rem!important;
+	text-align: center;
+	width: 4.75rem!important;
+    font-family: @nrgFontFamily;
+
+    & > .sapMIBar.sapMFooter-CTX {
+            background-color: transparent;
+            border-top: Opx;
+    }
+    & > .sapMFooter-CTX .sapMBtn:hover>.sapMBtnHoverable:not(.sapMBtnActive) {
+            background-color: transparent;
+            color: #ffffff;
+            /* text-shadow: 0 1px 0 rgba(0,0,0,0.5); */
+            border-color: transparent;
+    }
+    & > .sapMFooter-CTX .sapMBtn {
+            background-color: @nrgColor-blue-link;
+
+    }
+}

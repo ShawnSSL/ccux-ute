@@ -3,7 +3,8 @@
           xmlns:c="sap.ui.commons"
           xmlns:core="sap.ui.core"
           xmlns:u="ute.ui.commons"
-          xmlns:um="ute.ui.main">
+          xmlns:um="ute.ui.main"
+          xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 <u:Tag class="nrgdashCo-root">
    <u:Tag>
         <u:Textfield fieldType="Regular"
@@ -19,8 +20,17 @@
         <u:Button text="Clear"
                    class="nrgdashco-root-btn"
                    press=".onClearSearch"   />
-
+<!--        <u:Tag>
+            <um:RadioButton id="idnrgUsgRadioASC" design="Default" class="nrgUsg-RadioLabel" group="nrgUsgSort" checked="true" enabled="true" select=".onExpandType"/>
+            <um:Label text="Ascending" labelFor="idnrgUsgRadioASC-intRb" class="nrgUsg-RadioLabel"/>
+            <um:RadioButton id="idnrgUsgRadioDSC" design="Default" class="nrgUsg-RadioLabel" group="nrgUsgSort" enabled="true" select=".onExpandType"/>
+            <um:Label text="Descending" labelFor="idnrgUsgRadioDSC-intRb" class="nrgUsg-RadioLabel" />
+        </u:Tag>-->
     </u:Tag>
+
+
+
+
     <u:Tag class="nrgdashCo-root-scrollTable">
         <u:Table width="auto"
                  id="idnrgdashCoTable"
@@ -31,37 +41,66 @@
                     <c:Label text="Select"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="Contract Account"/>
+<!--                    <c:Label text="Contract Account"/>-->
+                    <um:Button design="None" text="Contract Account"
+                               class="nrgdashCo-th-btn"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="Contract"/>
+<!--                    <c:Label text="Contract"/>-->
+                    <um:Button design="None" text="Contract"
+                               class="nrgdashCo-th-btn"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="Status"/>
+<!--                    <c:Label text="Status"/>-->
+                    <um:Button design="None" text="Status"
+                               class="nrgdashCo-th-btn"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="Move In Date"/>
+<!--                    <c:Label text="Move In Date"/>-->
+                    <um:Button design="None" text="Move In Date"
+                               class="nrgdashCo-th-btn"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="Move Out Date"/>
+<!--                    <c:Label text="Move Out Date"/>-->
+                    <um:Button design="None" text="Move Out Date"
+                               class="nrgdashCo-th-btn"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="House"/>
+<!--                    <c:Label text="House"/>-->
+                    <um:Button design="None" text="House"
+                               class="nrgdashco-root-btn"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="Street"/>
+<!--                    <c:Label text="Street"/>-->
+                    <um:Button design="None" text="Street"
+                               class="nrgdashCo-th-btn"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="Apt"/>
+<!--                    <c:Label text="Apt"/>-->
+                    <um:Button design="None" text="Apt"
+                               class="nrgdashCo-th-btn"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="City"/>
+<!--                    <c:Label text="City"/>-->
+                    <um:Button design="None" text="City"
+                               class="nrgdashCo-th-btn"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="State"/>
+<!--                    <c:Label text="State"/>-->
+                    <um:Button design="None" text="State"
+                               class="nrgdashCo-th-btn"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-                    <c:Label text="Zip"/>
+<!--                    <c:Label text="Zip"/>-->
+                    <um:Button design="None" text="Zip"
+                               class="nrgdashCo-th-btn"/>
+                </u:TableColumn>
+                <u:TableColumn class="nrgdashCo-th">
+<!--                    <c:Label text="Eligibility"/>-->
+                    <um:Button design="None" text="Eligibility"
+                               class="nrgdashCo-th-btn"
+                               press=".onSorting"
+                               app:sortField="EligOffer"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th" sortProperty: "EligOffer" >
                     <c:Label text="Eligible Offers"/>

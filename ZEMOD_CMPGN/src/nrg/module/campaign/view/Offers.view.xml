@@ -153,7 +153,20 @@
 
                         <u:Tag class="nrgCamOff-feeinfo">
                             <u:Tag class="nrgCamOff-Canfee" text="Cancel : ${comp-campaign>CncFee}" />
-                            <u:Tag class="nrgCamOff-btnPrcLbl" text="(for {comp-campaign>EFLLevel}kWh)" />
+                            <!--<u:Tag class="nrgCamOff-btnPrcLbl" text="(for {comp-campaign>EFLLevel}kWh)" />-->
+                            <u:Tag class="nrgCamOff-btnPrcLbl"
+                                   text="EC= {path: 'comp-campaign>EC1',
+                                              type: 'sap.ui.model.type.Float',
+                                              formatOptions: { minFractionDigits: '2', maxFractionDigits: '2'}}¢"
+                                   visible="{= ${comp-campaign>EC2} > 0 ? false : true }"/>
+                            <u:Tag class="nrgCamOff-btnPrcLbl"
+                                   text="EC= {path: 'comp-campaign>EC2',
+                                              type: 'sap.ui.model.type.Float',
+                                              formatOptions: { minFractionDigits: '2', maxFractionDigits: '2'}}/
+                                             {path: 'comp-campaign>EC2',
+                                              type: 'sap.ui.model.type.Float',
+                                              formatOptions: { minFractionDigits: '2', maxFractionDigits: '2'}}¢"
+                                   visible="{= ${comp-campaign>EC2} > 0 ? true : false }"/>
                             <u:Tag class="nrgCamOff-Inc" text="Incentive: ${comp-campaign>Incentive}" />
                         </u:Tag>
                     </um:Button>

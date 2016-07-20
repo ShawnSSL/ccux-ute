@@ -1753,6 +1753,7 @@ sap.ui.define(
                 oSearchText;
             //this.getOwnerComponent().getCcuxApp().setOccupied(true);
             aFilterIds = ["BP"];
+            this._SortAsc = true;
             oContractsModel = new sap.ui.model.json.JSONModel();
             oContractsModel.setSizeLimit(1500);
             aFilterValues = [this._bpNum];
@@ -1943,6 +1944,36 @@ sap.ui.define(
             this._aCOSelPaths = oEvent.getSource().getParent().getBindingContext("view-dashboard").getPath();
             this.SelectCO();
         };
+        /**
+		 * Sorting for different columns
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onSorting = function (oEvent) {
+            var oButton = oEvent.getSource(),
+                sortData = oButton.data("sortField"),
+                oCJTable,
+                oSorter;
+            oCJTable = sap.ui.core.Fragment.byId("Contracts", "idnrgdashCoTable");
+            oSorter = new sap.ui.model.Sorter(sortData, !this._SortAsc);
+            this._SortAsc = !this._SortAsc;
+            oCJTable.getBinding("rows").sort(oSorter);
+        };
+        /**
+		 * Sorting for different columns
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+/*        Controller.prototype.onExpandType = function (oEvent) {
+            var oRadioAscending = sap.ui.core.Fragment.byId("Contracts", "idnrgUsgRadioASC");
+            if ((oRadioAscending) && (oRadioAscending.getChecked())) {
+                this._SortAsc = true;
+            } else {
+                this._SortAsc = false;
+            }
+        };*/
 
         /**
 		 * Handle when user clicked on Cancelling of Select contacts

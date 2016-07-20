@@ -7,7 +7,7 @@ sap.ui.define(
         'nrg/module/app/view/AppHeader',
         'nrg/module/app/view/AppBody',
         'nrg/module/app/view/AppFooter',
-        'sap/m/BusyDialog'
+        'nrg/module/app/view/NrgBusyDialog'
     ],
 
     function (EventProvider, AppHeader, AppBody, AppFooter, BusyDialog) {
@@ -18,15 +18,14 @@ sap.ui.define(
                 EventProvider.apply(this);
 
                 this._oController = oController;
-                this._oBusyDialog = new BusyDialog();
+                this._oBusyDialog = new BusyDialog({showCancelButton: true,
+                                                    cancelButtonText: "STOP",
+                                                    stop : this._BusyDialogStopped,
+                                                    close : this._BusyDialogClosed});
                 //this._oBusyDialog.setShowCancelButton(true);
                 /*
                 ** Over riding std escape function to avoid closing Busy dialog.
                 */
-                this._oBusyDialog.onsapescape = function (oEvent) {
-                    oEvent.preventDefault();
-                    oEvent.stopPropagation();
-                };
                 this._bEdit = false;
                 this._iBusyCounter = 0;
 
@@ -82,8 +81,18 @@ sap.ui.define(
             this.setInEdit(false);
         };
 
-        App.prototype.setOccupied = function (bOccupied) {
+        App.prototype._BusyDialogStopped = function () {
+            this._iBusyCounter = 0;
+            if (this._fCallBack) {
+                this._fCallBack();
+            }
+        };
+        App.prototype._BusyDialogClosed = function () {
+            this._iBusyCounter = 0;
+        };
+        App.prototype.setOccupied = function (bOccupied, fCallBack) {
             bOccupied = !!bOccupied;
+            this._fCallBack = fCallBack;
             if (bOccupied) {
                 this._iBusyCounter = this._iBusyCounter + 1;
             } else {
@@ -100,7 +109,17 @@ sap.ui.define(
 
             return this;
         };
+/*        App.prototype.setOccupied = function (bOccupied, fCallBack) {
+            bOccupied = !!bOccupied;
+            this._fCallBack = fCallBack;
+            if (bOccupied) {
+                this._oBusyDialog.open();
+            } else {
+                this._oBusyDialog.close();
+            }
 
+            return this;
+        };*/
         App.prototype.isOccupied = function () {
             return this._oBusyDialog.isOpen();
         };
