@@ -102,9 +102,6 @@
                                press=".onSorting"
                                app:sortField="EligOffer"/>
                 </u:TableColumn>
-                <u:TableColumn class="nrgdashCo-th" sortProperty: "EligOffer" >
-                    <c:Label text="Eligible Offers"/>
-                </u:TableColumn>
             </u:columns>
             <u:rows>
                 <u:TableRow>
