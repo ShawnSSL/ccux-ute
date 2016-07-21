@@ -434,6 +434,12 @@ sap.ui.define(
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtGrantDate-id').getValue();
                 sDwnPayDate = this.getView().byId('nrgBilling-ext-dwnPayDueCreateDate-id').getValue();
 
+                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').getValue();
+                if (!sDwnPayValue) {
+                    this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').setValue("0");
+                    sDwnPayValue = "0";
+                }
+
                 /*Check if the above two dates are empty*/
                 /*Check if the above two dates are empty*/
                 if (!sNewDateSelected) {
@@ -445,7 +451,7 @@ sap.ui.define(
                     return;
                 }
 
-                if (!sDwnPayDate) {
+                if (sDwnPayValue !== 0 && !sDwnPayDate) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Extension',
@@ -454,11 +460,6 @@ sap.ui.define(
                     return;
                 }
 
-                sDwnPayValue = this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').getValue();
-                if (!sDwnPayValue) {
-                    this.getView().byId('nrgBilling-ext-dwnPayGrantvalue-id').setValue("0");
-                    sDwnPayValue = "0";
-                }
                 oReason = this.getView().byId('idnrgBillingGrantReason');
             } else {
                 sNewDateSelected = this.getView().byId('nrgBilling-dpp-ExtChangeDate-id').getValue();
