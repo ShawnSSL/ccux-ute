@@ -106,5 +106,8 @@
                 </u:Tag>
        </u:Tag>
        <core:Fragment fragmentName="nrg.module.usage.view.TableView" type="XML" />
+       <u:Tag visible="false">
+
+       </u:Tag>
    </u:Tag>
 </mvc:View>
