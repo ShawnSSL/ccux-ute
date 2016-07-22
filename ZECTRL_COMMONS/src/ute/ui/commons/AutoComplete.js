@@ -346,6 +346,7 @@ sap.ui.define(['jquery.sap.global', './library', 'sap/ui/core/Control', 'ute/ui/
                     // otherwise use title
                     sNewValue = oListItem.getText();
                     oInput._$input.val(sNewValue);
+                    oInput.setProperty("value", sNewValue, true);
                     oInput.onChange(oEvent);
                     oInput._iPopupListSelectedIndex = -1;
                     oInput._closeSuggestionPopup();
