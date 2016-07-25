@@ -122,7 +122,8 @@
                                                 <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-lbl" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AVG_DAILY_USAGE} :" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt" text="{comp-feeAdjs>PayTypeDesc}" />
+                                                <ute:Tag elem="div" class="nrgBilling-cusDataPrePD-r-content-cnt"
+                                                         text="{path: 'comp-feeAdjs>AvgDailyUsage', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }"/>
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
