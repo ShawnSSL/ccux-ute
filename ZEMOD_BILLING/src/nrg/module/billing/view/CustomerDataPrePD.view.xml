@@ -127,7 +127,7 @@
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
                                     <ute:HorizontalDivider
-                                        class="nrgBilling-cusDataPrePD-horDvi"  width="400px"/>
+                                        class="nrgBilling-cusDataPrePD-horDvi"  width="280px"/>
                                     <l:MatrixLayout widths="50%,50%" width="25rem" columns="2">
                                         <l:MatrixLayoutRow>
                                             <!--<l:MatrixLayoutCell>
@@ -145,7 +145,7 @@
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
                                     <ute:HorizontalDivider
-                                        class="nrgBilling-cusDataPrePD-horDvi"  width="400px"/>
+                                        class="nrgBilling-cusDataPrePD-horDvi"  width="280px"/>
                                     <l:MatrixLayout widths="50%,50%" width="25rem" columns="2">
                                         <l:MatrixLayoutRow>
                                             <!--<l:MatrixLayoutCell>
@@ -160,7 +160,7 @@
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>
                                     <ute:HorizontalDivider
-                                        class="nrgBilling-cusDataPrePD-horDvi" width="400px"/>
+                                        class="nrgBilling-cusDataPrePD-horDvi" width="280px"/>
                                     <l:MatrixLayout widths="50%,50%" width="25rem" columns="2">
                                         <l:MatrixLayoutRow>
                                             <!--<l:MatrixLayoutCell>
@@ -181,7 +181,7 @@
                                 </ute:Tag>
 
                                 <ute:HorizontalDivider
-                                    class="nrgBilling-cusDataPrePD-horDvi-long"  width="400px"/>
+                                    class="nrgBilling-cusDataPrePD-horDvi-long"  width="280px"/>
 
                                 <!--<ute:Tag elem="span" class="nrgBilling-cusDataPrePD-btm-label1" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AVG_DAILY_USAGE}:" />
 
@@ -198,6 +198,34 @@
 
                             </ute:Tag>
                             <ute:Tag class="nrgBilling-cusDataPrePD-r-div-right">
+                                <ute:Tag class="nrgBilling-cusDataPrePD-r-div-right-autoinfo">
+                                    <ute:Tag class="nrgBilling-cusDataPrePD-rdra-title"
+                                             text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-AUTOPAY_INFO}" />
+                                     <ute:Tag class="nrgBilling-cusDataPrePD-rdra-line">
+                                        <ute:Tag class="nrgBilling-cusDataPrePD-rdra-line-lbl"
+                                                 text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-PMT_TYPE_DESC}:" />
+                                        <ute:Tag class="nrgBilling-cusDataPrePD-rdra-line-cnt"
+                                                 text="{comp-feeAdjs>PayTypeDesc}" />
+                                    </ute:Tag>
+                                    <ute:HorizontalDivider
+                                        class="nrgBilling-cusDataPrePD-horDvi"  width="280px"/>
+                                    <ute:Tag class="nrgBilling-cusDataPrePD-rdra-line">
+                                        <ute:Tag class="nrgBilling-cusDataPrePD-rdra-line-lbl"
+                                                 text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-THRESHOLD_AMNT}:" />
+                                        <ute:Tag class="nrgBilling-cusDataPrePD-rdra-line-cnt"
+                                                 text="{path: 'comp-feeAdjs>ThresholdAmt', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }" />
+                                    </ute:Tag>
+                                    <ute:HorizontalDivider
+                                        class="nrgBilling-cusDataPrePD-horDvi"  width="280px"/>
+                                    <ute:Tag class="nrgBilling-cusDataPrePD-rdra-line">
+                                        <ute:Tag class="nrgBilling-cusDataPrePD-rdra-line-lbl"
+                                                 text="{comp-i18n-billing>nrgBilling-cusDataPrePD-r-div-RELOAD_AMNT}:" />
+                                        <ute:Tag class="nrgBilling-cusDataPrePD-rdra-line-cnt"
+                                                 text="{path: 'comp-feeAdjs>ReloadAmt', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }" />
+                                    </ute:Tag>
+                                    <ute:HorizontalDivider
+                                        class="nrgBilling-cusDataPrePD-horDvi"  width="280px"/>
+                                </ute:Tag>
                                 <ute:Tag class="nrgBilling-cusDataBil-r-div-dunningmsgs" id="idnrgBilDunMsgs">
                                 </ute:Tag>
                                 <ute:Tag visible="false">
