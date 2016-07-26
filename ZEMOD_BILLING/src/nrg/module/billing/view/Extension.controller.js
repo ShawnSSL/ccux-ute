@@ -468,6 +468,26 @@ sap.ui.define(
                     this.getView().byId('nrgBilling-ext-dwnPaychangevalue-id').setValue("0");
                     sDwnPayValue = "0";
                 }
+
+                /*Check if the above two dates are empty*/
+                if (!sNewDateSelected) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'Extension',
+                        message: 'Please select an extended date.'
+                    });
+                    return;
+                }
+
+                if ( parseFloat(sDwnPayValue) !== 0 && !sDwnPayDate) {
+                    this.getOwnerComponent().getCcuxApp().setOccupied(false);
+                    ute.ui.main.Popup.Alert({
+                        title: 'Extension',
+                        message: 'Please select a down payment date.'
+                    });
+                    return;
+                }
+
                 oReason = this.getView().byId('idnrgBillingChangeReason');
             }
             if (oReason.getSelectedKey() === "0000") {
