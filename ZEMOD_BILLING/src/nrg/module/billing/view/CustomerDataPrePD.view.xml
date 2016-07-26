@@ -50,7 +50,7 @@
                                     </ute:Tag>
                                     <ute:Tag elem="div" class="nrgBilling-cusDataBil-PayBalBtn-text" text="{comp-i18n-billing>nrgBilling-cusDataPrePD-l-div-PAY_NOW}" />-->
                                     <ute:Tag class="nrgBilling-cusDataBil-PayBalBtn-amount"
-                                             text="{path: 'comp-feeAdjs>AmountDue', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }">
+                                             text="${path: 'comp-feeAdjs>AmountDue', type: 'sap.ui.model.type.Float', formatOptions:{maxFractionDigits: '2'} }">
                                         <ute:customData>
                                             <core:CustomData key="mydata" value="{= ${comp-feeAdjs>AmountDue} >= 0 ? 'true' : 'false'}" writeToDom="true" />
                                         </ute:customData>
