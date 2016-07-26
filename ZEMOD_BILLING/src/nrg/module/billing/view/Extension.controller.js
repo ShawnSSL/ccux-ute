@@ -450,7 +450,7 @@ sap.ui.define(
                     return;
                 }
 
-                if (sDwnPayValue !== 0 && !sDwnPayDate) {
+                if ( parseFloat(sDwnPayValue) !== 0 && !sDwnPayDate) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Extension',
