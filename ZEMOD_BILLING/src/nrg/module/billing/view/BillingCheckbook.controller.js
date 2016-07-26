@@ -518,7 +518,6 @@ sap.ui.define(
 
             sPath = '/ChkBookHdrs' + '(ContractAccountID=\'' + this._caNum + '\',InvoiceNum=\'\')';
 
-
             this._retrChkbookHdr(sPath);
         };
 

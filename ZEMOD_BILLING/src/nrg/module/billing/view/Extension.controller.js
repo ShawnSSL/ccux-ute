@@ -441,8 +441,7 @@ sap.ui.define(
                 }
 
                 /*Check if the above two dates are empty*/
-                /*Check if the above two dates are empty*/
-                /*if (!sNewDateSelected) {
+                if (!sNewDateSelected) {
                     this.getOwnerComponent().getCcuxApp().setOccupied(false);
                     ute.ui.main.Popup.Alert({
                         title: 'Extension',
@@ -458,7 +457,7 @@ sap.ui.define(
                         message: 'Please select a down payment date.'
                     });
                     return;
-                }*/
+                }
 
                 oReason = this.getView().byId('idnrgBillingGrantReason');
             } else {
