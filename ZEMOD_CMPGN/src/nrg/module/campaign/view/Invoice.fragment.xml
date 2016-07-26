@@ -23,7 +23,10 @@
             </u:Tag>
             <u:Tag class="nrgCamOff-mtx nrgCamOff-top">
                 <u:Tag class="nrgCamOff-mtxRow">
-                    <u:Tag text="{comp-campaign>BillMonth} Invoice (${comp-campaign>AvgPrice})" class="nrgCamOff-mtxFstCell"/>
+                    <u:Tag text="{comp-campaign>BillMonth} Invoice ({path: 'comp-campaign>AvgPrice',
+                                                                     type: 'sap.ui.model.type.Float',
+                                                                     formatOptions: { minFractionDigits: '1', maxFractionDigits: '1'}}¢)"
+                           class="nrgCamOff-mtxFstCell"/>
                     <u:Tag text="$ {comp-campaign>CurrInvAmt}"
                            class="nrgCamOff-mtxSndCell"/>
                 </u:Tag>
