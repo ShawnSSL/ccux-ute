@@ -1084,31 +1084,31 @@ sap.ui.define(
             oSearchField.setValue("");
             if (oFirstCardInvoice.getBindingContext("comp-campaign")) {
                 oFirstCardInvoice.unbindElement("comp-campaign");
-                oFirstCardInvoice.bindElement({
+/*                oFirstCardInvoice.bindElement({
                     model : "comp-campaign",
                     path : "/"
-                });
+                });*/
             }
             if (oSecondCardInvoice.getBindingContext("comp-campaign")) {
                 oSecondCardInvoice.unbindElement("comp-campaign");
-                oSecondCardInvoice.bindElement({
+/*                oSecondCardInvoice.bindElement({
                     model : "comp-campaign",
                     path : "/"
-                });
+                });*/
             }
             if (oFirstCardConsumption.getBindingContext("comp-campaign")) {
                 oFirstCardConsumption.unbindElement("comp-campaign");
-                oFirstCardConsumption.bindElement({
-                    model : "comp-campaign",
-                    path : "/"
-                });
+//                oFirstCardConsumption.bindElement({
+//                    model : "comp-campaign",
+//                    path : "/"
+//                });
             }
             if (oSecondCardConsumption.getBindingContext("comp-campaign")) {
                 oSecondCardConsumption.unbindElement("comp-campaign");
-                oSecondCardConsumption.bindElement({
-                    model : "comp-campaign",
-                    path : "/"
-                });
+//                oSecondCardConsumption.bindElement({
+//                    model : "comp-campaign",
+//                    path : "/"
+//                });
             }
             oTableTag = this.byId(sap.ui.core.Fragment.createId("Invoice1", "idnrgCamOffPriceT"));
             if (oTableTag) {
