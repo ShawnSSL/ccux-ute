@@ -160,7 +160,7 @@
                                               formatOptions: { minFractionDigits: '1', maxFractionDigits: '1'}}¢"
                                    visible="{= ${comp-campaign>EC2} > 0 ? false : true }"/>
                             <u:Tag class="nrgCamOff-btnPrcLbl"
-                                   text="EC= {path: 'comp-campaign>EC2',
+                                   text="EC= {path: 'comp-campaign>EC1',
                                               type: 'sap.ui.model.type.Float',
                                               formatOptions: { minFractionDigits: '1', maxFractionDigits: '1'}}/
                                              {path: 'comp-campaign>EC2',
