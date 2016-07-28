@@ -353,6 +353,71 @@ sap.ui.define(
         /*****************************************************************************************************************************************************/
         /*****************************************************************************************************************************************************/
         //Handlers
+        CustomController.prototype._onExpandAllClicked = function (oEvent) {
+            var oPmtHdrs = this.getView().byId('nrgChkbookPmtHdrs'),
+                i,
+                sTempPath,
+                oPmtHdrModel = this.getView().getModel('oPaymentHdr'),
+                aPromises = [],
+                oScrlCtaner = this.getView().byId('nrgChkbookScrollContainer');
+
+            for (i = 0; i < oPmtHdrs.mAggregations.content.length; i = i + 1) {
+                oPmtHdrs.mAggregations.content[i].setExpanded(true);
+
+                sTempPath = oPmtHdrs.mAggregations.content[i].oBindingContexts.oPaymentHdr.sPath;
+
+                this._retrPayments(oPmtHdrModel.getProperty(sTempPath).InvoiceNum, sTempPath);
+                this._retrPaymentItmes(oPmtHdrModel.getProperty(sTempPath).InvoiceNum, sTempPath);
+                aPromises.push(jQuery.Deferred());
+                this._retrPaymentSumryswResolve(oPmtHdrModel.getProperty(sTempPath).InvoiceNum, sTempPath, aPromises[i]);
+            }
+
+            jQuery.when.apply(jQuery, aPromises).done( function(){
+                oScrlCtaner.scrollTo(0, 10000, 1000);
+                //alert("success");
+            });
+        };
+
+        CustomController.prototype._retrPaymentSumryswResolve = function (sInvNum, sBindingPath, oDeferred) {
+            var oChbkOData = this.getView().getModel('oDataSvc'),
+                sPath,
+                oParameters,
+                oReadReturn;
+                //oScrlCtaner = this.getView().byId('nrgChkbookScrollContainer');
+
+            sPath = '/PaymentHdrs(\'' + sInvNum + '\')/PaymentSumry';
+
+            oParameters = {
+                success : function (oData) {
+                    if (oData && oData.results && oData.results.length > 0) {
+                        this.getView().getModel('oPaymentHdr').setProperty(sBindingPath + '/PaymentSumry', oData.results[0]);
+                    }
+                    //oScrlCtaner.scrollTop = oScrlCtaner.scrollHeight;
+                    //oScrlCtaner.scrollTo(0, 550, 100);
+                    oDeferred.resolve();
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                    oDeferred.resolve();
+                }.bind(this)
+            };
+
+            if (oChbkOData) {
+                oReadReturn = oChbkOData.read(sPath, oParameters);
+            }
+
+            return oReadReturn;
+        };
+
+        CustomController.prototype._onCollapseAllClicked = function (oEvent) {
+            var oPmtHdrs = this.getView().byId('nrgChkbookPmtHdrs'),
+                i;
+
+            for (i = 0; i < oPmtHdrs.mAggregations.content.length; i = i + 1) {
+                oPmtHdrs.mAggregations.content[i].setExpanded(false);
+            }
+        };
+
         CustomController.prototype._onPaymentHdrClicked = function (oEvent) {
             var sBindingPath,
                 oPmtHdr = this.getView().getModel('oPaymentHdr');
@@ -482,7 +547,8 @@ sap.ui.define(
         CustomController.prototype._retrPaymentSumrys = function (sInvNum, sBindingPath) {
             var oChbkOData = this.getView().getModel('oDataSvc'),
                 sPath,
-                oParameters;
+                oParameters,
+                oReadReturn;
                 //oScrlCtaner = this.getView().byId('nrgChkbookScrollContainer');
 
             sPath = '/PaymentHdrs(\'' + sInvNum + '\')/PaymentSumry';
@@ -501,8 +567,10 @@ sap.ui.define(
             };
 
             if (oChbkOData) {
-                oChbkOData.read(sPath, oParameters);
+                oReadReturn = oChbkOData.read(sPath, oParameters);
             }
+
+            return oReadReturn;
         };
 
         CustomController.prototype._initRoutingInfo = function () {

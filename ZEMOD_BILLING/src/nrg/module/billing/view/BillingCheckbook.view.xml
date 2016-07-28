@@ -40,6 +40,16 @@
                         <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-val"
                                  text="{path: 'oChkbkHdr>/InvStrartDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} } - {path: 'oChkbkHdr>/InvEndDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yy'} }"/>
                         </ute:Tag>
+                        <utmain:Button design="None" class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-btn"
+                                       press="_onExpandAllClicked">
+                            <core:Icon class="nrgBilling-blChkBk-lftDiv-qlcb-icon" src="sap-icon://expand-group"/>
+                            <ute:Tag class="nrgBilling-blChkBk-lftDiv-qlcb-txt" text="Expand All"/>
+                        </utmain:Button>
+                        <utmain:Button design="None" class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-btn"
+                                       press="_onCollapseAllClicked">
+                            <core:Icon class="nrgBilling-blChkBk-lftDiv-qlcb-icon" src="sap-icon://collapse-group"/>
+                            <ute:Tag class="nrgBilling-blChkBk-lftDiv-qlcb-txt" text="Collapse All"/>
+                        </utmain:Button>
                     <!-- End Date -->
 <!--                    <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-ctnt">
                         <ute:Tag class="nrgBilling-blChkBk-lftDiv-qkRefArea-lft-lbl"
@@ -218,7 +228,7 @@
             <m:ScrollContainer id="nrgChkbookScrollContainer"
                     class="nrgBilling-blChkBk-lftDiv-scrllArea" width="768px" height="500px" horizontal="false" vertical="true">
 
-                <ute:Tag content="{oPaymentHdr>/results}">
+                <ute:Tag id="nrgChkbookPmtHdrs" content="{oPaymentHdr>/results}">
                     <utmain:Infoline expanded="{oPaymentHdr>bExpand}" reverse="true"
                                      press="._onPaymentHdrClicked"
                                      class="nrgBilling-blChkBk-lftDiv-scrllArea-lnItm">
