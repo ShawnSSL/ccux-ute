@@ -373,8 +373,9 @@ sap.ui.define(
             }
 
             jQuery.when.apply(jQuery, aPromises).done( function(){
-                oScrlCtaner.scrollTo(0, 10000, 1000);
-                //alert("success");
+                window.setTimeout( function(){
+                    oScrlCtaner.scrollTo(0, 10000, 1000);
+                }, 2000 );
             });
         };
 
@@ -413,7 +414,7 @@ sap.ui.define(
             var oPmtHdrs = this.getView().byId('nrgChkbookPmtHdrs'),
                 i;
 
-            for (i = 0; i < oPmtHdrs.mAggregations.content.length; i = i + 1) {
+            for (i = 0; i < oPmtHdrs.mAggregations.content.length - 1; i = i + 1) {
                 oPmtHdrs.mAggregations.content[i].setExpanded(false);
             }
         };
