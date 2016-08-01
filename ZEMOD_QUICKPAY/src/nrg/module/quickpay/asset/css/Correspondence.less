@@ -1,0 +1,244 @@
+// Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO, July 22, 2016
+.nrgQPPay-correspondencePopup {
+    width: 750px;
+    height: 70%;
+    font-family: @nrgFontFamily;
+    // Content
+    & .nrgQPPay-correspondencePopup-content {
+        display: flex;
+        flex-direction: column;
+        padding: 0 10px;
+        & .nrgQPPay-toggleTab {
+            margin: auto;
+        }
+        & .nrgQPPay-noAutoPay {
+            margin: auto;
+        }
+        & .nrgQPPay-toggleText {
+            margin: auto;
+            margin-top: 15px;
+            text-align: center;
+        }
+        & > .nrgQPPay-contentArea {
+            display: inline-block;
+            flex: 0 0 550px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-botm {
+            margin-top: 37px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-botm > .nrgQPPay-botm-btns {
+            margin-top: 60px;
+            text-align: center;
+        }
+        & .nrgQPPay-dlbb-btn-left {
+            margin-right: 20px;
+        }
+        & .nrgQPPay-dlbb-btn-right {
+            margin-left: 20px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-title {
+            font-weight: @nrgFontWeight-semiBold;
+            font-size: @nrgFontSize-large;
+            display: inline-block;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-divider {
+            border-bottom: solid 1px @nrgColor-grey-lighter;
+            height: 17px;
+            width: 80px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-top {
+            display: inline-flex;
+            width: 100%;
+            //padding-right: 40px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-top > .nrgQPPay-contentArea-top-l {
+            width: 700px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-top > .nrgQPPay-contentArea-top-l > .nrgQPPay-dltl-step {
+            font-size: @nrgFontSize-base;
+            font-weight: @nrgFontWeight-semiBold;
+            margin-top: 20px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt {
+            margin-top: 30px;
+            width: auto;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr {
+            margin-top: 24px;
+            margin-left: 3px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-options {
+            margin-left: 25px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-chbrow {
+            margin-bottom: 13px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-chbrow > .nrgQPPay-dlcc-chbrow-chb {
+            vertical-align: middle;
+            margin-right: 12px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-chbrow > .nrgQPPay-dlcc-chbrow-lbl {
+            font-weight: @nrgFontWeight-semiBold;
+            margin-right: 10px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-chbrow > .nrgQPPay-dlcc-chbrow-lbl > span {
+            font-size: @nrgFontSize-base;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-chbrow > .nrgQPPay-dlcc-chbrow-sel {
+            margin-left: 18px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-chbrow > .nrgQPPay-dlcc-chbrow-val {
+            border-bottom: 1px solid @nrgColor-grey-dark;
+            display: inline-block;
+            margin-left: 18px;
+            width: 500px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-mail {
+            margin-left: 25px;
+            margin-bottom: 13px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-mail > .nrgQPPay-dlcc-mail-l > .nrgQPPay-dlcc-mail-row {
+            display: inline-block;
+            margin: 10px 30px 0px 0px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-mail .nrgQPPay-dlcc-mail-lbl {
+            font-weight: @nrgFontWeight-semiBold;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-mail .nrgQPPay-dlcc-mail-lbl > span {
+            font-size: @nrgFontSize-base;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-mail .nrgQPPay-dlcc-mail-val {
+            font-size: @nrgFontSize-base;
+            margin-left: 6px;
+            position: relative;
+            bottom: 6px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-ctnt > .nrgQPPay-contentArea-ctnt-corr > .nrgQPPay-dlcc-mail .nrgQPPay-dlcc-mail-valCol {
+            font-size: @nrgFontSize-base;
+            margin-left: 6px;
+            position: relative;
+            bottom: 2px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-botm {
+            margin-top: 37px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-botm > .nrgQPPay-contentArea-botm-btns {
+            margin-top: 60px;
+            text-align: center;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-botm > .nrgQPPay-contentArea-botm-btns > .nrgQPPay-dlbb-btn {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-botm > .nrgQPPay-contentArea-botm-btn-left {
+            margin-top: 60px;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-contentArea-botm > .nrgQPPay-contentArea-botm-btn-left > .nrgQPPay-dlbb-btn {
+            margin-right: 50px;
+        }
+    }
+    & .nrgQPPay-cusDataVerifyEditMail {
+        width: 100%;
+        & .nrgQPPay-toggleTab {
+            margin: auto;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-hdr {
+            margin-left: 13px;
+            margin-bottom: 10px;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-hdr > div > span {
+            color: @nrgColor-red-alert;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-hdr > div > div {
+            display: inline-block;
+            margin-left: 5px;
+            color: @nrgColor-red-alert;
+        }
+        &.nrgQPPay-cusDataVerifyEditMail-vl {
+            width: 880px;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-l {
+            display: inline-block;
+            width: 50%;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-l-vl {
+            width: 47%;
+            border-right-color: @nrgColor-inactiveGrey;
+            border-right-style: dashed;
+            border-right-width: 1px;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-l > div {
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+        }
+        & > div > .nrgQPPay-cusDataVerifyEditMail-rl-title > span {
+            font-weight: @nrgFontWeight-bold;
+            text-decoration: underline;
+        }
+        & > div > .nrgQPPay-cusDataVerifyEditMail-rl-title {
+            margin-bottom: 2px;
+            padding-bottom: 2px;
+            text-align: center;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-l > div > span > label {
+            font-weight: @nrgFontWeight-semiBold;
+            display: inline-block;
+            float: left;
+            clear: left;
+            width: 120px;
+            text-align: right;
+            padding-top: 3px;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-l > div > span > input {
+            display: inline-block;
+            float: left;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-r > .nrgQPPay-cusDataVerifyEditMail-l-ftr {
+            margin-top: 10px;
+            margin-left: 13px;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-r {
+            display: inline-block;
+            width: 50%;
+            vertical-align: top;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-r > div {
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-l > div .nrgQPPay-cusDataVerifyEditMail-lHighlight > input,
+        & > .nrgQPPay-cusDataVerifyEditMail-r > div .nrgQPPay-cusDataVerifyEditMail-rHighlight > input {
+            background-color: @nrgColor-orange-attention;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-r > .nrgQPPay-cusDataVerifyEditMail-r-ChkBx {
+            margin-left: 35px;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-r > .nrgQPPay-cusDataVerifyEditMail-r-ChkBx > .uteMChkBox {
+            float: left;
+            margin-right: 10px;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-r > div > span > label {
+            font-weight: @nrgFontWeight-semiBold;
+            color: @nrgColor-red-alert;
+            display: inline-block;
+            float: left;
+            clear: left;
+            width: 120px;
+            text-align: right;
+            padding-top: 3px;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-r > div > span > input {
+            display: inline-block;
+            float: left;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-l > .nrgQPPay-cusDataVerifyEditMailAdd-updtBtn {
+            margin-left: 179px;
+            margin-top: 20px;
+            margin-bottom: 2px;
+        }
+        & > .nrgQPPay-cusDataVerifyEditMail-r > .nrgQPPay-cusDataVerifyEditMailAdd-valdBtn {
+            margin-left: 35px;
+            margin-top: 20px;
+        }
+    }
+}
