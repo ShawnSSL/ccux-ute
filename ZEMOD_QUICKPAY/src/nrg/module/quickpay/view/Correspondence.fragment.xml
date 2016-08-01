@@ -1,0 +1,288 @@
+<!-- Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO, July 22, 2016 -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<core:FragmentDefinition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ute="ute.ui.commons"
+    xmlns:utmain="ute.ui.main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:c="sap.ui.commons"
+    xmlns:l="sap.ui.commons.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:m="sap.m"
+    displayBlock="true">
+
+    <ute:Tag class="nrgQPPay-correspondencePopup">
+        <!-----------------------------------------  Correspondence ------------------------------------------------------------------------->
+        <ute:Tag class="nrgQPPay-correspondencePopup-content" visible="{oScrnControl>/Correspondence}">
+        <!-- 1. Toggle Tab -->
+        <ute:ToggleButton id="id_QuickPayTglBtn" design="ToggleDashboard"
+            leftSelected="true"
+            leftBtnText="{comp-i18n-quickpay>nrgQPPaymentSetUp}"
+            rightBtnText="{comp-i18n-quickpay>nrgQPPaymentCancell}"
+            class="nrgQPPay-toggleTab"
+            press="._onToggleButtonPress" >
+        </ute:ToggleButton>
+        <ute:Tag id="toggleButtonText" class="nrgQPPay-toggleText">
+            <utmain:Label id="paymentSetUp" visible="true" text="{comp-i18n-quickpay>nrgQPPaymentSetUp}" class="nrgQPPay-dlcc-chbrow-lbl" />
+            <utmain:Label id="paymentCancell" visible="false" text="{comp-i18n-quickpay>nrgQPPaymentCancell}" class="nrgQPPay-dlcc-chbrow-lbl" />
+        </ute:Tag>
+
+        <!-- 2. Set up / Edit Auto Pay -->
+        <ute:Tag id="setUpAutoPay" visible="true" class="nrgQPPay-contentArea">
+            <ute:Tag class="nrgQPPay-contentArea-ctnt">
+                <ute:Tag class="nrgQPPay-contentArea-ctnt-corr">
+                    <ute:Tag class="nrgQPPay-dlcc-chbrow">
+                        <utmain:RadioButton class="nrgQPPay-dlcc-chbrow-chb" group="channel" design="Default" enabled="{oCorrModel>/Fax_Email_Allow}"
+                                         checked="{oCorrModel>/eMailCheck}" />
+                        <utmain:Label class="nrgQPPay-dlcc-chbrow-lbl" text="{comp-i18n-quickpay>nrgQPPayment-viaEmail}"/>
+                        <ute:Textfield class="nrgQPPay-dlcc-mail-val"
+                                       fieldType="Underlined" width="200px" value="{oCorrModel>/eMail}"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgQPPay-dlcc-chbrow">
+                        <utmain:RadioButton class="nrgQPPay-dlcc-chbrow-chb" group="channel" design="Default" enabled="{oCorrModel>/Fax_Email_Allow}"
+                                         checked="{oCorrModel>/FaxCheck}" />
+                        <utmain:Label class="nrgQPPay-dlcc-chbrow-lbl" text="{comp-i18n-quickpay>nrgQPPayment-viaFax}"/>
+                        <ute:Textfield class="nrgQPPay-dlcc-mail-val"
+                                       fieldType="Underlined" width="200px" value="{oCorrModel>/Fax}"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgQPPay-dlcc-chbrow nrgQPPay-dlcc-options">
+                        <utmain:Label class="nrgQPPay-dlcc-chbrow-lbl" text="{comp-i18n-quickpay>nrgQPPayment-to}"/>
+                        <ute:Textfield class="nrgQPPay-dlcc-mail-val"
+                                       fieldType="Underlined" width="15rem" value="{oCorrModel>/FaxTo}"/>
+                    </ute:Tag>
+                </ute:Tag>
+                <ute:Tag class="nrgQPPay-contentArea-ctnt-corr">
+                    <ute:Tag class="nrgQPPay-dlcc-chbrow">
+                        <utmain:RadioButton class="nrgQPPay-dlcc-chbrow-chb" group="channel" design="Default"
+                                         checked="{oCorrModel>/AddrCheck}" select="._onComAddrCheck"/>
+                        <utmain:Label class="nrgQPPay-dlcc-chbrow-lbl" text="{comp-i18n-quickpay>nrgQPPayment-viaMail}"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgQPPay-dlcc-chbrow nrgQPPay-dlcc-options">
+                        <utmain:RadioButton class="nrgQPPay-dlcc-chbrow-chb" group="Address" design="Default"
+                                         checked="{olocalAddress>/current}" select="._onCurrentAddCheck"/>
+                        <utmain:Label class="nrgQPPay-dlcc-chbrow-lbl" text="{comp-i18n-quickpay>nrgQPPayment-CtAddr}"/>
+
+                        <utmain:RadioButton class="nrgQPPay-dlcc-chbrow-chb" group="Address" design="Default"
+                                         checked="{olocalAddress>/newAdd}" select="._onNewAddCheck"/>
+                        <utmain:Label class="nrgQPPay-dlcc-chbrow-lbl" text="{comp-i18n-quickpay>nrgQPPayment-NewAddr}"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgQPPay-dlcc-mail">
+                        <ute:Tag class="nrgQPPay-dlcc-mail-l">
+                            <ute:Tag class="nrgQPPay-dlcc-mail-row">
+                                <utmain:Label class="nrgQPPay-dlcc-mail-lbl" text="{comp-i18n-quickpay>nrgQPPayment-incareof}"/>
+                                <ute:Textfield class="nrgQPPay-dlcc-mail-val"
+                                               fieldType="Underlined" width="12rem" value="{olocalAddress>/Address/co}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                        </ute:Tag>
+
+                        <ute:Tag class="nrgQPPay-dlcc-mail-l">
+                            <ute:Tag class="nrgQPPay-dlcc-mail-row">
+                                <utmain:Label class="nrgQPPay-dlcc-mail-lbl" text="{comp-i18n-quickpay>nrgQPPayment-stNum}"/>
+                                <ute:Textfield class="nrgQPPay-dlcc-mail-valCol"
+                                               fieldType="Underlined" width="7rem" value="{olocalAddress>/Address/HouseNo}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                            <ute:Tag class="nrgQPPay-dlcc-mail-row">
+                                <utmain:Label class="nrgQPPay-dlcc-mail-lbl" text="{comp-i18n-quickpay>nrgQPPayment-stNAme}"/>
+                                <ute:Textfield class="nrgQPPay-dlcc-mail-val"
+                                               fieldType="Underlined" width="19rem" value="{olocalAddress>/Address/Street}" editable="{olocalAddress>/editable}" />
+                            </ute:Tag>
+                        </ute:Tag>
+                        <ute:Tag class="nrgQPPay-dlcc-mail-l">
+                            <ute:Tag class="nrgQPPay-dlcc-mail-row">
+                                <utmain:Label class="nrgQPPay-dlcc-mail-lbl" text="{comp-i18n-quickpay>nrgQPPayment-aptNo}"/>
+                                <ute:Textfield class="nrgQPPay-dlcc-mail-valCol"
+                                               fieldType="Underlined"
+                                               width="9.5rem"
+                                               value="{olocalAddress>/Address/UnitNo}"
+                                               editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                            <ute:Tag class="nrgQPPay-dlcc-mail-row">
+                                <utmain:Label class="nrgQPPay-dlcc-mail-lbl" text="{comp-i18n-quickpay>nrgQPPayment-poBox}" />
+                                <ute:Textfield class="nrgQPPay-dlcc-mail-val"
+                                               fieldType="Underlined" width="10rem" value="{olocalAddress>/Address/PoBox}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                        </ute:Tag>
+                        <ute:Tag class="nrgQPPay-dlcc-mail-l">
+                            <ute:Tag class="nrgQPPay-dlcc-mail-row">
+                                <utmain:Label class="nrgQPPay-dlcc-mail-lbl" text="{comp-i18n-quickpay>nrgQPPayment-city}"/>
+                                <ute:Textfield class="nrgQPPay-dlcc-mail-valCol"
+                                               fieldType="Underlined" width="11.7rem" value="{olocalAddress>/Address/City}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                            <ute:Tag class="nrgQPPay-dlcc-mail-row">
+                                <utmain:Label class="nrgQPPay-dlcc-mail-lbl" text="{comp-i18n-quickpay>nrgQPPayment-state}"/>
+                                <ute:Textfield class="nrgQPPay-dlcc-mail-valCol"
+                                               fieldType="Underlined" width="5rem" value="{olocalAddress>/Address/State}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                            <ute:Tag class="nrgQPPay-dlcc-mail-row">
+                                <utmain:Label class="nrgQPPay-dlcc-mail-lbl" text="{comp-i18n-quickpay>nrgQPPayment-zip}" />
+                                <ute:Textfield class="nrgQPPay-dlcc-mail-val"
+                                               fieldType="Underlined" width="7rem" value="{olocalAddress>/Address/ZipCode}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                        </ute:Tag>
+                       <ute:Tag class="nrgQPPay-dlcc-mail-l">
+                            <ute:Tag class="nrgQPPay-dlcc-mail-row">
+                                <utmain:Label class="nrgQPPay-dlcc-mail-lbl" text="{comp-i18n-quickpay>nrgQPPayment-country}"/>
+                                <ute:Textfield class="nrgQPPay-dlcc-mail-val"
+                                               fieldType="Underlined" width="10rem" value="{olocalAddress>/Address/Country}" editable="{olocalAddress>/editable}"/>
+                            </ute:Tag>
+                       </ute:Tag>
+                    </ute:Tag>
+                    <ute:Tag class="nrgQPPay-dlcc-chbrow nrgQPPay-dlcc-options" visible="{olocalAddress>/NewAddressflag}">
+                        <utmain:Checkbox class="nrgQPPay-dlcc-chbrow-chb"  checked="{olocalAddress>/NewAddrCheck}" />
+                        <utmain:Label class="nrgQPPay-dlcc-chbrow-lbl" text="Save New Address"/>
+                    </ute:Tag>
+                </ute:Tag>
+            </ute:Tag>
+            <ute:Tag class="nrgQPPay-botm">
+                <ute:Tag class="nrgQPPay-botm-btns">
+                    <!--<utmain:Button class="nrgQPPay-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnBack}"/>-->
+                    <utmain:Button class="nrgQPPay-dlbb-btn-left" text="{comp-i18n-quickpay>nrgQPPayment-BtnSend}"
+                                   press="._sendCorrespondenceClicked"/>
+                    <utmain:Button class="nrgQPPay-dlbb-btn-right" text="{comp-i18n-quickpay>nrgQPPayment-BtnCancel}"
+                                   press="._onCancelBtnClick"/>
+                </ute:Tag>
+            </ute:Tag>
+
+        </ute:Tag>
+
+        <!-- 3. Remove Auto Pay -->
+        <ute:Tag id="removeAutoPay" visible="false" class="nrgQPPay-contentArea">
+
+            <ute:Tag class="nrgQPPay-botm">
+                <ute:Tag class="nrgQPPay-botm-btns">
+                    <!--<utmain:Button class="nrgQPPay-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnBack}"/>-->
+                    <utmain:Button class="nrgQPPay-dlbb-btn-left" text="{comp-i18n-quickpay>nrgQPPayment-BtnRemove}"
+                                   press="._onRemoveBtnClick"/>
+                    <utmain:Button class="nrgQPPay-dlbb-btn-right" text="{comp-i18n-quickpay>nrgQPPayment-BtnCancel}"
+                                   press="._onCancelBtnClick"/>
+                </ute:Tag>
+            </ute:Tag>
+
+        </ute:Tag>
+        </ute:Tag>
+        <!-----------------------------------------Trillium address check------------------------------------------------------------------------->
+
+        <ute:Tag class="nrgQPPay-cusDataVerifyEditMail" visible="{oScrnControl>/Trillium}">
+            <ute:Tag id="idAddrUpdatePopup-HdrLn" visible="{olocalAddress>/updateSent}"
+                class="nrgQPPay-cusDataVerifyEditMail-hdr">
+                <ute:Tag>
+                    <core:Icon src="sap-icon://nrg-icon/notification"/>
+                    <ute:TextView text="{olocalAddress>/SuggAddrInfo/HeaderText1}"/>
+                </ute:Tag>
+                <ute:Tag>
+                    <core:Icon src="sap-icon://nrg-icon/notification"/>
+                    <ute:TextView text="{olocalAddress>/SuggAddrInfo/HeaderText2}"/>
+                </ute:Tag>
+            </ute:Tag>
+            <ute:Tag id="idAddrUpdatePopup-l"
+                class="nrgQPPay-cusDataVerifyEditMail-l">
+                <ute:TextView visible="{olocalAddress>/updateSent}"
+                    class="nrgQPPay-cusDataVerifyEditMail-rl-title"
+                    text="{comp-i18n-quickpay>nrgQPPayment_Pup_lTitle}"/>
+                <ute:Tag><ute:Textfield id="idEditPoBox" fieldType="Underlined"
+                    change="._onPoBoxEdit"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_PoBox}"
+                    editable="{olocalAddress>/updateNotSent}" width="100px"
+                    value="{olocalAddress>/Address/PoBox}"/></ute:Tag>
+                <ute:Tag><ute:Textfield id="idEditHouseNum" fieldType="Underlined"
+                    change="._onRegAddrEdit"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_HuNum}"
+                    editable="{olocalAddress>/updateNotSent}" width="100px"
+                    value="{olocalAddress>/Address/HouseNo}"/></ute:Tag>
+                <ute:Tag><ute:Textfield id="idEditUnitNum" fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_UniNum}"
+                    editable="{olocalAddress>/updateNotSent}" width="100px"
+                    value="{olocalAddress>/Address/UnitNo}"/></ute:Tag>
+                <ute:Tag><ute:Textfield id="idEditStName" fieldType="Underlined"
+                    change="._onRegAddrEdit"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_StName}"
+                    editable="{olocalAddress>/updateNotSent}" width="220px"
+                    value="{olocalAddress>/Address/Street}"/></ute:Tag>
+                <ute:Tag><ute:Textfield id="idEditCity" fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_City}"
+                    editable="{olocalAddress>/updateNotSent}" width="100px"
+                    value="{olocalAddress>/Address/City}"/></ute:Tag>
+                <ute:Tag><ute:Textfield id="idEditState" fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_State}"
+                    editable="{olocalAddress>/updateNotSent}" width="100px"
+                    value="{olocalAddress>/Address/State}"/></ute:Tag>
+                <ute:Tag><ute:Textfield id="idEditZip" fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_ZipCode}"
+                    editable="{olocalAddress>/updateNotSent}" width="100px"
+                    value="{olocalAddress>/Address/ZipCode}"/></ute:Tag>
+
+                <ute:Button  id="idEditMailAddr_UpdtBtn"
+                    visible="{olocalAddress>/updateNotSent}"
+                    class="nrgQPPay-cusDataVerifyEditMailAdd-updtBtn nrgABP-cusDataVerify-alignCenBtn"
+                    text="{comp-i18n-quickpay>nrgQPPayment_Pup_UpdtBtnText}"
+                    press="._TrilliumAddressCheck"/>
+            </ute:Tag>
+            <ute:Tag id="idAddrUpdatePopup-r"
+                class="nrgQPPay-cusDataVerifyEditMail-r"
+                visible="{olocalAddress>/updateSent}">
+                <ute:TextView
+                    class="nrgQPPay-cusDataVerifyEditMail-rl-title"
+                    text="{comp-i18n-quickpay>nrgQPPayment_Pup_rTitle}"/>
+                <ute:Tag><ute:Textfield fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_PoBox}"
+                    editable="false" width="100px"
+                    value="{olocalAddress>/SuggAddrInfo/PoBox}"/></ute:Tag>
+                <ute:Tag><ute:Textfield fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_HuNum}"
+                    editable="false" width="100px"
+                    value="{olocalAddress>/SuggAddrInfo/HouseNo}"/></ute:Tag>
+                <ute:Tag><ute:Textfield fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_UniNum}"
+                    editable="false" width="100px"
+                    value="{olocalAddress>/SuggAddrInfo/UnitNo}"/></ute:Tag>
+                <ute:Tag><ute:Textfield fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_StName}"
+                    editable="false" width="220px"
+                    value="{olocalAddress>/SuggAddrInfo/Street}"/></ute:Tag>
+                <ute:Tag><ute:Textfield fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_City}"
+                    editable="false" width="100px"
+                    value="{olocalAddress>/SuggAddrInfo/City}"/></ute:Tag>
+                <ute:Tag><ute:Textfield fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_State}"
+                    editable="false" width="100px"
+                    value="{olocalAddress>/SuggAddrInfo/State}"/></ute:Tag>
+                <ute:Tag><ute:Textfield id="idValdZip" fieldType="Underlined"
+                    label="{comp-i18n-quickpay>nrgQPPayment_Pup_ZipCode}"
+                    editable="false" width="100px"
+                    value="{olocalAddress>/SuggAddrInfo/ZipCode}"/></ute:Tag>
+                <ute:Tag id="idAddrUpdatePopup-FtrLn"
+                    class="nrgQPPay-cusDataVerifyEditMail-l-ftr">
+                    <ute:TextView text="{olocalAddress>/SuggAddrInfo/FooterLine1}"/>
+                    <ute:TextView text="{olocalAddress>/SuggAddrInfo/FooterLine2}"/>
+                    <ute:TextView text="{olocalAddress>/SuggAddrInfo/FooterLine3}"/>
+                </ute:Tag>
+
+                <ute:Tag class="nrgQPPay-cusDataVerifyEditMail-r-ChkBx">
+                    <utmain:Checkbox id="idSuggCompareCheck" select="._compareSuggChkClicked"/>
+                    <utmain:Label class="nrgABP-cusDataVerifyEditMail-r-ChkBxlabel"
+                        labelFor="idSuggCompareCheck" text="Compare"/>
+                </ute:Tag>
+                <ute:Button  id="idEditMailAddr_AcptBtn"
+                    visible="{olocalAddress>/showVldBtns}"
+                    class="nrgQPPay-cusDataVerifyEditMailAdd-valdBtn"
+                    text="{comp-i18n-quickpay>nrgQPPayment_Pup_AcceptBtn}"
+                    press="._handleMailingAcceptBtn"/>
+                <ute:Button  id="idEditMailAddr_DclnBtn"
+                    visible="{olocalAddress>/showVldBtns}"
+                    class="nrgQPPay-cusDataVerifyEditMailAdd-valdBtn"
+                    text="{comp-i18n-quickpay>nrgQPPayment_Pup_DeclineBtn}"
+                    press="._handleMailingDeclineBtn"/>
+                <ute:Button  id="idEditMailAddr_EditBtn"
+                    visible="{olocalAddress>/showVldBtns}"
+                    class="nrgQPPay-cusDataVerifyEditMailAdd-valdBtn"
+                    text="{comp-i18n-quickpay>nrgQPPayment_Pup_EditBtn}"
+                    press="._handleMailingEditBtn"/>
+            </ute:Tag>
+        </ute:Tag>
+
+    </ute:Tag>
+
+</core:FragmentDefinition>
