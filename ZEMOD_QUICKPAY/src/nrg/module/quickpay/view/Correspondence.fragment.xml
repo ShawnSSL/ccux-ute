@@ -15,7 +15,7 @@
 
     <ute:Tag class="nrgQPPay-correspondencePopup">
         <!-----------------------------------------  Correspondence ------------------------------------------------------------------------->
-        <ute:Tag class="nrgQPPay-correspondencePopup-content" visible="{oScrnControl>/Correspondence}">
+        <ute:Tag class="nrgQPPay-correspondencePopup-content" visible="{olocalCorrModel>/Correspondence}">
         <!-- 1. Toggle Tab -->
         <ute:ToggleButton id="id_QuickPayTglBtn" design="ToggleDashboard"
             leftSelected="true"
@@ -164,7 +164,7 @@
         </ute:Tag>
         <!-----------------------------------------Trillium address check------------------------------------------------------------------------->
 
-        <ute:Tag class="nrgQPPay-cusDataVerifyEditMail" visible="{oScrnControl>/Trillium}">
+        <ute:Tag class="nrgQPPay-cusDataVerifyEditMail" visible="{olocalCorrModel>/Trillium}">
             <ute:Tag id="idAddrUpdatePopup-HdrLn" visible="{olocalAddress>/updateSent}"
                 class="nrgQPPay-cusDataVerifyEditMail-hdr">
                 <ute:Tag>

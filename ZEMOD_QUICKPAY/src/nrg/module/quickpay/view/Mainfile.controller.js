@@ -87,14 +87,12 @@ sap.ui.define(
                 editable : false
             }), 'olocalAddress');
             this.getView().setModel(new JSONModel(), 'oCorrModel');
-            this.getView().setModel(new JSONModel(), 'oPaymentOption');
-            this.getView().setModel(new JSONModel(), 'oScrnControl');
             this.getView().setModel(new sap.ui.model.json.JSONModel({
                 isPrePay : false,
                 prePayDes : "Please Use Index to Set Up Prepay Auto Pay",
-            }), 'oPrePay');
+            }), 'olocalCorrModel');
             if (oGlobalDataManager.isPrepay()) {
-                this.getView().getModel("oPrePay").setProperty("/isPrePay", true);
+                this.getView().getModel("olocalCorrModel").setProperty("/isPrePay", true);
             }
             this._initScrnControl();
             /*************************  Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO stop *******************************/
@@ -1941,7 +1939,7 @@ sap.ui.define(
         /** PM Popup Button Select **/
         Controller.prototype.onAutoBankDraft = function (oEvent) {
             var oPpPmt = this.getView().getModel('olocalAddress');
-            var oPayOption = this.getView().getModel('oPaymentOption');
+            var oPayOption = this.getView().getModel('olocalCorrModel');
             oPayOption.setProperty('/bankDraft', true);
             oPayOption.setProperty('/creditCard', false);
             oPpPmt.setProperty('/current', false);
@@ -1965,7 +1963,7 @@ sap.ui.define(
 
         Controller.prototype.onAutoCreditCard = function (oEvent) {
             var oPpPmt = this.getView().getModel('olocalAddress');
-            var oPayOption = this.getView().getModel('oPaymentOption');
+            var oPayOption = this.getView().getModel('olocalCorrModel');
             oPayOption.setProperty('/creditCard', true);
             oPayOption.setProperty('/bankDraft', false);
             oPpPmt.setProperty('/current', false);
@@ -2057,7 +2055,7 @@ sap.ui.define(
 
         Controller.prototype._sendCorrespondenceClicked = function () {
             var oCorrModel = this.getView().getModel('oCorrModel'),
-                oPayOption = this.getView().getModel('oPaymentOption'),
+                oPayOption = this.getView().getModel('olocalCorrModel'),
                 oData = oCorrModel.oData,
                 olocalAddress = this.getView().getModel('olocalAddress');
 
@@ -2155,7 +2153,7 @@ sap.ui.define(
 
         Controller.prototype._onRemoveBtnClick = function () {
              var oODataSvc = this.getView().getModel('comp-quickpay'),
-                oPayOption = this.getView().getModel('oPaymentOption'),
+                oPayOption = this.getView().getModel('olocalCorrModel'),
                 oParameters,
                 sPath,
                 that=this,
@@ -2338,13 +2336,13 @@ sap.ui.define(
         /** Trillium Check Button Stop**/
 
         Controller.prototype._initScrnControl = function () {
-            var oScrnControl = this.getView().getModel('oScrnControl');
+            var oScrnControl = this.getView().getModel('olocalCorrModel');
             oScrnControl.setProperty('/Correspondence', false);
             oScrnControl.setProperty('/Trillium', false);
         };
 
         Controller.prototype._selectScrn = function (bCorres, bTrillium) {
-            var oScrnControl = this.getView().getModel('oScrnControl');
+            var oScrnControl = this.getView().getModel('olocalCorrModel');
 
             if (bCorres) {
                 oScrnControl.setProperty('/Correspondence', true);
@@ -2360,7 +2358,7 @@ sap.ui.define(
 
         Controller.prototype._sendCorrespondence = function () {
             var oODataSvc = this.getView().getModel('comp-quickpay'),
-                oPayOption = this.getView().getModel('oPaymentOption'),
+                oPayOption = this.getView().getModel('olocalCorrModel'),
                 oParameters,
                 sPath,
                 that=this,
@@ -2468,7 +2466,7 @@ sap.ui.define(
 
         /** Toggle Button Select **/
         Controller.prototype._onToggleButtonPress = function (oEvent) {
-            var oPayOption = this.getView().getModel('oPaymentOption');
+            var oPayOption = this.getView().getModel('olocalCorrModel');
 
             if (this.getView().byId('id_QuickPayTglBtn').getLeftSelected()) {
                 this.getView().byId('paymentSetUp').setVisible(true);
