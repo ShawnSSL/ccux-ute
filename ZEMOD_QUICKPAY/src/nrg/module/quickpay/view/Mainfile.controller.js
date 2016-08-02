@@ -66,6 +66,39 @@ sap.ui.define(
             oContactModel = new sap.ui.model.json.JSONModel();
             this.getView().setModel(oContactModel, "quickpay-cl");
             this.getView().setModel(oViewModel, "appView");
+
+            /*************************  Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO start ******************************/
+            var oGlobalDataManager = this._OwnerComponent.getGlobalDataManager();
+            this.getView().setModel(new sap.ui.model.json.JSONModel({
+                current : false,
+                newAdd : false,
+                co : '',
+                HouseNo : '',
+                UnitNo : '',
+                City : '',
+                State: '',
+                Country : '',
+                AddrLine : '',
+                Street : '',
+                PoBox: '',
+                ZipCode : '',
+                NewAddrCheck : false,
+                NewAddressflag : false,
+                editable : false
+            }), 'olocalAddress');
+            this.getView().setModel(new JSONModel(), 'oCorrModel');
+            this.getView().setModel(new JSONModel(), 'oPaymentOption');
+            this.getView().setModel(new JSONModel(), 'oScrnControl');
+            this.getView().setModel(new sap.ui.model.json.JSONModel({
+                isPrePay : false,
+                prePayDes : "Please Use Index to Set Up Prepay Auto Pay",
+            }), 'oPrePay');
+            if (oGlobalDataManager.isPrepay()) {
+                this.getView().getModel("oPrePay").setProperty("/isPrePay", true);
+            }
+            this._initScrnControl();
+            /*************************  Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO stop *******************************/
+
             if (this._Process === 'PCC') {
                 this.onPendingCreditCard();
                 this._onPayFlagsRead();
@@ -1901,6 +1934,570 @@ sap.ui.define(
             }
             return aFilters;
         };
+
+/********************************  Recurring Payment Related functionality start *************************************/
+/*************************  Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO ******************************/
+
+        /** PM Popup Button Select **/
+        Controller.prototype.onAutoBankDraft = function (oEvent) {
+            var oPpPmt = this.getView().getModel('olocalAddress');
+            var oPayOption = this.getView().getModel('oPaymentOption');
+            oPayOption.setProperty('/bankDraft', true);
+            oPayOption.setProperty('/creditCard', false);
+            oPpPmt.setProperty('/current', false);
+            oPpPmt.setProperty('/newAdd', false);
+            oPpPmt.setProperty('/NewAddrCheck', false);
+            oPpPmt.setProperty('/NewAddressflag', false);
+            oPpPmt.setProperty('/editable', false);
+
+            if (!this._oPpCorrespondencePopup) {
+                this._oPpCorrespondencePopup = ute.ui.main.Popup.create({
+                    content: sap.ui.xmlfragment(this.getView().sId, "nrg.module.quickpay.view.Correspondence", this),
+                    title: 'Send Correspondence'
+                });
+                this.getView().addDependent(this._oPpCorrespondencePopup);
+            }
+            this._oPpCorrespondencePopup.open();
+            this._initToggleArea();
+            this._selectScrn(true);
+            return;
+        };
+
+        Controller.prototype.onAutoCreditCard = function (oEvent) {
+            var oPpPmt = this.getView().getModel('olocalAddress');
+            var oPayOption = this.getView().getModel('oPaymentOption');
+            oPayOption.setProperty('/creditCard', true);
+            oPayOption.setProperty('/bankDraft', false);
+            oPpPmt.setProperty('/current', false);
+            oPpPmt.setProperty('/newAdd', false);
+            oPpPmt.setProperty('/NewAddrCheck', false);
+            oPpPmt.setProperty('/NewAddressflag', false);
+            oPpPmt.setProperty('/editable', false);
+
+            if (!this._oPpCorrespondencePopup) {
+                this._oPpCorrespondencePopup = ute.ui.main.Popup.create({
+                    content: sap.ui.xmlfragment(this.getView().sId, "nrg.module.quickpay.view.Correspondence", this),
+                    title: 'Send Correspondence'
+                });
+                this.getView().addDependent(this._oPpCorrespondencePopup);
+            }
+            this._oPpCorrespondencePopup.open();
+            this._initToggleArea();
+            this._selectScrn(true);
+            return;
+        };
+
+        Controller.prototype._onCancelBtnClick = function () {
+            this._oPpCorrespondencePopup.close();
+        };
+
+        Controller.prototype._initToggleArea = function () {
+            if (!this.getView().byId('id_QuickPayTglBtn').getLeftSelected()) {
+                this.getView().byId('id_QuickPayTglBtn').setLeftSelected(true);
+                this._onToggleButtonPress(null);
+            }
+        };
+
+        Controller.prototype._retrCorrespondence = function () {
+            var oODataMOdel = this.getView().getModel('comp-quickpay'),
+                oParameters,
+                sPath,
+                olocalAddress = this.getView().getModel('olocalAddress'),
+                that = this;
+            this._OwnerComponent.getCcuxApp().setOccupied(true);
+            if (that._sContractId === undefined) {
+                this._sContractId = '';
+            }
+            sPath = "/AutoPayCorrs(BP=\'" + this._sBP + "\',CA=\'" + this._sCA + "\',CO=\'" + this._sContractId + "')";
+
+            oParameters = {
+                success : function (oData) {
+                    var temp = olocalAddress.oData;
+                    if (oData) {
+                        this.getView().getModel('oCorrModel').setData(oData);
+                        if (oData.AddrCheck) {
+                            olocalAddress.setProperty('/current', true);
+                            olocalAddress.setProperty('/newAdd', false);
+                        }
+                        if (oData.Address) {
+                            olocalAddress.setProperty('/Address', {});
+                            //temp.Address = {};
+                            olocalAddress.setProperty('/Address/co', oData.Address.co);
+                            //temp.Address.co = oData.Address.co;
+                            olocalAddress.setProperty('/Address/HouseNo', oData.Address.HouseNo);
+                            //temp.Address.HouseNo = oData.Address.HouseNo;
+                            olocalAddress.setProperty('/Address/UnitNo', oData.Address.UnitNo);
+                            //temp.Address.UnitNo = oData.Address.UnitNo;
+                            olocalAddress.setProperty('/Address/City', oData.Address.City);
+                            //temp.Address.City = oData.Address.City;
+                            olocalAddress.setProperty('/Address/State', oData.Address.State);
+                            //temp.Address.State = oData.Address.State;
+                            olocalAddress.setProperty('/Address/Country', oData.Address.Country);
+                            //temp.Address.Country = oData.Address.Country;
+                            //temp.Address.AddrLine = oData.Address.AddrLine;
+                            olocalAddress.setProperty('/Address/Street', oData.Address.Street);
+                            //temp.Address.Street = oData.Address.Street;
+                            olocalAddress.setProperty('/Address/PoBox', oData.Address.PoBox);
+                            //temp.Address.PoBox = oData.Address.PoBox;
+                            olocalAddress.setProperty('/Address/ZipCode', oData.Address.ZipCode);
+                            //temp.Address.ZipCode = oData.Address.ZipCode;
+                        }
+                    }
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                }.bind(this),
+                error: function (oError) {
+                    //Need to put error message
+                }.bind(this)
+            };
+
+            if (oODataMOdel) {
+                oODataMOdel.read(sPath, oParameters);
+            }
+        };
+
+        Controller.prototype._sendCorrespondenceClicked = function () {
+            var oCorrModel = this.getView().getModel('oCorrModel'),
+                oPayOption = this.getView().getModel('oPaymentOption'),
+                oData = oCorrModel.oData,
+                olocalAddress = this.getView().getModel('olocalAddress');
+
+            if (oPayOption.getProperty('/creditCard')) {
+                oPayOption.setProperty('/creditCard', true);
+                oPayOption.setProperty('/bankDraft', false);
+                oPayOption.setProperty('/CCSetUp', true);
+                oPayOption.setProperty('/BDSetUp', false);
+                oPayOption.setProperty('/CCRemove', false);
+                oPayOption.setProperty('/BDRemove', false);
+            }
+            if (oPayOption.getProperty('/bankDraft')) {
+                oPayOption.setProperty('/creditCard', false);
+                oPayOption.setProperty('/bankDraft', true);
+                oPayOption.setProperty('/BDSetUp', true);
+                oPayOption.setProperty('/CCSetUp', false);
+                oPayOption.setProperty('/CCRemove', false);
+                oPayOption.setProperty('/BDRemove', false);
+            }
+
+            if (oData.eMailCheck) {
+                if (!oData.eMail) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Auto Pay',
+                        message: 'Email field is empty'
+                    });
+                    return true;
+                }
+            }
+            if (oData.FaxCheck) {
+                if (!(oData.Fax)) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Auto Pay',
+                        message: 'Please enter Fax Number'
+                    });
+                    return true;
+                }
+                if (!(oData.FaxTo)) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Auto Pay',
+                        message: 'Please enter Fax To'
+                    });
+                    return true;
+                }
+            }
+            if (oData.AddrCheck) {
+                if (olocalAddress.getProperty('/newAdd')) {
+                    if (!(((olocalAddress.getProperty('/Address/HouseNo')) && (olocalAddress.getProperty('/Address/Street'))) || (olocalAddress.getProperty('/Address/PoBox')))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Auto Pay',
+                            message: 'Please enter street no & street name or PO Box'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/Address/City'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Auto Pay',
+                            message: 'Please enter city'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/Address/State'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Auto Pay',
+                            message: 'Please enter state'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/Address/ZipCode'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Auto Pay',
+                            message: 'Please enter zip Code'
+                        });
+                        return true;
+                    }
+                    if (!(olocalAddress.getProperty('/Address/Country'))) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Auto Pay',
+                            message: 'Please enter country'
+                        });
+                        return true;
+                    }
+
+                    this._TrilliumAddressCheck();
+                    return true;
+                } else {
+                    this._sendCorrespondence();
+                    return true;
+                }
+            }
+            this._sendCorrespondence();
+            return true;
+
+        };
+
+        Controller.prototype._onRemoveBtnClick = function () {
+             var oODataSvc = this.getView().getModel('comp-quickpay'),
+                oPayOption = this.getView().getModel('oPaymentOption'),
+                oParameters,
+                sPath,
+                that=this,
+                oRemoveModel = this.getView().getModel('oCorrModel'),
+                oData = oRemoveModel.oData;
+            this._OwnerComponent.getCcuxApp().setOccupied(true);
+            sPath = '/AutoPayCorrs';
+
+            oParameters = {
+                merge: false,
+                success : function (oData) {
+                    if (oData.Error) {
+                        if (oData.Message) {
+                            ute.ui.main.Popup.Alert({
+                                title: 'Auto Pay',
+                                message: oData.Message
+                            });
+                        } else {
+                            ute.ui.main.Popup.Alert({
+                                title: 'Auto Pay',
+                                message: 'Correspondence Failed'
+                            });
+                        }
+                    } else if (oData.Message) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Auto Pay',
+                            message: oData.Message
+                        });
+                    } else {
+                            ute.ui.main.Popup.Alert({
+                                title: 'Auto Pay',
+                                message: 'Correspondence Sucessfully Sent'
+                            });
+                        }
+                    this._oPpCorrespondencePopup.close();
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                }.bind(this),
+                error: function (oError) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Auto Pay',
+                        message: 'Correspondence Failed'
+                    });
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                }.bind(this)
+            };
+
+            if (oODataSvc) {
+                oData.BDRemove = oPayOption.getProperty('/BDRemove');
+                oData.CCSetUp = oPayOption.getProperty('/CCSetUp');
+                oData.BDSetUp = oPayOption.getProperty('/BDSetUp');
+                oData.CCRemove = oPayOption.getProperty('/CCRemove');
+            }
+            oODataSvc.create(sPath, oRemoveModel.oData, oParameters);
+        };
+
+
+        /** Trillium Address Check Function **/
+        Controller.prototype._TrilliumAddressCheck = function () {
+            var olocalAddress = this.getView().getModel('olocalAddress'),
+                oModel = this.getView().getParent().getParent().getParent().getController().getOwnerComponent().getModel('comp-bupa'),
+                sPath,
+                oParameters,
+                that=this,
+                aFilters = this._createAddrValidateFilters();
+            this._OwnerComponent.getCcuxApp().setOccupied(true);
+            olocalAddress.setProperty('/updateSent', true);
+            olocalAddress.setProperty('/showVldBtns', true);
+            olocalAddress.setProperty('/updateNotSent', false);
+            sPath = '/BuagAddrDetails';
+
+            oParameters = {
+                filters: aFilters,
+                success: function (oData) {
+                    if (oData.results[0].AddrChkValid === 'X') {
+                        this._sendCorrespondenceClicked();
+                    } else {
+                        olocalAddress.setProperty('/SuggAddrInfo', oData.results[0].TriCheck);
+                        this._showSuggestedAddr();
+                        this._selectScrn(false, true);//show trillium comparision
+                    }
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                }.bind(this),
+                error: function (oError) {
+                    sap.ui.commons.MessageBox.alert('Validatation Call Failed');
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                }.bind(this)
+            };
+            if (oModel) {
+                oModel.read(sPath, oParameters);
+            }
+        };
+
+        Controller.prototype._createAddrValidateFilters = function () {
+            var aFilters = [],
+                oFilterTemplate,
+                oMailEdit = this.getView().getModel('olocalAddress'),
+                oMailEditAddrInfo = oMailEdit.getProperty("/Address"),
+                key,
+                tempPath;
+
+            oFilterTemplate = new Filter({ path: 'FixUpd', operator: FilterOperator.EQ, value1: 'X'});
+            aFilters.push(oFilterTemplate);
+            oFilterTemplate = new Filter({ path: 'PartnerID', operator: FilterOperator.EQ, value1: this._sBP});
+            aFilters.push(oFilterTemplate);
+            oFilterTemplate = new Filter({ path: 'ChkAddr', operator: FilterOperator.EQ, value1: 'X'});
+            aFilters.push(oFilterTemplate);
+
+            for (key in oMailEditAddrInfo) {
+                if (oMailEditAddrInfo.hasOwnProperty(key)) {
+                    if (!(key === '__metadata' || key === 'StandardFlag' || key === 'ShortForm' || key === 'ValidFrom' || key === 'ValidTo' || key === 'Supplement')) {
+                        tempPath = 'FixAddrInfo/' + key;
+                        oFilterTemplate = new Filter({ path: tempPath, operator: FilterOperator.EQ, value1: oMailEditAddrInfo[key]});
+                        aFilters.push(oFilterTemplate);
+                    }
+                }
+            }
+            return aFilters;
+        };
+
+        Controller.prototype._showSuggestedAddr = function () {
+            //Address validation error there was. Show system suggested address values we need to.
+            var olocalAddress = this.getView().getModel('olocalAddress');
+            olocalAddress.setProperty('/updateSent', true);
+            olocalAddress.setProperty('/showVldBtns', true);
+            olocalAddress.setProperty('/updateNotSent', false);
+        };
+
+        /** Trillium Check Button Start**/
+
+        Controller.prototype._onPoBoxEdit = function (oEvent) {
+            var olocalAddress = this.getView().getModel('olocalAddress');
+            olocalAddress.setProperty('/HouseNo', '');
+            olocalAddress.setProperty('/Street', '');
+        };
+
+        Controller.prototype._compareSuggChkClicked = function (oEvent) {
+            //this.getView().byId('idAddrUpdatePopup-l').getContent()[2].getContent()[0].getValue()
+            var oLeftInputArea = this.getView().byId('idAddrUpdatePopup-l').getContent(),
+                oRightSuggArea = this.getView().byId('idAddrUpdatePopup-r').getContent(),
+                i;
+
+            if (oEvent.mParameters.checked) {
+                for (i = 1; i < 8; i = i + 1) {
+                    if (oLeftInputArea[i].getContent()[0].getValue() !== oRightSuggArea[i].getContent()[0].getValue()) {
+                        oLeftInputArea[i].getContent()[0].addStyleClass('nrgQPPay-cusDataVerifyEditMail-lHighlight');
+                        oRightSuggArea[i].getContent()[0].addStyleClass('nrgQPPay-cusDataVerifyEditMail-rHighlight');
+                    }
+                }
+            } else {
+                for (i = 1; i < 8; i = i + 1) {
+                    if (oLeftInputArea[i].getContent()[0].getValue() !== oRightSuggArea[i].getContent()[0].getValue()) {
+                        oLeftInputArea[i].getContent()[0].removeStyleClass('nrgQPPay-cusDataVerifyEditMail-lHighlight');
+                        oRightSuggArea[i].getContent()[0].removeStyleClass('nrgQPPay-cusDataVerifyEditMail-rHighlight');
+                    }
+                }
+            }
+        };
+
+        Controller.prototype._handleMailingAcceptBtn = function (oEvent) {
+            var olocalAddress = this.getView().getModel('olocalAddress'),
+                oOriginalInput = olocalAddress.getProperty("/Address"),
+                oSuggestedInput = olocalAddress.getProperty("/SuggAddrInfo");
+            oOriginalInput = oSuggestedInput;
+
+            this._sendCorrespondence();
+        };
+
+        Controller.prototype._handleMailingDeclineBtn = function (oEvent) {
+            this._sendCorrespondence();
+        };
+
+        Controller.prototype._handleMailingEditBtn = function (oEvent) {
+            var oEditMail = this.getView().getModel('olocalAddress');
+
+            oEditMail.setProperty('/updateSent', false);
+            oEditMail.setProperty('/showVldBtns', false);
+            oEditMail.setProperty('/updateNotSent', true);
+        };
+
+        /** Trillium Check Button Stop**/
+
+        Controller.prototype._initScrnControl = function () {
+            var oScrnControl = this.getView().getModel('oScrnControl');
+            oScrnControl.setProperty('/Correspondence', false);
+            oScrnControl.setProperty('/Trillium', false);
+        };
+
+        Controller.prototype._selectScrn = function (bCorres, bTrillium) {
+            var oScrnControl = this.getView().getModel('oScrnControl');
+
+            if (bCorres) {
+                oScrnControl.setProperty('/Correspondence', true);
+                oScrnControl.setProperty('/Trillium', false);
+                this._retrCorrespondence();
+            }
+            if (bTrillium) {
+                oScrnControl.setProperty('/Correspondence', false);
+                oScrnControl.setProperty('/Trillium', true);
+            }
+        };
+
+
+        Controller.prototype._sendCorrespondence = function () {
+            var oODataSvc = this.getView().getModel('comp-quickpay'),
+                oPayOption = this.getView().getModel('oPaymentOption'),
+                oParameters,
+                sPath,
+                that=this,
+                oDPPComunication = this.getView().getModel('oCorrModel'),
+                oData = oDPPComunication.oData,
+                olocalAddress = this.getView().getModel('olocalAddress');
+            this._OwnerComponent.getCcuxApp().setOccupied(true);
+            sPath = '/AutoPayCorrs';
+
+            oParameters = {
+                merge: false,
+                success : function (oData) {
+                    if (oData.Error) {
+                        if (oData.Message) {
+                            ute.ui.main.Popup.Alert({
+                                title: 'Auto Pay',
+                                message: oData.Message
+                            });
+                        } else {
+                            ute.ui.main.Popup.Alert({
+                                title: 'Auto Pay',
+                                message: 'Correspondence Failed'
+                            });
+                        }
+                    } else if (oData.Message) {
+                        ute.ui.main.Popup.Alert({
+                            title: 'Auto Pay',
+                            message: oData.Message
+                        });
+                    } else {
+                            ute.ui.main.Popup.Alert({
+                                title: 'Auto Pay',
+                                message: 'Correspondence Sucessfully Sent'
+                            });
+                        }
+                    this._oPpCorrespondencePopup.close();
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                }.bind(this),
+                error: function (oError) {
+                    ute.ui.main.Popup.Alert({
+                        title: 'Auto Pay',
+                        message: 'Correspondence Failed'
+                    });
+                    that._OwnerComponent.getCcuxApp().setOccupied(false);
+                }.bind(this)
+            };
+            if (oODataSvc) {
+                oData.BDRemove = oPayOption.getProperty('/BDRemove');
+                oData.CCSetUp = oPayOption.getProperty('/CCSetUp');
+                oData.BDSetUp = oPayOption.getProperty('/BDSetUp');
+                oData.CCRemove = oPayOption.getProperty('/CCRemove');
+                if (olocalAddress.getProperty('/newAdd')) {
+                    //oData.Address.co = olocalAddress.getProperty('/Address/co');
+                    oData.Address.HouseNo = olocalAddress.getProperty('/Address/HouseNo');
+                    oData.Address.UnitNo = olocalAddress.getProperty('/Address/UnitNo');
+                    oData.Address.City = olocalAddress.getProperty('/Address/City');
+                    oData.Address.State = olocalAddress.getProperty('/Address/State');
+                    oData.Address.Country = olocalAddress.getProperty('/Address/Country');
+                    oData.Address.AddrLine = olocalAddress.getProperty('/Address/AddrLine');
+                    oData.Address.Street = olocalAddress.getProperty('/Address/Street');
+                    oData.Address.PoBox = olocalAddress.getProperty('/Address/PoBox');
+                    oData.Address.ZipCode = olocalAddress.getProperty('/Address/ZipCode');
+                    oData.NewAddr = olocalAddress.getProperty('/NewAddrCheck');
+                }
+                oODataSvc.create(sPath, oDPPComunication.oData, oParameters);
+            }
+        };
+
+        /**Edit Mailing Addr functions*/
+        Controller.prototype._onComAddrCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/current', true);
+            this.getView().getModel('olocalAddress').setProperty('/newAdd', false);
+        };
+        Controller.prototype._onCurrentAddCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/Address/co', this.getView().getModel('oCorrModel').getProperty('/Address/co'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/HouseNo', this.getView().getModel('oCorrModel').getProperty('/Address/HouseNo'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/UnitNo', this.getView().getModel('oCorrModel').getProperty('/Address/UnitNo'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/City', this.getView().getModel('oCorrModel').getProperty('/Address/City'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/State', this.getView().getModel('oCorrModel').getProperty('/Address/State'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/Country', this.getView().getModel('oCorrModel').getProperty('/Address/Country'));
+            //this.getView().getModel('olocalAddress').setProperty('/Address/AddrLine', this.getView().getModel('oDppStepThreeCom').getProperty('/Address/AddrLine'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/Street', this.getView().getModel('oCorrModel').getProperty('/Address/Street'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/PoBox', this.getView().getModel('oCorrModel').getProperty('/Address/PoBox'));
+            this.getView().getModel('olocalAddress').setProperty('/Address/ZipCode', this.getView().getModel('oCorrModel').getProperty('/Address/ZipCode'));
+            this.getView().getModel('olocalAddress').setProperty('/NewAddrCheck', false);
+            this.getView().getModel('olocalAddress').setProperty('/NewAddressflag', false);
+            this.getView().getModel('olocalAddress').setProperty('/editable', false);
+
+        };
+        Controller.prototype._onNewAddCheck = function (oEvent) {
+            this.getView().getModel('olocalAddress').setProperty('/Address/co', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/HouseNo', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/UnitNo', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/City', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/State', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/Country', '');
+            //this.getView().getModel('olocalAddress').setProperty('/Address/AddrLine', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/Street', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/PoBox', '');
+            this.getView().getModel('olocalAddress').setProperty('/Address/ZipCode', '');
+            this.getView().getModel('olocalAddress').setProperty('/NewAddrCheck', true);
+            this.getView().getModel('olocalAddress').setProperty('/NewAddressflag', true);
+            this.getView().getModel('olocalAddress').setProperty('/editable', true);
+        };
+
+        /** Toggle Button Select **/
+        Controller.prototype._onToggleButtonPress = function (oEvent) {
+            var oPayOption = this.getView().getModel('oPaymentOption');
+
+            if (this.getView().byId('id_QuickPayTglBtn').getLeftSelected()) {
+                this.getView().byId('paymentSetUp').setVisible(true);
+                this.getView().byId('paymentCancell').setVisible(false);
+                this.getView().byId('setUpAutoPay').setVisible(true);
+                this.getView().byId('removeAutoPay').setVisible(false);
+            } else {
+                this.getView().byId('paymentSetUp').setVisible(false);
+                this.getView().byId('paymentCancell').setVisible(true);
+                this.getView().byId('setUpAutoPay').setVisible(false);
+                this.getView().byId('removeAutoPay').setVisible(true);
+                if (oPayOption.getProperty('/creditCard')) {
+                    oPayOption.setProperty('/BDSetUp', false);
+                    oPayOption.setProperty('/CCSetUp', false);
+                    oPayOption.setProperty('/CCRemove', true);
+                    oPayOption.setProperty('/BDRemove', false);
+                } else if (oPayOption.getProperty('/bankDraft')) {
+                    oPayOption.setProperty('/BDSetUp', false);
+                    oPayOption.setProperty('/CCSetUp', false);
+                    oPayOption.setProperty('/CCRemove', false);
+                    oPayOption.setProperty('/BDRemove', true);
+                }
+            }
+
+        };
+
+/************************  Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO ******************************/
+/********************************  Recurring Payment Related functionality stop *************************************/
+
         return Controller;
     }
 );

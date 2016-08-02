@@ -53,7 +53,46 @@
                        enabled="{= ${comp-quickpay>BDPPFlag} === 'X'}">
 
             </um:Button>
+
+<!--Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO, July 22, 2016    START -->
+        <u:Tag class="nrgQPPay-Pend">
+            <u:Tag text="Recurring Payments" class="nrgQPPay-ttl" />
+            <um:Button press=".onAutoCreditCard"
+                       text="{comp-i18n-quickpay>nrgQPPaymentCC}"
+                       class="nrgQPPay-btn"
+                       id="idnrgQPPayBt-ACC"
+                       design="Default"
+                       enabled="{= ${comp-quickpay>NoCreditCardsDes} === '' || ${oPrePay>isPrePay} === false}">
+                <um:tooltip>
+                    <u:Tooltip>
+                        <u:TextView
+                            color="White"
+                            text="{= ${oPrePay>isPrePay} === true ? ${oPrePay>prePayDes} : ${comp-quickpay>NoCreditCardsDes}}"/>
+                    </u:Tooltip>
+                </um:tooltip>
+            </um:Button>
+            <um:Button press=".onAutoBankDraft"
+                       text="{comp-i18n-quickpay>nrgQPPaymentBD}"
+                       class="nrgQPPay-btn"
+                       id="idnrgQPPayBt-ABD"
+                       design="Default"
+                       enabled="{= ${comp-quickpay>NoChecksDes} === '' || ${oPrePay>isPrePay} === false}">
+                <um:tooltip>
+                    <u:Tooltip>
+                        <u:TextView
+                            color="White"
+                            text="{= ${oPrePay>isPrePay} === true ? ${oPrePay>prePayDes} : ${comp-quickpay>NoChecksDes}}"/>
+                    </u:Tooltip>
+                </um:tooltip>
+            </um:Button>
+         </u:Tag>
+        <!-- <u:Tag class="nrgQPPay-Pend">
+             <u:Tag text="YOU CANNOT USE AUTO PAYMENT" class="nrgQPPay-ttl" />
+         </u:Tag>-->
+<!--text="{oSendCorrespondence>/toolTipBD}"/>-->
+<!--Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO, July 22, 2016    STOP -->
+
         </u:Tag>
     </u:Tag>
- </u:Tag>
+</u:Tag>
 </core:FragmentDefinition>
