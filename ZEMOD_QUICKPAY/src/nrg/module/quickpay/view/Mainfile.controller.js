@@ -2316,7 +2316,9 @@ sap.ui.define(
             var olocalAddress = this.getView().getModel('olocalAddress'),
                 oOriginalInput = olocalAddress.getProperty("/Address"),
                 oSuggestedInput = olocalAddress.getProperty("/SuggAddrInfo");
-            oOriginalInput = oSuggestedInput;
+
+            olocalAddress.setProperty('/Address', oSuggestedInput);
+            //oOriginalInput = oSuggestedInput;
 
             this._sendCorrespondence();
         };
