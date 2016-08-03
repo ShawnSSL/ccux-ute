@@ -62,12 +62,12 @@
                        class="nrgQPPay-btn"
                        id="idnrgQPPayBt-ACC"
                        design="Default"
-                       enabled="{= ${comp-quickpay>NoCreditCardsDes} === '' || ${olocalCorrModel>isPrePay} === false}">
+                       enabled="{= ${comp-quickpay>NoCreditCardsDes} === '' &amp;&amp; ${olocalCorrModel>/isPrePay} === false}">
                 <um:tooltip>
                     <u:Tooltip>
                         <u:TextView
                             color="White"
-                            text="{= ${olocalCorrModel>isPrePay} === true ? ${olocalCorrModel>prePayDes} : ${comp-quickpay>NoCreditCardsDes}}"/>
+                            text="{= ${olocalCorrModel>/isPrePay} === true ? ${olocalCorrModel>/prePayDes} : ${comp-quickpay>NoCreditCardsDes}}"/>
                     </u:Tooltip>
                 </um:tooltip>
             </um:Button>
@@ -76,20 +76,16 @@
                        class="nrgQPPay-btn"
                        id="idnrgQPPayBt-ABD"
                        design="Default"
-                       enabled="{= ${comp-quickpay>NoChecksDes} === '' || ${olocalCorrModel>isPrePay} === false}">
+                       enabled="{= ${comp-quickpay>NoChecksDes} === '' &amp;&amp; ${olocalCorrModel>/isPrePay} === false}">
                 <um:tooltip>
                     <u:Tooltip>
                         <u:TextView
                             color="White"
-                            text="{= ${olocalCorrModel>isPrePay} === true ? ${olocalCorrModel>prePayDes} : ${comp-quickpay>NoChecksDes}}"/>
+                            text="{= ${olocalCorrModel>/isPrePay} === true ? ${olocalCorrModel>/prePayDes} : ${comp-quickpay>NoChecksDes}}"/>
                     </u:Tooltip>
                 </um:tooltip>
             </um:Button>
          </u:Tag>
-        <!-- <u:Tag class="nrgQPPay-Pend">
-             <u:Tag text="YOU CANNOT USE AUTO PAYMENT" class="nrgQPPay-ttl" />
-         </u:Tag>-->
-<!--text="{oSendCorrespondence>/toolTipBD}"/>-->
 <!--Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO, July 22, 2016    STOP -->
 
         </u:Tag>
