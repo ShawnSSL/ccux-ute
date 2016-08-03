@@ -81,6 +81,7 @@
                             <ute:Tag class="nrgQPPay-dlcc-mail-row">
                                 <utmain:Label class="nrgQPPay-dlcc-mail-lbl" text="{comp-i18n-quickpay>nrgQPPayment-stNum}"/>
                                 <ute:Textfield class="nrgQPPay-dlcc-mail-valCol"
+                                               valueType="i"
                                                fieldType="Underlined" width="7rem" value="{olocalAddress>/Address/HouseNo}" editable="{olocalAddress>/editable}"/>
                             </ute:Tag>
                             <ute:Tag class="nrgQPPay-dlcc-mail-row">
