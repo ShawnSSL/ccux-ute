@@ -2228,7 +2228,7 @@ sap.ui.define(
                 filters: aFilters,
                 success: function (oData) {
                     if (oData.results[0].AddrChkValid === 'X') {
-                        this._sendCorrespondenceClicked();
+                        this._sendCorrespondence();
                     } else {
                         olocalAddress.setProperty('/SuggAddrInfo', oData.results[0].TriCheck);
                         this._showSuggestedAddr();
