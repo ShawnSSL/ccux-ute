@@ -32,8 +32,12 @@ sap.ui.controller("sap.ui.demo.myFiori.view.Master", {
         ];
 
         this.getView().setModel(new sap.ui.model.json.JSONModel(), "modelData");
+        this.getView().setModel(new sap.ui.model.json.JSONModel(), "oState");
         this.getView().getModel("modelData").setProperty("/test",aData);
 
+
+        this.getView().getModel("oState").loadData('../../../../../ZEBASE/build/nrg/base/component/json/States.json',{},false,'GET',false,false,{});
+        this.getView().getModel("oState").setProperty("/selKey" , "TX");
     },
 
     onButtonClick : function(evt) {

@@ -12,8 +12,12 @@
                         float: right;
                 }
                 & > .nrgBllCJ-header-btn-sel {
-                        color: @nrgColor-grey-dark;
+                        color: @nrgColor-blue-link;
                         font-weight: @nrgFontWeight-bold;
+                        margin-left: 10px;
+                }
+                & > .nrgBllCJ-header-btn-cont {
+                        margin-left: 10px;
                 }
         }
         & > .nrgBllCJ-main {
@@ -28,9 +32,11 @@
                     & > .nrgBllCJ-main-frq-ttl {
                             display:inline-block;
                             color: @nrgColor-grey-dark;
-                            font-size: @nrgFontSize-small;
+                            font-size: @nrgFontSize-base;
                             font-weight: @nrgFontWeight-bold;
-                            margin-left: 5px;
+                            margin-left: 15px;
+                            font-style: italic;
+                            margin-top: 10px;
                     }
                     & > .nrgBllCJ-main-frq-pie {
                             height: 100%;
@@ -42,30 +48,44 @@
                     vertical-align: top;
                     color: @nrgColor-grey-highlight;
                     max-width: 75%;
-	                width: 75%;
+	                  width: 75%;
                     & > .nrgBllCJ-main-timeline-details {
-                            width: 30%;
+                            width: 45%;
                             display: inline-block;
                             vertical-align: top;
                             & > .nrgBllCJ-main-timeline-ttl {
-                                    display:inline-block;
                                     color: @nrgColor-grey-dark;
-                                    vertical-align: top;
-                                    font-size: @nrgFontSize-small;
+                                    font-size: @nrgFontSize-base;
                                     font-weight: @nrgFontWeight-bold;
-                                    margin: 5px;
+                                    font-style: italic;
+                                    margin-top: 10px;
+                                    margin-left: 5px;
+                                    padding-bottom: 5px;
+
+                            }
+                            & > .nrgBllCJ-timeline-btns-l {
+                                    margin: 5px 0px 5px 6px;
+	                                  width: 7rem;
+                            }
+                            & > .nrgBllCJ-timeline-btns-r {
+                                    margin: 5px 0px 5px 23px;
+	                                  width: 7rem;
                             }
                             & > .nrgBllCJ-timeline-btns {
                                     margin: 5px 12px;
-	                                width: 5rem;
+	                                  width: 7rem;
                             }
-                            & > .nrgBllCJ-timeline-btns[data-disabled=true] {
+                            & > .nrgBllCJ-timeline-btns-l[data-disabled=true] {
                                     color: #fff;
-                                    background-color: @nrgColor-grey-light;
+                                    background-color: #f37221; //@nrgColor-grey-light;
+                            }
+                            & > .nrgBllCJ-timeline-btns-r[data-disabled=true] {
+                                    color: #fff;
+                                    background-color: #f37221;
                             }
                             & > .nrgBllCJ-timeline-gobtn {
-                                    margin: 5px 10px;
-	                                min-width: 2rem;
+                                    margin: 5px 10px 5px 23px;
+	                                  min-width: 2rem;
                             }
                             & > .nrgBllCJ-timeline-btns.nrgBllCJ-timeline-btns-sel {
                                    background-color: @nrgColor-grey-inactive;
@@ -112,7 +132,7 @@
 
                     }
                     & > .nrgBllCJ-main-timeline-icons {
-                            width: 70%;
+                            width: 55%;
                             display: inline-block;
                     }
             }

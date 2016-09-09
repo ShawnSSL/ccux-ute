@@ -18,9 +18,9 @@ sap.ui.define(
 
         var Controller = CoreController.extend('nrg.module.dashboard.view.CustomerDataVerification');
 
-        Controller.prototype.onInit = function () {
+        /*Controller.prototype.onInit = function () {
 
-        };
+        };*/
 
         Controller.prototype.onBeforeRendering = function () {
 
@@ -1000,13 +1000,18 @@ sap.ui.define(
                 sCurrentCaNumber,
                 oParameters,
                 checkCaRetrComplete,
-                checkCurCaRetrComplete;
+                checkCurCaRetrComplete,
+                oGlobalDataManager = this.getOwnerComponent().getGlobalDataManager();
 
             oParameters = {
                 success : function (oData) {
                     if (oData) {
                         // Determine if Seibel Customer
-                        //if (oData.SiebelCustomer) {this._showSiebelAlert(); }
+                        //20160801 Enabled again to disable all controls
+                        if (oData.SiebelCustomer) {
+                            this._bSiebelCustomer = oData.SiebelCustomer;
+                            oGlobalDataManager.setIsSiebel( this._bSiebelCustomer );
+                        }
                         // Determine the SMS button
                         this.getView().getModel('oCfrmStatus').setProperty('/ShowSMSBtn', true);// change to show always
 

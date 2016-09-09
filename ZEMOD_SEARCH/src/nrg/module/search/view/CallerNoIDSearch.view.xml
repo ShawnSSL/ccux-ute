@@ -130,29 +130,6 @@
                     fieldType="Float"
                     width="48%">
                 </ute:Textfield>-->
-<!--                <um:Dropdown
-                    id="idSearchFiName"
-                    type="Text"
-                    placeholder="Enter Product ..."
-                    showSuggestion="true"
-                    suggestionItems="{ path:'comp-search>/LiveSearchSet', sorter:{ path:'comp-search>Value', descending: 'false'}}"
-                    suggest="onFirstNameSuggest">
-                    <um:DropdownItem>
-                        <core:Item text="{comp-search>Value}" />
-                    </um:DropdownItem>
-                </um:Dropdown>-->
-<!--                <c:AutoComplete
-                    value="{
-                        path:'oSearchFilters>/searchTextFields/sFiName'}"
-                    id="idSearchFiName"
-                    class="nrgSearch-calrNoIDSearch-textfield-input"
-                    placeholder="{comp-i18n-search>nrgSearchClrNid_FiName}"
-                    path
-                    width="48%">
-                    <c:items>
-                        <core:ListItem text="{comp-search>Value}"/>
-                    </c:items>
-                </c:AutoComplete>-->
                 <ute:AutoComplete
                     id="idSearchFiName"
                     value="{

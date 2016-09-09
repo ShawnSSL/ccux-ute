@@ -59,7 +59,7 @@
                     class="nrgBupa-cusDataVerifyEditMail-l-stateLable"
                     text="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_State}:">
                 </utmain:Label>
-                <utmain:Dropdown id="idEditState"
+                <!--<utmain:Dropdown id="idEditState"
                     class="nrgBupa-cusDataVerifyEditMail-l-stateDropDown"
                     content="{oUSStateList>/US_State}"
                     selectedKey="{oDataAddrEdit>/AddressInfo/State}"
@@ -67,7 +67,15 @@
                     <utmain:DropdownItem key="{oUSStateList>sAbvName}">
                         <ute:Tag elem="span" text="{oUSStateList>sFullName}"/>
                     </utmain:DropdownItem>
-                </utmain:Dropdown>
+                </utmain:Dropdown>-->
+                <utmain:ComboBox id="idEditState" design="Default" class="nrgBupa-cusDataVerifyEditMail-l-stateDropDown"
+                    content="{oUSStateList>/US_State}"
+                    selectedKey="{oDtaAddrEdit>/AddrInfo/State}"
+                    enabled="{oDtaAddrEdit>/updateNotSent}">
+                    <utmain:ComboBoxItem key="{oUSStateList>sAbvName}">
+                        <ute:Tag text="{oUSStateList>sFullName}"/>
+                    </utmain:ComboBoxItem>
+                </utmain:ComboBox>
             </ute:Tag>
             <ute:Tag><ute:Textfield id="idEditZip" fieldType="Underlined"
                 label="{comp-i18n-bupa>nrgBupaCusDatVrf_Pup_ZipCode}"

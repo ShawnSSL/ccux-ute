@@ -62,12 +62,12 @@
                        class="nrgQPPay-btn"
                        id="idnrgQPPayBt-ACC"
                        design="Default"
-                       enabled="{= ${comp-quickpay>NoCreditCardsDes} === '' &amp;&amp; ${olocalCorrModel>/isPrePay} === false}">
+                       enabled="{= !(${comp-quickpay>NoCreditCardsDes} || ${olocalCorrModel>/isPrePay})}">
                 <um:tooltip>
-                    <u:Tooltip>
+                    <u:Tooltip visible="{= !!(${comp-quickpay>NoCreditCardsDes} || ${olocalCorrModel>/isPrePay}) }">
                         <u:TextView
                             color="White"
-                            text="{= ${olocalCorrModel>/isPrePay} === true ? ${olocalCorrModel>/prePayDes} : ${comp-quickpay>NoCreditCardsDes}}"/>
+                            text="{= ${olocalCorrModel>/isPrePay} ? ${olocalCorrModel>/prePayDes} : ${comp-quickpay>NoCreditCardsDes}}"/>
                     </u:Tooltip>
                 </um:tooltip>
             </um:Button>
@@ -76,12 +76,12 @@
                        class="nrgQPPay-btn"
                        id="idnrgQPPayBt-ABD"
                        design="Default"
-                       enabled="{= ${comp-quickpay>NoChecksDes} === '' &amp;&amp; ${olocalCorrModel>/isPrePay} === false}">
+                       enabled="{= !(${comp-quickpay>NoChecksDes} || ${olocalCorrModel>/isPrePay})}">
                 <um:tooltip>
-                    <u:Tooltip>
+                    <u:Tooltip visible="{= !!(${comp-quickpay>NoChecksDes} || ${olocalCorrModel>/isPrePay})}">
                         <u:TextView
                             color="White"
-                            text="{= ${olocalCorrModel>/isPrePay} === true ? ${olocalCorrModel>/prePayDes} : ${comp-quickpay>NoChecksDes}}"/>
+                            text="{= ${olocalCorrModel>/isPrePay}  ? ${olocalCorrModel>/prePayDes} : ${comp-quickpay>NoChecksDes}}"/>
                     </u:Tooltip>
                 </um:tooltip>
             </um:Button>

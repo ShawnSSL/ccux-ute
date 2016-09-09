@@ -1,22 +1,22 @@
 {
-  "d" : {
-    "results" : [
+  "d":{
+    "results":[
       {
-        "__metadata" : {
-          "id" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/OtherOrdS('000301143603')",
-          "uri" : "http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/OtherOrdS('000301143603')",
-          "type" : "ZE_CCUX_SRV_ORD_SRV.SrvOrd"
+        "__metadata":{
+          "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/OtherOrdS('000301143603')",
+          "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/OtherOrdS('000301143603')",
+          "type":"ZE_CCUX_SRV_ORD_SRV.SrvOrd"
         },
-        "QMNUM" : "000301143603",
-        "BP" : "0002926935",
-        "CA" : "000003648303",
-        "Contract" : "0034910949",
-        "ESID" : "1008901017126656741100",
-        "Requester" : "Customer",
-        "CreateDate" : "\/Date(1087755729000+0000)\/",
-        "Type" : "Re-read/Potential Error",
-        "Status" : "ACCURATE",
-        "Time" : "\/Date(1087755729000+0000)\/"
+        "QMNUM":"000301143603",
+        "BP":"6009682618",
+        "CA":"000070352880",
+        "Contract":"0034910949",
+        "ESID":"1008901023811218130100",
+        "Requester": "Customer",
+        "CreateDate":"\/Date(1087755729000+0000)\/",
+        "Type":"Other",
+        "Status":"ACCURATE",
+        "Time":"\/Date(1087755729000+0000)\/"
       }
     ]
   }

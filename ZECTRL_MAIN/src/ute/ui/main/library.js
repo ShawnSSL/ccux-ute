@@ -25,7 +25,8 @@ sap.ui.define(
                 'ute.ui.main.RadioButtonDesign',
                 'ute.ui.main.InfolineDesign',
                 'ute.ui.main.PopupDesign',
-                'ute.ui.main.DropdownDesign'
+                'ute.ui.main.DropdownDesign',
+                'ute.ui.main.ComboBoxDesign'
             ],
 
 			controls: [
@@ -39,7 +40,9 @@ sap.ui.define(
                 'ute.ui.main.RadioButton',
                 'ute.ui.main.Infoline',
                 'ute.ui.main.Dropdown',
-                'ute.ui.main.DropdownItem'
+                'ute.ui.main.DropdownItem',
+                'ute.ui.main.ComboBox',
+                'ute.ui.main.ComboBoxItem'
 			],
 
 			elements: [],
@@ -93,6 +96,10 @@ sap.ui.define(
             None: 'None',
             Default: 'Default',
             Plain: 'Plain'
+        };
+
+        ute.ui.main.ComboBoxDesign = {
+            Default: 'Default'
         };
 
         /*

@@ -6,11 +6,10 @@ sap.ui.define(
         'nrg/base/view/BaseController',
         'sap/ui/model/Filter',
         'sap/ui/model/FilterOperator',
-        'sap/ui/core/routing/HashChanger',
         'nrg/base/type/ContractAccountNumber'
     ],
 
-    function (CoreController, Filter, FilterOperator, HashChanger) {
+    function (CoreController, Filter, FilterOperator) {
         'use strict';
 
         var Controller = CoreController.extend('nrg.module.search.view.CallerNoIDSearch');
@@ -126,9 +125,13 @@ sap.ui.define(
         Controller.prototype.onTextFieldChange = function () {
 
         };
-
+        Controller.prototype._StopSearch = function () {
+            if (this._readObject) {
+                this._readObject.abort();
+            }
+        };
         Controller.prototype.onSearch = function () {
-            this.getOwnerComponent().getCcuxApp().setOccupied(true);
+            this.getOwnerComponent().getCcuxApp().setOccupied(true, jQuery.proxy(this._StopSearch, this), true);
             this._searchBP('/BpSearchs', this._createSearchParameters());
         };
 
@@ -346,7 +349,7 @@ sap.ui.define(
             var oModel = this.getView().getModel('oSearchBpODataModel');
             if (oModel) {
                 if (this._checkWildCard(oParameters)) {
-                    oModel.read(sPath, oParameters);
+                    this._readObject = oModel.read(sPath, oParameters);
                 }
             }
         };

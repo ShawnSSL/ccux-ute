@@ -1,24 +1,28 @@
 {
    "d":{
-      "results":[
-         {
       "__metadata":{
-         "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_QUICK_PAY_SRV/PayAvailFlagsSet(BP='0002473499',CA='000003040103')",
-         "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_QUICK_PAY_SRV/PayAvailFlagsSet(BP='0002473499',CA='000003040103')",
+         "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_QUICK_PAY_SRV/PayAvailFlagsSet(BP='6014537703',CA='70992604')",
+         "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_QUICK_PAY_SRV/PayAvailFlagsSet(BP='6014537703',CA='70992604')",
          "type":"ZE_CCUX_QUICK_PAY_SRV.PayAvailFlags"
       },
       "ContractID":"",
-      "BP":"0002473499",
-      "CA":"000003040103",
+      "BP":"6014537703",
+      "CA":"70992604",
       "CCPPFlag":"",
-      "BDPPFlag":"X",
+      "BDPPFlag":"",
       "PartnerID":"",
       "CCFlag":"X",
-      "BDFlag":"X",
+      "BDFlag":"",
       "ReliantFlag":"X",
       "ReceiptFlag":"X",
-      "Message":""
-         }
-    ]
+      "Message":"",
+      "TerminalID":"",
+      "CaName":"LORIE LENNON",
+      "NoChecks":true,
+      "NoChecksDes":"No Checks set manually until 12/31/9999",
+      "NoCreditCards":false,
+      "NoCreditCardsDes":"",
+      "Rps":"Eligible for Recurring Credit Card",
+      "Rpt":""
    }
 }

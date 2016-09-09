@@ -1,0 +1,181 @@
+.uteMDd {
+    display: inline-block;
+    position: relative;
+}
+
+.uteMDd .uteMDd-hdr {
+    display: inline-block;
+    position: relative;
+}
+
+.uteMDd .uteMDd-hdr .uteMDd-hdrContent {
+    display: inline-block;
+    position: relative;
+}
+
+.uteMDd .uteMDd-hdr .uteMDd-hdrExpander {
+    display: inline-block;
+    position: relative;
+}
+
+.uteMDd-picker {
+    display: none;
+	position: absolute;
+}
+
+.uteMDd.uteMDd-active .uteMDd-picker {
+    display: block;
+}
+
+/*
+** Design default
+*/
+.uteMDd-design-default .uteMDd-hdr {
+    border-radius: 4px;
+    border: 1px solid @uteColor-grey-dark;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.uteMDd-design-default[data-disabled=disabled] .uteMDd-hdr {
+    border: 1px solid @uteColor-grey-light;
+    cursor: auto;
+}
+
+.uteMDd-design-default .uteMDd-hdr .uteMDd-hdrContent {
+    padding: 5px;
+}
+
+.uteMDd-design-default .uteMDd-hdr .uteMDd-hdrContent input {
+    border: none;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    font-size: @uteFontSize-base;
+}
+
+.uteMDd-design-default .uteMDd-hdr .uteMDd-hdrContent input:focus {
+    outline: none;
+}
+
+.uteMDd-design-default .uteMDd-hdr .uteMDd-hdrExpander {
+    padding: 5px 10px;
+}
+
+.uteMDd-design-default .uteMDd-hdr .uteMDd-hdrExpander::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 1px solid @uteColor-grey-dark;
+    border-top: none;
+    border-left: none;
+    transform: translate(-6px, -6px) rotate(45deg);
+}
+
+.uteMDd-design-default[data-disabled=disabled] .uteMDd-hdr .uteMDd-hdrExpander::before {
+    border-color: @uteColor-grey-light;
+}
+
+.uteMDd-design-default.uteMDd-active .uteMDd-hdr .uteMDd-hdrExpander::before {
+    border: 1px solid @uteColor-grey-dark;
+    border-bottom: none;
+    border-right: none;
+    transform: translate(-6px, -2px) rotate(45deg);
+}
+
+.uteMDd-design-default .uteMDd-hdr:hover .uteMDd-hdrExpander::before {
+    border-color: @uteColor-blue-link;
+}
+
+.uteMDd-design-default[data-disabled=disabled] .uteMDd-hdr:hover .uteMDd-hdrExpander::before {
+    border-color: @uteColor-grey-light;
+}
+
+.uteMDd-design-default .uteMDd-picker {
+    background-color: @uteColor-white;
+    border-radius: 4px;
+    border: 1px solid @uteColor-grey-dark;
+    padding: 5px;
+}
+
+.uteMDd-design-default .uteMDd-picker .uteMDdItem[data-selected=selected] {
+    color: @uteColor-grey-light;
+}
+
+.uteMDd-design-default .uteMDd-picker .uteMDdItem:hover {
+    color: @uteColor-blue-link;
+    cursor: pointer;
+}
+
+.uteMDd-design-default .uteMDd-picker .uteMDdItem[data-selected=selected]:hover {
+    color: @uteColor-grey-light;
+    cursor: auto;
+}
+
+/*
+** Design plain
+*/
+.uteMDd-design-plain .uteMDd-hdr {
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.uteMDd-design-plain[data-disabled=disabled] .uteMDd-hdr {
+    cursor: auto;
+}
+
+.uteMDd-design-plain .uteMDd-hdr .uteMDd-hdrContent {
+    padding: 5px 5px 0 5px;
+}
+
+.uteMDd-design-plain .uteMDd-hdr .uteMDd-hdrExpander {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid @uteColor-grey-dark;
+    margin-right: 5px;
+}
+
+.uteMDd-design-plain[data-disabled=disabled] .uteMDd-hdr .uteMDd-hdrExpander {
+    border-top: 8px solid @uteColor-grey-light;
+}
+
+.uteMDd-design-plain.uteMDd-active .uteMDd-hdr .uteMDd-hdrExpander {
+    border-bottom: 8px solid @uteColor-grey-dark;
+    border-top: none;
+}
+
+.uteMDd-design-plain .uteMDd-hdr:hover .uteMDd-hdrExpander {
+    border-top-color: @uteColor-blue-link;
+}
+
+.uteMDd-design-plain[data-disabled=disabled] .uteMDd-hdr:hover .uteMDd-hdrExpander {
+    border-top-color: @uteColor-grey-light;
+}
+
+.uteMDd-design-plain.uteMDd-active .uteMDd-hdr:hover .uteMDd-hdrExpander {
+    border-bottom-color: @uteColor-blue-link;
+}
+
+.uteMDd-design-plain .uteMDd-picker {
+    background-color: @uteColor-white;
+    border-radius: 4px;
+    border: 1px solid @uteColor-grey-dark;
+    padding: 5px;
+}
+
+.uteMDd-design-plain .uteMDd-picker .uteMDdItem[data-selected=selected] {
+    color: @uteColor-grey-light;
+}
+
+.uteMDd-design-plain .uteMDd-picker .uteMDdItem:hover {
+    color: @uteColor-blue-link;
+    cursor: pointer;
+}
+
+.uteMDd-design-plain .uteMDd-picker .uteMDdItem[data-selected=selected]:hover {
+    color: @uteColor-grey-light;
+    cursor: auto;
+}

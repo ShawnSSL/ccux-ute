@@ -3,18 +3,18 @@
         "results":[
             {
                 "__metadata":{
-                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/BillDisConInfs('100738')",
-                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/BillDisConInfs('100738')",
+                    "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/BillDisConInfs('000007829815')",
+                    "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/BillDisConInfs('000007829815')",
                     "type":"ZE_CCUX_CHKBOOK_SRV.BillDisConInf"
                 },
-                "ContractAccountNumber":"100738",
+                "ContractAccountNumber":"000007829815",
                 "DisNoticeAmt":"0.0000",
                 "NetAmt":"0.0000",
                 "DueDate":null,
                 "MailDate":null,
                 "ConfBuag":{
                     "__deferred":{
-                        "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/BillDisConInfs('100738')/ConfBuag"
+                        "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/BillDisConInfs('000007829815')/ConfBuag"
                     }
                 }
             }

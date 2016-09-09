@@ -11,14 +11,14 @@
     width="100%"
     displayBlock="true">
 
-    <u:Tag class="nrgAppMain-generalContent nrgDashboard-Tools nrgDashboard-Tools-CJ">
+    <u:Tag class="nrgAppMain-generalContent-journey nrgDashboard-Tools nrgDashboard-Tools-CJ">
         <u:Tag class="nrgBllCJ-header">
             <um:Button text="{comp-i18n-billing>nrgBllCJTitle}"
                         class="nrgBllCJ-header-btn nrgBllCJ-header-btn-sel"
                         design="None">
             </um:button>
             <um:Button text="{comp-i18n-billing>nrgBllCJContactLogsTtl}"
-                        class="nrgBllCJ-header-btn"
+                        class="nrgBllCJ-header-btn-cont"
                         design="None"
                         press=".onContactLogs">
             </um:button>
@@ -50,14 +50,14 @@
                         <u:DatePicker width="7rem" id="idnrgBllCJ-toDate" class="nrgBllCJ-timeline-calendar"></u:DatePicker>
                     </u:Tag>
                     <um:Button text="Last {Cj-Date>/Interval1} Days"
-                               class="nrgBllCJ-timeline-btns"
+                               class="nrgBllCJ-timeline-btns-l"
                                design="Default"
                                press="onInterval1"
                                id="idnrgBllCJ-Interval1"
                                enabled="{cj-view>/interval1}">
                     </um:button>
                     <um:Button text="Last {Cj-Date>/Interval2} Days"
-                               class="nrgBllCJ-timeline-btns"
+                               class="nrgBllCJ-timeline-btns-r"
                                design="Default"
                                press="onInterval2"
                                id="idnrgBllCJ-Interval2"

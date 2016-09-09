@@ -1,5 +1,5 @@
 .nrgBilling-cusDataBillingInfo{
-    height: 398px;
+    height: 400px;
     padding: 17px 25px 18px 25px !important;
 
     font-family: @nrgFontFamily;
@@ -9,7 +9,6 @@
         font: @nrgFontWeight-bold @nrgFontSize-base @nrgFontFamily;
         color: @nrgColor-grey-dark;
     }
-
     & > .nrgBilling-cusDataBil-r-btn{
         display: inline-block;
         float: right;
@@ -54,6 +53,15 @@
         border-width: 1px;
         border-color: #5092CD;
         margin-top: 17px;
+    }
+
+    & > .nrgBilling-cusDataBil-layout > tbody > tr > .nrgBilling-cusDataBil-l > .nrgBilling-cusDataBil-l-div > .nrgBilling-cusDataBil-date-block-label-headerContent{
+        font: @nrgFontWeight-regular @nrgFontSize-base @nrgFontFamily;
+        color: @nrgColor-grey-dark;
+        border-radius: 2px;
+        width: 214px;
+/*        height: 140px;*/
+        margin-top: 4px;
     }
 
     & > .nrgBilling-cusDataBil-layout > tbody > tr > .nrgBilling-cusDataBil-l > .nrgBilling-cusDataBil-l-div > .nrgBilling-cusDataBil-PayBalBtn > .nrgBilling-cusDataBil-PayBalBtn-amount{
@@ -184,30 +192,23 @@
 
     }
     & > .nrgBilling-cusDataBil-layout > tbody > tr > .nrgBilling-cusDataBil-l > .nrgBilling-cusDataBil-l-div > .nrgBilling-cusDataBil-date{
-        background-color: @nrgColor-bluePearl;
-        border-radius: 2px;
-        width: 214px;
-/*        height: 140px;*/
-        margin-top: 5px;
+        margin-top: 4px;
+        display: flex;
+        align-items: center;
     }
-    & > .nrgBilling-cusDataBil-layout > tbody > tr > .nrgBilling-cusDataBil-l > .nrgBilling-cusDataBil-l-div > .nrgBilling-cusDataBil-date > .nrgBilling-cusDataBil-date-block {
-        display: inline-block;
-        width: 50%;
-    }
-     & > .nrgBilling-cusDataBil-layout > tbody > tr > .nrgBilling-cusDataBil-l > .nrgBilling-cusDataBil-l-div > .nrgBilling-cusDataBil-date > .nrgBilling-cusDataBil-date-block > .nrgBilling-cusDataBil-date-block-label {
-        font: @nrgFontWeight-regular @nrgFontSize-small @nrgFontFamily;
-        color: @nrgColor-grey-inactive;
-        text-align: center;
-/*        padding-top: 16px;*/
-    }
-
-    & > .nrgBilling-cusDataBil-layout > tbody > tr > .nrgBilling-cusDataBil-l > .nrgBilling-cusDataBil-l-div > .nrgBilling-cusDataBil-date > .nrgBilling-cusDataBil-date-block > .nrgBilling-cusDataBil-date-block-value{
-        font: @nrgFontWeight-bold @nrgFontSize-small @nrgFontFamily;
+    & > .nrgBilling-cusDataBil-layout > tbody > tr > .nrgBilling-cusDataBil-l > .nrgBilling-cusDataBil-l-div > .nrgBilling-cusDataBil-date > .nrgBilling-cusDataBil-date-lable {
+        font: @nrgFontWeight-regular @nrgFontSize-base @nrgFontFamily;
         color: @nrgColor-grey-dark;
-        text-align: center;
-        margin-top: 5px;
+        display: inline-block;
+        width: 85px;
     }
 
+    & > .nrgBilling-cusDataBil-layout > tbody > tr > .nrgBilling-cusDataBil-l > .nrgBilling-cusDataBil-l-div > .nrgBilling-cusDataBil-date > .nrgBilling-cusDataBil-date-value {
+        font: @nrgFontWeight-regular @nrgFontSize-base @nrgFontFamily;
+        color: @nrgColor-grey-dark;
+        display: inline-block;
+        width: 85px;
+    }
 
     /*--------------------------------------------------- Middle Section ------------------------------------------------*/
 

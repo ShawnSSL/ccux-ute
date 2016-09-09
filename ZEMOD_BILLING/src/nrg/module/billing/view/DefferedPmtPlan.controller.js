@@ -1156,9 +1156,200 @@ sap.ui.define(
                 oParameters,
                 alert,
                 i,
-                i18NModel = this.getOwnerComponent().getModel("comp-i18n-billing");
+                i18NModel = this.getOwnerComponent().getModel("comp-i18n-billing"),
+                tempAlertMessage;
 
             oParameters = {
+                success : function (oData) {
+                    oEligModel.setData(oData);
+                    var container = this.getView().byId('idnrgBilling-dpp-notifications');
+                    if (container && container.getContent() && container.getContent().length > 0) {
+                        container.removeAllContent();
+                    }
+                // If already has eligibility alerts, then skip
+                    this._eligibilityAlerts = [];
+
+
+                    // Check ABP
+                    if (oData.ABPElig) {
+                        if (oData.ABPElig === 'Y' || oData.ABPElig === 'y') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfABPT");
+                        }
+                        if (oData.ABPElig === 'N' || oData.ABPElig === 'n') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfABPF");
+                        }
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: tempAlertMessage,
+                            linkPress: this._openEligABPPopup.bind(this)
+                        });
+                    }
+                    else {
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfABPEmpty"),
+                            linkPress: this._reloadNotification.bind(this)
+                        });
+                    }
+
+                    this._eligibilityAlerts.push(alert);
+
+
+                    // Check EXTN
+                    if (oData.EXTNElig) {
+                        if (oData.EXTNElig === 'Y' || oData.ABPElig === 'y') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfEXTT");
+                        }
+                        if (oData.EXTNElig === 'N' || oData.ABPElig === 'n') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfEXTF");
+                        }
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: tempAlertMessage,
+                            linkPress: this._openEligABPPopup.bind(this)
+                        });
+                    } else {
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfEXTEmpty"),
+                            linkPress: this._reloadNotification.bind(this)
+                        });
+                    }
+
+                    this._eligibilityAlerts.push(alert);
+
+
+                    // Check RBB
+                    if (oData.RBBElig) {
+                        if (oData.RBBElig === 'Y' || oData.ABPElig === 'y') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfRBPT");
+                        }
+                        if (oData.RBBElig === 'N' || oData.ABPElig === 'n') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfRBPF");
+                        }
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: tempAlertMessage,
+                            linkPress: this._openEligABPPopup.bind(this)
+                        });
+                    } else {
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfRBPEmpty"),
+                            linkPress: this._reloadNotification.bind(this)
+                        });
+                    }
+
+                    this._eligibilityAlerts.push(alert);
+
+
+                    // Check DPP
+                    if (oData.DPPElig) {
+                        if (oData.DPPElig === 'Y' || oData.ABPElig === 'y') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfDPPT");
+                        }
+                        if (oData.DPPElig === 'N' || oData.ABPElig === 'n') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfDPPF");
+                        }
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: tempAlertMessage,
+                            linkPress: this._openEligABPPopup.bind(this)
+                        });
+                    } else {
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfDPPEmpty"),
+                            linkPress: this._reloadNotification.bind(this)
+                        });
+                    }
+
+                    this._eligibilityAlerts.push(alert);
+
+
+                    //Others
+                    if (oData.EXTNPend === 'Y' || oData.EXTNPend === 'y') {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfPE")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.CollAccActv === 'Y' || oData.CollAccActv === 'y') {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfCB")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.CSAActv === 'Y' || oData.CSAActv === 'y') {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfCSA")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.RBankDActv === 'Y' || oData.RBankDActv === 'y') {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfRBD")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+                    if (oData.RCCardActv === 'Y' || oData.RCCardActv === 'y') {
+                        // Check DPP
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: false,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfRCC")
+                        });
+                        this._eligibilityAlerts.push(alert);
+                    }
+
+                    // Insert all alerts to DOM
+                    for (i = 0; i < this._eligibilityAlerts.length; i = i + 1) {
+                        this._eligibilityAlerts[i].placeAt(container);
+                    }
+                }.bind(this),
+                error: function (oError) {
+                    var container = this.getView().byId('idnrgBilling-dpp-notifications');
+                    if (container && container.getContent() && container.getContent().length > 0) {
+                        container.removeAllContent();
+                    }
+
+                    this._eligibilityAlerts = [];
+
+
+                    // Check ABP
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: i18NModel.getProperty("nrgNotfReload"),
+                        linkPress: this._reloadNotification.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
+
+                    this._eligibilityAlerts[0].placeAt(container);
+
+                }.bind(this)
+            };
+            /*oParameters = {
                 success : function (oData) {
                     oEligModel.setData(oData);
                     var container = this.getView().byId('idnrgBilling-dpp-notifications');
@@ -1256,7 +1447,7 @@ sap.ui.define(
                 error: function (oError) {
 
                 }.bind(this)
-            };
+            };*/
 
             if (oModel && this._coNum) {
                 oModel.read(sPath, oParameters);

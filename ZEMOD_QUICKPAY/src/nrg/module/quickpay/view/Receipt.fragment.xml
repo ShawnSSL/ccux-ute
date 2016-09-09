@@ -30,7 +30,7 @@
                 </u:Tag>
                 <u:Tag text="{comp-i18n-quickpay>nrgQPDate}" class="nrgQPCC-lbl"/>
             </u:Tag>
-            <u:Tag class="nrgQPCC-row nrgQPPay-top">
+            <u:Tag class="nrgQPCC-row nrgQPPay-bottomTop">
                 <u:Tag class="nrgQPPay-TF">
                     <u:Textfield placeholder="{comp-i18n-quickpay>nrgQPReceiptNum}"
                                  fieldType="Regular"
@@ -44,7 +44,7 @@
             </u:Tag>
         </u:Tag>
         <u:Tag class="nrgQPPay-top">
-            <u:Tag text="{comp-i18n-quickpay>nrgQPNoProcessingFee}" class="nrgQPCC-Rdmlbl"/>
+            <u:Tag text="{comp-i18n-quickpay>nrgQPNoProcessingFee}" class="nrgQPCC-Rdmlbl-mid"/>
         </u:Tag>
 <!--            <u:Tag class="nrgQPPay-top">
                     <um:Dropdown placeholder="{comp-i18n-quickpay>nrgQPProcessingFee}"
@@ -58,17 +58,17 @@
                 </um:Dropdown>
             </u:Tag>-->
 
-            <u:Tag class="nrgQPPay-top nrgQPPay-left" >
+            <u:Tag class="nrgQPPay-top nrgQPPay-left-bottom" >
                 <um:Button press=".onAcceptReceipt"
                            text="{comp-i18n-quickpay>nrgQPPay}"
                            class="nrgQPCC-btn"
                            design="Default">
-                </um:button>
+                </um:Button>
                 <um:Button press=".onPopupClose"
                            text="{comp-i18n-quickpay>nrgQPCancel}"
                            class="nrgQPCC-btn"
                            design="Default">
-                </um:button>
+                </um:Button>
             </u:Tag>
     </u:Tag>
 </core:FragmentDefinition>

@@ -440,10 +440,10 @@ sap.ui.define(
             }
         };*/
         CustomController.prototype._formatVisElig = function (sIndicator) {
-            if (!sIndicator) {
-                return false;
-            } else {
+            if (sIndicator === 'Y' || sIndicator === 'y') {
                 return true;
+            } else {
+                return false;
             }
         };
 

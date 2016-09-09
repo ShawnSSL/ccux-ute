@@ -20,7 +20,7 @@
                         text="{oDtaVrfyContract>/ContractStatus}"
                         class="nrgDashboard-cusDataVerify-left-statusTitle">
                         <ute:tooltip>
-                            <ute:Tooltip>
+                            <ute:Tooltip visible="{= ${oDtaVrfyContract>/ContractStatus} === 'ENROLLMENT HOLD' || ${oDtaVrfyContract>/ContractStatus} === 'ENROLLMENT REJECT' ? false : true }">
                                 <ute:TextView
                                     color="White"
                                     text="{

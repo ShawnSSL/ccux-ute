@@ -26,10 +26,9 @@
                 </u:Tag>
                 <u:Tag text="{comp-i18n-quickpay>nrgQPDate}" class="nrgQPCC-lbl"/>
             </u:Tag>
-            <u:Tag class="nrgQPCC-row nrgQPPay-top">
+            <u:Tag class="nrgQPCC-row nrgQPPay-BDbottomTop">
                 <u:Tag class="nrgQPPay-TF">
-                    <um:Dropdown placeholder="{comp-i18n-quickpay>nrgQPSelect}"
-                                 class="nrgQPCC-DDL"
+                    <um:Dropdown class="nrgQPCC-DDL"
                                  id="idnrgQPBD-BankAccounts">
                         <um:DropdownItem key="1" class="nrgQPCC-DdLItem">
                             <u:Tag class="nrgQPCC-DDI">
@@ -40,12 +39,13 @@
                         </um:DropdownItem>
                     </um:Dropdown>
                 </u:Tag>
-<!--                <u:Tag text="ADD" class="nrgQPCC-lbl"/>-->
+                <u:Tag class="nrgQPCC-lbl">
                     <um:Button press=".onAddBD"
                                class="nrgQPCC-Addbtn"
                                design="None">
                         <u:Tag text="{comp-i18n-quickpay>nrgQPAdd}" class="nrgQPCC-lblAdd"/>
-                    </um:button>
+                    </um:Button>
+                </u:Tag>
             </u:Tag>
         </u:Tag>
             <u:Tag class="nrgQPPay-top">
@@ -54,17 +54,17 @@
                     <core:Item key="{ProductId}" text="{Name}" />
                 </m:ComboBox>
             </u:Tag>
-            <u:Tag class="nrgQPPay-top nrgQPPay-left" >
+            <u:Tag class="nrgQPPay-top nrgQPPay-left-bottom" >
                 <um:Button press=".onAcceptBankDraft"
                            text="{comp-i18n-quickpay>nrgQPPay}"
                            class="nrgQPCC-btn"
                            design="Default">
-                </um:button>
+                </um:Button>
                 <um:Button press=".onDeclineCredit"
                            text="{comp-i18n-quickpay>nrgQPCancel}"
                            class="nrgQPCC-btn"
                            design="Default">
-                </um:button>
+                </um:Button>
             </u:Tag>
     </u:Tag>
 </core:FragmentDefinition>

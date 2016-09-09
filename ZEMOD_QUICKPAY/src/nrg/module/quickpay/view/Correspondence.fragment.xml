@@ -27,6 +27,39 @@
         <ute:Tag id="toggleButtonText" class="nrgQPPay-toggleText">
             <utmain:Label id="paymentSetUp" visible="true" text="{comp-i18n-quickpay>nrgQPPaymentSetUp}" class="nrgQPPay-dlcc-chbrow-lbl" />
             <utmain:Label id="paymentCancell" visible="false" text="{comp-i18n-quickpay>nrgQPPaymentCancell}" class="nrgQPPay-dlcc-chbrow-lbl" />
+
+            <utmain:Label class="nrgQPPay-dlcc-chbrow-lbl" text=" - {= ${olocalCorrModel>/creditCard} ? ${comp-i18n-quickpay>nrgQPPaymentCC} : ${comp-i18n-quickpay>nrgQPPaymentBD}}" >
+
+        </ute:Tag>
+
+        <!--<ute:Tag id="toggleButtonText_BD" visible="true" class="nrgQPPay-toggleText">-->
+        <ute:Tag class="nrgQPPay-toggleText" visible="false">
+            <ute:Tag id="paymentSetUp_BD" visible="true" text="{comp-i18n-quickpay>nrgQPPaymentSetUp_BD}" class="nrgQPPay-toggleText-up" />
+            <ute:Tag id="paymentCancell_BD" visible="false" text="{comp-i18n-quickpay>nrgQPPaymentCancell_BD}" class="nrgQPPay-toggleText-up">
+                <ute:Tag class="nrgQPPay-toggleText-down">
+                                <ute:Tag class="nrgQPPay-toggleText-lable-l" text="{comp-i18n-quickpay>nrgQPPayment-recurringPayStatus}"/>
+                                <ute:Tag class="nrgQPPay-toggleText-lable-r" value="{comp-quickpay>RPS}" />
+                </ute:Tag>
+                <ute:Tag class="nrgQPPay-toggleText-down">
+                                <ute:Tag class="nrgQPPay-toggleText-lable-l" text="{comp-i18n-quickpay>nrgQPPayment-recurringPayType}"/>
+                                <ute:Tag class="nrgQPPay-toggleText-lable-r" value="{comp-quickpay>RPT}" />
+                </ute:Tag>
+            </ute:Tag>
+        </ute:Tag>
+        <!--<ute:Tag id="toggleButtonText_CC" visible="true" class="nrgQPPay-toggleText">-->
+        <ute:Tag class="nrgQPPay-toggleText" visible="false">
+            <ute:Tag id="paymentSetUp_CC" visible="true" text="{comp-i18n-quickpay>nrgQPPaymentSetUp_CC}" class="nrgQPPay-toggleText-up" />
+            <ute:Tag id="paymentCancell_CC" visible="false" text="{comp-i18n-quickpay>nrgQPPaymentCancell_CC}" class="nrgQPPay-toggleText-up">
+                            <ute:Tag class="nrgQPPay-toggleText-down">
+                                <ute:Tag class="nrgQPPay-toggleText-lable-l" text="{comp-i18n-quickpay>nrgQPPayment-recurringPayStatus}"/>
+                                <ute:Tag class="nrgQPPay-toggleText-lable-r" value="{comp-quickpay>RPS}" />
+                            </ute:Tag>
+                            <ute:Tag class="nrgQPPay-toggleText-down">
+                                <ute:Tag class="nrgQPPay-toggleText-lable-l" text="{comp-i18n-quickpay>nrgQPPayment-recurringPayType}"/>
+                                <ute:Tag class="nrgQPPay-toggleText-lable-r" value="{comp-quickpay>RPT}" />
+                            </ute:Tag>
+            </ute:Tag>
+
         </ute:Tag>
 
         <!-- 2. Set up / Edit Auto Pay -->
@@ -152,6 +185,18 @@
         <ute:Tag id="removeAutoPay" visible="false" class="nrgQPPay-contentArea">
 
             <ute:Tag class="nrgQPPay-botm">
+
+                    <ute:Tag class="nrgQPPay-botm-row">
+                        <utmain:Label text="{comp-i18n-quickpay>nrgQPPayment-recurringPayStatus}" class="nrgQPPay-botm-row-lbl" />
+                        <ute:Textfield class="nrgQPPay-botm-row-val"
+                                       width="15rem" value="{olocalCorrModel>/Rps}" editable="false" fieldType="Underlined"/>
+                    </ute:Tag>
+                    <ute:Tag class="nrgQPPay-botm-row">
+                        <utmain:Label text="{comp-i18n-quickpay>nrgQPPayment-recurringPayType}" class="nrgQPPay-botm-row-lbl" />
+                        <ute:Textfield class="nrgQPPay-botm-row-val"
+                                       width="15rem" value="{olocalCorrModel>/Rpt}" editable="false" fieldType="Underlined"/>
+                    </ute:Tag>
+                    <utmain:Label text="{olocalCorrModel>/Rpt}" class="nrgQPPay-dlcc-chbrow-lbl" />
                 <ute:Tag class="nrgQPPay-botm-btns">
                     <!--<utmain:Button class="nrgQPPay-dlbb-btn" text="{comp-i18n-billing>nrgBilling-dpp-BtnBack}"/>-->
                     <utmain:Button class="nrgQPPay-dlbb-btn-left" text="{comp-i18n-quickpay>nrgQPPayment-BtnRemove}"

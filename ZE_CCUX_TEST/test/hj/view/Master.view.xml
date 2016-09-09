@@ -5,11 +5,30 @@
 	xmlns:core="sap.ui.core"
     xmlns:u="ute.ui.commons"
     xmlns:n="nrg.asset.img.icon"
-    xmlns:t="sap.ui.table">
-    <u:Tag>
-        <u:DatePicker class="uteDatePicIcon" id="testtesttest"
-                      defaultDate="5-21-2017"></u:DatePicker>
-    </u:Tag>
+    xmlns:t="sap.ui.table"
+    xmlns:ute="ute.ui.main">
+
+
+
+    <ute:ComboBox content="{oState>/US_State/}"
+                selectedKey="{oState>/selKey}"
+                enabled="true"
+                allowOnlyListed="true">
+        <ute:ComboBoxItem key="{oState>sAbvName}">
+            <u:Tag text="{oState>sFullName}"/>
+        </ute:ComboBoxItem>
+    </ute:ComboBox>
+
+    <ute:Dropdown content="{oState>/US_State/}"
+                selectedKey="{oState>/selKey}"
+                enabled="true">
+        <ute:DropdownItem key="{oState>sAbvName}">
+            <u:Tag text="{oState>sFullName}"/>
+        </ute:DropdownItem>
+    </ute:Dropdown>
+
+
+
     <!--u:Tag>
         <u:Tag
             text="Buttons">

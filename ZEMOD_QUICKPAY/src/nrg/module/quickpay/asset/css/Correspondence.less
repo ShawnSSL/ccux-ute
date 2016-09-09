@@ -1,13 +1,13 @@
 // Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO, July 22, 2016
 .nrgQPPay-correspondencePopup {
-    width: 750px;
-    height: 70%;
-    font-family: @nrgFontFamily;
+        width: 750px;
+        height: 70%;
+        font-family: @nrgFontFamily;
     // Content
     & .nrgQPPay-correspondencePopup-content {
-        display: flex;
-        flex-direction: column;
-        padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+            padding: 0 10px;
         & .nrgQPPay-toggleTab {
             margin: auto;
         }
@@ -15,20 +15,46 @@
             margin: auto;
         }
         & .nrgQPPay-toggleText {
-            margin: auto;
-            margin-top: 15px;
-            text-align: center;
+                margin: auto;
+                margin-top: 15px;
+                text-align: center;
+                font-weight: @nrgFontWeight-semiBold;
+        }
+        & .nrgQPPay-toggleText > .nrgQPPay-toggleText-up{
+            font-size: @nrgFontSize-base;
+        }
+        & .nrgQPPay-toggleText > .nrgQPPay-toggleText-up > .nrgQPPay-toggleText-down{
+            margin-top: 10px;
+            display: flex;
+        }
+        & .nrgQPPay-toggleText > .nrgQPPay-toggleText-up > .nrgQPPay-toggleText-down > .nrgQPPay-toggleText-lable-l{
+            font-size: @nrgFontSize-base;
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-right: 5px;
+        }
+        & .nrgQPPay-toggleText > .nrgQPPay-toggleText-up > .nrgQPPay-toggleText-down > .nrgQPPay-toggleText-lable-r{
+            font-size: @nrgFontSize-base;
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 5px;
         }
         & > .nrgQPPay-contentArea {
-            display: inline-block;
-            flex: 0 0 550px;
+                display: inline-block;
+                flex: 0 0 550px;
         }
         & > .nrgQPPay-contentArea > .nrgQPPay-botm {
             margin-top: 37px;
         }
         & > .nrgQPPay-contentArea > .nrgQPPay-botm > .nrgQPPay-botm-btns {
-            margin-top: 60px;
+            margin-top: 20px;
             text-align: center;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-botm > .nrgQPPay-botm-row {
+                margin: 0px 0px 0px 12rem;
+        }
+        & > .nrgQPPay-contentArea > .nrgQPPay-botm > .nrgQPPay-botm-row > .nrgQPPay-botm-row-lbl > .uteMLbl-text {
+            font-weight: @nrgFontWeight-semiBold;
         }
         & .nrgQPPay-dlbb-btn-left {
             margin-right: 20px;

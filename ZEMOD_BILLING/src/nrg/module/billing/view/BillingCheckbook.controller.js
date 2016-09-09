@@ -361,6 +361,8 @@ sap.ui.define(
                 aPromises = [],
                 oScrlCtaner = this.getView().byId('nrgChkbookScrollContainer');
 
+            this.getOwnerComponent().getCcuxApp().setOccupied(true);    //Add loading image
+
             for (i = 0; i < oPmtHdrs.mAggregations.content.length; i = i + 1) {
                 oPmtHdrs.mAggregations.content[i].setExpanded(true);
 
@@ -781,7 +783,9 @@ sap.ui.define(
                         }
                     }
 
-                    oScrlCtaner.scrollTo(0, 1000, 1000);
+                    window.setTimeout( function(){
+                        oScrlCtaner.scrollTo(0, 1000, 1000);
+                    }, 2000 );
                 }.bind(this),
                 error: function (oError) {
                     //Need to put error message
@@ -842,7 +846,8 @@ sap.ui.define(
                 oParameters,
                 alert,
                 i,
-                i18NModel = this.getOwnerComponent().getModel("comp-i18n-billing");
+                i18NModel = this.getOwnerComponent().getModel("comp-i18n-billing"),
+                tempAlertMessage;
 
             oParameters = {
                 success : function (oData) {
@@ -856,40 +861,112 @@ sap.ui.define(
 
 
                     // Check ABP
-                    alert = new ute.ui.app.FooterNotificationItem({
-                        link: true,
-                        design: 'Information',
-                        text: (oData.ABPElig) ? i18NModel.getProperty("nrgNotfABPT") : i18NModel.getProperty("nrgNotfABPF"),
-                        linkPress: this._openEligABPPopup.bind(this)
-                    });
+                    if (oData.ABPElig) {
+                        if (oData.ABPElig === 'Y' || oData.ABPElig === 'y') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfABPT");
+                        }
+                        if (oData.ABPElig === 'N' || oData.ABPElig === 'n') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfABPF");
+                        }
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: tempAlertMessage,
+                            linkPress: this._openEligABPPopup.bind(this)
+                        });
+                    }
+                    else {
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfABPEmpty"),
+                            linkPress: this._reloadNotification.bind(this)
+                        });
+                    }
+
                     this._eligibilityAlerts.push(alert);
+
 
                     // Check EXTN
-                    alert = new ute.ui.app.FooterNotificationItem({
-                        link: true,
-                        design: 'Information',
-                        text: (oData.EXTNElig) ? i18NModel.getProperty("nrgNotfEXTT") : i18NModel.getProperty("nrgNotfEXTF"),
-                        linkPress: this._openEligEXTNPopup.bind(this)
-                    });
+                    if (oData.EXTNElig) {
+                        if (oData.EXTNElig === 'Y' || oData.ABPElig === 'y') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfEXTT");
+                        }
+                        if (oData.EXTNElig === 'N' || oData.ABPElig === 'n') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfEXTF");
+                        }
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: tempAlertMessage,
+                            linkPress: this._openEligABPPopup.bind(this)
+                        });
+                    } else {
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfEXTEmpty"),
+                            linkPress: this._reloadNotification.bind(this)
+                        });
+                    }
+
                     this._eligibilityAlerts.push(alert);
+
 
                     // Check RBB
-                    alert = new ute.ui.app.FooterNotificationItem({
-                        link: true,
-                        design: 'Information',
-                        text: (oData.RBBElig) ? i18NModel.getProperty("nrgNotfRBPT") : i18NModel.getProperty("nrgNotfRBPF"),
-                        linkPress: this._openEligRBBPopup.bind(this)
-                    });
+                    if (oData.RBBElig) {
+                        if (oData.RBBElig === 'Y' || oData.ABPElig === 'y') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfRBPT");
+                        }
+                        if (oData.RBBElig === 'N' || oData.ABPElig === 'n') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfRBPF");
+                        }
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: tempAlertMessage,
+                            linkPress: this._openEligABPPopup.bind(this)
+                        });
+                    } else {
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfRBPEmpty"),
+                            linkPress: this._reloadNotification.bind(this)
+                        });
+                    }
+
                     this._eligibilityAlerts.push(alert);
 
+
                     // Check DPP
-                    alert = new ute.ui.app.FooterNotificationItem({
-                        link: false,
-                        design: 'Information',
-                        text: (oData.DPPElig) ? i18NModel.getProperty("nrgNotfDPPT") : i18NModel.getProperty("nrgNotfDPPF")
-                    });
+                    if (oData.DPPElig) {
+                        if (oData.DPPElig === 'Y' || oData.ABPElig === 'y') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfDPPT");
+                        }
+                        if (oData.DPPElig === 'N' || oData.ABPElig === 'n') {
+                            tempAlertMessage = i18NModel.getProperty("nrgNotfDPPF");
+                        }
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: tempAlertMessage,
+                            linkPress: this._openEligABPPopup.bind(this)
+                        });
+                    } else {
+                        alert = new ute.ui.app.FooterNotificationItem({
+                            link: true,
+                            design: 'Information',
+                            text: i18NModel.getProperty("nrgNotfDPPEmpty"),
+                            linkPress: this._reloadNotification.bind(this)
+                        });
+                    }
+
                     this._eligibilityAlerts.push(alert);
-                    if (oData.EXTNPend) {
+
+
+                    //Others
+                    if (oData.EXTNPend === 'Y' || oData.EXTNPend === 'y') {
                         // Check DPP
                         alert = new ute.ui.app.FooterNotificationItem({
                             link: false,
@@ -898,7 +975,7 @@ sap.ui.define(
                         });
                         this._eligibilityAlerts.push(alert);
                     }
-                    if (oData.CollAccActv) {
+                    if (oData.CollAccActv === 'Y' || oData.CollAccActv === 'y') {
                         // Check DPP
                         alert = new ute.ui.app.FooterNotificationItem({
                             link: false,
@@ -907,7 +984,7 @@ sap.ui.define(
                         });
                         this._eligibilityAlerts.push(alert);
                     }
-                    if (oData.CSAActv) {
+                    if (oData.CSAActv === 'Y' || oData.CSAActv === 'y') {
                         // Check DPP
                         alert = new ute.ui.app.FooterNotificationItem({
                             link: false,
@@ -916,7 +993,7 @@ sap.ui.define(
                         });
                         this._eligibilityAlerts.push(alert);
                     }
-                    if (oData.RBankDActv) {
+                    if (oData.RBankDActv === 'Y' || oData.RBankDActv === 'y') {
                         // Check DPP
                         alert = new ute.ui.app.FooterNotificationItem({
                             link: false,
@@ -925,7 +1002,7 @@ sap.ui.define(
                         });
                         this._eligibilityAlerts.push(alert);
                     }
-                    if (oData.RCCardActv) {
+                    if (oData.RCCardActv === 'Y' || oData.RCCardActv === 'y') {
                         // Check DPP
                         alert = new ute.ui.app.FooterNotificationItem({
                             link: false,
@@ -941,6 +1018,24 @@ sap.ui.define(
                     }
                 }.bind(this),
                 error: function (oError) {
+                    var container = this.getView().byId('nrgBilling-billChkBook-notifications');
+                    if (container && container.getContent() && container.getContent().length > 0) {
+                        container.removeAllContent();
+                    }
+
+                    this._eligibilityAlerts = [];
+
+
+                    // Check ABP
+                    alert = new ute.ui.app.FooterNotificationItem({
+                        link: true,
+                        design: 'Information',
+                        text: i18NModel.getProperty("nrgNotfReload"),
+                        linkPress: this._reloadNotification.bind(this)
+                    });
+                    this._eligibilityAlerts.push(alert);
+
+                    this._eligibilityAlerts[0].placeAt(container);
 
                 }.bind(this)
             };
@@ -948,6 +1043,10 @@ sap.ui.define(
             if (oModel && this._coNum) {
                 oModel.read(sPath, oParameters);
             }
+        };
+
+        CustomController.prototype._reloadNotification = function () {
+            this._retrieveNotification();
         };
 
         CustomController.prototype._openEligABPPopup = function () {

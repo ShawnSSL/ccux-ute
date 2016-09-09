@@ -75,6 +75,20 @@ sap.ui.define(
             oRm.write('</div>');
         };
 
+        //SHAWN
+        CustomRenderer._renderTagline = function (oRm, oCustomControl) {
+            oRm.write('<div');
+            oRm.addClass('uteAppBodyCnt-tagline');
+            oRm.writeClasses();
+            oRm.write('>');
+
+            oCustomControl.getTagline().forEach(function (oTagline) {
+                oRm.renderControl(oTagline);
+            }.bind(this));
+
+            oRm.write('</div>');
+        };
+
         CustomRenderer._renderFooter = function (oRm, oCustomControl) {
             oRm.write('<div');
             oRm.addClass('uteAppBodyCnt-footer');
@@ -124,8 +138,9 @@ sap.ui.define(
             oRm.writeClasses();
             oRm.write('>');
 
-            this._renderSummary(oRm, oCustomControl);
             this._renderGeneral(oRm, oCustomControl);
+            this._renderSummary(oRm, oCustomControl);
+
 
             oRm.write('</div>');
 
@@ -135,6 +150,7 @@ sap.ui.define(
             oRm.write('>');
 
             this._renderTool(oRm, oCustomControl);
+            this._renderTagline(oRm, oCustomControl);
 
             oRm.write('</div>');
 

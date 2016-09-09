@@ -4,7 +4,7 @@
 sap.ui.define(
     [
         'nrg/base/view/BaseController',
-        'nrg/module/quickpay/view/QuickPayControl',
+        'nrg/module/quickpay/view/QuickPayPopup',
         'sap/ui/model/json/JSONModel'
     ],
 

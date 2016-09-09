@@ -1,0 +1,14 @@
+<mvc:View
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ute="ute.ui.commons"
+xmlns:utmain="ute.ui.main"
+xmlns:mvc="sap.ui.core.mvc"
+xmlns:c="sap.ui.commons"
+xmlns:l="sap.ui.commons.layout"
+xmlns:core="sap.ui.core"
+controllerName="nrg.module.dashboard.view.Tagline">
+
+<ute:Tag class="nrgDashboard-tagline">
+  <ute:Tag text="Customer Data" class="nrgDashboard-text" />
+</ute:Tag>
+</mvc:View>

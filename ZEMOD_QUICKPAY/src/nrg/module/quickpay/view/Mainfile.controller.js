@@ -54,7 +54,8 @@ sap.ui.define(
                 }),
                 oContactModel,
                 fnRecievedHandler,
-                that = this;
+                that = this,
+                oGlobalDataManager;
             this._oFormatYyyymmdd = DateFormat.getInstance({
                 pattern: 'MM/dd/yyyy',
                 calendarType: sap.ui.core.CalendarType.Gregorian
@@ -68,7 +69,7 @@ sap.ui.define(
             this.getView().setModel(oViewModel, "appView");
 
             /*************************  Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO start ******************************/
-            var oGlobalDataManager = this._OwnerComponent.getGlobalDataManager();
+            oGlobalDataManager = this._OwnerComponent.getGlobalDataManager();
             this.getView().setModel(new sap.ui.model.json.JSONModel({
                 current : false,
                 newAdd : false,
@@ -89,7 +90,7 @@ sap.ui.define(
             this.getView().setModel(new JSONModel(), 'oCorrModel');
             this.getView().setModel(new sap.ui.model.json.JSONModel({
                 isPrePay : false,
-                prePayDes : "Please Use Index to Set Up Prepay Auto Pay",
+                prePayDes : "Please Use Index to Set Up Prepay Auto Pay"
             }), 'olocalCorrModel');
             if (oGlobalDataManager.isPrepay()) {
                 this.getView().getModel("olocalCorrModel").setProperty("/isPrePay", true);
@@ -193,10 +194,13 @@ sap.ui.define(
             this.setShowCloseButton(false);
             this.getView().setModel(oCreditCardModel, "quickpay-cc");
             WRRecievedHandler = function (oEvent) {
-                jQuery.sap.log.info("Date Received Succesfully");
+                jQuery.sap.log.info("Data Received Succesfully");
                 if (oEvent) {
                     if (oEvent.getSource().getLength() === 1) {
                         oWaiveReasonDropDown.setSelectedKey(oEvent.getSource().getContexts()[0].getProperty("ReasonCode"));
+                        oMsgArea.removeStyleClass("nrgQPPay-hide");
+                        oMsgArea.addStyleClass("nrgQPPay-black");
+                        oAppViewModel.setProperty("/message", oEvent.getSource().getContexts()[0].getProperty("Message"));
                     } else {
                         if ((oEvent) && (oEvent.mParameters) && (oEvent.mParameters.data) && (oEvent.mParameters.data.results)) {
                             oEvent.mParameters.data.results.forEach(function (item) {
@@ -214,7 +218,14 @@ sap.ui.define(
                 }
             };
             fnRecievedHandler = function (oEvent) {
-                jQuery.sap.log.info("Date Received Succesfully");
+                jQuery.sap.log.info("Data Received Succesfully");
+                if (oEvent) {
+                    if ((oEvent) && (oEvent.mParameters) && (oEvent.mParameters.data) && (oEvent.mParameters.data.results[0])) {
+                        oCreditCardDropDown.setPlaceholder('Select');
+                    } else {
+                        oCreditCardDropDown.setPlaceholder('No stored cards');
+                    }
+                }
                 that._OwnerComponent.getCcuxApp().setOccupied(false);
             };
             sCurrentPath = "/CreditCardSet" + "(BP='" + this._sBP + "',CA='" + this._sCA + "')";
@@ -839,6 +850,13 @@ sap.ui.define(
             sCurrentPath = "/BankDraftSet" + "(BP='" + this._sBP + "',CA='" + this._sCA + "')/WaiveReasonsSet";
             fnRecievedHandler = function (oEvent) {
                 jQuery.sap.log.info("Date Received Succesfully");
+                if (oEvent) {
+                    if ((oEvent) && (oEvent.mParameters) && (oEvent.mParameters.data) && (oEvent.mParameters.data.results[0])) {
+                        oBankDraftDropDown.setPlaceholder('Select');
+                    } else {
+                        oBankDraftDropDown.setPlaceholder('No stored cards');
+                    }
+                }
                 that._OwnerComponent.getCcuxApp().setOccupied(false);
             };
             WRRecievedHandler = function (oEvent) {
@@ -846,6 +864,9 @@ sap.ui.define(
                 if (oEvent) {
                     if (oEvent.getSource().getLength() === 1) {
                         oWaiveReasonDropDown.setSelectedKey(oEvent.getSource().getContexts()[0].getProperty("ReasonCode"));
+                        oMsgArea.removeStyleClass("nrgQPPay-hide");
+                        oMsgArea.addStyleClass("nrgQPPay-black");
+                        oAppViewModel.setProperty("/message", oEvent.getSource().getContexts()[0].getProperty("Message"));
                     } else {
                         if ((oEvent) && (oEvent.mParameters) && (oEvent.mParameters.data) && (oEvent.mParameters.data.results)) {
                             oEvent.mParameters.data.results.forEach(function (item) {
@@ -1937,9 +1958,17 @@ sap.ui.define(
 /*************************  Add Auto Bank Draft / Pay Card Option to CCUX BY SHAWN SHAO ******************************/
 
         /** PM Popup Button Select **/
+        Controller.prototype.updateRPSData = function () {
+            var oPayAvailFlags = "/PayAvailFlagsSet" + "(BP='" + parseInt(this._sBP, 10) + "',CA='" +  parseInt(this._sCA, 10) + "')",
+                oModel = this.getView().getModel('comp-quickpay'),
+                oContext = oModel.getContext(oPayAvailFlags),
+                oPayOptionModel = this.getView().getModel('olocalCorrModel');
+            oPayOptionModel.setProperty('/Rps', oContext.getProperty("Rps"));
+            oPayOptionModel.setProperty('/Rpt', oContext.getProperty("Rpt"));
+        };
         Controller.prototype.onAutoBankDraft = function (oEvent) {
-            var oPpPmt = this.getView().getModel('olocalAddress');
-            var oPayOption = this.getView().getModel('olocalCorrModel');
+            var oPpPmt = this.getView().getModel('olocalAddress'),
+                oPayOption = this.getView().getModel('olocalCorrModel');
             oPayOption.setProperty('/bankDraft', true);
             oPayOption.setProperty('/creditCard', false);
             oPpPmt.setProperty('/current', false);
@@ -1957,13 +1986,14 @@ sap.ui.define(
             }
             this._oPpCorrespondencePopup.open();
             this._initToggleArea();
+            this.updateRPSData();
             this._selectScrn(true);
             return;
         };
 
         Controller.prototype.onAutoCreditCard = function (oEvent) {
-            var oPpPmt = this.getView().getModel('olocalAddress');
-            var oPayOption = this.getView().getModel('olocalCorrModel');
+            var oPpPmt = this.getView().getModel('olocalAddress'),
+                oPayOption = this.getView().getModel('olocalCorrModel');
             oPayOption.setProperty('/creditCard', true);
             oPayOption.setProperty('/bankDraft', false);
             oPpPmt.setProperty('/current', false);
@@ -1981,6 +2011,7 @@ sap.ui.define(
             }
             this._oPpCorrespondencePopup.open();
             this._initToggleArea();
+            this.updateRPSData();
             this._selectScrn(true);
             return;
         };
@@ -1989,13 +2020,30 @@ sap.ui.define(
             this._oPpCorrespondencePopup.close();
         };
 
+/*        Controller.prototype._initToggleArea = function () {
+            var oPayOption = this.getView().getModel('olocalCorrModel');
+
+            this.getView().byId('id_QuickPayTglBtn').setLeftSelected(true);
+            if (oPayOption.getProperty('/creditCard')) {
+                this.getView().byId('paymentSetUp_BD').setVisible(false);
+                this.getView().byId('paymentCancell_BD').setVisible(false);
+                this.getView().byId('paymentSetUp_CC').setVisible(true);
+                this.getView().byId('paymentCancell_CC').setVisible(false);
+            } else if (oPayOption.getProperty('/bankDraft')) {
+                this.getView().byId('paymentSetUp_BD').setVisible(true);
+                this.getView().byId('paymentCancell_BD').setVisible(false);
+                this.getView().byId('paymentSetUp_CC').setVisible(false);
+                this.getView().byId('paymentCancell_CC').setVisible(false);
+            }
+            this.getView().byId('setUpAutoPay').setVisible(true);
+            this.getView().byId('removeAutoPay').setVisible(false);
+        };*/
         Controller.prototype._initToggleArea = function () {
             if (!this.getView().byId('id_QuickPayTglBtn').getLeftSelected()) {
                 this.getView().byId('id_QuickPayTglBtn').setLeftSelected(true);
                 this._onToggleButtonPress(null);
             }
         };
-
         Controller.prototype._retrCorrespondence = function () {
             var oODataMOdel = this.getView().getModel('comp-quickpay'),
                 oParameters,
@@ -2152,11 +2200,11 @@ sap.ui.define(
         };
 
         Controller.prototype._onRemoveBtnClick = function () {
-             var oODataSvc = this.getView().getModel('comp-quickpay'),
+            var oODataSvc = this.getView().getModel('comp-quickpay'),
                 oPayOption = this.getView().getModel('olocalCorrModel'),
                 oParameters,
                 sPath,
-                that=this,
+                that = this,
                 oRemoveModel = this.getView().getModel('oCorrModel'),
                 oData = oRemoveModel.oData;
             this._OwnerComponent.getCcuxApp().setOccupied(true);
@@ -2183,11 +2231,11 @@ sap.ui.define(
                             message: oData.Message
                         });
                     } else {
-                            ute.ui.main.Popup.Alert({
-                                title: 'Auto Pay',
-                                message: 'Correspondence Sucessfully Sent'
-                            });
-                        }
+                        ute.ui.main.Popup.Alert({
+                            title: 'Auto Pay',
+                            message: 'Correspondence Sucessfully Sent'
+                        });
+                    }
                     this._oPpCorrespondencePopup.close();
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
                 }.bind(this),
@@ -2216,7 +2264,7 @@ sap.ui.define(
                 oModel = this.getView().getParent().getParent().getParent().getController().getOwnerComponent().getModel('comp-bupa'),
                 sPath,
                 oParameters,
-                that=this,
+                that = this,
                 aFilters = this._createAddrValidateFilters();
             this._OwnerComponent.getCcuxApp().setOccupied(true);
             olocalAddress.setProperty('/updateSent', true);
@@ -2363,7 +2411,7 @@ sap.ui.define(
                 oPayOption = this.getView().getModel('olocalCorrModel'),
                 oParameters,
                 sPath,
-                that=this,
+                that = this,
                 oDPPComunication = this.getView().getModel('oCorrModel'),
                 oData = oDPPComunication.oData,
                 olocalAddress = this.getView().getModel('olocalAddress');
@@ -2391,11 +2439,11 @@ sap.ui.define(
                             message: oData.Message
                         });
                     } else {
-                            ute.ui.main.Popup.Alert({
-                                title: 'Auto Pay',
-                                message: 'Correspondence Sucessfully Sent'
-                            });
-                        }
+                        ute.ui.main.Popup.Alert({
+                            title: 'Auto Pay',
+                            message: 'Correspondence Sucessfully Sent'
+                        });
+                    }
                     this._oPpCorrespondencePopup.close();
                     that._OwnerComponent.getCcuxApp().setOccupied(false);
                 }.bind(this),
@@ -2466,6 +2514,53 @@ sap.ui.define(
             this.getView().getModel('olocalAddress').setProperty('/editable', true);
         };
 
+        /** Toggle Button Select **/
+/*        Controller.prototype._onToggleButtonPress = function (oEvent) {
+            var oPayOption = this.getView().getModel('olocalCorrModel');
+
+            if (this.getView().byId('id_QuickPayTglBtn').getLeftSelected()) {
+                if (oPayOption.getProperty('/creditCard')) {
+                    this.getView().byId('paymentSetUp_BD').setVisible(false);
+                    this.getView().byId('paymentCancell_BD').setVisible(false);
+                    this.getView().byId('paymentSetUp_CC').setVisible(true);
+                    this.getView().byId('paymentCancell_CC').setVisible(false);
+                    oPayOption.setProperty('/BDSetUp', false);
+                    oPayOption.setProperty('/CCSetUp', true);
+                } else if (oPayOption.getProperty('/bankDraft')) {
+                    this.getView().byId('paymentSetUp_BD').setVisible(true);
+                    this.getView().byId('paymentCancell_BD').setVisible(false);
+                    this.getView().byId('paymentSetUp_CC').setVisible(false);
+                    this.getView().byId('paymentCancell_CC').setVisible(false);
+                    oPayOption.setProperty('/BDSetUp', true);
+                    oPayOption.setProperty('/CCSetUp', false);
+                }
+                oPayOption.setProperty('/CCRemove', false);
+                oPayOption.setProperty('/BDRemove', false);
+                this.getView().byId('setUpAutoPay').setVisible(true);
+                this.getView().byId('removeAutoPay').setVisible(false);
+            } else {
+                if (oPayOption.getProperty('/creditCard')) {
+                    this.getView().byId('paymentSetUp_BD').setVisible(false);
+                    this.getView().byId('paymentCancell_BD').setVisible(false);
+                    this.getView().byId('paymentSetUp_CC').setVisible(false);
+                    this.getView().byId('paymentCancell_CC').setVisible(true);
+                    oPayOption.setProperty('/CCRemove', true);
+                    oPayOption.setProperty('/BDRemove', false);
+                } else if (oPayOption.getProperty('/bankDraft')) {
+                    this.getView().byId('paymentSetUp_BD').setVisible(false);
+                    this.getView().byId('paymentCancell_BD').setVisible(true);
+                    this.getView().byId('paymentSetUp_CC').setVisible(false);
+                    this.getView().byId('paymentCancell_CC').setVisible(false);
+                    oPayOption.setProperty('/CCRemove', false);
+                    oPayOption.setProperty('/BDRemove', true);
+                }
+                oPayOption.setProperty('/BDSetUp', false);
+                oPayOption.setProperty('/CCSetUp', false);
+                this.getView().byId('setUpAutoPay').setVisible(false);
+                this.getView().byId('removeAutoPay').setVisible(true);
+            }
+
+        };*/
         /** Toggle Button Select **/
         Controller.prototype._onToggleButtonPress = function (oEvent) {
             var oPayOption = this.getView().getModel('olocalCorrModel');

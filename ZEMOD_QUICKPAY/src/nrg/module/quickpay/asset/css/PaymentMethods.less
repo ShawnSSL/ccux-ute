@@ -24,7 +24,22 @@
             padding: 5px;
     }
     &    .nrgQPPay-top  {
-            margin-top: 5px;
+            display: flex;
+            margin-top: 10px;
+    }
+    &    .nrgQPPay--afterDropDown-top  {
+            margin-top: 6px;
+            margin-bottom: 10px;
+    }
+    &    .nrgQPPay-bottomTop  {
+            display: flex;
+            margin-bottom: 10px;
+            margin-top: 10px;
+    }
+    &    .nrgQPPay-BDbottomTop  {
+            display: flex;
+            margin-bottom: 5px;
+            margin-top: 10px;
     }
     &    .nrgQPPay-tabPanelItem > .uteMTabPanelItem-content {
             width: @nrgQPPay-maxWidth;
@@ -98,7 +113,7 @@
     }
     &    .nrgQPCC-data {
             background-color:@nrgColor-blue-pearl;
-            margin: 0.5rem 2rem 0.5rem 2rem;
+            margin: 0.3rem 0.6rem 0.3rem 0.6rem;
             padding: 10px 0px 10px 0px;
     }
     &    .nrgQPCC-dataBD {
@@ -118,15 +133,15 @@
             color: @nrgColor-grey-inactive;
     }
     &    .nrgQPCC-btn {
-            margin: 5px 5px 5px 0px;
+            margin: 5px 1.5rem 5px 1.5rem;
             min-width: 5rem;
     }
     &    .nrgQPCC-ttl {
             font-weight: @nrgFontWeight-semiBold;
             text-align: left;
             position: relative;
-            left: 1rem;
-            font-size: @nrgFontSize-small;
+            left: 0.6rem;
+            font-size: @nrgFontSize-base;
             display:inline-block;
     }
     &   .nrgQPPay-ttl {
@@ -136,15 +151,18 @@
             font-size: @nrgFontSize-small;
     }
     &    .nrgQPCC-lbl {
-            display:inline-block;
+            margin-top: auto;
+            margin-bottom: auto;
+            flex-basis: 25%;
+            text-align: left;
     }
     &    .nrgQPCC-lblAdd {
             display:inline-block;
             font-weight:@nrgFontWeight-bold;
     }
     &    .nrgQPPay-TF {
-            display:inline-block;
-            width: 80%;
+            flex-basis: 75%;
+            margin-left: 0.5rem;
     }
     &    .nrgQPCC-DDI {
             width:8.5rem;
@@ -169,13 +187,19 @@
             font-size: 10pt;
     }
     &    .nrgQPCC-cvv {
-            margin-left: @nrgQPPay-marginleft;
+            margin-left: 2.9rem;
     }
     &    .nrgQPCC-zipcode {
-            margin-left:20px;
+            margin-left:22px;
     }
     &    .nrgQPPay-left {
-            margin-left: 4.4rem;
+            margin-left: 2.6rem;
+            margin-right: 2.6rem;
+    }
+    &    .nrgQPPay-left-bottom {
+            margin-left: 2.6rem;
+            margin-right: 2.6rem;
+            margin-bottom: 5px;
     }
     &    .nrgQPCC-DDLWR {
             width: 20rem;
@@ -203,6 +227,18 @@
             margin-left: 4.4rem;
             min-width: 10rem;
             display: inline-block;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 22px;
+            border-radius: 2px;
+            background-color: @nrgColor-grey-dark;
+    }
+    &    .nrgQPCC-Rdmlbl-mid {
+            border: 1px solid;
+            min-height: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            min-width: 10rem;
             padding-top: 10px;
             padding-bottom: 10px;
             padding-left: 22px;
@@ -246,7 +282,7 @@
             overflow-x: hidden;
     }
     &    .nrgQPPay-msgArea > .nrgQPPay-msg {
-            margin: 5px 5px 10px 20px;
+            margin: 5px 10px 5px 20px;
             font-size: @nrgFontSize-small;
             font-weight: @nrgFontWeight-semiBold;
     }
@@ -270,8 +306,9 @@
    }
    &    .nrgQPCC-Refreshbtn {
             position: absolute;
-            right: 20px;
-            font-size: 12pt;
+            right: 0.5rem;
+            top: 26px;
+            font-size: 15pt;
             vertical-align: middle;
        &  > span {
                 cursor  : pointer;
@@ -391,6 +428,11 @@
 li.sapMComboBoxBaseItem {
 	height: 1.5rem;
 	border: none;
+}
+li.sapMSelectListItem {
+    padding : 0 1rem 0 1rem;
+    height: 30px;
+    line-height: 30px;
 }
 .nrgQPCC-btn {
         margin: 5px 5px 5px 0px;

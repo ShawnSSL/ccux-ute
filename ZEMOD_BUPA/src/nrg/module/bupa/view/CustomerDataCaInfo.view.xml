@@ -244,14 +244,22 @@
                                                          text="{comp-i18n-bupa>nrgBupa-cusDataCaInfo-STATE}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <utmain:Dropdown class="nrgBupa-cusDataCaInfo-statedropdown"
+                                                <!--<utmain:Dropdown class="nrgBupa-cusDataCaInfo-statedropdown"
                                                     content="{oUSStateList>/US_State}"
                                                     selectedKey="{oDataBuagAddrDetails>/FixAddrInfo/State}"
                                                     enabled="{oCaInfoConfig>/mailAddrEditable}">
                                                     <utmain:DropdownItem key="{oUSStateList>sAbvName}">
                                                         <ute:Tag elem="span" text="{oUSStateList>sFullName}"/>
                                                     </utmain:DropdownItem>
-                                                </utmain:Dropdown>
+                                                </utmain:Dropdown>-->
+                                                <utmain:ComboBox design="Default" class="nrgBupa-cusDataCaInfo-statedropdown"
+                                                    content="{oUSStateList>/US_State}"
+                                                    selectedKey="{oDataBuagAddrDetails>/FixAddrInfo/State}"
+                                                    enabled="{oCaInfoConfig>/mailAddrEditable}">
+                                                    <utmain:ComboBoxItem key="{oUSStateList>sAbvName}">
+                                                        <ute:Tag text="{oUSStateList>sFullName}" class="nrgBupa-cusDataCaInfo-cnt_Dropdown"/>
+                                                    </utmain:ComboBoxItem>
+                                                </utmain:ComboBox>
                                                 <!--ute:Textfield fieldType="Noborder"
                                                                class="nrgBupa-cusDataCaInfo-cnt"
                                                                editable="{oCaInfoConfig>/mailAddrEditable}"
@@ -509,18 +517,22 @@
                                                          text="{comp-i18n-bupa>nrgBupa-cusDataCaInfo-STATE}:" />
                                             </l:MatrixLayoutCell>
                                             <l:MatrixLayoutCell>
-                                                <utmain:Dropdown class="nrgBupa-cusDataCaInfo-statedropdown"
+                                                <!--<utmain:Dropdown class="nrgBupa-cusDataCaInfo-statedropdown"
                                                     content="{oUSStateList>/US_State}"
                                                     selectedKey="{oDataBuagAddrDetails>/TempAddrInfo/State}"
                                                     enabled="{oCaInfoConfig>/tempAddrEditable}">
                                                     <utmain:DropdownItem key="{oUSStateList>sAbvName}">
                                                         <ute:Tag elem="span" text="{oUSStateList>sFullName}"/>
                                                     </utmain:DropdownItem>
-                                                </utmain:Dropdown>
-                                                <!--ute:Textfield fieldType="Noborder"
-                                                               class="nrgBupa-cusDataCaInfo-cnt"
-                                                               editable="{oCaInfoConfig>/tempAddrEditable}"
-                                                               value="{oDataBuagAddrDetails>/TempAddrInfo/State}"/-->
+                                                </utmain:Dropdown>-->
+                                                <utmain:ComboBox design="Default" class="nrgBupa-cusDataCaInfo-statedropdown"
+                                                    content="{oUSStateList>/US_State}"
+                                                    selectedKey="{oDataBuagAddrDetails>/TempAddrInfo/State}"
+                                                    enabled="{oCaInfoConfig>/tempAddrEditable}">
+                                                    <utmain:ComboBoxItem key="{oUSStateList>sAbvName}">
+                                                        <ute:Tag text="{oUSStateList>sFullName}"/>
+                                                    </utmain:ComboBoxItem>
+                                                </utmain:ComboBox>
                                             </l:MatrixLayoutCell>
                                         </l:MatrixLayoutRow>
                                     </l:MatrixLayout>

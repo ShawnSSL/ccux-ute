@@ -53,17 +53,17 @@
             "routes": {
                 "dashboard.Verification": {
                     "pattern": "dashboard/verification/bp/{bpNum}",
-                    "target": [ "dashboard.CustomerDataVerification", "dashboard.CustomerDataSummary", "billing.CustomerJourney", "app.Footer" ]
+                    "target": [ "dashboard.CustomerDataVerification", "dashboard.CustomerDataSummary", "billing.CustomerJourney", "dashboard.Tagline", "app.Footer" ]
                 },
 
                 "dashboard.VerificationWithCa": {
                     "pattern": "dashboard/verification/bp/{bpNum}/ca/{caNum}",
-                    "target": [ "dashboard.CustomerDataVerification", "dashboard.CustomerDataSummary", "billing.CustomerJourney", "app.Footer" ]
+                    "target": [ "dashboard.CustomerDataVerification", "dashboard.CustomerDataSummary", "billing.CustomerJourney", "dashboard.Tagline", "app.Footer" ]
                 },
 
                 "dashboard.VerificationWithCaCo": {
                     "pattern": "dashboard/verification/bp/{bpNum}/ca/{caNum}/co/{coNum}",
-                    "target": [ "dashboard.CustomerDataVerification", "dashboard.CustomerDataSummary", "billing.CustomerJourney", "app.Footer" ]
+                    "target": [ "dashboard.CustomerDataVerification", "dashboard.CustomerDataSummary", "billing.CustomerJourney", "dashboard.Tagline", "app.Footer" ]
                 },
 
                 "dashboard.ServiceOrder": {
@@ -76,6 +76,11 @@
                 "dashboard.EmptyTools":{
                     "viewName": "nrg.module.dashboard.view.EmptyTools",
                     "controlId": "idAppTools"
+                },
+
+                "dashboard.Tagline":{
+                    "viewName": "nrg.module.dashboard.view.Tagline",
+                    "controlId": "idAppTagline"
                 },
 
                 "dashboard.Tools":{

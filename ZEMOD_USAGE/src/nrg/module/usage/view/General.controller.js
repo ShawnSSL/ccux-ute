@@ -1,4 +1,4 @@
-/*globals sap*/
+/*globals sap, ute*/
 /*jslint nomen:true*/
 
 sap.ui.define(

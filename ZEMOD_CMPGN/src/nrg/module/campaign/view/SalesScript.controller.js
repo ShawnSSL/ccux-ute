@@ -688,7 +688,16 @@ sap.ui.define(
             this._oOverviewDialog.close();
             this.navTo("campaignoffers", {bpNum: this._sBP, caNum: this._sCA, coNum: this._sContract, typeV : "N"});
         };
-
+        /**
+		 * Handle when user clicked on Declining Overview Script
+		 *
+		 * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event
+		 */
+        Controller.prototype.onOVSDisposition = function (oEvent) {
+            this._oOverviewDialog.close();
+            this.onDisposition(oEvent);
+        };
         /**
 		 * Event Handler function for Disposition Reason selected
 		 *
@@ -760,7 +769,6 @@ sap.ui.define(
                 }.bind(this)
             };
             oModel.callFunction("/RejectCampaign", mParameters); // callback function for error
-            this._oOverviewDialog.close();
         };
         return Controller;
     }

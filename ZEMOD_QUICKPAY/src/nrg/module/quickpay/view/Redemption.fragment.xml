@@ -30,7 +30,7 @@
                 </u:Tag>
                 <u:Tag text="{comp-i18n-quickpay>nrgQPDate}" class="nrgQPCC-lbl"/>
             </u:Tag>
-            <u:Tag class="nrgQPCC-row nrgQPPay-top">
+            <u:Tag class="nrgQPCC-row nrgQPPay-bottomTop">
                 <u:Tag class="nrgQPPay-TF">
                     <u:Textfield id="idnrgQPCC-ReliantCard"
                                  placeholder="{comp-i18n-quickpay>nrgQPRedemptionNum}"
@@ -44,9 +44,9 @@
             </u:Tag>
         </u:Tag>
             <u:Tag class="nrgQPPay-top">
-                <u:Tag text="{comp-i18n-quickpay>nrgQPNoProcessingFee}" class="nrgQPCC-Rdmlbl"/>
+                <u:Tag text="{comp-i18n-quickpay>nrgQPNoProcessingFee}" class="nrgQPCC-Rdmlbl-mid"/>
             </u:Tag>
-            <u:Tag class="nrgQPPay-top nrgQPPay-left" >
+            <u:Tag class="nrgQPPay-top nrgQPPay-left-bottom" >
                 <um:Button press=".onAcceptReliant"
                            id="idnrgQPCC-reliantAccept"
                            text="{appView>/reliantText}"

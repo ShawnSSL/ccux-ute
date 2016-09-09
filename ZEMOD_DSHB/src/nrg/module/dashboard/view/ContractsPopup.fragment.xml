@@ -41,66 +41,66 @@
                     <c:Label text="Select"/>
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="Contract Account"/>-->
-                    <um:Button design="None" text="Contract Account"
-                               class="nrgdashCo-th-btn"/>
+                    <c:Label text="Contract Account"/>
+ <!--                   <um:Button design="None" text="Contract Account"
+                               class="nrgdashCo-th-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="Contract"/>-->
-                    <um:Button design="None" text="Contract"
-                               class="nrgdashCo-th-btn"/>
+                   <c:Label text="Contract"/>
+  <!--                  <um:Button design="None" text="Contract"
+                               class="nrgdashCo-th-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="Status"/>-->
-                    <um:Button design="None" text="Status"
-                               class="nrgdashCo-th-btn"/>
+                   <c:Label text="Status"/>
+  <!--                  <um:Button design="None" text="Status"
+                               class="nrgdashCo-th-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="Move In Date"/>-->
-                    <um:Button design="None" text="Move In Date"
-                               class="nrgdashCo-th-btn"/>
+                    <c:Label text="Move In Date"/>
+ <!--                   <um:Button design="None" text="Move In Date"
+                               class="nrgdashCo-th-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="Move Out Date"/>-->
-                    <um:Button design="None" text="Move Out Date"
-                               class="nrgdashCo-th-btn"/>
+                   <c:Label text="Move Out Date"/>
+  <!--                  <um:Button design="None" text="Move Out Date"
+                               class="nrgdashCo-th-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="House"/>-->
-                    <um:Button design="None" text="House"
-                               class="nrgdashco-root-btn"/>
+                   <c:Label text="House"/>
+  <!--                  <um:Button design="None" text="House"
+                               class="nrgdashco-root-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="Street"/>-->
-                    <um:Button design="None" text="Street"
-                               class="nrgdashCo-th-btn"/>
+                    <c:Label text="Street"/>
+   <!--                 <um:Button design="None" text="Street"
+                               class="nrgdashCo-th-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="Apt"/>-->
-                    <um:Button design="None" text="Apt"
-                               class="nrgdashCo-th-btn"/>
+                 <c:Label text="Apt"/>
+   <!--                 <um:Button design="None" text="Apt"
+                               class="nrgdashCo-th-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="City"/>-->
-                    <um:Button design="None" text="City"
-                               class="nrgdashCo-th-btn"/>
+                    <c:Label text="City"/>
+   <!--                 <um:Button design="None" text="City"
+                               class="nrgdashCo-th-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="State"/>-->
-                    <um:Button design="None" text="State"
-                               class="nrgdashCo-th-btn"/>
+                    <c:Label text="State"/>
+   <!--                 <um:Button design="None" text="State"
+                               class="nrgdashCo-th-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="Zip"/>-->
-                    <um:Button design="None" text="Zip"
-                               class="nrgdashCo-th-btn"/>
+                    <c:Label text="Zip"/>
+  <!--                  <um:Button design="None" text="Zip"
+                               class="nrgdashCo-th-btn"/>-->
                 </u:TableColumn>
                 <u:TableColumn class="nrgdashCo-th">
-<!--                    <c:Label text="Eligibility"/>-->
-                    <um:Button design="None" text="Eligibility"
-                               class="nrgdashCo-th-btn"
+                    <c:Label text="Eligible offers"/>
+      <!--                <um:Button design="None" text="Eligible Offer"
+                             class="nrgdashCo-th-btn"
                                press=".onSorting"
-                               app:sortField="EligOffer"/>
+                               app:sortField="EligOffer"/>-->
                 </u:TableColumn>
             </u:columns>
             <u:rows>

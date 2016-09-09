@@ -3,12 +3,12 @@
         "results":[
             {
                 "__metadata":{
-                    "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/ChkBookHdrs(ContractAccountID='100738',InvoiceNum='8005303668')",
-                    "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/ChkBookHdrs(ContractAccountID='100738',InvoiceNum='8005303668')",
+                    "id":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/ChkBookHdrs(ContractAccountID='71851129',InvoiceNum='8005303668')",
+                    "uri":"http://sapcmq02.retail.nrgenergy.com:8001/sap/opu/odata/sap/ZE_CCUX_CHKBOOK_SRV/ChkBookHdrs(ContractAccountID='71851129',InvoiceNum='8005303668')",
                     "type":"ZE_CCUX_CHKBOOK_SRV.ChkBookHdr"
                 },
-                "ContractAccountID":"000071348166",
-                "InvoiceNum":"",
+                "ContractAccountID":"71851129",
+                "InvoiceNum":"8005303668",
                 "InvStrartDate":"\/Date(1447394401000+0000)\/",
                 "InvEndDate":"\/Date(1399957201000+0000)\/",
                 "InvAmount":"0.0000",

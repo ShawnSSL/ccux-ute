@@ -87,25 +87,19 @@
                                          icon="sap-icon://nrg-icon/notification"
                                          class="nrgBilling-cusDataBil-msgs-msg" />
                                 </ute:Tag>
-                                <ute:Tag class="nrgBilling-cusDataBil-date">
-                                    <ute:Tag class="nrgBilling-cusDataBil-date-block">
-                                        <ute:Tag elem="div"
-                                                 class="nrgBilling-cusDataBil-date-block-label"
-                                                 text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-l-div-BILLING_DATE}" />
-                                        <ute:Tag elem="div"
-                                                 class="nrgBilling-cusDataBil-date-block-value"
-                                                 text="{path: 'oBillingInvoices>/BillDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                                    </ute:Tag>
-                                    <ute:Tag class="nrgBilling-cusDataBil-date-block">
-                                        <ute:Tag elem="div"
-                                                 class="nrgBilling-cusDataBil-date-block-label"
-                                                 text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-l-div-DUE_DATE}" />
-                                        <ute:Tag elem="div"
-                                                 class="nrgBilling-cusDataBil-date-block-value"
-                                                 text="{path: 'oBillingInvoices>/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"/>
-                                    </ute:Tag>
+  				                <ute:Tag class="nrgBilling-cusDataBil-date">
+                                    <ute:Tag text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-l-div-BILLING_DATE}"
+                                             class="nrgBilling-cusDataBil-date-lable"/>
+                                    <ute:Tag text="{path: 'oBillingInvoices>/BillDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"
+                                             class="nrgBilling-cusDataBil-date-value"/>
                                 </ute:Tag>
-                                <ute:Tag class="nrgBilling-cusDataBil-date"
+                                <ute:Tag class="nrgBilling-cusDataBil-date">
+                                    <ute:Tag text="{comp-i18n-billing>nrgBilling-cusDataBillingInfo-l-div-DUE_DATE}"
+                                             class="nrgBilling-cusDataBil-date-lable"/>
+                                    <ute:Tag text="{path: 'oBillingInvoices>/DueDate', type: 'sap.ui.model.type.Date', formatOptions:{pattern: 'MM/dd/yyyy'} }"
+                                             class="nrgBilling-cusDataBil-date-value"/>
+                                </ute:Tag>
+                                <ute:Tag class="nrgBilling-cusDataBil-date-block-label-headerContent"
                                          text="{oBillingInvoices>/CustDueDate}" />
                             </ute:Tag>
                         </l:MatrixLayoutCell>

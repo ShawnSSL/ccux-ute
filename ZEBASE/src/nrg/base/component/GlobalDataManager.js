@@ -23,7 +23,9 @@ sap.ui.define(
                     'setGDCProperty',
                     'getGDCProperty',
                     'refreshGDC',
-                    'setPrepay'
+                    'setPrepay',
+                    'getIsSiebel',
+                    'setIsSiebel'
                 ]
             }
         });
@@ -32,6 +34,18 @@ sap.ui.define(
             if (sPath && oValue) {
                 this._globalModel.setProperty(sPath, oValue);
             }
+        };
+
+        Manager.prototype.setIsSiebel = function (bSiebel) {
+            if (bSiebel) {
+                this.setGDCProperty("/siebel", true);
+            } else {
+                this.setGDCProperty("/siebel", false);
+            }
+        };
+
+        Manager.prototype.getIsSiebel = function () {
+            return this.getGDCProperty("/siebel") || false;
         };
 
         Manager.prototype.setPrepay = function (bisPrepay) {

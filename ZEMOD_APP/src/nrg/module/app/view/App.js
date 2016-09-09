@@ -7,10 +7,11 @@ sap.ui.define(
         'nrg/module/app/view/AppHeader',
         'nrg/module/app/view/AppBody',
         'nrg/module/app/view/AppFooter',
-        'nrg/module/app/view/NrgBusyDialog'
+        'nrg/module/app/view/NrgBusyDialog',
+        'jquery.sap.global'
     ],
 
-    function (EventProvider, AppHeader, AppBody, AppFooter, BusyDialog) {
+    function (EventProvider, AppHeader, AppBody, AppFooter, BusyDialog, jQuery) {
         'use strict';
 
         var App = EventProvider.extend('nrg.module.app.view.App', {
@@ -20,8 +21,8 @@ sap.ui.define(
                 this._oController = oController;
                 this._oBusyDialog = new BusyDialog({showCancelButton: true,
                                                     cancelButtonText: "STOP",
-                                                    stop : this._BusyDialogStopped,
-                                                    close : this._BusyDialogClosed});
+                                                    stop : jQuery.proxy(this._BusyDialogStopped, this),
+                                                    close : jQuery.proxy(this._BusyDialogClosed, this)});
                 //this._oBusyDialog.setShowCancelButton(true);
                 /*
                 ** Over riding std escape function to avoid closing Busy dialog.
@@ -85,12 +86,38 @@ sap.ui.define(
             this._iBusyCounter = 0;
             if (this._fCallBack) {
                 this._fCallBack();
+            } else {
+                var oContext,
+                    oRouter,
+                    oOwnerComponent = this._oController.getOwnerComponent(),
+                    oCurrentRouteInfo = oOwnerComponent.getCcuxRouteManager().getCurrentRouteInfo();
+                oContext = oOwnerComponent.getCcuxContextManager().getContext().getData();
+                oRouter = oOwnerComponent.getRouter();
+
+                if ((oCurrentRouteInfo) && (oCurrentRouteInfo.name) && (oCurrentRouteInfo.name.indexOf('dashboard') === -1) && (oCurrentRouteInfo.name.indexOf('search') === -1)) {
+                    if (oContext.bpNum && oContext.caNum && oContext.coNum) {
+                        oRouter.navTo('dashboard.VerificationWithCaCo', {
+                            bpNum: oContext.bpNum,
+                            caNum: oContext.caNum,
+                            coNum: oContext.coNum
+                        });
+                    } else if (oContext.bpNum && oContext.caNum) {
+                        oRouter.navTo('dashboard.VerificationWithCa', {
+                            bpNum: oContext.bpNum,
+                            caNum: oContext.caNum
+                        });
+                    } else if (oContext.bpNum) {
+                        oRouter.navTo('dashboard.Verification', {
+                            bpNum: oContext.bpNum
+                        });
+                    }
+                }
             }
         };
         App.prototype._BusyDialogClosed = function () {
             this._iBusyCounter = 0;
         };
-        App.prototype.setOccupied = function (bOccupied, fCallBack) {
+        App.prototype.setOccupied = function (bOccupied, fCallBack, bShowStopImmediately) {
             bOccupied = !!bOccupied;
             this._fCallBack = fCallBack;
             if (bOccupied) {
@@ -102,7 +129,7 @@ sap.ui.define(
                 }
             }
             if (this._iBusyCounter === 1) {
-                this._oBusyDialog.open();
+                this._oBusyDialog.open(bShowStopImmediately);
             } else if (this._iBusyCounter === 0) {
                 this._oBusyDialog.close();
             }

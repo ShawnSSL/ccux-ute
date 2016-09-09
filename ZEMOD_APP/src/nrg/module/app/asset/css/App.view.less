@@ -1,5 +1,5 @@
 .nrgApp {
-    background: data-uri('../img/background.jpg');
+    background: data-uri('../img/utegrationbg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -41,10 +41,11 @@
         display: block;
         float: left;
         margin-top: 15px;
-        background: data-uri('../../../../../../../ZEBASE/src/nrg/base/asset/img/nrg-logo.svg');
+        background: data-uri('../../../../../../../ZEBASE/src/nrg/base/asset/img/u-logo.jpg');
+        //background: data-uri('../../../../../../../ZEBASE/src/nrg/base/asset/img/nrg-logo.svg');
         background-size: contain;
         background-repeat: no-repeat;
-        width: 70px;
+        width: 300px;
         height: 50px;
     }
 
@@ -131,12 +132,32 @@
         //overflow: hidden;
     }
 
-    & .nrgAppMain-generalContent,
-    & .nrgAppMain-summaryContent,
     & .nrgAppMain-toolsContent {
         width: 100%;
         border-radius: 2px;
-        background-color: @nrgColor-blue-lightPale;
+        background-color: rgba(35,46,98,0.9);
+        padding: 25px 14px 20px 14px;
+    }
+
+    & .nrgAppMain-generalContent {
+        width: 100%;
+        border-radius: 2px;
+        background-color: rgba(35, 46, 98, 0.6);
+        opacity: 0.8;
+        padding: 25px 14px 20px 14px;
+    }
+
+    & .nrgAppMain-generalContent-journey {
+        width: 100%;
+        border-radius: 2px;
+        background-color: rgba(35, 46, 98, 0.9);
+        padding: 25px 14px 20px 14px;
+    }
+
+    & .nrgAppMain-summaryContent {
+        width: 100%;
+        border-radius: 2px;
+        background-color: rgba(35, 46, 98, 0.9);
         padding: 25px 14px 20px 14px;
     }
 
@@ -145,7 +166,6 @@
     }
 
     & .nrgAppMain-generalContent:last-child {
-        margin-bottom: 30px;
     }
 
     & .nrgAppMain-generalContent.nrgAppMain-generalContent-full {
@@ -165,7 +185,7 @@
 
         // when footer is expanded
         &.open {
-            
+
             & .nrgAppMain-footerCaret {
                 margin-top: -20px;
 
@@ -236,7 +256,7 @@
                     margin-bottom: 30px;
                     color: @nrgColor-blue-link;
                     cursor: pointer;
-                
+
                     &:last-child {
                         margin-bottom: 0;
                     }

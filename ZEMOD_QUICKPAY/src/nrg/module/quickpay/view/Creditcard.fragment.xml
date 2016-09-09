@@ -11,7 +11,7 @@
                    class="nrgQPCC-Refreshbtn"
                    design="None">
            <core:Icon src="sap-icon://nrg-icon/refresh" />
-        </um:button>
+        </um:Button>
         <u:Tag class="nrgQPCC-data">
             <u:Tag class="nrgQPCC-row nrgQPPay-top">
                 <u:Tag class="nrgQPPay-TF">
@@ -34,7 +34,6 @@
             <u:Tag class="nrgQPCC-row nrgQPPay-top">
                 <u:Tag class="nrgQPPay-TF">
                     <um:Dropdown id="idnrgQPCC-DDL"
-                                 placeholder="{comp-i18n-quickpay>nrgQPSelect}"
                                  class="nrgQPCC-DDL">
                         <um:DropdownItem key="1" class="nrgQPCC-DdLItem">
                             <u:Tag class="nrgQPCC-DDI">
@@ -47,13 +46,15 @@
                         </um:DropdownItem>
                     </um:Dropdown>
                 </u:Tag>
+                <u:Tag class="nrgQPCC-lbl">
                     <um:Button press=".onAddCC"
                                class="nrgQPCC-Addbtn"
                                design="None">
                         <u:Tag text="{comp-i18n-quickpay>nrgQPAdd}" class="nrgQPCC-lblAdd"/>
-                    </um:button>
+                    </um:Button>
+                </u:Tag>
             </u:Tag>
-            <u:Tag class="nrgQPCC-row nrgQPPay-top">
+            <u:Tag class="nrgQPCC-row nrgQPPay--afterDropDown-top">
                 <u:Textfield fieldType="Regular"
                              id="idnrgQPCC-cvv"
                              class="nrgQPCC-cvv"
@@ -66,7 +67,7 @@
                              class="nrgQPCC-zipcode"
                              width="5rem"
                              valueType="I"
-                             placeholder="ZIPCODE">
+                             placeholder="ZIP CODE">
                 </u:Textfield>
             </u:Tag>
         </u:Tag>
@@ -76,17 +77,17 @@
                         <core:Item key="{ProductId}" text="{Name}" />
                     </m:ComboBox>
             </u:Tag>
-            <u:Tag class="nrgQPPay-top nrgQPPay-left" >
+            <u:Tag class="nrgQPPay-bottomTop nrgQPPay-left" >
                 <um:Button press=".onAcceptCredit"
                            text="{comp-i18n-quickpay>nrgQPPay}"
                            class="nrgQPCC-btn"
                            design="Default">
-                </um:button>
+                </um:Button>
                 <um:Button press=".onDeclineCredit"
                            text="{comp-i18n-quickpay>nrgQPCancel}"
                            class="nrgQPCC-btn"
                            design="Default">
-                </um:button>
+                </um:Button>
             </u:Tag>
     </u:Tag>
 </core:FragmentDefinition>

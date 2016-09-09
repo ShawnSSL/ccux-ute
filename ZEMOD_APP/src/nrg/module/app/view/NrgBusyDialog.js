@@ -11,12 +11,12 @@ sap.ui.define(
     function (BusyDialog, EnabledPropagator, Button) {
         'use strict';
 
-        var NrgBusyDialog = BusyDialog.extend('nrg.module.app.view.NrgBusyDialog', {
+        var NrgBusyDialog = BusyDialog.extend('nrg.module.app.view.NrgBusyDialog', { metadata : {
             events: {
 					/**
 					 * Fires when the busy dialog is closed.
 					 */
-				stop: {
+				"stop": {
 				    parameters: {
 							/**
 							 * Indicates if the close events are triggered by a user, pressing a cancel button or because the operation was terminated.
@@ -26,10 +26,15 @@ sap.ui.define(
 				    }
 				}
             }
-        });
+        },
+			// requires a dummy render function to avoid loading of separate
+			// renderer file and in case of usage in control tree a render
+			// function has to be available to not crash the rendering
+			renderer: {
 
+            }
+            });
 
-        EnabledPropagator.call(NrgBusyDialog.prototype);
 
       // execute standard init  method to override sap escape functionality and adding new style class
         NrgBusyDialog.prototype.init = function () {
@@ -47,7 +52,7 @@ sap.ui.define(
 		 * @type sap.m.BusyDialog
 		 * @public
 		 */
-		BusyDialog.prototype.open = function () {
+		BusyDialog.prototype.open = function (bShowStopImmediately) {
 			//jQuery.sap.log.debug("sap.m.BusyDialog.open called at " + new Date().getTime());
 
 			if (this.getAriaLabelledBy() && !this._oDialog._$dialog) {
@@ -62,15 +67,20 @@ sap.ui.define(
 					this.open();
 				}.bind(this), 50);
 			} else {
-                this._cancelButton.setVisible(false);
-                if (this._stopButtonTimer) {
-                    clearTimeout(this._stopButtonTimer);
-                }
-                this._stopButtonTimer = setTimeout(function () {
-                    if (this._oDialog.isOpen()) {
-                        this.showCancelButton();
+                if (!bShowStopImmediately) {
+                    this._cancelButton.setVisible(false);
+                    if (this._stopButtonTimer) {
+                        clearTimeout(this._stopButtonTimer);
                     }
-				}.bind(this), 5000);
+                    this._stopButtonTimer = setTimeout(function () {
+                        if (this._oDialog.isOpen()) {
+                            this.showCancelButton();
+                        }
+                    }.bind(this), 30000);
+
+                } else {
+                    this.showCancelButton();
+                }
                 this._oDialog.open();
 			}
 			return this;

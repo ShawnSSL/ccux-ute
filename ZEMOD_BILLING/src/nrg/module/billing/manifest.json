@@ -104,11 +104,11 @@
                 },
                 "billing.BillingInfo": {
                     "pattern": "billing/billinginfo/bp/{bpNum}/ca/{caNum}/co/{coNum}",
-                    "target":["billing.CustomerDataBillingInfo", "dashboard.CustomerDataSummary", "billing.CustomerJourney", "app.Footer"]
+                    "target":["billing.CustomerDataBillingInfo", "dashboard.CustomerDataSummary", "billing.CustomerJourney", "billing.BillingTagline", "app.Footer"]
                 },
                 "billing.BillingInfoNoCo": {
                     "pattern": "billing/billinginfo/bp/{bpNum}/ca/{caNum}",
-                    "target":["billing.CustomerDataBillingInfo", "dashboard.CustomerDataSummary", "billing.CustomerJourney", "app.Footer"]
+                    "target":["billing.CustomerDataBillingInfo", "dashboard.CustomerDataSummary", "billing.CustomerJourney", "billing.BillingTagline", "app.Footer"]
                 },
                 "billing.BillingPrePaid": {
                     "pattern": "billing/billingprepaid/bp/{bpNum}/ca/{caNum}/co/{coNum}",
@@ -160,6 +160,10 @@
                 "billing.CustomerDataPrePD": {
                     "viewName": "nrg.module.billing.view.CustomerDataPrePD",
                     "controlId": "idAppGeneral"
+                },
+                "billing.BillingTagline":{
+                    "viewName": "nrg.module.billing.view.BillingTagline",
+                    "controlId": "idAppTagline"
                 },
                 "billing.HighBill": {
                     "viewName": "nrg.module.billing.view.HighBill",

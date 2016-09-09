@@ -13,7 +13,6 @@
             <ua:Header id="appHdr">
                 <ua:banner>
                     <span class="nrgAppBanner-logo"></span>
-                    <ua:Text class="nrgAppBanner-title" text="{comp-i18n-app>nrgAppBannerTitle}" />
                 </ua:banner>
                 <ua:menu>
                     <ua:HeaderMenu id="appHdrMenu">
@@ -58,9 +57,9 @@
         </ua:header>
         <ua:body>
             <ua:Body id="appBody" class="nrgAppBody">
-                <ua:banner>
+                <!--<ua:banner>
                     <ua:Text id="appBodyTitle" class="nrgAppBodyBanner-title" />
-                </ua:banner>
+                </ua:banner>-->
                 <ua:navLeft>
                     <ua:EventArea id="appBodyNavLeft" class="nrgU-displayNone">
                         <div class="nrgAppBody-navLeft"></div>
@@ -82,6 +81,9 @@
                         <ua:general>
                             <ua:Tag id="idAppGeneral"></ua:Tag>
                         </ua:general>
+                        <ua:tagline>
+                            <ua:Tag id="idAppTagline"></ua:Tag>
+                        </ua:tagline>
                         <ua:footer>
                             <ua:Tag id="idAppFooter"></ua:Tag>
                         </ua:footer>

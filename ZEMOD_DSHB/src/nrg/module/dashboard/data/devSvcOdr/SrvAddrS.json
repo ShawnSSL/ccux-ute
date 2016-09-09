@@ -3,13 +3,13 @@
     "results":[
       {
         "__metadata":{
-          "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/SrvAddrS(CA='000003648303',Contract='0034910949')",
-          "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/SrvAddrS(CA='000003648303',Contract='0034910949')",
+          "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/SrvAddrS(CA='000070352880',Contract='0034910949')",
+          "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/SrvAddrS(CA='000070352880',Contract='0034910949')",
           "type":"ZE_CCUX_SRV_ORD_SRV.SrvAddr"
         },
-        "CA":"000003648303",
+        "CA":"000070352880",
         "Contract":"0034910949",
-        "ESID":"1008901017126656741100",
+        "ESID":"1008901023811218130100",
         "House":"4630",
         "Street":"MAGNOLIA COVE DR",
         "Apt":"APT 1324",
@@ -19,11 +19,11 @@
       },
       {
         "__metadata":{
-          "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/SrvAddrS(CA='000003648303',Contract='0034910937')",
-          "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/SrvAddrS(CA='000003648303',Contract='0034910937')",
+          "id":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/SrvAddrS(CA='000070352880',Contract='0034910937')",
+          "uri":"http://sapcmd02.retail.nrgenergy.com:8000/sap/opu/odata/sap/ZE_CCUX_SRV_ORD_SRV/SrvAddrS(CA='000070352880',Contract='0034910937')",
           "type":"ZE_CCUX_SRV_ORD_SRV.SrvAddr"
         },
-        "CA":"000003648303",
+        "CA":"000070352880",
         "Contract":"0034910937",
         "ESID":"1008901023811987000102",
         "House":"722",

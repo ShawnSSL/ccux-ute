@@ -27,7 +27,7 @@
             press=".onOvsAccept">
         </u:Button>
         <um:Dropdown id="idnrgRejectRsnsOV"
-                     select=".onDisposition"
+                     select=".onOVSDisposition"
                      placeholder="Non-Disposition Reason"
                      class="nrgCamSSRr-DdL nrgCamSS-left">
             <um:DropdownItem key="{view-campaign>RejectionCode}" class="nrgCamSSRr-DdLItem">
