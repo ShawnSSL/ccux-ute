@@ -1,0 +1,1 @@
+sap.ui.define(["jquery.sap.global"],function(a){"use strict";var b;return b=function(){},b.prototype.getText=function(){var b=[].slice.call(arguments),c=b.shift();return a.sap.formatMessage(c,b)},new b});

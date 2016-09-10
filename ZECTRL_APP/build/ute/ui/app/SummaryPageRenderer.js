@@ -1,0 +1,1 @@
+sap.ui.define([],function(){"use strict";var a={};return a.render=function(a,b){a.write("<div"),a.writeControlData(b),a.addClass("uteAppSumPg"),a.writeClasses(),a.write(">"),a.write("</div>")},a},!0);

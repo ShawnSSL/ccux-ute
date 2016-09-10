@@ -1,0 +1,1 @@
+<mvc:View xmlns="http://www.w3.org/1999/xhtml" xmlns:ute="ute.ui.commons" xmlns:mvc="sap.ui.core.mvc" controllerName="nrg.module.others.view.SummaryEmpty"><ute:Tag class="nrgSummaryEmpty nrgAppMain-summaryContent nrgAppMain-summaryContent-full"><ute:content><span>Summary Content</span></ute:content></ute:Tag></mvc:View>

@@ -1,0 +1,1 @@
+<mvc:View xmlns="http://www.w3.org/1999/xhtml" xmlns:ute="ute.ui.commons" xmlns:mvc="sap.ui.core.mvc" controllerName="nrg.module.others.view.ToolsEmpty"><ute:Tag class="nrgToolsEmpty nrgAppMain-toolsContent nrgAppMain-toolsContent-full"><ute:content><span>Tools Content</span></ute:content></ute:Tag></mvc:View>

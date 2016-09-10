@@ -1,0 +1,1 @@
+<mvc:View xmlns="http://www.w3.org/1999/xhtml" xmlns:ute="ute.ui.commons" xmlns:mvc="sap.ui.core.mvc" controllerName="nrg.module.dashboard.view.Tools" height="100%" width="100%" displayBlock="true"></mvc:View>

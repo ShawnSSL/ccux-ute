@@ -1,0 +1,1 @@
+sap.ui.define([],function(){"use strict";var a={};return a.render=function(a,b){a.write("<"+b.getElem()),a.writeControlData(b),b.getType()&&a.writeAttribute("type",b.getType()),a.writeClasses(),a.write(">"),a.writeEscaped(b.getText()),b.getContent().forEach(function(b){a.renderControl(b)}),a.write("</"+b.getElem()+">")},a},!0);

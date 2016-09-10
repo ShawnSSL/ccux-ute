@@ -1,0 +1,1 @@
+sap.ui.define(["jquery.sap.global"],function(){"use strict";var a={};return a.render=function(a,b){b.getCells().forEach(function(c){a.write("<th"),a.writeControlData(b),a.addStyle("width",b.getWidth()),a.writeStyles(),a.writeClasses(),a.write(">"),a.renderControl(c),a.write("</th>")})},a},!0);

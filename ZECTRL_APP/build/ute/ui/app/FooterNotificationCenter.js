@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/Control"],function(a){"use strict";var b=a.extend("ute.ui.app.FooterNotificationCenter",{metadata:{library:"ute.ui.app",aggregations:{content:{type:"ute.ui.app.FooterNotificationItem",multiple:!0,singularName:"content"}},defaultAggregation:"content"}});return b},!0);

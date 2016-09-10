@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/Control"],function(a){"use strict";var b=a.extend("ute.ui.app.App",{metadata:{library:"ute.ui.app",aggregations:{header:{type:"ute.ui.app.Header",multiple:!1},body:{type:"ute.ui.app.Body",multiple:!1},footer:{type:"ute.ui.app.Footer",multiple:!1}}}});return b},!0);

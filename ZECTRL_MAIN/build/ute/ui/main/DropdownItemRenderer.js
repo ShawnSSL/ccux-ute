@@ -1,0 +1,1 @@
+sap.ui.define([],function(){"use strict";var a={};return a.render=function(a,b){a.write("<div"),a.writeControlData(b),a.addClass("uteMDdItem"),b.getEnabled()||a.addClass("uteMDdItem-disabled"),a.writeClasses(),a.write(">"),this._renderContent(a,b),a.write("</div>")},a._renderContent=function(a,b){var c=b.getContent()||[];c.forEach(function(b){a.renderControl(b)})},a},!0);

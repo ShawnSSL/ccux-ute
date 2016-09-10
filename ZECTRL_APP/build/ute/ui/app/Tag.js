@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/Control"],function(a){"use strict";var b=a.extend("ute.ui.app.Tag",{metadata:{library:"ute.ui.app",properties:{type:{type:"ute.ui.app.TagType",defaultValue:ute.ui.app.TagType.Block}},aggregations:{content:{type:"sap.ui.core.Control",multiple:!0,singularName:"content"}},defaultAggregation:"content"}});return b},!0);

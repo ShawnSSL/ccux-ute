@@ -1,0 +1,1 @@
+<mvc:View xmlns="http://www.w3.org/1999/xhtml" xmlns:ute="ute.ui.commons" xmlns:mvc="sap.ui.core.mvc" xmlns:sm="sap.m" controllerName="nrg.module.campaign.view.General" height="100%" width="100%" displayBlock="true"><div>General Campaign</div><sm:ScrollContainer id="viewContent" height="100%" width="100%" horizontal="true" vertical="true"></sm:ScrollContainer></mvc:View>

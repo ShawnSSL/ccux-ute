@@ -1,0 +1,1 @@
+sap.ui.define(["jquery.sap.global","./DatePicker","ute/ui/commons/TextfieldRenderer"],function(a,b,c){"use strict";var d=sap.ui.core.Renderer.extend(c);return d.renderOuterContentBefore=function(a,b){a.write("<div"),a.writeControlData(b),a.writeAttribute("tabindex","-1"),a.addClass("uteDatePicIcon"),a.writeClasses(),a.write("></div>")},d},!0);

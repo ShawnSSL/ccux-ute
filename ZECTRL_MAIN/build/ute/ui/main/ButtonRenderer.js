@@ -1,0 +1,1 @@
+sap.ui.define([],function(){"use strict";var a={};return a.render=function(a,b){a.write("<span"),a.writeControlData(b),a.addClass("uteMBtn"),b.getDesign()!==ute.ui.main.ButtonDesign.None&&a.addClass("uteMBtn-design-"+b.getDesign().toLowerCase()),a.writeClasses(),a.write(">"),b.getText()&&b._addHtmlText(a),b.getContent()&&b._addHtmlContent(a),a.write("</span>")},a},!0);

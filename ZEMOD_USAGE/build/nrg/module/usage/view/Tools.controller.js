@@ -1,0 +1,1 @@
+sap.ui.define(["nrg/base/view/BaseController"],function(a){"use strict";var b=a.extend("nrg.module.usage.view.Tools");return b.prototype.onInit=function(){},b.prototype.onBeforeRendering=function(){},b});

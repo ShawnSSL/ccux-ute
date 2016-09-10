@@ -1,0 +1,1 @@
+<core:FragmentDefinition xmlns="http://www.w3.org/1999/xhtml" xmlns:ua="ute.ui.app" xmlns:core="sap.ui.core"><ua:HeaderSubmenu class="nrgAppHdrMsg"><div class="uteAppHdrSMenu-wrap"><ua:MessageContainer content="{view-message>/}"><ua:Message design="{view-message>type}" text="{view-message>description}"/></ua:MessageContainer></div></ua:HeaderSubmenu></core:FragmentDefinition>

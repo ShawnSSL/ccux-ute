@@ -1,0 +1,1 @@
+<mvc:View xmlns="http://www.w3.org/1999/xhtml" xmlns:ute="ute.ui.commons" xmlns:mvc="sap.ui.core.mvc" xmlns:um="sap.m" controllerName="nrg.module.nnp.view.General" height="100%" width="100%" displayBlock="true"><div>General Campaign</div><um:Button press=".onQuickPay" text="Quick Pay" class="nrgCamOff-btn" id="idnrgCamOffBt" design="Default"></um:Button></mvc:View>

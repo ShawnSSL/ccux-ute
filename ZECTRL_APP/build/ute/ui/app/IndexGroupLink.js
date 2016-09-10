@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/Control"],function(a){"use strict";var b=a.extend("ute.ui.app.IndexGroupLink",{metadata:{library:"ute.ui.app",properties:{title:{type:"string",defaultValue:null}},aggregations:{content:{type:"ute.ui.app.IndexLink",multiple:!0,singularName:"content"}},defaultAggregation:"content"}});return b},!0);

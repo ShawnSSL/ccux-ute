@@ -1,0 +1,1 @@
+sap.ui.define([],function(){"use strict";var a={};return a.render=function(a,b){a.write("<label"),a.writeControlData(b),a.addClass("uteMLbl"),a.writeClasses(),b.getLabelForRendering()&&b._addLabelForRendering(a),a.write(">"),b.getText()&&b._addHtmlText(a),b.getContent()&&b._addHtmlContent(a),a.write("</label>")},a},!0);

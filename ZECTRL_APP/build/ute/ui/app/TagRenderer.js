@@ -1,0 +1,1 @@
+sap.ui.define([],function(){"use strict";var a={};return a.render=function(a,b){var c=b.getType()===ute.ui.app.TagType.Block?"div":"span";a.write("<"+c),a.writeControlData(b),a.writeClasses(),a.write(">"),this._renderContent(a,b),a.write("</"+c+">")},a._renderContent=function(a,b){b.getContent().forEach(function(b){a.renderControl(b)}.bind(this))},a},!0);

@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/Control"],function(a){"use strict";var b=a.extend("ute.ui.app.IndexLink",{metadata:{library:"ute.ui.app",properties:{description:{type:"string",defaultValue:null},refId:{type:"string",defaultValue:null}},events:{press:{}}}});return b.prototype.ontap=function(){this.firePress()},b},!0);

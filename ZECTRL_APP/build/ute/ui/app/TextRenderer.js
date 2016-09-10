@@ -1,0 +1,1 @@
+sap.ui.define([],function(){"use strict";var a={};return a.render=function(a,b){a.write("<span"),a.writeControlData(b),a.writeClasses(),a.write(">"),b.getText()&&a.writeEscaped(b.getText()),a.write("</span>")},a},!0);

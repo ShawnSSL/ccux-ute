@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/Control"],function(a){"use strict";var b=a.extend("ute.ui.app.IndexWorkCenter",{metadata:{library:"ute.ui.app",aggregations:{leftContent:{type:"ute.ui.app.IndexGroupLink",multiple:!0,singularName:"leftContent"},rightContent:{type:"ute.ui.app.IndexGroupLink",multiple:!0,singularName:"rightContent"}},defaultAggregation:"leftContent"}});return b},!0);

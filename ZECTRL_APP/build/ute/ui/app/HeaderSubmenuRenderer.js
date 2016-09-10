@@ -1,0 +1,1 @@
+sap.ui.define([],function(){"use strict";var a={};return a.render=function(a,b){a.write("<div"),a.writeControlData(b),a.addClass("uteAppHdrSMenu"),a.writeClasses(),a.write(">"),this._renderContent(a,b),a.write("</div>")},a._renderContent=function(a,b){b.getContent().forEach(function(b){a.renderControl(b)}.bind(this))},a},!0);

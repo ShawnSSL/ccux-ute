@@ -1,0 +1,1 @@
+{"sap.ui5":{"rootView":{"viewName":"nrg.module.app.view.App","type":"XML"},"routing":{"routes":{"notFound":{"pattern":"{all*}","target":["others.GeneralEmpty","others.SummaryEmpty","others.ToolsEmpty"]}},"config":{"viewType":"XML","controlAggregation":"content","clearControlAggregation":true}}}}

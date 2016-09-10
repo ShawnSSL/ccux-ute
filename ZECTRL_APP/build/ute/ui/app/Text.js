@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/Control"],function(a){"use strict";var b=a.extend("ute.ui.app.Text",{metadata:{library:"ute.ui.app",properties:{text:{type:"string",defaultValue:null}}}});return b},!0);

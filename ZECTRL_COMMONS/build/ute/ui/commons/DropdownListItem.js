@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/Element","sap/ui/core/Control"],function(a){"use strict";var b=a.extend("ute.ui.commons.DropdownListItem",{metadata:{library:"ute.ui.commons",properties:{key:{type:"string",defaultValue:null}},defaultAggregation:"content",aggregations:{content:{type:"sap.ui.core.Control",multiple:!0,singularName:"content"}}}});return b},!0);

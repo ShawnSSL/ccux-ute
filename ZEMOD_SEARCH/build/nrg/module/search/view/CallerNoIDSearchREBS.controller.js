@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/mvc/Controller"],function(a){"use strict";var b=a.extend("nrg.module.search.view.CallerNoIDSearchREBS");return b.prototype.onInit=function(){},b});

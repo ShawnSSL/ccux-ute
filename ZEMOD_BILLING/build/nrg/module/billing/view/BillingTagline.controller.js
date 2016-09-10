@@ -1,0 +1,1 @@
+sap.ui.define(["nrg/base/view/BaseController","sap/ui/model/json/JSONModel"],function(a){"use strict";var b=a.extend("nrg.module.billing.view.BillingTagline");return b});

@@ -1,0 +1,1 @@
+sap.ui.define(["ute/ui/app/HeaderMenuItem"],function(){"use strict";var a={};return a.render=function(a,b){a.write("<div"),a.writeControlData(b),a.addClass("uteAppHdrMenu"),a.writeClasses(),a.write(">"),b.getItem()&&this._renderItem(a,b),a.write("</div>")},a._renderItem=function(a,b){var c=b.getItem();c.forEach(function(b){a.renderControl(b)}.bind(this))},a},!0);
